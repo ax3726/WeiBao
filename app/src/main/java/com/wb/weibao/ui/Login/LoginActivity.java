@@ -12,6 +12,7 @@ import com.lm.lib_common.utils.MD5Utils;
 import com.lm.lib_common.utils.WorksSizeCheckUtil;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityLoginBinding;
 import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.ui.main.MainActivity;
@@ -78,9 +79,11 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
                 .subscribe(new BaseNetListener<LoginModel>(LoginActivity.this, true) {
                     @Override
                     public void onSuccess(LoginModel loginModel) {
+
+                        MyApplication.getInstance().setUserData(loginModel.getData());
                         Log.e("====",loginModel.toString());
                         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("loginModel",loginModel);
+
                         startActivity(intent);
                         finish();
                     }

@@ -5,6 +5,8 @@ package com.wb.weibao.common;
 
 import com.lm.lib_common.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
+import com.wb.weibao.model.earlywarning.ErrorListModel;
+import com.wb.weibao.model.earlywarning.ProjectListModel;
 
 import java.util.Map;
 
@@ -36,7 +38,20 @@ public interface ApiService {
     Flowable<LoginModel>  getUserLogin(@Query("loginAccount") String loginAccount, @Query("password") String password);
 
     @POST("project/list")
-    Flowable<BaseBean>  getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
+    Flowable<ProjectListModel>  getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
+
+
+    /**
+     * 预警列表接口
+     * @return
+     */
+    @POST("early/record/list")
+    Flowable<ErrorListModel>  getError_list(@Query("instCode") String instCode,
+                                            @Query("userId") String userId,
+                                            @Query("projectId") String projectId,
+                                            @Query("status") int status,
+                                            @Query("page") int  page,
+                                            @Query("size") int  size);
 
 
 }

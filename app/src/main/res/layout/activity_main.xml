@@ -1,95 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-        <com.zhy.autolayout.AutoRelativeLayout
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoFrameLayout
+            android:id="@+id/lly_body"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1"
 
-            <com.zhy.autolayout.AutoFrameLayout
-                android:id="@+id/lly_body"
-                android:layout_width="match_parent"
+            android:background="@color/colorBackground" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@+id/rg_buttom"
+            android:background="@color/colorLine" />
+
+
+        <RadioGroup
+            android:id="@+id/rg_buttom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_record"
+            android:background="#F8F8F8"
+            android:orientation="horizontal"
+            android:paddingBottom="1dp"
+            android:paddingTop="2dp">
+
+            <RadioButton
+                android:id="@+id/rb_forewarning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/selector_forewarning"
+                android:gravity="center"
+                android:text="预警"
+                android:textColor="@color/color999999"
+                android:textSize="10dp" />
+
+            <RadioButton
+                android:id="@+id/rb_record"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="49px"
-                android:background="@color/colorBackground"
-                />
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_alignParentBottom="true"
-                android:layout_height="wrap_content">
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="false"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/selector_record"
+                android:gravity="center"
+                android:text="记录"
+                android:textColor="@color/color999999"
+                android:textSize="10dp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_above="@+id/rg_buttom"
-                    android:background="@color/colorLine" />
-                <RadioGroup
-                    android:id="@+id/rg_buttom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_record"
-                    android:background="#F8F8F8"
-                    android:orientation="horizontal"
-                    android:paddingBottom="1dp"
-                    android:paddingTop="2dp">
+            <RadioButton
+                android:id="@+id/rb_weibao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="false"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/selector_weibao"
+                android:gravity="center"
+                android:text="维保"
+                android:textColor="@color/color999999"
+                android:textSize="10dp" />
 
-                    <RadioButton
-                        android:id="@+id/rb_forewarning"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:checked="true"
-                        android:drawablePadding="4dp"
-                        android:drawableTop="@drawable/selector_forewarning"
-                        android:gravity="center"
-                        android:text="预警"
-                        android:textColor="@color/color999999"
-                        android:textSize="10dp" />
+            <RadioButton
+                android:id="@+id/rb_myuser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="false"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/selector_myuser"
+                android:gravity="center"
+                android:text="我的"
+                android:textColor="@color/color999999"
+                android:textSize="10dp" />
+        </RadioGroup>
 
-                    <RadioButton
-                        android:id="@+id/rb_record"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:checked="false"
-                        android:drawablePadding="4dp"
-                        android:gravity="center"
-                        android:drawableTop="@drawable/selector_record"
-                        android:text="记录"
-                        android:textColor="@color/color999999"
-                        android:textSize="10dp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_weibao"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:checked="false"
-                        android:drawablePadding="4dp"
-                        android:drawableTop="@drawable/selector_weibao"
-                        android:gravity="center"
-                        android:text="维保"
-                        android:textColor="@color/color999999"
-                        android:textSize="10dp"
-                       />
-
-                    <RadioButton
-                        android:id="@+id/rb_myuser"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:button="@null"
-                        android:checked="false"
-                        android:drawablePadding="4dp"
-                        android:drawableTop="@drawable/selector_myuser"
-                        android:gravity="center"
-                        android:text="我的"
-                        android:textColor="@color/color999999"
-                        android:textSize="10dp" />
-                </RadioGroup>
-            </com.zhy.autolayout.AutoRelativeLayout>
-
-        </com.zhy.autolayout.AutoRelativeLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
 </layout>

@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.wb.weibao.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;

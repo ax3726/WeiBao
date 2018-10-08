@@ -20,6 +20,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.wb.weibao.model.LoginModel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class MyApplication extends ThisApplication {
     private static MyApplication instance;
     public static String Base_Path = "";
     private String token = "";//token
-
+    private LoginModel.Data mUserData=null;//用户信息
 
     public static MyApplication getInstance() {
         return instance;
@@ -102,6 +103,13 @@ public class MyApplication extends ThisApplication {
         });
     }
 
+    public LoginModel.Data getUserData() {
+        return mUserData;
+    }
+
+    public void setUserData(LoginModel.Data mUserData) {
+        this.mUserData = mUserData;
+    }
 
     public String getToken() {
         return token;

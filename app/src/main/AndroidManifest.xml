@@ -3,7 +3,9 @@
     package="com.wb.weibao">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写sdcard，storage等等 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- 读写sdcard，storage等等 -->
     <application
         android:name=".common.MyApplication"
         android:allowBackup="true"
@@ -12,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- AUTO LAYOUT -->
         <meta-data
             android:name="design_width"
@@ -31,6 +34,9 @@
         </provider>
 
         <activity android:name=".ui.main.MainActivity">
+
+        </activity>
+        <activity android:name=".ui.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

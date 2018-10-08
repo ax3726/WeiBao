@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Weibao.iml" filepath="$PROJECT_DIR$/Weibao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WeiBao.iml" filepath="$PROJECT_DIR$/WeiBao.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_common/lib_common.iml" filepath="$PROJECT_DIR$/lib_common/lib_common.iml" />
     </modules>

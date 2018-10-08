@@ -1,7 +1,11 @@
 package com.wb.weibao.ui.earlywarning;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
 import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
@@ -36,6 +40,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
     private String mProjectId = "";//当前项目id
     private int mPage = 1;
     private int mPageSize = 15;
+    private List<ProjectListModel.DataBean.ListBean> mProjectList = new ArrayList<>();//项目列表
 
     @Override
     protected int getLayoutId() {
@@ -57,7 +62,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                 ItemEarlyWarningLayoutBinding binding = holder.getBinding(ItemEarlyWarningLayoutBinding.class);
                 binding.tvName.setText(item.getProjectArea());
                 binding.tvError.setText(item.getProjectName());
-                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(),"yyyy.MM.dd"));
+                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd"));
             }
         };
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
@@ -80,6 +85,18 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
         });
 
         getProjectList();
+
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mBinding.tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProjectList();
+            }
+        });
     }
 
     /**
@@ -93,8 +110,9 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                     public void onSuccess(ProjectListModel baseBean) {
                         ProjectListModel.DataBean data = baseBean.getData();
                         if (data != null) {
-
+                            mProjectList.clear();
                             if (data.getList() != null && data.getList().size() > 0) {
+                                mProjectList.addAll(data.getList());
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(1);
                                 mProjectId = listBean.getInstId();
                                 mBinding.tvName.setText(listBean.getInstName());
@@ -124,12 +142,12 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                     public void onSuccess(ErrorListModel baseBean) {
                         stopRefersh();
                         ErrorListModel.DataBean data = baseBean.getData();
-                        if (data!=null) {
+                        if (data != null) {
                             if (mPage == 1) {
                                 mDataList.clear();
                             }
                             List<ErrorListModel.DataBean.ListBean> list = data.getList();
-                            if (list!=null&&list.size()>0) {
+                            if (list != null && list.size() > 0) {
                                 mDataList.addAll(list);
                                 if (list.size() < mPageSize) {
                                     mBinding.srlBody.finishLoadmoreWithNoMoreData();
@@ -146,6 +164,34 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                     }
                 });
     }
+
+    // 单选提示框
+    private AlertDialog mAlertDialog;
+
+    public void showProjectList() {
+        final String[] items = new String[mProjectList.size()];
+        for (int i = 0; i < mProjectList.size(); i++) {
+            items[i] = mProjectList.get(i).getInstName();
+        }
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(aty);
+        alertBuilder.setTitle("选择区域");
+        alertBuilder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int index) {
+                ProjectListModel.DataBean.ListBean listBean = mProjectList.get(index);
+                mProjectId = listBean.getInstId();
+                mBinding.tvName.setText(listBean.getInstName());
+                mPage = 1;
+                getErrorList();
+                mAlertDialog.dismiss();
+            }
+        });
+
+        mAlertDialog = alertBuilder.create();
+        mAlertDialog.show();
+    }
+
+
     private void stopRefersh() {
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();

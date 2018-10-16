@@ -29,7 +29,7 @@
             android:background="#F8F8F8"
             android:orientation="horizontal"
             android:paddingBottom="1dp"
-            android:paddingTop="2dp">
+            android:paddingTop="4dp">
 
             <RadioButton
                 android:id="@+id/rb_forewarning"

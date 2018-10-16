@@ -188,20 +188,20 @@ public class WheelView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Style.FILL);
         mPaint.setTextAlign(Align.CENTER);
-        mPaint.setColor(getResources().getColor(R.color.white));
-        mPaint.setTextSize(SizeConvertUtil.spTopx(context, 18));
+        mPaint.setColor(getResources().getColor(R.color.wheel_bg));
+        mPaint.setTextSize(SizeConvertUtil.spTopx(context, 20));
 
 
         selectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         selectPaint.setStyle(Style.FILL);
         selectPaint.setTextAlign(Align.CENTER);
-        selectPaint.setColor(getResources().getColor(R.color.orange));
-        selectPaint.setTextSize(SizeConvertUtil.spTopx(context, 22));
+        selectPaint.setColor(getResources().getColor(R.color.color3e3e3e));
+        selectPaint.setTextSize(SizeConvertUtil.spTopx(context, 24));
 
         centerLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         centerLinePaint.setStyle(Style.FILL);
         centerLinePaint.setTextAlign(Align.CENTER);
-        centerLinePaint.setColor(getResources().getColor(R.color.white));
+        centerLinePaint.setColor(getResources().getColor(R.color.wheel_bg));
         // 绘制背景
         setBackground(null);
     }
@@ -273,7 +273,7 @@ public class WheelView extends View {
                 canvas.drawLine(0, itemHeight, width, itemHeight, centerLinePaint);
                 canvas.drawLine(0, itemHeight * 2, width, itemHeight * 2, centerLinePaint);
 
-                centerLinePaint.setColor(getResources().getColor(R.color.wheel_bg));
+                centerLinePaint.setColor(getResources().getColor(R.color.white));
                 Rect topRect = new Rect(0, 0, width, itemHeight);
                 canvas.drawRect(topRect, centerLinePaint);
                 Rect bottomRect = new Rect(0, itemHeight * 2, width, itemHeight * 3);

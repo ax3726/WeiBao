@@ -5,31 +5,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.RadioGroup;
 
 import com.lm.lib_common.base.BaseActivity;
-import com.lm.lib_common.base.BaseNetListener;
 import com.lm.lib_common.base.BasePresenter;
-import com.lm.lib_common.model.BaseBean;
 import com.lm.lib_common.utils.DoubleClickExitHelper;
-import com.lm.lib_common.utils.MD5Utils;
-import com.lm.lib_common.utils.Utils;
 import com.wb.weibao.R;
-import com.wb.weibao.common.Api;
 import com.wb.weibao.databinding.ActivityMainBinding;
-import com.wb.weibao.model.LoginModel;
-import com.wb.weibao.ui.Login.LoginActivity;
 import com.wb.weibao.ui.earlywarning.EarlyWarningFragment;
 import com.wb.weibao.ui.maintenance.MainTenanceFragment;
 import com.wb.weibao.ui.mine.MineFragment;
 import com.wb.weibao.ui.record.RecordFragment;
-import com.wb.weibao.view.CustomPopWindow;
-import com.wb.weibao.view.WheelStyle;
-import com.wb.weibao.view.WheelView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,30 +125,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 点击 PopupWindow 之外的地方不消失
-     */
-    private void touchOutsideDontDisMiss() {
-//        View view = LayoutInflater.from(this).inflate(R.layout.pop_layout_close,null);
-//        View.OnClickListener listener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.e("FK","onClick.....");
-//                mPopWindow.dissmiss();
-//            }
-//        };
-//        view.findViewById(R.id.close_pop).setOnClickListener(listener);
-//        wheel = (WheelView) view.findViewById(R.id.wheel_week_wheel);
-//
-//        wheel.setWheelStyle(WheelStyle.STYLE_LIGHT_TIME);
-//        mPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
-//                .setView(view)
-//                .enableBackgroundDark(true)//弹出popWindow时，背景是否变暗
-//                .enableOutsideTouchableDissmiss(false)// 设置点击PopupWindow之外的地方，popWindow不关闭，如果不设置这个属性或者为true，则关闭
-//                .create();
-//
-//        mPopWindow.showAsDropDown(mButton7,0,10);
-    }
+
 
 
 }

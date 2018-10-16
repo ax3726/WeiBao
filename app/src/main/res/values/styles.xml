@@ -63,5 +63,9 @@
         <item name="android:textColor">@color/btn_textcolor</item>
         <item name="android:background">@drawable/test_button_selector</item>
     </style>
+    <style name="popp_anim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_popup_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_popup_out</item>
+    </style>
 
 </resources>

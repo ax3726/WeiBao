@@ -7,6 +7,7 @@ import com.lm.lib_common.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.record.RecordListModel;
 
 import java.util.Map;
 
@@ -53,5 +54,15 @@ public interface ApiService {
                                             @Query("page") int  page,
                                             @Query("size") int  size);
 
+    /**
+     * 记录列表接口
+     * @return
+     */
+    @POST("early/record/list")
+    Flowable<RecordListModel>  getRecord_list(@Query("instCode") String instCode,
+                                             @Query("userId") String userId,
+                                             @Query("projectId") String projectId,
+                                             @Query("page") int  page,
+                                             @Query("size") int  size);
 
 }

@@ -24,8 +24,10 @@ import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
 import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.ui.Login.LoginActivity;
 import com.wb.weibao.ui.main.MainActivity;
 import com.wb.weibao.utils.DemoUtils;
+import com.wb.weibao.view.PopupWindow.FitPopupUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,10 +93,30 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
     @Override
     protected void initEvent() {
         super.initEvent();
+
         mBinding.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showProjectList();
+                Log.e("112",""+mProjectList.size()+mProjectList.toString());
+                List<String> wheelString = new ArrayList<>();
+                for (int i = 0; i < mProjectList.size(); i++) {
+                    wheelString.add(mProjectList.get(i).getInstName());
+                }
+                if(wheelString.size()>1) {
+                    FitPopupUtil fitPopupUtil = new FitPopupUtil(getActivity(), wheelString);
+                    fitPopupUtil.setOnClickListener(new FitPopupUtil.OnCommitClickListener() {
+                        @Override
+                        public void onClick(String reason) {
+                            ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
+                            mProjectId = listBean.getInstId();
+                            mBinding.tvName.setText(listBean.getInstName());
+                            mPage = 1;
+                            getErrorList();
+                            Toast.makeText(getActivity(), reason, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    fitPopupUtil.showPopup(v);
+                }
             }
         });
     }
@@ -113,7 +135,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                             mProjectList.clear();
                             if (data.getList() != null && data.getList().size() > 0) {
                                 mProjectList.addAll(data.getList());
-                                ProjectListModel.DataBean.ListBean listBean = data.getList().get(1);
+                                ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
                                 mProjectId = listBean.getInstId();
                                 mBinding.tvName.setText(listBean.getInstName());
                                 getErrorList();
@@ -165,31 +187,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                 });
     }
 
-    // 单选提示框
-    private AlertDialog mAlertDialog;
 
-    public void showProjectList() {
-        final String[] items = new String[mProjectList.size()];
-        for (int i = 0; i < mProjectList.size(); i++) {
-            items[i] = mProjectList.get(i).getInstName();
-        }
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(aty);
-        alertBuilder.setTitle("选择区域");
-        alertBuilder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int index) {
-                ProjectListModel.DataBean.ListBean listBean = mProjectList.get(index);
-                mProjectId = listBean.getInstId();
-                mBinding.tvName.setText(listBean.getInstName());
-                mPage = 1;
-                getErrorList();
-                mAlertDialog.dismiss();
-            }
-        });
-
-        mAlertDialog = alertBuilder.create();
-        mAlertDialog.show();
-    }
 
 
     private void stopRefersh() {

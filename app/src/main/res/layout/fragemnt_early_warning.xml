@@ -21,7 +21,7 @@
                 android:drawableLeft="@mipmap/home_location_icon"
                 android:drawablePadding="20px"
                 android:gravity="center_vertical"
-                android:paddingLeft="28px"
+               android:layout_marginLeft="38px"
                 android:text=""
                 android:textColor="#23363A"
                 android:textSize="32px" />
@@ -29,8 +29,8 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60px"
-                android:layout_marginBottom="20px"
-                android:layout_marginTop="38px"
+                android:layout_marginBottom="50px"
+                android:layout_marginTop="48px"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 

@@ -13,18 +13,40 @@
             android:background="@color/colorTheme"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30px"
-                android:drawableLeft="@mipmap/home_location_icon"
-                android:drawablePadding="20px"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="38px"
-                android:text=""
-                android:textColor="#23363A"
-                android:textSize="32px" />
+                android:layout_marginTop="30px">
+
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="38px"
+
+                    android:drawableLeft="@mipmap/home_location_icon"
+                    android:drawablePadding="20px"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="#23363A"
+                    android:textSize="32px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingBottom="8px"
+                    android:paddingLeft="15px"
+                    android:paddingRight="15px"
+                    android:paddingTop="8px"
+                    android:layout_marginRight="20px"
+                    android:background="@drawable/shape_btn_white"
+                    android:text="新增订单"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30px" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
@@ -35,7 +57,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-
+                    android:id="@+id/et_search"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="28px"

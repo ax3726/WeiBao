@@ -65,4 +65,12 @@ public interface ApiService {
                                              @Query("page") int  page,
                                              @Query("size") int  size);
 
+    /**
+     * 订单列表接口
+     * @return
+     */
+    @POST("order/list")
+    Flowable<BaseBean>  getOrderList(@Query("userId") String userId,
+                                              @Query("page") int  page,
+                                              @Query("size") int  size);
 }

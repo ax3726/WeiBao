@@ -102,7 +102,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                 for (int i = 0; i < mProjectList.size(); i++) {
                     wheelString.add(mProjectList.get(i).getInstName());
                 }
-                if(wheelString.size()>1) {
+                if(wheelString.size()>0) {
                     FitPopupUtil fitPopupUtil = new FitPopupUtil(getActivity(), wheelString);
                     fitPopupUtil.setOnClickListener(new FitPopupUtil.OnCommitClickListener() {
                         @Override
@@ -112,7 +112,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                             mBinding.tvName.setText(listBean.getInstName());
                             mPage = 1;
                             getErrorList();
-                            Toast.makeText(getActivity(), reason, Toast.LENGTH_SHORT).show();
+
                         }
                     });
                     fitPopupUtil.showPopup(v);

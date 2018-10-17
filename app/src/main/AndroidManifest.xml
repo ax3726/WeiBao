@@ -33,11 +33,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.main.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            >
-
-        </activity>
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".ui.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.maintenance.AddOrderActivity"></activity>
     </application>
 
 </manifest>

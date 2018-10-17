@@ -1,8 +1,6 @@
 package com.wb.weibao.common;
 
 
-
-
 import com.lm.lib_common.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
@@ -31,46 +29,65 @@ public interface ApiService {
 
     /**
      * 登录接口
+     *
      * @param loginAccount
      * @param password
      * @return
      */
     @POST("login/login2")
-    Flowable<LoginModel>  getUserLogin(@Query("loginAccount") String loginAccount, @Query("password") String password);
+    Flowable<LoginModel> getUserLogin(@Query("loginAccount") String loginAccount, @Query("password") String password);
 
     @POST("project/list")
-    Flowable<ProjectListModel>  getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
+    Flowable<ProjectListModel> getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
 
 
     /**
      * 预警列表接口
+     *
      * @return
      */
     @POST("early/record/list")
-    Flowable<ErrorListModel>  getError_list(@Query("instCode") String instCode,
-                                            @Query("userId") String userId,
-                                            @Query("projectId") String projectId,
-                                            @Query("status") int status,
-                                            @Query("page") int  page,
-                                            @Query("size") int  size);
+    Flowable<ErrorListModel> getError_list(@Query("instCode") String instCode,
+                                           @Query("userId") String userId,
+                                           @Query("projectId") String projectId,
+                                           @Query("status") int status,
+                                           @Query("page") int page,
+                                           @Query("size") int size);
 
     /**
      * 记录列表接口
+     *
      * @return
      */
     @POST("early/record/list")
-    Flowable<RecordListModel>  getRecord_list(@Query("instCode") String instCode,
+    Flowable<RecordListModel> getRecord_list(@Query("instCode") String instCode,
                                              @Query("userId") String userId,
                                              @Query("projectId") String projectId,
-                                             @Query("page") int  page,
-                                             @Query("size") int  size);
+                                             @Query("page") int page,
+                                             @Query("size") int size);
 
     /**
      * 订单列表接口
+     *
      * @return
      */
     @POST("order/list")
-    Flowable<BaseBean>  getOrderList(@Query("userId") String userId,
-                                              @Query("page") int  page,
-                                              @Query("size") int  size);
+    Flowable<BaseBean> getOrderList(@Query("userId") String userId,
+                                    @Query("page") int page,
+                                    @Query("size") int size);
+
+
+    /**
+     * 新增订单接口
+     *
+     * @return
+     */
+    @POST("order/add")
+    Flowable<BaseBean> addOrder(@Query("userId") String userId,
+                                    @Query("instCode") String instCode,
+                                    @Query("projectId") String projectId,
+                                    @Query("type") int type,
+                                    @Query("principalName") String principalName,
+                                    @Query("principalPhone") String principalPhone,
+                                    @Query("memo") String memo);
 }

@@ -1,6 +1,7 @@
 package com.wb.weibao.ui.maintenance;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
 import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
@@ -28,7 +29,7 @@ import java.util.List;
  * Created by Administrator on 2018/10/8.
  */
 
-public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, FragemntMainTenanceBinding> {
+public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, FragemntMainTenanceBinding> implements View.OnClickListener {
 
     private List<ErrorListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<ErrorListModel.DataBean.ListBean> mAdapter;
@@ -119,5 +120,20 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
     private void stopRefersh() {
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mBinding.tvAddOrder.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_add_order:
+                startActivity(AddOrderActivity.class);
+                break;
+        }
     }
 }

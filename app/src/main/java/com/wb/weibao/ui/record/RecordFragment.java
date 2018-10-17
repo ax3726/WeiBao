@@ -20,6 +20,7 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntMineBinding;
 import com.wb.weibao.databinding.FragemntRecordBinding;
 import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
+import com.wb.weibao.databinding.ItemRecordLayoutBinding;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.utils.DemoUtils;
@@ -58,7 +59,7 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter,FragemntR
         mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, RecordListModel.DataBean.ListBean item, int position) {
-                ItemEarlyWarningLayoutBinding binding = holder.getBinding(ItemEarlyWarningLayoutBinding.class);
+                ItemRecordLayoutBinding binding = holder.getBinding(ItemRecordLayoutBinding.class);
                 binding.tvName.setText(item.getProjectArea());
                 binding.tvError.setText(item.getProjectName());
                 binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd"));

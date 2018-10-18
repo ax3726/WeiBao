@@ -1,5 +1,6 @@
 package com.wb.weibao.ui.maintenance;
 
+import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -19,9 +20,11 @@ import com.wb.weibao.databinding.FragemntMainTenanceBinding;
 import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
 import com.wb.weibao.databinding.ItemMaintenanceLayoutBinding;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
+import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.utils.DemoUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +32,13 @@ import java.util.List;
  * Created by Administrator on 2018/10/8.
  */
 
-public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, FragemntMainTenanceBinding> implements View.OnClickListener {
+public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, FragemntMainTenanceBinding> {
 
-    private List<ErrorListModel.DataBean.ListBean> mDataList = new ArrayList<>();
-    private CommonAdapter<ErrorListModel.DataBean.ListBean> mAdapter;
+    private List<OrderListModel.DataBean.ListBean> mDataList = new ArrayList<>();
+    private CommonAdapter<OrderListModel.DataBean.ListBean> mAdapter;
     private int mPage = 1;
     private int mPageSize = 15;
-    private List<ProjectListModel.DataBean.ListBean> mProjectList = new ArrayList<>();//项目列表
-
+    private DecimalFormat df=new DecimalFormat("0.00");
     @Override
     protected int getLayoutId() {
         return R.layout.fragemnt_main_tenance;
@@ -50,13 +52,49 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
     @Override
     protected void initData() {
         super.initData();
-        mAdapter = new CommonAdapter<ErrorListModel.DataBean.ListBean>(aty, R.layout.item_maintenance_layout, mDataList) {
+        mAdapter = new CommonAdapter<OrderListModel.DataBean.ListBean>(aty, R.layout.item_maintenance_layout, mDataList) {
             @Override
-            protected void convert(ViewHolder holder, ErrorListModel.DataBean.ListBean item, int position) {
+            protected void convert(ViewHolder holder, OrderListModel.DataBean.ListBean item, int position) {
                 ItemMaintenanceLayoutBinding binding = holder.getBinding(ItemMaintenanceLayoutBinding.class);
-                binding.tvName.setText(item.getProjectArea());
-                binding.tvPrice.setText(item.getProjectName());
-                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd"));
+
+                switch (item.getStatus()) {
+                    case "1":
+                        binding.tvHint.setText("待平台定价");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        break;
+                    case "2":
+                        binding.tvHint.setText("用户撤销");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        break;
+                    case "3":
+                        binding.tvHint.setText("代交预付款");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        break;
+                    case "4":
+                        binding.tvHint.setText("付款失败");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        break;
+                    case "5":
+                        binding.tvHint.setText("待维保");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        break;
+                    case "6":
+                        binding.tvHint.setText("维保中");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        break;
+                    case "7":
+                        binding.tvHint.setText("失效");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        break;
+                    default:
+                        binding.tvHint.setText("完成");
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        break;
+                }
+
+                binding.tvName.setText(item.getOrderNo());
+                binding.tvPrice.setText(df.format(item.getAmount()));
+                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getCreateTime(), "yyyy.MM.dd"));
             }
         };
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
@@ -81,6 +119,8 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         getDataList();
     }
 
+
+
     /**
      * 获取订单列表
      */
@@ -88,16 +128,16 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         Api.getApi().getOrderList(
                 "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId, mPage, mPageSize)
                 .compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(this, false) {
+                .subscribe(new BaseNetListener<OrderListModel>(this, false) {
                     @Override
-                    public void onSuccess(BaseBean baseBean) {
+                    public void onSuccess(OrderListModel baseBean) {
                         stopRefersh();
-                     /*   ErrorListModel.DataBean data = baseBean.getData();
+                        OrderListModel.DataBean data = baseBean.getData();
                         if (data != null) {
                             if (mPage == 1) {
                                 mDataList.clear();
                             }
-                            List<ErrorListModel.DataBean.ListBean> list = data.getList();
+                            List<OrderListModel.DataBean.ListBean> list = data.getList();
                             if (list != null && list.size() > 0) {
                                 mDataList.addAll(list);
                                 if (list.size() < mPageSize) {
@@ -105,7 +145,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                                 }
                             }
                             mAdapter.notifyDataSetChanged();
-                        }*/
+                        }
 
                     }
 
@@ -122,18 +162,5 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         mBinding.srlBody.finishLoadmore();
     }
 
-    @Override
-    protected void initEvent() {
-        super.initEvent();
-        mBinding.tvAddOrder.setOnClickListener(this);
-    }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_add_order:
-                startActivity(AddOrderActivity.class);
-                break;
-        }
-    }
 }

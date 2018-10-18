@@ -35,7 +35,7 @@ public class MyApplication extends ThisApplication {
     public static String Base_Path = "";
     private String token = "";//token
     private LoginModel.Data mUserData=null;//用户信息
-
+    private String mProjectId = "";//当前项目id
     public static MyApplication getInstance() {
         return instance;
     }
@@ -101,6 +101,14 @@ public class MyApplication extends ThisApplication {
                 return new ClassicsFooter(context).setDrawableSize(20);
             }
         });
+    }
+
+    public String getProjectId() {
+        return mProjectId;
+    }
+
+    public void setProjectId(String mProjectId) {
+        this.mProjectId = mProjectId;
     }
 
     public LoginModel.Data getUserData() {

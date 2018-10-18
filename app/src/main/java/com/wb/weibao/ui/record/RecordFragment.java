@@ -23,6 +23,7 @@ import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
 import com.wb.weibao.databinding.ItemRecordLayoutBinding;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.record.RecordListModel;
+import com.wb.weibao.ui.main.MainActivity;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
 
@@ -33,14 +34,12 @@ import java.util.List;
  * Created by Administrator on 2018/10/8.
  */
 
-public class RecordFragment extends BaseFragment<BaseFragmentPresenter,FragemntRecordBinding> {
+public class RecordFragment extends BaseFragment<BaseFragmentPresenter, FragemntRecordBinding> {
 
     private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
-    private String mProjectId = "";//当前项目id
     private int mPage = 1;
     private int mPageSize = 15;
-    private List<ProjectListModel.DataBean.ListBean> mProjectList = new ArrayList<>();//项目列表
 
     @Override
     protected int getLayoutId() {
@@ -83,72 +82,16 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter,FragemntR
                 getErrorList();
             }
         });
-
-        getProjectList();
+        getErrorList();
 
     }
 
-    @Override
-    protected void initEvent() {
-        super.initEvent();
 
-        mBinding.tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("112",""+mProjectList.size()+mProjectList.toString());
-                List<String> wheelString = new ArrayList<>();
-                for (int i = 0; i < mProjectList.size(); i++) {
-                    wheelString.add(mProjectList.get(i).getInstName());
-                }
-                if(wheelString.size()>1) {
-                    FitPopupUtil fitPopupUtil = new FitPopupUtil(getActivity(), wheelString);
-                    fitPopupUtil.setOnClickListener(new FitPopupUtil.OnCommitClickListener() {
-                        @Override
-                        public void onClick(String reason) {
-                            ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
-                            mProjectId = listBean.getInstId();
-                            mBinding.tvName.setText(listBean.getInstName());
-                            mPage = 1;
-                            getErrorList();
-                            Toast.makeText(getActivity(), reason, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    fitPopupUtil.showPopup(v);
-                }
-            }
-        });
+    public void loadData() {
+        mPage = 1;
+        getErrorList();
     }
 
-    /**
-     * 获取项目列表
-     */
-    private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().institutions.getCode(),
-                "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId).compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
-                    @Override
-                    public void onSuccess(ProjectListModel baseBean) {
-                        ProjectListModel.DataBean data = baseBean.getData();
-                        if (data != null) {
-                            mProjectList.clear();
-                            if (data.getList() != null && data.getList().size() > 0) {
-                                mProjectList.addAll(data.getList());
-                                ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
-                                mProjectId = listBean.getInstId();
-                                mBinding.tvName.setText(listBean.getInstName());
-                                getErrorList();
-                            }
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFail(String errMsg) {
-
-                    }
-                });
-    }
 
     /**
      * 获取预警列表
@@ -156,7 +99,7 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter,FragemntR
     private void getErrorList() {
         Api.getApi().getRecord_list(MyApplication.getInstance().getUserData().institutions.getCode(),
                 "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,
-                mProjectId, mPage, mPageSize).compose(callbackOnIOToMainThread())
+                MyApplication.getInstance().getProjectId(), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

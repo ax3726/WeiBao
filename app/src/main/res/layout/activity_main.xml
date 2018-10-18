@@ -6,6 +6,46 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/rly_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTheme"
+            android:paddingTop="30px">
+
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38px"
+
+                android:drawableLeft="@mipmap/home_location_icon"
+                android:drawablePadding="20px"
+                android:gravity="center_vertical"
+                android:text=""
+                android:paddingBottom="10px"
+                android:textColor="#23363A"
+                android:textSize="32px" />
+
+            <TextView
+                android:id="@+id/tv_add_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20px"
+                android:background="@drawable/shape_btn_white"
+                android:paddingBottom="8px"
+                android:paddingLeft="15px"
+                android:paddingRight="15px"
+                android:paddingTop="8px"
+                android:text="新增订单"
+                android:visibility="gone"
+                android:textColor="@color/colorWhite"
+                android:textSize="30px" />
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+
         <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/lly_body"
             android:layout_width="match_parent"

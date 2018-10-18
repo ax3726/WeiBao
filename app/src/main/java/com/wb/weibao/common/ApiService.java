@@ -4,6 +4,7 @@ package com.wb.weibao.common;
 import com.lm.lib_common.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
+import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.record.RecordListModel;
 
@@ -72,9 +73,9 @@ public interface ApiService {
      * @return
      */
     @POST("order/list")
-    Flowable<BaseBean> getOrderList(@Query("userId") String userId,
-                                    @Query("page") int page,
-                                    @Query("size") int size);
+    Flowable<OrderListModel> getOrderList(@Query("userId") String userId,
+                                          @Query("page") int page,
+                                          @Query("size") int size);
 
 
     /**

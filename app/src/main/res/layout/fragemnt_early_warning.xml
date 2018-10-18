@@ -13,18 +13,7 @@
             android:background="@color/colorTheme"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30px"
-                android:drawableLeft="@mipmap/home_location_icon"
-                android:drawablePadding="20px"
-                android:gravity="center_vertical"
-               android:layout_marginLeft="38px"
-                android:text=""
-                android:textColor="#23363A"
-                android:textSize="32px" />
+
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"

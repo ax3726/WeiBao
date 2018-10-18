@@ -134,7 +134,7 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
         mBinding.tvSubmit.setClickable(false);
         Api.getApi().addOrder(MyApplication.getInstance().getUserData().userRoles.get(0).userId + "",
                 MyApplication.getInstance().getUserData().institutions.getCode(),
-                "1", 1, name, phone, content)
+                MyApplication.getInstance().getProjectId(), 1, name, phone, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -151,7 +151,7 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
                                     e.printStackTrace();
                                 }
                             }
-                        };
+                        }.start();
                     }
 
                     @Override

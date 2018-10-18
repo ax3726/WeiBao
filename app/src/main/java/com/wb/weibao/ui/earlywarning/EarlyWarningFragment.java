@@ -39,10 +39,9 @@ import java.util.List;
 public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, FragemntEarlyWarningBinding> {
     private List<ErrorListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<ErrorListModel.DataBean.ListBean> mAdapter;
-    private String mProjectId = "";//当前项目id
+
     private int mPage = 1;
     private int mPageSize = 15;
-    private List<ProjectListModel.DataBean.ListBean> mProjectList = new ArrayList<>();//项目列表
 
     @Override
     protected int getLayoutId() {
@@ -86,7 +85,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
             }
         });
 
-        getProjectList();
+
 
     }
 
@@ -94,63 +93,14 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
     protected void initEvent() {
         super.initEvent();
 
-        mBinding.tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("112",""+mProjectList.size()+mProjectList.toString());
-                List<String> wheelString = new ArrayList<>();
-                for (int i = 0; i < mProjectList.size(); i++) {
-                    wheelString.add(mProjectList.get(i).getInstName());
-                }
-                if(wheelString.size()>0) {
-                    FitPopupUtil fitPopupUtil = new FitPopupUtil(getActivity(), wheelString);
-                    fitPopupUtil.setOnClickListener(new FitPopupUtil.OnCommitClickListener() {
-                        @Override
-                        public void onClick(String reason) {
-                            ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
-                            mProjectId = listBean.getInstId();
-                            mBinding.tvName.setText(listBean.getInstName());
-                            mPage = 1;
-                            getErrorList();
-
-                        }
-                    });
-                    fitPopupUtil.showPopup(v);
-                }
-            }
-        });
     }
 
-    /**
-     * 获取项目列表
-     */
-    private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().institutions.getCode(),
-                "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId).compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
-                    @Override
-                    public void onSuccess(ProjectListModel baseBean) {
-                        ProjectListModel.DataBean data = baseBean.getData();
-                        if (data != null) {
-                            mProjectList.clear();
-                            if (data.getList() != null && data.getList().size() > 0) {
-                                mProjectList.addAll(data.getList());
-                                ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
-                                mProjectId = listBean.getInstId();
-                                mBinding.tvName.setText(listBean.getInstName());
-                                getErrorList();
-                            }
-
-                        }
-
-                    }
-
-                    @Override
-                    public void onFail(String errMsg) {
-
-                    }
-                });
+    public void loadData()
+    {
+        mPage=1;
+        getErrorList();
     }
+
 
     /**
      * 获取预警列表
@@ -158,7 +108,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
     private void getErrorList() {
         Api.getApi().getError_list(MyApplication.getInstance().getUserData().institutions.getCode(),
                 "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,
-                mProjectId, 1, mPage, mPageSize).compose(callbackOnIOToMainThread())
+                MyApplication.getInstance().getProjectId(), 1, mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ErrorListModel>(this, false) {
                     @Override
                     public void onSuccess(ErrorListModel baseBean) {

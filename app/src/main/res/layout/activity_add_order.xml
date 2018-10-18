@@ -85,9 +85,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/tv_hint1"
+                        android:layout_alignBaseline="@+id/tv_hint1"
                         android:background="@color/colorWhite"
                         android:hint="请填写负责人姓名"
-                        android:textColor="@color/color666666"
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <View
@@ -114,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line"
                         android:layout_toRightOf="@+id/tv_hint2"
+                        android:layout_alignBaseline="@+id/tv_hint2"
                         android:background="@color/colorWhite"
                         android:hint="请填写负责人电话号码"
                         android:textColor="@color/color333333"

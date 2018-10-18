@@ -22,7 +22,12 @@ import com.wb.weibao.databinding.ItemMaintenanceLayoutBinding;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.event.AddOderEvent;
 import com.wb.weibao.utils.DemoUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -52,6 +57,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
     @Override
     protected void initData() {
         super.initData();
+        EventBus.getDefault().register(this);
         mAdapter = new CommonAdapter<OrderListModel.DataBean.ListBean>(aty, R.layout.item_maintenance_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, OrderListModel.DataBean.ListBean item, int position) {
@@ -162,5 +168,17 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         mBinding.srlBody.finishLoadmore();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(AddOderEvent event) {
+        mBinding.srlBody.resetNoMoreData();
+        mPage = 1;
+        getDataList();
+    }
 
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+
+    }
 }

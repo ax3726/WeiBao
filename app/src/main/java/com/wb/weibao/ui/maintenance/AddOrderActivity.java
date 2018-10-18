@@ -18,6 +18,9 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityAddOrderBinding;
 import com.wb.weibao.databinding.ItemAddOrderLayoutBinding;
 import com.wb.weibao.model.earlywarning.QuestItemModel;
+import com.wb.weibao.model.event.AddOderEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +143,7 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
                     @Override
                     public void onSuccess(BaseBean baseBean) {
                         showToast("添加成功！");
+                        EventBus.getDefault().post(new AddOderEvent());
                         new Thread() {
                             @Override
                             public void run() {

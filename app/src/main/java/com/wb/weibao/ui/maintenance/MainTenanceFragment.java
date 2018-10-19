@@ -1,8 +1,12 @@
 package com.wb.weibao.ui.maintenance;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
 import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
@@ -62,7 +66,16 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
             @Override
             protected void convert(ViewHolder holder, OrderListModel.DataBean.ListBean item, int position) {
                 ItemMaintenanceLayoutBinding binding = holder.getBinding(ItemMaintenanceLayoutBinding.class);
-
+                RelativeLayout rly_item = holder.getView(R.id.rly_item);
+                rly_item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(aty, DetailActivity.class);
+                        intent.putExtra("userId", item.getUserId().toString());
+                        intent.putExtra("id", ""+item.getId());
+                        startActivity(intent);
+                    }
+                });
                 switch (item.getStatus()) {
                     case "1":
                         binding.tvHint.setText("待平台定价");
@@ -105,7 +118,12 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         };
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
         mBinding.rcBody.setAdapter(mAdapter);
+        mBinding.rcBody.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
         mBinding.srlBody.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override

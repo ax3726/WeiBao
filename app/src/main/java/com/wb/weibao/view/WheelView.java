@@ -40,7 +40,7 @@ public class WheelView extends View {
     /**
      * 除选中item外，上下各需要显示的备选项数目
      */
-    public static final int SHOW_SIZE = 1;
+    public static final int SHOW_SIZE = 0;
 
     private Context context;
 

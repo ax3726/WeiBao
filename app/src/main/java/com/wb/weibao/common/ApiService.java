@@ -91,4 +91,26 @@ public interface ApiService {
                                     @Query("principalName") String principalName,
                                     @Query("principalPhone") String principalPhone,
                                     @Query("memo") String memo);
+
+
+    /**
+     * 修改密码接口
+     *
+     * @return
+     */
+    @POST("user/updatePwdByUserId")
+    Flowable<BaseBean> getupdatePwd(@Query("userId") String userId,
+                                          @Query("newPwd") String newPwd,
+                                          @Query("oldPwd") String oldPwd);
+
+    /**
+     * 维保订单详情页接口
+     *
+     * @return
+     */
+    @POST("order/detail")
+    Flowable<BaseBean> getorderDetail(@Query("userId") String userId,
+                                    @Query("id") String id);
+
+
 }

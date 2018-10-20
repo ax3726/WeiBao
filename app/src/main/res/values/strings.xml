@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weibao</string>
+    <string name="app_name">创源消防</string>
     <string-array name="weeks">
         <item>星期一</item>
         <item>星期二</item>

@@ -16,6 +16,7 @@
             android:gravity="center"
             android:orientation="vertical">
               <TextView
+                  android:id="@+id/name"
                   android:textColor="#323232"
                   android:text="创源消防"
                   android:textSize="20sp"
@@ -177,9 +178,9 @@
             android:layout_marginBottom="40px"
             android:layout_width="match_parent"
             android:textSize="16sp"
-            android:textColor="@color/color4a4a4a"
+            android:textColor="@color/white"
             android:gravity="center"
-            android:background="@color/colorWhite"
+            android:background="@color/colorTheme"
             android:layout_height="90px"
             android:text="退出登陆" />
     </com.zhy.autolayout.AutoLinearLayout>

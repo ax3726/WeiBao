@@ -1,11 +1,10 @@
 package com.wb.weibao.ui.main;
 
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -215,7 +214,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                             ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
                             MyApplication.getInstance().setProjectId(listBean.getInstId());
                             mBinding.tvName.setText(listBean.getInstName());
-
+                            toLoadData();
 
                         }
                     });

@@ -45,7 +45,9 @@
         </activity>
         <activity android:name=".ui.maintenance.AddOrderActivity" />
         <activity android:name=".ui.maintenance.DetailActivity" />
-        <activity android:name=".ui.mine.pwdActivity"></activity>
+        <activity android:name=".ui.mine.pwdActivity" />
+        <activity android:name=".ui.maintenance.FeedbackActivity" />
+        <activity android:name=".ui.earlywarning.EarlyWarningDetailActivity"></activity>
     </application>
 
 </manifest>

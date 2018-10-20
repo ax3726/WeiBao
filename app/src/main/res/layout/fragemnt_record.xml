@@ -23,7 +23,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-
+                    android:id="@+id/et_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="28px"
@@ -37,6 +37,7 @@
                     />
 
                 <ImageView
+                    android:id="@+id/sousuo"
                     android:layout_width="50px"
                     android:layout_height="50px"
                     android:layout_marginLeft="20px"

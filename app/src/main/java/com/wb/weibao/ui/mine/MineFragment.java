@@ -6,10 +6,9 @@ import android.view.View;
 import com.lm.lib_common.base.BaseFragment;
 import com.lm.lib_common.base.BaseFragmentPresenter;
 import com.wb.weibao.R;
-import com.wb.weibao.databinding.ActivityPwdBinding;
-import com.wb.weibao.databinding.FragemntMainTenanceBinding;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntMineBinding;
-import com.wb.weibao.ui.maintenance.DetailActivity;
+import com.wb.weibao.ui.Login.LoginActivity;
 
 /**
  * Created by Administrator on 2018/10/8.
@@ -44,11 +43,20 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
     @Override
     protected void initData() {
         super.initData();
+        mBinding.name.setText(MyApplication.getInstance().getUserData().getInstitutions().getName());
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(aty, pwdActivity.class);
                 startActivity(intent);
+            }
+        });
+        mBinding.btnTui.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(LoginActivity.class);
+                aty.finish();
+                MyApplication.getInstance().exit();
             }
         });
     }

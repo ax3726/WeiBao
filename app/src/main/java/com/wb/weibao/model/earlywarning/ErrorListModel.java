@@ -1,12 +1,13 @@
 package com.wb.weibao.model.earlywarning;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/10/8.
  */
 
-public class ErrorListModel {
+public class ErrorListModel implements Serializable{
 
     /**
      * code : 200
@@ -42,7 +43,7 @@ public class ErrorListModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * pageNum : 1
          * pageSize : 15
@@ -257,7 +258,51 @@ public class ErrorListModel {
             this.navigatepageNums = navigatepageNums;
         }
 
-        public static class ListBean {
+        public static class ListBean implements Serializable{
+            @Override
+            public String toString() {
+                return "ListBean{" +
+                        "startTime=" + startTime +
+                        ", endTime=" + endTime +
+                        ", id=" + id +
+                        ", instCode='" + instCode + '\'' +
+                        ", instName='" + instName + '\'' +
+                        ", projectId='" + projectId + '\'' +
+                        ", flowNo=" + flowNo +
+                        ", projectName='" + projectName + '\'' +
+                        ", projectPrincipalName=" + projectPrincipalName +
+                        ", projectPrincipalPhone=" + projectPrincipalPhone +
+                        ", projectArea='" + projectArea + '\'' +
+                        ", projectAreaCode=" + projectAreaCode +
+                        ", mechanismId='" + mechanismId + '\'' +
+                        ", status='" + status + '\'' +
+                        ", rdescribe=" + rdescribe +
+                        ", ploop='" + ploop + '\'' +
+                        ", ppoint='" + ppoint + '\'' +
+                        ", confirmTime=" + confirmTime +
+                        ", warningTime='" + warningTime + '\'' +
+                        ", warningType='" + warningType + '\'' +
+                        ", subWarningType='" + subWarningType + '\'' +
+                        ", changeStatus='" + changeStatus + '\'' +
+                        ", confirmUserId=" + confirmUserId +
+                        ", closeUserId=" + closeUserId +
+                        ", closeTime=" + closeTime +
+                        ", type='" + type + '\'' +
+                        ", level='" + level + '\'' +
+                        ", equipmentId='" + equipmentId + '\'' +
+                        ", equipmentType='" + equipmentType + '\'' +
+                        ", equipmentDetails=" + equipmentDetails +
+                        ", latitude=" + latitude +
+                        ", longitude=" + longitude +
+                        ", earlyNum=" + earlyNum +
+                        ", earlyTime=" + earlyTime +
+                        ", createUserId='" + createUserId + '\'' +
+                        ", updateUserId=" + updateUserId +
+                        ", createTime=" + createTime +
+                        ", updateTime=" + updateTime +
+                        '}';
+            }
+
             /**
              * startTime : null
              * endTime : null

@@ -1,31 +1,26 @@
 package com.wb.weibao.ui.maintenance;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
 import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
 import com.lm.lib_common.base.BaseFragment;
 import com.lm.lib_common.base.BaseFragmentPresenter;
 import com.lm.lib_common.base.BaseNetListener;
-import com.lm.lib_common.model.BaseBean;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
-import com.wb.weibao.databinding.FragemntEarlyWarningBinding;
 import com.wb.weibao.databinding.FragemntMainTenanceBinding;
-import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
 import com.wb.weibao.databinding.ItemMaintenanceLayoutBinding;
-import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
-import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.AddOderEvent;
 import com.wb.weibao.utils.DemoUtils;
 
@@ -45,9 +40,12 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
 
     private List<OrderListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<OrderListModel.DataBean.ListBean> mAdapter;
+    private OrderListModel.DataBean data;
     private int mPage = 1;
     private int mPageSize = 15;
     private DecimalFormat df=new DecimalFormat("0.00");
+    private String name="";
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragemnt_main_tenance;
@@ -73,6 +71,8 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                         Intent intent = new Intent(aty, DetailActivity.class);
                         intent.putExtra("userId", item.getUserId().toString());
                         intent.putExtra("id", ""+item.getId());
+                        intent.putExtra("status",item.getStatus());
+                        intent.putExtra("hasProcessing",""+data.isHasProcessing());
                         startActivity(intent);
                     }
                 });
@@ -141,6 +141,42 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         });
 
         getDataList();
+
+
+        mBinding.sousuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBinding.srlBody.resetNoMoreData();
+                name=mBinding.etSearch.getText().toString();
+                mPage = 1;
+                getDataList();
+            }
+        });
+
+        mBinding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("name=",name);
+                if(s.length()>0)
+                {
+                    name=s.toString();
+                }else
+                {
+                    name="";
+                }
+            }
+        });
+
     }
 
 
@@ -150,13 +186,13 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
      */
     private void getDataList() {
         Api.getApi().getOrderList(
-                "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId, mPage, mPageSize)
+                "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId, mPage, mPageSize,name)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<OrderListModel>(this, false) {
                     @Override
                     public void onSuccess(OrderListModel baseBean) {
                         stopRefersh();
-                        OrderListModel.DataBean data = baseBean.getData();
+                         data = baseBean.getData();
                         if (data != null) {
                             if (mPage == 1) {
                                 mDataList.clear();

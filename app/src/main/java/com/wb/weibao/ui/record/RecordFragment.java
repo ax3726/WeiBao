@@ -1,11 +1,10 @@
 package com.wb.weibao.ui.record;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
 import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
@@ -17,15 +16,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
-import com.wb.weibao.databinding.FragemntMineBinding;
 import com.wb.weibao.databinding.FragemntRecordBinding;
-import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
 import com.wb.weibao.databinding.ItemRecordLayoutBinding;
-import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.record.RecordListModel;
-import com.wb.weibao.ui.main.MainActivity;
 import com.wb.weibao.utils.DemoUtils;
-import com.wb.weibao.view.PopupWindow.FitPopupUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +34,7 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
     private int mPage = 1;
     private int mPageSize = 15;
+    private String name="";
 
     @Override
     protected int getLayoutId() {
@@ -83,7 +78,39 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
             }
         });
         getErrorList();
+        mBinding.sousuo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBinding.srlBody.resetNoMoreData();
+                name=mBinding.etName.getText().toString();
+                mPage = 1;
+                getErrorList();
+            }
+        });
 
+        mBinding.etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Log.e("name=",name);
+                if(s.length()>0)
+                {
+                    name=s.toString();
+                }else
+                {
+                    name="";
+                }
+            }
+        });
     }
 
 
@@ -99,7 +126,7 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
     private void getErrorList() {
         Api.getApi().getRecord_list(MyApplication.getInstance().getUserData().institutions.getCode(),
                 "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,
-                MyApplication.getInstance().getProjectId(), mPage, mPageSize).compose(callbackOnIOToMainThread())
+                MyApplication.getInstance().getProjectId(), mPage, mPageSize,name).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

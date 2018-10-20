@@ -6,9 +6,8 @@ import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.event.DetailBean;
 import com.wb.weibao.model.record.RecordListModel;
-
-import java.util.Map;
 
 import io.reactivex.Flowable;
 import okhttp3.ResponseBody;
@@ -53,7 +52,8 @@ public interface ApiService {
                                            @Query("projectId") String projectId,
                                            @Query("status") int status,
                                            @Query("page") int page,
-                                           @Query("size") int size);
+                                           @Query("size") int size,
+                                           @Query("name") String name);
 
     /**
      * 记录列表接口
@@ -65,7 +65,8 @@ public interface ApiService {
                                              @Query("userId") String userId,
                                              @Query("projectId") String projectId,
                                              @Query("page") int page,
-                                             @Query("size") int size);
+                                             @Query("size") int size,
+                                             @Query("name") String name);
 
     /**
      * 订单列表接口
@@ -75,7 +76,9 @@ public interface ApiService {
     @POST("order/list")
     Flowable<OrderListModel> getOrderList(@Query("userId") String userId,
                                           @Query("page") int page,
-                                          @Query("size") int size);
+                                          @Query("size") int size,
+                                          @Query("name") String name
+                                          );
 
 
     /**
@@ -109,8 +112,48 @@ public interface ApiService {
      * @return
      */
     @POST("order/detail")
-    Flowable<BaseBean> getorderDetail(@Query("userId") String userId,
-                                    @Query("id") String id);
+    Flowable<DetailBean> getorderDetail(@Query("userId") String userId,
+                                        @Query("id") String id);
+
+    /**
+     *  接受订单接口
+     * @param userId
+     * @param status
+     * @return
+     */
+    @POST("order/update")
+    Flowable<BaseBean> getorderUpdate(@Query("userId") String userId,
+                                        @Query("status") String status,
+                                        @Query("id") String id);
+
+    /**
+     * 维保反馈接口
+     * @param userId
+     * @param status
+     * @param id
+     * @param processingName
+     * @param endAmount
+     * @param returnMsg
+     * @return
+     */
+    @POST("order/update")
+    Flowable<BaseBean> getorderUpdateFankui(@Query("userId") String userId,
+                                      @Query("status") String status,
+                                      @Query("id") String id,
+                                            @Query("processingName") String processingName,
+                                            @Query("endAmount") String endAmount,
+                                            @Query("returnMsg") String returnMsg);
+
+    /**
+     *  预警详情页面接口更新
+     * @param userId
+     * @param status
+     * @return
+     */
+    @POST("early/record/update")
+    Flowable<BaseBean> getearlyRecordUpdate(@Query("userId") String userId,
+                                      @Query("status") String status,
+                                      @Query("id") String id);
 
 
 }

@@ -27,6 +27,7 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
         super.initTitleBar();
         mTitleBarLayout.setLeftShow(false);
         mTitleBarLayout.setTitle("我的");
+        mTitleBarLayout.setTextSize(20);
     }
 
 

@@ -1,6 +1,7 @@
 package com.wb.weibao.ui.maintenance;
 
 import android.text.TextUtils;
+import android.view.View;
 
 import com.lm.lib_common.base.BaseActivity;
 import com.lm.lib_common.base.BaseNetListener;
@@ -8,6 +9,7 @@ import com.lm.lib_common.base.BasePresenter;
 import com.lm.lib_common.model.BaseBean;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityFeedbackBinding;
 import com.wb.weibao.model.event.AddOderEvent;
 
@@ -41,6 +43,12 @@ public class FeedbackActivity extends BaseActivity<BasePresenter,ActivityFeedbac
     @Override
     protected void initData() {
         super.initData();
+        mBinding.tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+            }
+        });
     }
 
 
@@ -62,7 +70,7 @@ public class FeedbackActivity extends BaseActivity<BasePresenter,ActivityFeedbac
             return;
         }
         mBinding.tvSubmit.setClickable(false);
-        Api.getApi().getorderUpdateFankui(getIntent().getStringExtra("userId").toString(),"8",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
+        Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"8",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(FeedbackActivity.this, false) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {

@@ -173,15 +173,15 @@
             android:layout_weight="1"
             />
 
-        <TextView
+        <Button
+            android:enabled="true"
             android:id="@+id/btn_tui"
+            style="@style/SmsButton"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+
             android:layout_marginBottom="40px"
-            android:layout_width="match_parent"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:background="@color/colorTheme"
-            android:layout_height="90px"
-            android:text="退出登陆" />
+            android:text="退出登陆"
+            />
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

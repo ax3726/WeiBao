@@ -44,10 +44,16 @@ public class TitleBarLayout extends LinearLayout {
     /**
      * 设置标题
      */
+    public void setTextSize(int title) {
+        mBinding.tvTitle.setTextSize(20);
+    }
+
+    /**
+     * 设置标题
+     */
     public void setTitle(String title) {
         mBinding.tvTitle.setText(title);
     }
-
     /**
      * 设置左边的图片
      */

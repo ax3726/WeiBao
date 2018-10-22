@@ -8,6 +8,7 @@
         android:orientation="vertical">
 
         <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/rly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="20px"
@@ -29,8 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name"
                 android:layout_marginTop="20px"
-                android:text="其他"
-                android:textColor="@color/colorTheme"
+                android:text=""
+                android:textColor="@color/color333333"
                 android:textSize="28px" />
 
             <TextView

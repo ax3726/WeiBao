@@ -31,7 +31,7 @@
                 android:layout_below="@+id/tv_name"
                 android:layout_marginTop="20px"
                 android:text="故障"
-                android:textColor="@color/colorTheme"
+                android:textColor="@color/color333333"
                 android:textSize="28px" />
 
             <TextView

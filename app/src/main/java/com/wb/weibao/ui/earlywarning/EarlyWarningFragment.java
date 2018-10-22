@@ -119,23 +119,23 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                 {
                     case "1":
                         binding.tvError.setText("预警中");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.colorTheme));
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
                         break;
                     case "2":
                         binding.tvError.setText("处理中");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.text_color));
+                        binding.tvError.setTextColor(getResources().getColor(R.color.colorFACF28));
                         break;
                     case "3":
                         binding.tvError.setText("无灾情");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.colorTheme));
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
                         break;
                     case "4":
                         binding.tvError.setText("有灾情");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
+                        binding.tvError.setTextColor(getResources().getColor(R.color.colorF15453));
                         break;
                     case "5":
                         binding.tvError.setText("系统复位");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.colorTheme));
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
                         break;
                 }
 

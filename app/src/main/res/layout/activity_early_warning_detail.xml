@@ -475,18 +475,18 @@
         android:orientation="horizontal">
         <Button
             android:visibility="gone"
-            android:background="@color/colorC8241D"
+            android:background="@drawable/shape_red_theme"
             android:id="@+id/affirm1"
             android:layout_weight="1"
             android:textColor="@color/white"
             android:layout_height="70px"
             android:layout_marginLeft="24px"
             android:layout_marginRight="24px"
-            android:text="确认无灾情"
+            android:text="确认有灾情"
             android:layout_width="0px" />
         <Button
             android:visibility="gone"
-            android:background="@color/colorTheme"
+            android:background="@drawable/shape_common_theme"
             android:id="@+id/affirm2"
             android:layout_weight="1"
             android:layout_width="0px"
@@ -494,12 +494,12 @@
             android:layout_height="70px"
             android:layout_marginLeft="20px"
             android:layout_marginRight="20px"
-            android:text="确认有灾情"
+            android:text="确认无灾情"
             />
 
         <Button
             android:visibility="gone"
-            android:background="@color/colorTheme"
+            android:background="@drawable/shape_common_theme"
             android:id="@+id/affirm3"
             android:layout_weight="1"
             android:layout_width="0px"

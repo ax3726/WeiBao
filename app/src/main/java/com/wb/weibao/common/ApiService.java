@@ -53,7 +53,7 @@ public interface ApiService {
                                            @Query("status") int status,
                                            @Query("page") int page,
                                            @Query("size") int size,
-                                           @Query("name") String name);
+                                           @Query("subWarningType") String subWarningType);
 
     /**
      * 记录列表接口
@@ -66,7 +66,7 @@ public interface ApiService {
                                              @Query("projectId") String projectId,
                                              @Query("page") int page,
                                              @Query("size") int size,
-                                             @Query("name") String name);
+                                             @Query("subWarningType") String subWarningType);
 
     /**
      * 订单列表接口
@@ -77,8 +77,7 @@ public interface ApiService {
     Flowable<OrderListModel> getOrderList(@Query("userId") String userId,
                                           @Query("page") int page,
                                           @Query("size") int size,
-                                          @Query("name") String name
-                                          );
+                                          @Query("principalName") String principalName);
 
 
     /**

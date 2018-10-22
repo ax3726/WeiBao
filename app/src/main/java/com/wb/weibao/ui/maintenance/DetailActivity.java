@@ -9,6 +9,7 @@ import com.lm.lib_common.base.BasePresenter;
 import com.lm.lib_common.model.BaseBean;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityDetailBinding;
 import com.wb.weibao.model.event.DetailBean;
 import com.wb.weibao.utils.DemoUtils;
@@ -47,7 +48,7 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
        muserId=getIntent().getStringExtra("userId");
         mstatus=getIntent().getStringExtra("status");
         mhasProcessing=getIntent().getStringExtra("hasProcessing");
-        Api.getApi().getorderDetail(muserId, mId)
+        Api.getApi().getorderDetail("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId, mId)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<DetailBean>(this, true) {
                     @Override
@@ -149,7 +150,7 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
                     startActivity(FeedbackActivity.class);
                 }else
                 {
-                    Api.getApi().getorderUpdate(muserId,"6",mId).compose(callbackOnIOToMainThread())
+                    Api.getApi().getorderUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"6",mId).compose(callbackOnIOToMainThread())
                             .subscribe(new BaseNetListener<BaseBean>(DetailActivity.this, false) {
                                 @Override
                                 public void onSuccess(BaseBean baseBean) {

@@ -35,7 +35,7 @@
                 android:id="@+id/input_phone"
                 style="@style/login_field.value"
                 android:paddingRight="8dp"
-                android:hint="请输入手机号码"
+                android:hint="请输入账号"
                 android:textColor="#323232"
                 android:textSize="14sp" />
             <TextView

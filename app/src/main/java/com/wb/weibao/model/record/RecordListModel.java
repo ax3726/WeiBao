@@ -1,12 +1,13 @@
 package com.wb.weibao.model.record;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/10/8.
  */
 
-public class RecordListModel {
+public class RecordListModel implements Serializable {
 
     /**
      * code : 200
@@ -42,7 +43,7 @@ public class RecordListModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * pageNum : 1
          * pageSize : 15
@@ -257,7 +258,7 @@ public class RecordListModel {
             this.navigatepageNums = navigatepageNums;
         }
 
-        public static class ListBean {
+        public static class ListBean implements Serializable{
             /**
              * startTime : null
              * endTime : null

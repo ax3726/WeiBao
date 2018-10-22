@@ -83,7 +83,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                         break;
                     case "2":
                         binding.tvHint.setText("用户撤销");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorF15453));
                         break;
                     case "3":
                         binding.tvHint.setText("代交预付款");
@@ -91,7 +91,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                         break;
                     case "4":
                         binding.tvHint.setText("付款失败");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorF15453));
                         break;
                     case "5":
                         binding.tvHint.setText("待维保");
@@ -103,15 +103,15 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                         break;
                     case "7":
                         binding.tvHint.setText("失效");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorF15453));
                         break;
                     default:
                         binding.tvHint.setText("完成");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.color999999));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorF15453));
                         break;
                 }
 
-                binding.tvName.setText(item.getOrderNo());
+                binding.tvName.setText(item.getPrincipalName());
                 binding.tvPrice.setText(df.format(item.getAmount()));
                 binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getCreateTime(), "yyyy.MM.dd"));
             }

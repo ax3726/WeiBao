@@ -9,6 +9,7 @@ import com.lm.lib_common.base.BasePresenter;
 import com.lm.lib_common.model.BaseBean;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityEarlyWarningDetailBinding;
 import com.wb.weibao.model.earlywarning.EarilDetailEvent;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
@@ -54,28 +55,28 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
         {
             case "1":
                 mBinding.tv3.setText("预警中");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorTheme));
+                mBinding.tv3.setTextColor(getResources().getColor(R.color.color00A0F1));
                 mBinding.aly.setVisibility(View.VISIBLE);
                 mBinding.affirm3.setVisibility(View.VISIBLE);
                 break;
             case "2":
                 mBinding.tv3.setText("处理中");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.text_color));
+                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorFACF28));
                 mBinding.aly.setVisibility(View.VISIBLE);
                 mBinding.affirm1.setVisibility(View.VISIBLE);
                 mBinding.affirm2.setVisibility(View.VISIBLE);
                 break;
             case "3":
                 mBinding.tv3.setText("无灾情");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorTheme));
+                mBinding.tv3.setTextColor(getResources().getColor(R.color.color00A0F1));
                 break;
             case "4":
                 mBinding.tv3.setText("有灾情");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorC8241D));
+                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorF15453));
                 break;
             case "5":
                 mBinding.tv3.setText("系统复位");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorTheme));
+                mBinding.tv3.setTextColor(getResources().getColor(R.color.color00A0F1));
                 break;
         }
         switch (list.getWarningType()) {
@@ -157,7 +158,7 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
         mBinding.affirm3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate(muserId,"2",mId)
+                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"2",mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(EarlyWarningDetailActivity.this, true) {
                             @Override
@@ -179,7 +180,7 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
         mBinding.affirm1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate(muserId,"4",mId)
+                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"4",mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(EarlyWarningDetailActivity.this, true) {
                             @Override
@@ -199,7 +200,7 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
         mBinding.affirm2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate(muserId,"3",mId)
+                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"3",mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(EarlyWarningDetailActivity.this, true) {
                             @Override

@@ -146,7 +146,22 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
                 mBinding.tv5.setText("电源故障");
                 break;
         }
+        switch (list.getEquipmentType())
+        {
+            case "1":
+                mBinding.tv91.setText("采集器");
+                break;
+            case "2":
+                mBinding.tv91.setText("无线设备");
+                break;
+            case "3":
+                mBinding.tv91.setText("点位");
+                break;
+            case "4":
+                mBinding.tv91.setText("电力设备");
+                break;
 
+        }
         mBinding.tv6.setText(list.getWarningTime());
         mBinding.tv7.setText(list.getPloop());
         mBinding.tv8.setText(list.getPpoint());

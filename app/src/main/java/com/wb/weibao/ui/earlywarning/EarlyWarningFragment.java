@@ -22,6 +22,8 @@ import com.wb.weibao.databinding.FragemntEarlyWarningBinding;
 import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
 import com.wb.weibao.model.earlywarning.EarilDetailEvent;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
+import com.wb.weibao.model.main.ChooseTypeModel;
+import com.wb.weibao.view.PopupWindow.ChooseTypePopupwindow;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,7 +43,9 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
 
     private int mPage = 1;
     private int mPageSize = 15;
-    private String name="";
+    private String name = "";
+    private List<ChooseTypeModel> mChooseList = new ArrayList<>();
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragemnt_early_warning;
@@ -52,20 +56,41 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
         return null;
     }
 
+    private void initChooseData() {
+        mChooseList.add(new ChooseTypeModel("全部", ""));
+        mChooseList.add(new ChooseTypeModel("采集器监测连接线路故障", "11"));
+        mChooseList.add(new ChooseTypeModel("采集器监控中心通信信道故障", "12"));
+        mChooseList.add(new ChooseTypeModel("采集器备电源故障", "13"));
+        mChooseList.add(new ChooseTypeModel("采集器主电源故障", "14"));
+        mChooseList.add(new ChooseTypeModel("主机复位", "21"));
+        mChooseList.add(new ChooseTypeModel("主机备电源故障", "22"));
+        mChooseList.add(new ChooseTypeModel("主机主电源故障", "23"));
+        mChooseList.add(new ChooseTypeModel("延时", "31"));
+        mChooseList.add(new ChooseTypeModel("反馈", "32"));
+        mChooseList.add(new ChooseTypeModel("启动", "33"));
+        mChooseList.add(new ChooseTypeModel("监管", "34"));
+        mChooseList.add(new ChooseTypeModel("屏蔽", "35"));
+        mChooseList.add(new ChooseTypeModel("故障", "36"));
+        mChooseList.add(new ChooseTypeModel("火警", "37"));
+        mChooseList.add(new ChooseTypeModel("测试", "38"));
+        mChooseList.add(new ChooseTypeModel("电源故障", "39"));
+    }
+
     @Override
     protected void initData() {
         super.initData();
         EventBus.getDefault().register(this);
+        initChooseData();
+
         mAdapter = new CommonAdapter<ErrorListModel.DataBean.ListBean>(aty, R.layout.item_early_warning_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, ErrorListModel.DataBean.ListBean item, int position) {
                 ItemEarlyWarningLayoutBinding binding = holder.getBinding(ItemEarlyWarningLayoutBinding.class);
-                binding.tvName.setText("("+item.getPloop()+","+item.getPpoint()+")");
+                binding.tvName.setText("(" + item.getPloop() + "," + item.getPpoint() + ")");
                 binding.tvError.setText(item.getProjectName());
                 binding.tvTime.setText(item.getWarningTime());
 
-                switch (item.getSubWarningType())
-                {
+                switch (item.getSubWarningType()) {
                     case "11":
                         binding.tvHint.setText("采集器监测连接线路故障");
                         break;
@@ -115,8 +140,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                         binding.tvHint.setText("电源故障");
                         break;
                 }
-                switch (item.getStatus())
-                {
+                switch (item.getStatus()) {
                     case "1":
                         binding.tvError.setText("预警中");
                         binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
@@ -143,10 +167,10 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                 rly_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(aty,EarlyWarningDetailActivity.class);
+                        Intent intent = new Intent(aty, EarlyWarningDetailActivity.class);
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().userRoles.get(0).userId);
-                        intent.putExtra("id", ""+item.getId());
+                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId);
+                        intent.putExtra("id", "" + item.getId());
                         startActivity(intent);
                     }
                 });
@@ -171,53 +195,40 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
             }
         });
 
-      mBinding.sousuo.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-             name=mBinding.etName.getText().toString();
-              mBinding.srlBody.resetNoMoreData();
-              mPage = 1;
-              getErrorList();
-          }
-      });
 
-        mBinding.etName.addTextChangedListener(new TextWatcher() {
+    }
+
+
+    private void showType() {
+        ChooseTypePopupwindow chooseTypePopupwindow = new ChooseTypePopupwindow(aty, mChooseList, name);
+        chooseTypePopupwindow.setChooseTypeListener(new ChooseTypePopupwindow.ChooseTypeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.e("name=",name);
-                   if(s.length()>0)
-                   {
-                       name=s.toString();
-                   }else
-                       {
-                           name="";
-                       }
+            public void onItem(ChooseTypeModel item) {
+                name = item.getId();
+                mBinding.srlBody.resetNoMoreData();
+                mPage = 1;
+                getErrorList();
             }
         });
-
+        chooseTypePopupwindow.showPopupWindow(mBinding.llyType);
     }
 
     @Override
     protected void initEvent() {
         super.initEvent();
-
+        mBinding.llyType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showType();
+            }
+        });
     }
 
-    public void loadData()
-    {
-        mPage=1;
+    public void loadData() {
+        mPage = 1;
         getErrorList();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refersh(EarilDetailEvent event) {
         mBinding.srlBody.resetNoMoreData();
@@ -231,7 +242,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
     private void getErrorList() {
         Api.getApi().getError_list(MyApplication.getInstance().getUserData().institutions.getCode(),
                 "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,
-                MyApplication.getInstance().getProjectId(), 1, mPage, mPageSize,name).compose(callbackOnIOToMainThread())
+                MyApplication.getInstance().getProjectId(), 1, mPage, mPageSize, name).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ErrorListModel>(this, false) {
                     @Override
                     public void onSuccess(ErrorListModel baseBean) {
@@ -259,8 +270,6 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                     }
                 });
     }
-
-
 
 
     private void stopRefersh() {

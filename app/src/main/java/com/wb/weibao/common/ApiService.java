@@ -77,7 +77,7 @@ public interface ApiService {
     Flowable<OrderListModel> getOrderList(@Query("userId") String userId,
                                           @Query("page") int page,
                                           @Query("size") int size,
-                                          @Query("principalName") String principalName);
+                                          @Query("status") String status);
 
 
     /**

@@ -22,7 +22,9 @@ import com.wb.weibao.databinding.FragemntMainTenanceBinding;
 import com.wb.weibao.databinding.ItemMaintenanceLayoutBinding;
 import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.event.AddOderEvent;
+import com.wb.weibao.model.main.ChooseTypeModel;
 import com.wb.weibao.utils.DemoUtils;
+import com.wb.weibao.view.PopupWindow.ChooseTypePopupwindow;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,7 +47,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
     private int mPageSize = 15;
     private DecimalFormat df=new DecimalFormat("0.00");
     private String name="";
-
+    private List<ChooseTypeModel> mChooseList = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.fragemnt_main_tenance;
@@ -56,10 +58,23 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         return null;
     }
 
+    private void initChooseData(){
+        mChooseList.add(new ChooseTypeModel("全部", ""));
+        mChooseList.add(new ChooseTypeModel("待平台定价", "1"));
+        mChooseList.add(new ChooseTypeModel("用户撤销", "2"));
+        mChooseList.add(new ChooseTypeModel("代交预付款", "3"));
+        mChooseList.add(new ChooseTypeModel("付款失败", "4"));
+        mChooseList.add(new ChooseTypeModel("待维保", "5"));
+        mChooseList.add(new ChooseTypeModel("维保中", "6"));
+        mChooseList.add(new ChooseTypeModel("失效", "7"));
+        mChooseList.add(new ChooseTypeModel("完成", "8"));
+
+    }
     @Override
     protected void initData() {
         super.initData();
         EventBus.getDefault().register(this);
+        initChooseData();
         mAdapter = new CommonAdapter<OrderListModel.DataBean.ListBean>(aty, R.layout.item_maintenance_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, OrderListModel.DataBean.ListBean item, int position) {
@@ -143,39 +158,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         getDataList();
 
 
-        mBinding.sousuo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBinding.srlBody.resetNoMoreData();
-                name=mBinding.etSearch.getText().toString();
-                mPage = 1;
-                getDataList();
-            }
-        });
 
-        mBinding.etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                Log.e("name=",name);
-                if(s.length()>0)
-                {
-                    name=s.toString();
-                }else
-                {
-                    name="";
-                }
-            }
-        });
 
     }
 
@@ -228,11 +211,34 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
         mPage = 1;
         getDataList();
     }
-
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mBinding.llyType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showType();
+            }
+        });
+    }
+    private void showType() {
+        ChooseTypePopupwindow chooseTypePopupwindow = new ChooseTypePopupwindow(aty, mChooseList, name);
+        chooseTypePopupwindow.setChooseTypeListener(new ChooseTypePopupwindow.ChooseTypeListener() {
+            @Override
+            public void onItem(ChooseTypeModel item) {
+                name = item.getId();
+                mBinding.srlBody.resetNoMoreData();
+                mPage = 1;
+                getDataList();
+            }
+        });
+        chooseTypePopupwindow.showPopupWindow(mBinding.llyType);
+    }
     @Override
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
 
     }
+
 }

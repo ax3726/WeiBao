@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         super.initEvent();
         mBinding.tvName.setOnClickListener(this);
         mBinding.tvAddOrder.setOnClickListener(this);
+
     }
 
     @Override

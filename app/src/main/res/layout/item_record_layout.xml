@@ -35,26 +35,28 @@
                 android:textSize="28px" />
 
             <TextView
-                android:id="@+id/tv_error"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/img_right"
-
-                android:text="火警"
-                android:textColor="@color/color333333"
-                android:textSize="28px" />
-
-            <TextView
                 android:id="@+id/tv_time"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_error"
-                android:layout_marginTop="20px"
+
+
                 android:layout_toLeftOf="@+id/img_right"
                 android:text="2018.08.31"
                 android:textColor="@color/color333333"
                 android:textSize="28px" />
+
+            <TextView
+                android:layout_marginTop="20px"
+                android:id="@+id/tv_error"
+                android:layout_below="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/img_right"
+                android:text="火警"
+                android:textColor="@color/color333333"
+                android:textSize="28px" />
+
+
 
 
             <ImageView

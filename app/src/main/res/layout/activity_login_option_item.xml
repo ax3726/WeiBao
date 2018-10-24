@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="2px"
+            android:layout_height="fill_parent"
+            />
+
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/head_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/zhanghao"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="3dip"
+            android:layout_marginTop="3dip" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/item_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textColor="#323232"
+                android:textSize="14sp" />
+            <ImageView
+                android:padding="9dp"
+                android:id="@+id/delImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:src="@mipmap/delete_gray" />
+            <View
+                android:layout_width="2px"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2px"
+        android:background="@color/colorD0D0D0"
+         />
+
+</LinearLayout>

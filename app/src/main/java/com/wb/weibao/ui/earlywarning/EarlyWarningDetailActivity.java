@@ -92,6 +92,10 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
                 mBinding.tv4.setText("设备预警");
 
                 break;
+            case "4":
+                mBinding.tv4.setText("电力预警");
+
+                break;
         }
         switch (list.getSubWarningType())
         {
@@ -143,6 +147,24 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
             case "39":
                 mBinding.tv5.setText("电源故障");
                 break;
+            case "41":
+                mBinding.tv5.setText("漏电报警");
+                break;
+            case "42":
+                mBinding.tv5.setText("漏电短路");
+                break;
+            case "43":
+                mBinding.tv5.setText("漏电开路");
+                break;
+            case "45":
+                mBinding.tv5.setText("温度报警");
+                break;
+            case "46":
+                mBinding.tv5.setText("温度短路");
+                break;
+            case "47":
+                mBinding.tv5.setText("温度开路");
+                break;
         }
         switch (list.getEquipmentType())
         {
@@ -153,7 +175,7 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
                 mBinding.tv91.setText("无线设备");
                 break;
             case "3":
-                mBinding.tv91.setText("点位");
+                mBinding.tv91.setText("点位("+list.getPloop()+","+list.getPpoint()+")");
                 break;
             case "4":
                 mBinding.tv91.setText("电力设备");
@@ -173,7 +195,7 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
         mBinding.affirm3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"2",mId)
+                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"2",MyApplication.getInstance().getUserData().getName(),mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(EarlyWarningDetailActivity.this, true) {
                             @Override
@@ -195,7 +217,7 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
         mBinding.affirm1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"4",mId)
+                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"4",MyApplication.getInstance().getUserData().getName(),mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(EarlyWarningDetailActivity.this, true) {
                             @Override
@@ -215,7 +237,7 @@ public class EarlyWarningDetailActivity extends BaseActivity<BasePresenter,Activ
         mBinding.affirm2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"3",mId)
+                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"3",MyApplication.getInstance().getUserData().getName(),mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(EarlyWarningDetailActivity.this, true) {
                             @Override

@@ -216,6 +216,7 @@
 
             <!--区号-->
             <View
+
                 android:id="@+id/view_line7"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -332,7 +333,7 @@
                 android:textSize="28px" />
             <!--项目Id-->
             <View
-
+               android:visibility="gone"
                 android:id="@+id/view_line10"
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -342,7 +343,7 @@
                 android:background="@color/colorLine" />
 
             <TextView
-
+                android:visibility="gone"
                 android:id="@+id/tv_hint_11"
                 android:layout_width="190px"
                 android:layout_height="wrap_content"
@@ -352,7 +353,7 @@
                 android:textSize="28px" />
 
             <TextView
-
+                android:visibility="gone"
                 android:id="@+id/tv_11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -152,7 +152,18 @@ public interface ApiService {
     @POST("early/record/update")
     Flowable<BaseBean> getearlyRecordUpdate(@Query("userId") String userId,
                                       @Query("status") String status,
+                                      @Query("confirmUserId") String confirmUserId,
                                       @Query("id") String id);
-
+    /**
+     *  预警详情页面接口更新
+     * @param userId
+     * @param status
+     * @return
+     */
+    @POST("early/record/update")
+    Flowable<BaseBean> getearlyRecordUpdate2(@Query("userId") String userId,
+                                            @Query("status") String status,
+                                            @Query("closeUserId") String closeUserId,
+                                            @Query("id") String id);
 
 }

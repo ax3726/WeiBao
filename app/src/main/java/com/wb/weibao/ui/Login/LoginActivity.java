@@ -48,6 +48,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
     @Override
     protected void initData() {
         super.initData();
+
         WorksSizeCheckUtil.textChangeListener listener = new WorksSizeCheckUtil.textChangeListener(mBinding.affirm);
         listener.addAllEditText(mBinding.inputPhone,mBinding.inputPassword);
         mBinding.pwdeye.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
 //            }
 //        });
         SetText();
+
         try {
             MDbUtils = DbUtils.create(this, "Account");
             MDbUtils.configAllowTransaction(true);

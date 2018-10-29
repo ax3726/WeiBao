@@ -11,6 +11,7 @@ public interface SpfKey {
      String LOGIN_NAME = "LoginName";                //登陆的用户名
      String LOGIN_PASSWORD = "LoginPassword";        //登陆的密码
      String LOGIN_HEAD_URL = "LoginHeadUrl";         //登陆的头像
-
+    String  INST_ID="InstId";
+    String  INST_NAME="InstName";
 
 }

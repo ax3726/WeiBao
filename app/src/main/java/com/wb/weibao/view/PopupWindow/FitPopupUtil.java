@@ -40,17 +40,22 @@ public class FitPopupUtil implements View.OnClickListener {
 
     private OnCommitClickListener listener;
 
-    public FitPopupUtil(Activity context,List<String> wheelString) {
+    public FitPopupUtil(Activity context, List<String> wheelString) {
 
         this.context = context;
 
         LayoutInflater inflater = LayoutInflater.from(context);
         contentView = inflater.inflate(R.layout.layout_popupwindow, null);
         wheel = (WheelView) contentView.findViewById(R.id.wheel_week_wheel);
-        btnCommit= (Button) contentView.findViewById(R.id.btnCommit);
+        btnCommit = (Button) contentView.findViewById(R.id.btnCommit);
         btnCommit.setOnClickListener(this);
-        btnReturn= (Button) contentView.findViewById(R.id.btnRuten);
+        btnReturn = (Button) contentView.findViewById(R.id.btnRuten);
         btnReturn.setOnClickListener(this);
+        if (wheelString.size() > 1) {
+            wheel.setSHOW_SIZE(1);
+        } else {
+            wheel.setSHOW_SIZE(0);
+        }
         wheel.setWheelItemList(wheelString);
     }
 
@@ -82,12 +87,12 @@ public class FitPopupUtil implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btnRuten:
                 if (listener != null) {
-                  mPopupWindow.dismiss();
+                    mPopupWindow.dismiss();
                 }
                 break;
             case R.id.btnCommit:
                 if (listener != null) {
-                    listener.onClick(""+wheel.getCurrentItem());
+                    listener.onClick("" + wheel.getCurrentItem());
                 }
                 mPopupWindow.dismiss();
                 break;

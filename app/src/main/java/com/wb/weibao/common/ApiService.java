@@ -89,7 +89,7 @@ public interface ApiService {
     Flowable<BaseBean> addOrder(@Query("userId") String userId,
                                     @Query("instCode") String instCode,
                                     @Query("projectId") String projectId,
-                                    @Query("type") int type,
+                                    @Query("type") String type,
                                     @Query("principalName") String principalName,
                                     @Query("principalPhone") String principalPhone,
                                     @Query("memo") String memo);

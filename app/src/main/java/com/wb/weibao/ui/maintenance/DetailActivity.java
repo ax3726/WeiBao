@@ -108,7 +108,7 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
                         {
                             case "1":
                             case "2":
-                            case "7":
+
                                 mBinding.rly1.setVisibility(View.VISIBLE);
                                 mBinding.rly2.setVisibility(View.VISIBLE);
 
@@ -131,6 +131,7 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
                                 }
                                 break;
                             case "8":
+                            case "7":
                                 mBinding.rly1.setVisibility(View.VISIBLE);
                                 mBinding.rly2.setVisibility(View.VISIBLE);
                                 mBinding.rly3.setVisibility(View.VISIBLE);

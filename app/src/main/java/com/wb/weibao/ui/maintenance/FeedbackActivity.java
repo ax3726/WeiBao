@@ -18,6 +18,9 @@ import org.greenrobot.eventbus.EventBus;
 public class FeedbackActivity extends BaseActivity<BasePresenter,ActivityFeedbackBinding> {
 
 
+    private String name;
+    private String phone;
+    private String content;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_feedback;
@@ -43,20 +46,55 @@ public class FeedbackActivity extends BaseActivity<BasePresenter,ActivityFeedbac
     @Override
     protected void initData() {
         super.initData();
+
         mBinding.tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 submit();
+                mBinding.tvSubmit.setClickable(false);
+                Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"8",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(FeedbackActivity.this, false) {
+                            @Override
+                            public void onSuccess(BaseBean baseBean) {
+                                EventBus.getDefault().post(new AddOderEvent());
+                                finish();
+                            }
+
+                            @Override
+                            public void onFail(String errMsg) {
+                                mBinding.tvSubmit.setClickable(true);
+                            }
+                        });
+            }
+        });
+        mBinding.affirm1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+                mBinding.affirm1.setClickable(false);
+                Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"7",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(FeedbackActivity.this, false) {
+                            @Override
+                            public void onSuccess(BaseBean baseBean) {
+                                EventBus.getDefault().post(new AddOderEvent());
+                                finish();
+                            }
+
+                            @Override
+                            public void onFail(String errMsg) {
+                                mBinding.affirm1.setClickable(true);
+                            }
+                        });
             }
         });
     }
 
 
     private void submit() {
-        String name = mBinding.etName.getText().toString();
-        String phone = mBinding.etPhone.getText().toString();
-        String content = mBinding.etContent.getText().toString();
 
+        name = mBinding.etName.getText().toString();
+        phone = mBinding.etPhone.getText().toString();
+        content = mBinding.etContent.getText().toString();
         if (TextUtils.isEmpty(name)) {
             showToast("请输入处理人姓名!");
             return;
@@ -69,19 +107,8 @@ public class FeedbackActivity extends BaseActivity<BasePresenter,ActivityFeedbac
             showToast("请输入处理结果!");
             return;
         }
-        mBinding.tvSubmit.setClickable(false);
-        Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"8",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(FeedbackActivity.this, false) {
-                    @Override
-                    public void onSuccess(BaseBean baseBean) {
-                        EventBus.getDefault().post(new AddOderEvent());
-                        finish();
-                    }
 
-                    @Override
-                    public void onFail(String errMsg) {
-                        mBinding.tvSubmit.setClickable(true);
-                    }
-                });
     }
+
+
 }

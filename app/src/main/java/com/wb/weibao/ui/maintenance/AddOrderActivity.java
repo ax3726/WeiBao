@@ -153,7 +153,7 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
         mBinding.tvSubmit.setClickable(false);
         Api.getApi().addOrder(MyApplication.getInstance().getUserData().userRoles.get(0).userId + "",
                 MyApplication.getInstance().getUserData().institutions.getCode(),
-                MyApplication.getInstance().getProjectId(), mType, name, phone, content)
+                MyApplication.getInstance().getProjectId(),""+ mType, name, phone, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

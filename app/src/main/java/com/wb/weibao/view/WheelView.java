@@ -40,7 +40,7 @@ public class WheelView extends View {
     /**
      * 除选中item外，上下各需要显示的备选项数目
      */
-    public static final int SHOW_SIZE = 0;
+    public   int SHOW_SIZE = 1;
 
     private Context context;
 
@@ -109,6 +109,10 @@ public class WheelView extends View {
     public WheelView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
+    }
+
+    public void setSHOW_SIZE(int SHOW_SIZE) {
+        this.SHOW_SIZE = SHOW_SIZE;
     }
 
     public void setOnSelectListener(SelectListener listener) {
@@ -390,5 +394,7 @@ public class WheelView extends View {
     public interface SelectListener {
         void onSelect(int index, String text);
     }
+
+
 
 }

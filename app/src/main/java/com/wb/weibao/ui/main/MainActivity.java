@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -18,11 +19,14 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.ui.Login.LoginActivity;
 import com.wb.weibao.ui.earlywarning.EarlyWarningFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
 import com.wb.weibao.ui.maintenance.MainTenanceFragment;
 import com.wb.weibao.ui.mine.MineFragment;
 import com.wb.weibao.ui.record.RecordFragment;
+import com.wb.weibao.utils.SpfKey;
+import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
 
 import java.util.ArrayList;
@@ -40,6 +44,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     private MineFragment mMineFragment;
     private List<ProjectListModel.DataBean.ListBean> mProjectList = new ArrayList<>();//项目列表
     private int mIndex = 0;//当前模块下标
+    private SpfUtils spfUtils;
 
     @Override
     protected int getLayoutId() {
@@ -62,7 +67,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     @Override
     protected void initData() {
         super.initData();
-
+        spfUtils = SpfUtils.getInstance(MainActivity.this);
         mBinding.rgButtom.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -168,8 +173,20 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                             if (data.getList() != null && data.getList().size() > 0) {
                                 mProjectList.addAll(data.getList());
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
-                                MyApplication.getInstance().setProjectId(listBean.getInstId());
-                                mBinding.tvName.setText(listBean.getInstName());
+
+                                if(!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID)))
+                                {
+
+                                    MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                                    mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+                                }else
+                                    {
+                                        spfUtils.setSpfString(SpfKey.INST_ID,listBean.getInstId());
+                                        spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getInstName());
+                                        MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                                        mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+                                    }
+
                                 toLoadData();
 
                             }
@@ -213,8 +230,12 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                         @Override
                         public void onClick(String reason) {
                             ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
-                            MyApplication.getInstance().setProjectId(listBean.getInstId());
-                            mBinding.tvName.setText(listBean.getInstName());
+                            spfUtils.setSpfString(SpfKey.INST_ID,listBean.getInstId());
+                            spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getInstName());
+                            MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                            mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+//                            MyApplication.getInstance().setProjectId(listBean.getInstId());
+//                            mBinding.tvName.setText(listBean.getInstName());
                             toLoadData();
 
                         }

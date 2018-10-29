@@ -22,6 +22,7 @@ public class SpfUtils {
     private SharedPreferences.Editor Editor;
     private static SpfUtils spfUtils;
 
+
     private String TAG_LOG = "SpfUtils";
 
     public SpfUtils(Context context) {

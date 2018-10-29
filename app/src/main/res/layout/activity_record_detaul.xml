@@ -272,12 +272,41 @@
                         android:background="@color/colorWhite"
                         android:textColor="@color/color333333"
                         android:textSize="28px" />
+                    <!--设备类型-->
+                    <View
+                        android:id="@+id/view_line81"
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@+id/tv_hint_9"
+                        android:layout_marginBottom="30px"
+                        android:layout_marginTop="30px"
+                        android:background="@color/colorLine" />
+
+                    <TextView
+                        android:id="@+id/tv_hint_91"
+                        android:layout_width="190px"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view_line81"
+                        android:text="设备类型"
+                        android:textColor="@color/colord9d9d9"
+                        android:textSize="28px" />
+
+                    <TextView
+                        android:id="@+id/tv_91"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/view_line81"
+                        android:layout_toRightOf="@+id/tv_hint_91"
+                        android:layout_alignBaseline="@+id/tv_hint_91"
+                        android:background="@color/colorWhite"
+                        android:textColor="@color/color333333"
+                        android:textSize="28px" />
                     <!--项目名称-->
                     <View
                         android:id="@+id/view_line9"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:layout_below="@+id/tv_hint_9"
+                        android:layout_below="@+id/tv_hint_91"
                         android:layout_marginBottom="30px"
                         android:layout_marginTop="30px"
                         android:background="@color/colorLine" />
@@ -303,7 +332,7 @@
                         android:textSize="28px" />
                     <!--项目Id-->
                     <View
-
+android:visibility="gone"
                         android:id="@+id/view_line10"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
@@ -313,7 +342,7 @@
                         android:background="@color/colorLine" />
 
                     <TextView
-
+                        android:visibility="gone"
                         android:id="@+id/tv_hint_11"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
@@ -323,7 +352,7 @@
                         android:textSize="28px" />
 
                     <TextView
-
+                        android:visibility="gone"
                         android:id="@+id/tv_11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

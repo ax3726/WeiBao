@@ -56,33 +56,35 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
                         switch (baseBean.getData().getStatus()) {
                             case "1":
                                 mBinding.tv2.setText("待平台定价");
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.color00A0F1));
                                 break;
                             case "2":
                                 mBinding.tv2.setText("用户撤销");
-
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorF15453));
                                 break;
                             case "3":
                                 mBinding.tv2.setText("代交预付款");
-
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.color00A0F1));
                                 break;
                             case "4":
                                 mBinding.tv2.setText("付款失败");
-
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorF15453));
                                 break;
                             case "5":
                                 mBinding.tv2.setText("待维保");
-
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
                                 break;
                             case "6":
                                 mBinding.tv2.setText("维保中");
-
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
                                 break;
                             case "7":
                                 mBinding.tv2.setText("失效");
-
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorF15453));
                                 break;
                             default:
                                 mBinding.tv2.setText("完成");
+                                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorF15453));
                                 break;
                         }
                         mBinding.tv1.setText(baseBean.getData().getOrderNo());
@@ -147,7 +149,11 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
             @Override
             public void onClick(View v) {
                 if(mBinding.tvTurn.getText().equals("订单完成")) {
-                    startActivity(FeedbackActivity.class);
+                    Intent intent=new Intent(DetailActivity.this,FeedbackActivity.class);
+                    intent.putExtra("userId", muserId);
+                    intent.putExtra("id", mId);
+                    startActivity(intent);
+                    finish();
                 }else
                 {
                     Api.getApi().getorderUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"6",mId).compose(callbackOnIOToMainThread())

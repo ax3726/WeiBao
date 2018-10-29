@@ -44,7 +44,7 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
     @Override
     protected void initData() {
         super.initData();
-        mBinding.name.setText(MyApplication.getInstance().getUserData().getInstitutions().getName());
+        mBinding.name.setText(MyApplication.getInstance().getUserData().getName());
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

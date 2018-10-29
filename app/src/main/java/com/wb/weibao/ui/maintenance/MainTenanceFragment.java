@@ -94,7 +94,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                 switch (item.getStatus()) {
                     case "1":
                         binding.tvHint.setText("待平台定价");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.color00A0F1));
                         break;
                     case "2":
                         binding.tvHint.setText("用户撤销");
@@ -102,7 +102,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                         break;
                     case "3":
                         binding.tvHint.setText("代交预付款");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.color00A0F1));
                         break;
                     case "4":
                         binding.tvHint.setText("付款失败");
@@ -110,11 +110,11 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                         break;
                     case "5":
                         binding.tvHint.setText("待维保");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorFACF28));
                         break;
                     case "6":
                         binding.tvHint.setText("维保中");
-                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorTheme));
+                        binding.tvHint.setTextColor(getResources().getColor(R.color.colorFACF28));
                         break;
                     case "7":
                         binding.tvHint.setText("失效");

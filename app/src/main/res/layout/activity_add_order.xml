@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-               >
+                >
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rc_body"
@@ -40,10 +40,10 @@
                     android:id="@+id/tv_turn"
                     android:layout_width="match_parent"
                     android:layout_height="70px"
-                    android:layout_marginBottom="120px"
                     android:layout_marginLeft="25px"
-                    android:layout_marginRight="25px"
                     android:layout_marginTop="120px"
+                    android:layout_marginRight="25px"
+                    android:layout_marginBottom="120px"
                     android:background="@drawable/shape_common_theme"
                     android:gravity="center"
                     android:text="下一步"
@@ -67,10 +67,10 @@
                     android:layout_marginLeft="25px"
                     android:layout_marginRight="25px"
                     android:background="@drawable/shape_white"
-                    android:paddingBottom="30px"
                     android:paddingLeft="20px"
+                    android:paddingTop="30px"
                     android:paddingRight="20px"
-                    android:paddingTop="30px">
+                    android:paddingBottom="30px">
 
                     <TextView
                         android:id="@+id/tv_hint1"
@@ -84,8 +84,8 @@
                         android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/tv_hint1"
                         android:layout_alignBaseline="@+id/tv_hint1"
+                        android:layout_toRightOf="@+id/tv_hint1"
                         android:background="@color/colorWhite"
                         android:hint="请填写负责人姓名"
                         android:textColor="@color/color333333"
@@ -96,8 +96,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint1"
-                        android:layout_marginBottom="30px"
                         android:layout_marginTop="30px"
+                        android:layout_marginBottom="30px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -114,14 +114,60 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line"
-                        android:layout_toRightOf="@+id/tv_hint2"
                         android:layout_alignBaseline="@+id/tv_hint2"
+                        android:layout_toRightOf="@+id/tv_hint2"
                         android:background="@color/colorWhite"
                         android:hint="请填写负责人电话号码"
                         android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                 </com.zhy.autolayout.AutoRelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="80px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="25px"
+                    android:text="请填写订单类型"
+                    android:textColor="@color/color999999"
+                    android:textSize="26px" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25px"
+                    android:layout_marginRight="25px"
+                    android:orientation="horizontal">
+
+
+                    <RadioButton
+                        android:id="@+id/rb_type1"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_com_btn"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="维保"
+                        android:textSize="13dp"
+                        android:textColor="@color/select_color_btn" />
+
+                    <RadioButton
+                        android:id="@+id/rb_type2"
+                        android:layout_width="0dp"
+                        android:layout_height="36dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_com_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:textSize="13dp"
+                        android:text="质检"
+                        android:textColor="@color/select_color_btn" />
+
+                </RadioGroup>
 
 
                 <TextView
@@ -144,8 +190,8 @@
                     android:hint="请填写订单详情"
                     android:minHeight="400px"
                     android:paddingLeft="5px"
-                    android:paddingRight="5px"
                     android:paddingTop="10px"
+                    android:paddingRight="5px"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
 
@@ -153,10 +199,10 @@
                     android:id="@+id/tv_submit"
                     android:layout_width="match_parent"
                     android:layout_height="70px"
-                    android:layout_marginBottom="120px"
                     android:layout_marginLeft="25px"
-                    android:layout_marginRight="25px"
                     android:layout_marginTop="120px"
+                    android:layout_marginRight="25px"
+                    android:layout_marginBottom="120px"
                     android:background="@drawable/shape_common_theme"
                     android:gravity="center"
                     android:text="提交"

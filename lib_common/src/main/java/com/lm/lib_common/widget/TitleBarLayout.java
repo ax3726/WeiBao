@@ -38,9 +38,15 @@ public class TitleBarLayout extends LinearLayout {
             mBinding.flyLine.setElevation(15f);
         }*/
     }
+
     public TextView getTitleView() {
-      return  mBinding.tvTitle;
+        return mBinding.tvTitle;
     }
+
+    public TextView getLeftTxtView() {
+        return mBinding.tvLeftTxt;
+    }
+
     /**
      * 设置标题
      */
@@ -54,6 +60,7 @@ public class TitleBarLayout extends LinearLayout {
     public void setTitle(String title) {
         mBinding.tvTitle.setText(title);
     }
+
     /**
      * 设置左边的图片
      */
@@ -89,6 +96,14 @@ public class TitleBarLayout extends LinearLayout {
     /**
      * 设置是否显示左边
      */
+    public void setLeftTxt(String txt) {
+        mBinding.tvLeftTxt.setVisibility(VISIBLE);
+        mBinding.tvLeftTxt.setText(txt);
+    }
+
+    /**
+     * 设置是否显示左边
+     */
     public void setLeftShow(boolean bl) {
         mBinding.llyLeft.setVisibility(bl ? VISIBLE : INVISIBLE);
         mBinding.llyLeft.setClickable(bl);
@@ -116,6 +131,15 @@ public class TitleBarLayout extends LinearLayout {
      */
     public void setLeftListener(OnClickListener clickListener) {
         mBinding.llyLeft.setOnClickListener(clickListener);
+    }
+
+    /**
+     * 设置左边文字的点击事件
+     *
+     * @param clickListener
+     */
+    public void setLeftTxtListener(OnClickListener clickListener) {
+        mBinding.tvLeftTxt.setOnClickListener(clickListener);
     }
 
     /**

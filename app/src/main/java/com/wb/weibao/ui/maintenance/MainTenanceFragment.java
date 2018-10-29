@@ -127,7 +127,8 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
                 }
 
                 binding.tvName.setText(item.getPrincipalName());
-                binding.tvPrice.setText(df.format(item.getAmount()));
+               String type= item.getType().equals("1")?"维保\t￥":"质检\t￥";
+                binding.tvPrice.setText(type+df.format(item.getAmount()));
                 binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getCreateTime(), "yyyy.MM.dd"));
             }
         };

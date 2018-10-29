@@ -151,6 +151,7 @@ public interface ApiService {
      */
     @POST("early/record/update")
     Flowable<BaseBean> getearlyRecordUpdate(@Query("userId") String userId,
+                                      @Query("confirmUserId") String confirmUserId,
                                       @Query("status") String status,
                                       @Query("id") String id);
 

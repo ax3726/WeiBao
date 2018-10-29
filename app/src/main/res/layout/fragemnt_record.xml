@@ -25,7 +25,7 @@
                 android:textColor="@color/colorTheme"
                 android:textSize="28px" />
             <ImageView
-                android:layout_marginLeft="10px"
+                android:layout_marginLeft  ="10px"
                 android:layout_width="wrap_content"
                 android:src="@mipmap/choose_down_icon"
                 android:layout_height="wrap_content" />

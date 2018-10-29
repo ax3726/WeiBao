@@ -29,6 +29,7 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
 
     private List<QuestItemModel> mDataList = new ArrayList<>();
     private CommonAdapter<QuestItemModel> mAdapter;
+    private int mType = 1;//1 维保  2 质检
 
     @Override
     protected boolean isTitleBar() {
@@ -39,6 +40,18 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
     protected void initTitleBar() {
         super.initTitleBar();
         mTitleBarLayout.setTitle("新增维保订单");
+        mTitleBarLayout.setLeftTxt("维保");
+        mTitleBarLayout.setLeftTxtListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String trim = mTitleBarLayout.getLeftTxtView().getText().toString().trim();
+                if (trim.equals("返回")) {
+                    mTitleBarLayout.setLeftTxt("维保");
+                    mBinding.llyQuest.setVisibility(View.VISIBLE);
+                    mBinding.llyOrder.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -113,6 +126,7 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
 
         mBinding.llyQuest.setVisibility(View.GONE);
         mBinding.llyOrder.setVisibility(View.VISIBLE);
+        mTitleBarLayout.setLeftTxt("返回");
         mBinding.etContent.setText(str);
 
     }
@@ -134,10 +148,12 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
             showToast("请输入订单详情!");
             return;
         }
+        mType = mBinding.rbType1.isChecked() ? 1 : 2;
+
         mBinding.tvSubmit.setClickable(false);
         Api.getApi().addOrder(MyApplication.getInstance().getUserData().userRoles.get(0).userId + "",
                 MyApplication.getInstance().getUserData().institutions.getCode(),
-                MyApplication.getInstance().getProjectId(), 1, name, phone, content)
+                MyApplication.getInstance().getProjectId(), mType, name, phone, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

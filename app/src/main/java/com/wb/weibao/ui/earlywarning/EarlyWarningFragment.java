@@ -284,7 +284,6 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
         mBinding.rcBody.setAdapter(mAdapter);
 
-
         mBinding.srlBody.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {

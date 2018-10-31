@@ -17,7 +17,7 @@ public class WrapperUtils
 
     public static void onAttachedToRecyclerView(RecyclerView.Adapter innerAdapter, RecyclerView recyclerView, final SpanSizeCallback callback)
     {
-        innerAdapter.onAttachedToRecyclerView(recyclerView);
+        //innerAdapter.onAttachedToRecyclerView(recyclerView);
 
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager)

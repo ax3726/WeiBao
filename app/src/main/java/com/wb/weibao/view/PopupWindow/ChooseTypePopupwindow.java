@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,13 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 
-import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
-import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
+import com.wb.weibao.adapters.recyclerview.CommonAdapter;
+import com.wb.weibao.adapters.recyclerview.base.ViewHolder;
 import com.wb.weibao.R;
 import com.wb.weibao.databinding.ItemChooseTypeLayoutBinding;
 import com.wb.weibao.databinding.PopupwindowChooseTypeBinding;
 import com.wb.weibao.model.main.ChooseTypeModel;
-import com.zhy.autolayout.utils.AutoUtils;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

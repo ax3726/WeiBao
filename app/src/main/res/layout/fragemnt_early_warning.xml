@@ -21,12 +21,12 @@
                 android:text="预警类型"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorTheme"
+                android:textColor="@color/colorF15453"
                 android:textSize="28px" />
             <ImageView
                 android:layout_marginLeft="10px"
                 android:layout_width="wrap_content"
-                android:src="@mipmap/choose_down_icon"
+                android:src="@mipmap/ic_login_bot"
                 android:layout_height="wrap_content" />
 
 

@@ -1,17 +1,15 @@
 package com.wb.weibao.ui.maintenance;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
-import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
-import com.lm.lib_common.base.BaseActivity;
-import com.lm.lib_common.base.BaseNetListener;
-import com.lm.lib_common.base.BasePresenter;
-import com.lm.lib_common.model.BaseBean;
+import com.wb.weibao.adapters.recyclerview.CommonAdapter;
+import com.wb.weibao.adapters.recyclerview.base.ViewHolder;
+import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
@@ -19,6 +17,7 @@ import com.wb.weibao.databinding.ActivityAddOrderBinding;
 import com.wb.weibao.databinding.ItemAddOrderLayoutBinding;
 import com.wb.weibao.model.earlywarning.QuestItemModel;
 import com.wb.weibao.model.event.AddOderEvent;
+import com.wb.weibao.view.AddSpaceTextWatcher;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,6 +29,7 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
     private List<QuestItemModel> mDataList = new ArrayList<>();
     private CommonAdapter<QuestItemModel> mAdapter;
     private int mType = 1;//1 维保  2 质检
+    private AddSpaceTextWatcher asEditTexts;
 
     @Override
     protected boolean isTitleBar() {
@@ -93,7 +93,8 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
         };
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
         mBinding.rcBody.setAdapter(mAdapter);
-
+        asEditTexts = new AddSpaceTextWatcher(mBinding.etPhone, 13);
+        asEditTexts.setSpaceType(AddSpaceTextWatcher.SpaceType.mobilePhoneNumberType);
 
     }
 
@@ -133,15 +134,19 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
 
     private void submit() {
         String name = mBinding.etName.getText().toString();
-        String phone = mBinding.etPhone.getText().toString();
+        String phone = mBinding.etPhone.getText().toString().replace(" ", "");
         String content = mBinding.etContent.getText().toString();
 
         if (TextUtils.isEmpty(name)) {
             showToast("请输入姓名!");
             return;
         }
-        if (TextUtils.isEmpty(phone)) {
+        if (TextUtils.isEmpty(phone) ) {
             showToast("请输入手机号码!");
+            return;
+        }
+        if (phone.length()<11 || phone.length()>11) {
+            showToast("手机号码格式不正确!");
             return;
         }
         if (TextUtils.isEmpty(content)) {

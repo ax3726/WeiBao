@@ -3,16 +3,11 @@ package com.wb.weibao.common;
 
 
 
-import com.lm.lib_common.net.DownloadResponseBody;
-import com.lm.lib_common.net.GsonConverterFactory;
-import com.lm.lib_common.net.LoggerInterceptor;
+import com.wb.weibao.net.DownloadResponseBody;
+import com.wb.weibao.net.GsonConverterFactory;
+import com.wb.weibao.net.LoggerInterceptor;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;

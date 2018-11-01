@@ -47,7 +47,8 @@
         <activity android:name=".ui.mine.pwdActivity" />
         <activity android:name=".ui.maintenance.FeedbackActivity" />
         <activity android:name=".ui.earlywarning.EarlyWarningDetailActivity" />
-        <activity android:name=".ui.record.RecordDetailActivity"></activity>
+        <activity android:name=".ui.record.RecordDetailActivity" />
+        <activity android:name=".ui.Login.RelationActivity"></activity>
     </application>
 
 </manifest>

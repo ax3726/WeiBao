@@ -27,7 +27,7 @@
             <ImageView
                 android:layout_marginLeft  ="10px"
                 android:layout_width="wrap_content"
-                android:src="@mipmap/choose_down_icon"
+                android:src="@mipmap/ic_login_bot"
                 android:layout_height="wrap_content" />
 
         </com.zhy.autolayout.AutoLinearLayout>

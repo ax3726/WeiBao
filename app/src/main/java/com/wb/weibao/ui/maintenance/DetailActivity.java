@@ -3,10 +3,10 @@ package com.wb.weibao.ui.maintenance;
 import android.content.Intent;
 import android.view.View;
 
-import com.lm.lib_common.base.BaseActivity;
-import com.lm.lib_common.base.BaseNetListener;
-import com.lm.lib_common.base.BasePresenter;
-import com.lm.lib_common.model.BaseBean;
+import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;

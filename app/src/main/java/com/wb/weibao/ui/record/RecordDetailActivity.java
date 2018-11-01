@@ -3,15 +3,14 @@ package com.wb.weibao.ui.record;
 import android.util.Log;
 import android.view.View;
 
-import com.lm.lib_common.base.BaseActivity;
-import com.lm.lib_common.base.BaseNetListener;
-import com.lm.lib_common.base.BasePresenter;
-import com.lm.lib_common.model.BaseBean;
+import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityRecordDetaulBinding;
-import com.wb.weibao.model.earlywarning.EarilDetailEvent;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 

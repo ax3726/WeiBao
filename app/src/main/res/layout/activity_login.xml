@@ -135,5 +135,16 @@
             android:layout_marginTop="63dp"
             android:text="确认"
             />
+        <TextView
+            android:id="@+id/lainxi"
+            android:drawablePadding="8px"
+            android:layout_marginTop="100px"
+           android:drawableRight="@drawable/ic_login_left"
+            android:textColor="@color/colorF15453"
+            android:text="联系我们"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

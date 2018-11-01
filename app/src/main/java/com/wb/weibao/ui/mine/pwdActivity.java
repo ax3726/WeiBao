@@ -1,26 +1,19 @@
 package com.wb.weibao.ui.mine;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
-import com.lm.lib_common.base.BaseActivity;
-import com.lm.lib_common.base.BaseNetListener;
-import com.lm.lib_common.base.BasePresenter;
-import com.lm.lib_common.model.BaseBean;
+import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.model.BaseBean;
 import com.lm.lib_common.utils.MD5Utils;
 import com.lm.lib_common.utils.WorksSizeCheckUtil;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
-import com.wb.weibao.common.CacheService;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityPwdBinding;
-import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.ui.Login.LoginActivity;
-import com.wb.weibao.ui.main.MainActivity;
 
 public class pwdActivity extends BaseActivity<BasePresenter,ActivityPwdBinding> {
 

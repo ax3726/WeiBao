@@ -1,7 +1,7 @@
 package com.wb.weibao.common;
 
 
-import com.lm.lib_common.model.BaseBean;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
@@ -165,5 +165,15 @@ public interface ApiService {
                                             @Query("status") String status,
                                             @Query("closeUserId") String closeUserId,
                                             @Query("id") String id);
+
+    /**
+     * 联系我们接口
+     * @param name
+     * @param phone
+     * @return
+     */
+    @POST("intention/add")
+    Flowable<BaseBean> getintentionadd(@Query("name") String name,
+                                             @Query("phone") String phone);
 
 }

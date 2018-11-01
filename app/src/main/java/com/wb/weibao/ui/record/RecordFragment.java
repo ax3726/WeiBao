@@ -2,17 +2,14 @@ package com.wb.weibao.ui.record;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.lm.lib_common.adapters.recyclerview.CommonAdapter;
-import com.lm.lib_common.adapters.recyclerview.base.ViewHolder;
-import com.lm.lib_common.base.BaseFragment;
-import com.lm.lib_common.base.BaseFragmentPresenter;
-import com.lm.lib_common.base.BaseNetListener;
+import com.wb.weibao.adapters.recyclerview.CommonAdapter;
+import com.wb.weibao.adapters.recyclerview.base.ViewHolder;
+import com.wb.weibao.base.BaseFragment;
+import com.wb.weibao.base.BaseFragmentPresenter;
+import com.wb.weibao.base.BaseNetListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wb.weibao.R;
@@ -20,11 +17,9 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntRecordBinding;
 import com.wb.weibao.databinding.ItemRecordLayoutBinding;
-import com.wb.weibao.model.earlywarning.EarilDetailEvent;
 import com.wb.weibao.model.main.ChooseTypeModel;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
-import com.wb.weibao.ui.earlywarning.EarlyWarningDetailActivity;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.view.PopupWindow.ChooseTypePopupwindow;
 

@@ -7,9 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.lm.lib_common.base.ThisApplication;
+import com.wb.weibao.base.ThisApplication;
 import com.lm.lib_common.utils.CacheUtils;
 import com.lm.lib_common.utils.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -152,10 +151,10 @@ public class MyApplication extends ThisApplication {
     }
 
     public static void backToLogin(Context context, Intent intent) {
-        if (TextUtils.isEmpty(getInstance().getToken())) {
-            return;
-        }
-        getInstance().setToken("");
+//        if (TextUtils.isEmpty(getInstance().getToken())) {
+//            return;
+//        }
+//        getInstance().setToken("");
         context.startActivity(intent);
         try {
             for (Activity activity : mList)

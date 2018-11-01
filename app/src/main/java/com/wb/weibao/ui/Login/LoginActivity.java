@@ -1,19 +1,19 @@
 package com.wb.weibao.ui.Login;
+
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.exception.DbException;
-import com.lm.lib_common.base.BaseActivity;
-import com.lm.lib_common.base.BaseNetListener;
-import com.lm.lib_common.base.BasePresenter;
+import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.base.BasePresenter;
 import com.lm.lib_common.utils.MD5Utils;
 import com.lm.lib_common.utils.WorksSizeCheckUtil;
 import com.wb.weibao.R;
@@ -30,10 +30,10 @@ import com.wb.weibao.utils.SpfUtils;
 
 import java.util.List;
 
-public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBinding> {
+public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBinding> {
 
 
-    private boolean flag=true;
+    private boolean flag = true;
 
     @Override
     protected int getLayoutId() {
@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
         super.initData();
 
         WorksSizeCheckUtil.textChangeListener listener = new WorksSizeCheckUtil.textChangeListener(mBinding.affirm);
-        listener.addAllEditText(mBinding.inputPhone,mBinding.inputPassword);
+        listener.addAllEditText(mBinding.inputPhone, mBinding.inputPassword);
         mBinding.pwdeye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +75,6 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
         });
 
 
-        
 //
 //        mBinding.RememberPasswordCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -93,6 +92,14 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
         } catch (DbException e) {
             e.printStackTrace();
         }
+
+
+        mBinding.lainxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(RelationActivity.class);
+            }
+        });
 
     }
 
@@ -115,7 +122,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
                     public void onSuccess(LoginModel loginModel) {
 
                         MyApplication.getInstance().setUserData(loginModel.getData());
-                        Log.e("====",loginModel.toString());
+                        Log.e("====", loginModel.toString());
 
                         spfUtils.setSpfString(SpfKey.LOGIN_NAME, phone);
                         spfUtils.setSpfString(SpfKey.LOGIN_PASSWORD, RememberPasswordCheckBoxFlag ? password : "");
@@ -157,8 +164,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
                         refreshData();
 
 
-
-                        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                     }
@@ -168,7 +174,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
                         mBinding.affirm.setClickable(true);
                     }
                 });
-               mBinding.affirm.setClickable(false);
+        mBinding.affirm.setClickable(false);
     }
 
     @Override
@@ -185,7 +191,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
     // 用来处理选中或者删除下拉项消息
     private DbUtils MDbUtils;
     private SpfUtils spfUtils;
-    private boolean RememberPasswordCheckBoxFlag=true;
+    private boolean RememberPasswordCheckBoxFlag = true;
     int count = 0;
 
     private void initWedget() {
@@ -282,6 +288,7 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
             e.printStackTrace();
         }
     }
+
     /*****************及时更新编辑框数据*/
     private void SetText() {
         spfUtils = SpfUtils.getInstance(LoginActivity.this);
@@ -290,8 +297,6 @@ public class LoginActivity extends BaseActivity<BasePresenter,ActivityLoginBindi
         mBinding.inputPassword.setText(spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD));
         mBinding.RememberPasswordCheckBox.setChecked(DemoUtils.isEmpty(spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD)) ? false : true);
     }
-
-
 
 
 }

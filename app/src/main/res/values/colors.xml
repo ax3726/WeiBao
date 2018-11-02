@@ -35,5 +35,6 @@
     <color name="color00A0F1">#00A0F1</color>
     <color name="colorFACF28">#FACF28</color>
     <color name="colorD0D0D0">#D0D0D0</color>
-
+    <color name="blue">#00AAEE</color>
+    <color name="transparent40">#66000000</color>
 </resources>

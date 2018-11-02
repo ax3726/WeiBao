@@ -3,6 +3,7 @@ package com.wb.weibao.common;
 
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
+import com.wb.weibao.model.VersionBean;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
@@ -175,5 +176,14 @@ public interface ApiService {
     @POST("intention/add")
     Flowable<BaseBean> getintentionadd(@Query("name") String name,
                                              @Query("phone") String phone);
+
+    /**
+     * 版本更新接口
+     * @return
+     */
+    @POST("version/version")
+    Flowable<VersionBean> getversion();
+
+
 
 }

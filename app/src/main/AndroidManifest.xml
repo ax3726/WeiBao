@@ -49,6 +49,7 @@
         <activity android:name=".ui.earlywarning.EarlyWarningDetailActivity" />
         <activity android:name=".ui.record.RecordDetailActivity" />
         <activity android:name=".ui.Login.RelationActivity"></activity>
+        <service android:name=".utils.update.DownloadService"/>
     </application>
 
 </manifest>

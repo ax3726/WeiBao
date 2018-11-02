@@ -1,6 +1,7 @@
 package com.wb.weibao.ui.Login;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.DbUtils;
 import com.lidroid.xutils.exception.DbException;
+import com.lidroid.xutils.util.LogUtils;
+import com.wb.weibao.BuildConfig;
 import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
@@ -20,13 +23,18 @@ import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityLoginBinding;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
 import com.wb.weibao.model.LoginUserInfoBean;
+import com.wb.weibao.model.VersionBean;
 import com.wb.weibao.ui.main.MainActivity;
 import com.wb.weibao.utils.CommonRecyclerAdapter;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
+import com.wb.weibao.utils.update.AppUpdateProgressDialog;
+import com.wb.weibao.utils.update.DownloadReceiver;
+import com.wb.weibao.utils.update.DownloadService;
 
 import java.util.List;
 
@@ -44,7 +52,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
     protected BasePresenter createPresenter() {
         return null;
     }
-
+    AppUpdateProgressDialog appUpdateProgressDialog;
     @Override
     protected void initData() {
         super.initData();
@@ -70,9 +78,13 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
         mBinding.affirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 checkLogin();
             }
         });
+
+
+
 
 
 //
@@ -100,10 +112,77 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                 startActivity(RelationActivity.class);
             }
         });
+        updateapp();
+    }
+
+
+
+    private void updateapp()
+    {
+        Api.getApi().getversion()
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<VersionBean>(LoginActivity.this, false) {
+                    @Override
+                    public void onSuccess(VersionBean versionBean) {
+                        LogUtils.e("baseBean"+versionBean.toString());
+                       if(compareVersion(BuildConfig.VERSION_NAME,versionBean.getData().getAndroidVersion())==-1)
+                       {
+                           appUpdateProgressDialog = new AppUpdateProgressDialog(LoginActivity.this);
+                           appUpdateProgressDialog.show();
+                           Intent intent = new Intent(LoginActivity.this, DownloadService.class);
+                           intent.putExtra("url",versionBean.getData().getAndroidUrl());
+                           intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
+                           startService(intent);
+                       }
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
 
     }
 
 
+    public static int compareVersion(String version1, String version2) {
+        if (version1.equals(version2)) {
+            return 0;
+        }
+        String[] version1Array = version1.split("\\.");
+        String[] version2Array = version2.split("\\.");
+        Log.d("HomePageActivity", "version1Array=="+version1Array.length);
+        Log.d("HomePageActivity", "version2Array=="+version2Array.length);
+        int index = 0;
+        // 获取最小长度值
+        int minLen = Math.min(version1Array.length, version2Array.length);
+        int diff = 0;
+        // 循环判断每位的大小
+        Log.d("HomePageActivity", "verTag2=2222="+version1Array[index]);
+        while (index < minLen
+                && (diff = Integer.parseInt(version1Array[index])
+                - Integer.parseInt(version2Array[index])) == 0) {
+            index++;
+        }
+        if (diff == 0) {
+            // 如果位数不一致，比较多余位数
+            for (int i = index; i < version1Array.length; i++) {
+                if (Integer.parseInt(version1Array[i]) > 0) {
+                    return 1;
+                }
+            }
+
+            for (int i = index; i < version2Array.length; i++) {
+                if (Integer.parseInt(version2Array[i]) > 0) {
+                    return -1;
+                }
+            }
+            return 0;
+        } else {
+            return diff > 0 ? 1 : -1;
+        }
+    }
     private void checkLogin() {
         String phone = mBinding.inputPhone.getText().toString().trim();
         String password = mBinding.inputPassword.getText().toString().trim();

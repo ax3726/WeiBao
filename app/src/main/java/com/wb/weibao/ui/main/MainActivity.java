@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                                     mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
                                 }else
                                     {
-                                        spfUtils.setSpfString(SpfKey.INST_ID,listBean.getInstId());
+                                        spfUtils.setSpfString(SpfKey.INST_ID,""+listBean.getId());
                                         spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getInstName());
                                         MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                         mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
@@ -229,7 +229,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                         @Override
                         public void onClick(String reason) {
                             ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
-                            spfUtils.setSpfString(SpfKey.INST_ID,listBean.getInstId());
+                            spfUtils.setSpfString(SpfKey.INST_ID,""+listBean.getId());
                             spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getInstName());
                             MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                             mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));

@@ -167,7 +167,7 @@ public class MainTenanceFragment extends BaseFragment<BaseFragmentPresenter, Fra
      */
     private void getDataList() {
         Api.getApi().getOrderList(
-                "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId, mPage, mPageSize,name)
+                "" + MyApplication.getInstance().getUserData().getId(), mPage, mPageSize,name)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<OrderListModel>(this, false) {
                     @Override

@@ -195,7 +195,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
         mBinding.affirm3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"2",MyApplication.getInstance().getUserData().getName(),mId)
+                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().getId(),"2",MyApplication.getInstance().getUserData().getName(),mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
                             @Override
@@ -217,7 +217,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
         mBinding.affirm1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"4",MyApplication.getInstance().getUserData().getName(),mId)
+                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().getId(),"4",MyApplication.getInstance().getUserData().getName(),mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
                             @Override
@@ -237,7 +237,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
         mBinding.affirm2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"3",MyApplication.getInstance().getUserData().getName(),mId)
+                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().getId(),"3",MyApplication.getInstance().getUserData().getName(),mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
                             @Override

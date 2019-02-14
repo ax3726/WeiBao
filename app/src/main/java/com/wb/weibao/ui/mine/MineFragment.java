@@ -9,6 +9,8 @@ import com.wb.weibao.R;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntMineBinding;
 import com.wb.weibao.ui.Login.LoginActivity;
+import com.wb.weibao.utils.SpfKey;
+import com.wb.weibao.utils.SpfUtils;
 
 /**
  * Created by Administrator on 2018/10/8.
@@ -16,6 +18,8 @@ import com.wb.weibao.ui.Login.LoginActivity;
 
 public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMineBinding> {
 
+
+    private SpfUtils spfUtils;
 
     @Override
     protected boolean isTitleBar() {
@@ -44,6 +48,7 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
     @Override
     protected void initData() {
         super.initData();
+        spfUtils = SpfUtils.getInstance(aty);
         mBinding.name.setText(MyApplication.getInstance().getUserData().getName());
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +63,7 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
                 startActivity(LoginActivity.class);
                 aty.finish();
                 MyApplication.getInstance().exit();
+                spfUtils.setSpfString(SpfKey.IS_LOGIN, "");
             }
         });
     }

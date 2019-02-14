@@ -52,7 +52,7 @@ public class FeedbackActivity extends BaseActivity<BasePresenter,ActivityFeedbac
             public void onClick(View v) {
                 submit();
                 mBinding.tvSubmit.setClickable(false);
-                Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"8",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
+                Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().getId(),"8",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(FeedbackActivity.this, false) {
                             @Override
                             public void onSuccess(BaseBean baseBean) {
@@ -72,7 +72,7 @@ public class FeedbackActivity extends BaseActivity<BasePresenter,ActivityFeedbac
             public void onClick(View v) {
                 submit();
                 mBinding.affirm1.setClickable(false);
-                Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,"7",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
+                Api.getApi().getorderUpdateFankui("" + MyApplication.getInstance().getUserData().getId(),"7",getIntent().getStringExtra("id").toString(),name,phone,content).compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(FeedbackActivity.this, false) {
                             @Override
                             public void onSuccess(BaseBean baseBean) {

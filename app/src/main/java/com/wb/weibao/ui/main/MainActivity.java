@@ -161,8 +161,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
      * 获取项目列表
      */
     private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().institutions.getCode(),
-                "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId).compose(callbackOnIOToMainThread())
+        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
+                "" + MyApplication.getInstance().getUserData().getId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {
@@ -181,7 +181,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                                 }else
                                     {
                                         spfUtils.setSpfString(SpfKey.INST_ID,""+listBean.getId());
-                                        spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getInstName());
+                                        spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getName());
                                         MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                         mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
                                     }
@@ -221,7 +221,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
             case R.id.tv_name:
                 List<String> wheelString = new ArrayList<>();
                 for (int i = 0; i < mProjectList.size(); i++) {
-                    wheelString.add(mProjectList.get(i).getInstName());
+                    wheelString.add(mProjectList.get(i).getName());
                 }
                 if (wheelString.size() > 0) {
                     FitPopupUtil fitPopupUtil = new FitPopupUtil(aty, wheelString);
@@ -230,11 +230,11 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                         public void onClick(String reason) {
                             ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
                             spfUtils.setSpfString(SpfKey.INST_ID,""+listBean.getId());
-                            spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getInstName());
+                            spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getName());
                             MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                             mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
 //                            MyApplication.getInstance().setProjectId(listBean.getInstId());
-//                            mBinding.tvName.setText(listBean.getInstName());
+//                            mBinding.tvName.setText(listBean.getName());
                             toLoadData();
 
                         }

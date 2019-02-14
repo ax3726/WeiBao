@@ -133,7 +133,15 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                            intent.putExtra("url",versionBean.getData().getAndroidUrl());
                            intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
                            startService(intent);
-                       }
+                       }else
+                           {
+                               if(spfUtils.getSpfString(SpfKey.IS_LOGIN).length()>0) {
+                                   if (spfUtils.getSpfString(SpfKey.LOGIN_NAME).length() > 0 && spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD).length() > 0) {
+                                       checkLogin();
+                                   }
+                               }
+                           }
+
 
                     }
 
@@ -199,7 +207,6 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                 .subscribe(new BaseNetListener<LoginModel>(LoginActivity.this, true) {
                     @Override
                     public void onSuccess(LoginModel loginModel) {
-
                         MyApplication.getInstance().setUserData(loginModel.getData());
                         Log.e("====", loginModel.toString());
 
@@ -242,7 +249,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                         }
                         refreshData();
 
-
+                        spfUtils.setSpfString(SpfKey.IS_LOGIN, "true");
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -255,6 +262,11 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                 });
         mBinding.affirm.setClickable(false);
     }
+
+
+
+
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -374,6 +386,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
         mBinding.inputPhone.setText(spfUtils.getSpfString(SpfKey.LOGIN_NAME));
         mBinding.inputPhone.setSelection(spfUtils.getSpfString(SpfKey.LOGIN_NAME).length());
         mBinding.inputPassword.setText(spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD));
+
         mBinding.RememberPasswordCheckBox.setChecked(DemoUtils.isEmpty(spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD)) ? false : true);
     }
 

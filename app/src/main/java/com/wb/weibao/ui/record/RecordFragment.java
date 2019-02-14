@@ -272,7 +272,7 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
                     public void onClick(View v) {
                         Intent intent=new Intent(aty,RecordDetailActivity.class);
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().userRoles.get(0).userId);
+                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getId());
                         intent.putExtra("id", ""+item.getId());
                         startActivity(intent);
                     }
@@ -318,8 +318,8 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecord_list(MyApplication.getInstance().getUserData().institutions.getCode(),
-                "" + MyApplication.getInstance().getUserData().userRoles.get(0).userId,
+        Api.getApi().getRecord_list(MyApplication.getInstance().getUserData().getCompanyId(),
+                "" + MyApplication.getInstance().getUserData().getId(),
                 MyApplication.getInstance().getProjectId(), mPage, mPageSize,name).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override

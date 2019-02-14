@@ -73,7 +73,7 @@ public class pwdActivity extends BaseActivity<BasePresenter,ActivityPwdBinding> 
         }
 
 
-        Api.getApi().getupdatePwd(""+MyApplication.getInstance().getUserData().userRoles.get(0).userId,MD5Utils.encryptMD5(newpwd),MD5Utils.encryptMD5(pwd))
+        Api.getApi().getupdatePwd(""+MyApplication.getInstance().getUserData().getId(),MD5Utils.encryptMD5(newpwd),MD5Utils.encryptMD5(pwd))
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

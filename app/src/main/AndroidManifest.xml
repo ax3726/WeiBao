@@ -13,7 +13,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="android.max_aspect" android:value="2.1" />
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
 
         <!-- AUTO LAYOUT -->
         <meta-data
@@ -22,6 +24,7 @@
         <meta-data
             android:name="design_height"
             android:value="1280" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.wb.weibao.fileprovider"
@@ -48,8 +51,12 @@
         <activity android:name=".ui.maintenance.FeedbackActivity" />
         <activity android:name=".ui.earlywarning.EarlyWarningDetailActivity" />
         <activity android:name=".ui.record.RecordDetailActivity" />
-        <activity android:name=".ui.Login.RelationActivity"></activity>
-        <service android:name=".utils.update.DownloadService"/>
+        <activity android:name=".ui.Login.RelationActivity" />
+
+        <service android:name=".utils.update.DownloadService" />
+
+        <activity android:name=".ui.Login.ForgetPwdActivity" />
+        <activity android:name=".ui.Login.RegisterActivity"></activity>
     </application>
 
 </manifest>

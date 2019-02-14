@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -88,12 +89,12 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
 
 
 //
-//        mBinding.RememberPasswordCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                RememberPasswordCheckBoxFlag = isChecked;
-//            }
-//        });
+        mBinding.RememberPasswordCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                RememberPasswordCheckBoxFlag = isChecked;
+            }
+        });
         SetText();
 
         try {
@@ -106,10 +107,16 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
         }
 
 
-        mBinding.lainxi.setOnClickListener(new View.OnClickListener() {
+        mBinding.register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(RelationActivity.class);
+                startActivity(RegisterActivity.class);
+            }
+        });
+        mBinding.forgetpwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(ForgetPwdActivity.class);
             }
         });
         updateapp();

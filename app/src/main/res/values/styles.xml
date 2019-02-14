@@ -21,7 +21,7 @@
 
     <style name="login_field">
         <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_height">67dp</item>
+        <item name="android:layout_height">57dp</item>
     </style>
 
     <style name="login_field2">

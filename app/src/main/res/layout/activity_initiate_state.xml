@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/lly_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F2F4F8"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_marginTop="100px"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/tijiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="30px"
+            android:text="维保单提交成功，等待审批"
+            android:textColor="#333333"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/affirm"
+            style="@style/SmsButton"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="63px"
+            android:enabled="false"
+            android:text="查看详情" />
+
+        <Button
+            android:background="@drawable/shape_btn_blue2"
+            style="@style/SmsButton"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="30px"
+            android:layout_marginBottom="50px"
+            android:textColor="#36519E"
+            android:enabled="false"
+            android:text="返回首页" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

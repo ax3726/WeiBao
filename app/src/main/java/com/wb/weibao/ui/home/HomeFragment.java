@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
                 break;
             case R.id.tv_add_weibao://发起维保
-
+                  startActivity(InitiateWeibaoActivity.class);
                 break;
             case R.id.tv_my_weibao://我的维保
 

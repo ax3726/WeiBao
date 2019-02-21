@@ -56,7 +56,10 @@
         <service android:name=".utils.update.DownloadService" />
 
         <activity android:name=".ui.Login.ForgetPwdActivity" />
-        <activity android:name=".ui.Login.RegisterActivity"></activity>
+        <activity android:name=".ui.Login.RegisterActivity" />
+        <activity android:name=".ui.home.InitiateWeibaoActivity" />
+        <activity android:name=".ui.home.InitiateStateActivity" />
+        <activity android:name=".ui.home.SentriesActivity"></activity>
     </application>
 
 </manifest>

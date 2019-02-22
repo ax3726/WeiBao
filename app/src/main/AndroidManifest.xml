@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <!-- 读写sdcard，storage等等 -->
     <application
         android:name=".common.MyApplication"
@@ -59,7 +61,12 @@
         <activity android:name=".ui.Login.RegisterActivity" />
         <activity android:name=".ui.home.InitiateWeibaoActivity" />
         <activity android:name=".ui.home.InitiateStateActivity" />
-        <activity android:name=".ui.home.SentriesActivity"></activity>
+        <activity android:name=".ui.home.SentriesActivity" />
+        <activity android:name=".ui.home.SignActivity" />
+        <activity android:name=".ui.home.AddDayWeiBaoActivity" />
+        <activity android:name=".ui.home.ChangeShiftsActivity" />
+        <activity android:name=".widget.zxing.android.CaptureActivity" />
+        <activity android:name=".ui.home.HandEditActivity"></activity>
     </application>
 
 </manifest>

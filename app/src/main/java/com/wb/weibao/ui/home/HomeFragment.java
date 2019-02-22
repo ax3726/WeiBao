@@ -41,16 +41,16 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sign://值班签到
-
+                startActivity(SignActivity.class);
                 break;
             case R.id.tv_day_record://日常维保记录
-
+                startActivity(AddDayWeiBaoActivity.class);
                 break;
             case R.id.tv_handover://交接班
-
+                startActivity(ChangeShiftsActivity.class);
                 break;
             case R.id.tv_add_weibao://发起维保
-                  startActivity(InitiateWeibaoActivity.class);
+                startActivity(InitiateWeibaoActivity.class);
                 break;
             case R.id.tv_my_weibao://我的维保
 

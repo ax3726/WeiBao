@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+
+        android:paddingLeft="30px"
+        android:paddingTop="18px">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018.09.09"
+            android:textColor="@color/color333333"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_sin_in_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:layout_marginTop="10px"
+            android:text="签到时间：8:00"
+            android:textColor="@color/color666666"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/tv_sin_out_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_time"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10px"
+            android:layout_marginRight="30px"
+            android:text="签退时间：18:00"
+            android:textColor="@color/color666666"
+            android:textSize="28px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/tv_sin_in_time"
+            android:layout_marginTop="16px"
+            android:background="@color/colorLine" />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+</layout>

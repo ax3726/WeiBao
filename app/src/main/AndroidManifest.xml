@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <!-- 读写sdcard，storage等等 -->
     <application
         android:name=".common.MyApplication"
@@ -66,7 +67,7 @@
         <activity android:name=".ui.home.AddDayWeiBaoActivity" />
         <activity android:name=".ui.home.ChangeShiftsActivity" />
         <activity android:name=".widget.zxing.android.CaptureActivity" />
-        <activity android:name=".ui.home.HandEditActivity"></activity>
+        <activity android:name=".ui.home.HandEditActivity" />
     </application>
 
 </manifest>

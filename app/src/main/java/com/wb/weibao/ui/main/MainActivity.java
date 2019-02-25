@@ -19,7 +19,7 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
-import com.wb.weibao.ui.earlywarning.EarlyWarningFragment;
+import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
 import com.wb.weibao.ui.maintenance.MainTenanceFragment;
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     private List<Fragment> mFragments = new ArrayList<>();
     private DoubleClickExitHelper mDoubleClickExit;//
     private HomeFragment mHomeFragment;
-    private EarlyWarningFragment mEarlyWarningFragment;
+    private WarningFragment WarningFragment;
   /*  private RecordFragment mRecordFragment;
     private MainTenanceFragment mMainTenanceFragment;*/
     private MineFragment mMineFragment;
@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                     case R.id.rb_forewarning:
                         if (currentFragmentPosition != 1) {
                             mIndex = 1;
-                         mBinding.rlyHead.setVisibility(View.VISIBLE);
+                         mBinding.rlyHead.setVisibility(View.GONE);
                             mBinding.tvAddOrder.setVisibility(View.GONE);
                             changeFragment(1);
                         }
@@ -128,13 +128,13 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
     private void initFragment() {
         mHomeFragment= new HomeFragment();
-        mEarlyWarningFragment = new EarlyWarningFragment();
+        WarningFragment = new WarningFragment();
        /* mRecordFragment = new RecordFragment();
         mMainTenanceFragment = new MainTenanceFragment();*/
         mMineFragment = new MineFragment();
 
         mFragments.add(mHomeFragment);
-        mFragments.add(mEarlyWarningFragment);
+        mFragments.add(WarningFragment);
         /*mFragments.add(mRecordFragment);
         mFragments.add(mMainTenanceFragment);*/
         mFragments.add(mMineFragment);
@@ -215,9 +215,9 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
     private void toLoadData() {
 
-        if (mEarlyWarningFragment != null) {
-            mEarlyWarningFragment.loadData();
-        }
+//        if (WarningFragment != null) {
+//            WarningFragment.loadData();
+//        }
      /*   if (mRecordFragment != null) {
             mRecordFragment.loadData();
         }*/

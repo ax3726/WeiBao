@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+        <LinearLayout
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/horizontal_card_text_holder_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_timeline_horizontal_card_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:textSize="22sp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Textdfds fdgd gdg dgds"
+                android:maxLines="2"/>
+
+        </LinearLayout>

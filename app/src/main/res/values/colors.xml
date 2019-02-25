@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#ffffff</color>
-    <color name="colorAccent">#2E4179</color>
-    <color name="colorTheme">#2E4179</color>
+    <color name="colorAccent">#36519E</color>
+    <color name="colorTheme">#36519E</color>
     <color name="click_bg">#45000000</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBackground">#F2F4F8</color>

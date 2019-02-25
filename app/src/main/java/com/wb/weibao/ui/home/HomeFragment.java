@@ -59,7 +59,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
                 break;
             case R.id.tv_look_gang://查岗
-
+                  startActivity(SentriesActivity.class);
                 break;
             case R.id.tv_weibao_order://维保订单
 

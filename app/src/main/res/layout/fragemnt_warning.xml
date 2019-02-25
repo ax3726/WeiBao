@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:background="#F3F3F3"
+        android:id="@+id/lly_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:paddingTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tab_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="火警"
+                android:gravity="center"
+                android:textColor="@color/color333333"
+                android:textSize="14sp"/>
+            <View
+                android:layout_marginTop="8dp"
+                android:id="@+id/tab_tv_line"
+                android:layout_width="50dp"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tab_tv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="告警"
+                android:gravity="center"
+                android:textColor="@color/color333333"
+                android:textSize="14sp"/>
+            <View
+                android:visibility="invisible"
+                android:layout_marginTop="8dp"
+                android:id="@+id/tab_tv_line1"
+                android:layout_width="50dp"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent"/>
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+        <!-- 内容区域 -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:overScrollMode="never"
+            android:layout_weight="1" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

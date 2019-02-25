@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/lly_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F2F4F8"
+            android:orientation="vertical">
+
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_white"
+                android:paddingLeft="20px"
+                android:paddingTop="30px"
+                android:paddingRight="20px"
+                android:paddingBottom="30px">
+
+                <TextView
+                    android:id="@+id/tv_hint1"
+                    android:layout_width="130px"
+                    android:layout_height="wrap_content"
+                    android:text="维修单位"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_hint1"
+                    android:layout_toRightOf="@+id/tv_hint1"
+                    android:background="@color/colorWhite"
+                    android:drawableRight="@drawable/bottom_jiantou"
+                    android:hint="请选择维修单位"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <View
+                    android:id="@+id/view_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_hint1"
+                    android:layout_marginTop="30px"
+                    android:layout_marginBottom="30px"
+                    android:background="@color/colorLine" />
+
+                <TextView
+                    android:id="@+id/tv_hint4"
+                    android:layout_width="130px"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_line"
+                    android:text="联系人"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_hint4"
+                    android:layout_toRightOf="@+id/tv_hint4"
+                    android:background="@color/colorWhite"
+                    android:hint="请输入联系人"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <View
+                    android:id="@+id/view_line3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_hint4"
+                    android:layout_marginTop="30px"
+                    android:layout_marginBottom="30px"
+                    android:background="@color/colorLine" />
+
+                <TextView
+                    android:id="@+id/tv_hint5"
+                    android:layout_width="130px"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_line3"
+                    android:text="联系电话"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_hint5"
+                    android:layout_toRightOf="@+id/tv_hint5"
+                    android:background="@color/colorWhite"
+                    android:hint="请输入联系电话"
+                    android:inputType="phone"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <View
+                    android:id="@+id/view_line4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_hint5"
+                    android:layout_marginTop="30px"
+                    android:layout_marginBottom="30px"
+                    android:background="@color/colorLine" />
+
+
+                <TextView
+
+                    android:id="@+id/tv_hint2"
+                    android:layout_width="130px"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_line4"
+                    android:text="维保时间"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_line"
+                    android:layout_alignBaseline="@+id/tv_hint2"
+                    android:layout_toRightOf="@+id/tv_hint2"
+                    android:background="@color/colorWhite"
+                    android:drawableRight="@drawable/bottom_jiantou"
+                    android:hint="请选择日期"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+
+                <View
+                    android:id="@+id/view_line2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@+id/tv_hint2"
+                    android:layout_marginTop="30px"
+                    android:layout_marginBottom="30px"
+                    android:background="@color/colorLine" />
+
+                <TextView
+
+                    android:id="@+id/tv_hint3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_line2"
+                    android:text="下次维保时间"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <TextView
+                    android:id="@+id/tv_next_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_line2"
+                    android:layout_alignBaseline="@+id/tv_hint3"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@+id/tv_hint3"
+                    android:background="@color/colorWhite"
+                    android:drawableRight="@drawable/bottom_jiantou"
+                    android:hint=""
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_white"
+                android:paddingLeft="20px"
+                android:paddingTop="30px"
+                android:paddingRight="20px"
+                android:paddingBottom="30px">
+
+                <TextView
+                    android:id="@+id/tv_picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="上传图片（选填，最多上传5张）"
+                    android:textColor="#333333" />
+
+                <com.wb.weibao.utils.imageshowpicker.ImageShowPickerView
+                    android:id="@+id/it_picker_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_picture"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"
+                    app:is_show_del="true">
+
+                </com.wb.weibao.utils.imageshowpicker.ImageShowPickerView>
+
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/it_picker_view"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shape_white2"
+                    android:gravity="left"
+                    android:hint="维保工作内容"
+                    android:minHeight="200px"
+                    android:paddingLeft="5px"
+                    android:paddingTop="10px"
+                    android:paddingRight="5px"
+                    android:textColor="@color/color333333"
+                    android:textSize="26px" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <Button
+                android:id="@+id/affirm"
+                style="@style/SmsButton"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="63px"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="50px"
+                android:enabled="false"
+                android:text="确认添加" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>
+

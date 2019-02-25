@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_theme"
+            android:orientation="vertical"
+            android:paddingLeft="30px"
+            android:paddingRight="30px">
+
+            <TextView
+                android:id="@+id/tv_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23px"
+                android:text="西湖科技园"
+                android:textColor="@color/colorWhite"
+                android:textSize="32px" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44px"
+                android:layout_marginBottom="52px"
+                android:background="@drawable/shape_white"
+                android:orientation="horizontal"
+                android:paddingTop="80px"
+                android:paddingBottom="52px">
+
+
+                <TextView
+                    android:id="@+id/tv_sign"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/home_sign_icon"
+                    android:drawablePadding="32px"
+                    android:gravity="center"
+                    android:text="值班签到"
+                    android:textColor="@color/color2D3D6D"
+                    android:textSize="28px" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="104px"
+                    android:background="@color/colorLine" />
+
+                <TextView
+                    android:id="@+id/tv_day_record"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/home_sign_record_icon"
+                    android:drawablePadding="32px"
+                    android:gravity="center"
+                    android:text="日常维保记录"
+                    android:textColor="@color/color2D3D6D"
+                    android:textSize="28px" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="104px"
+                    android:background="@color/colorLine" />
+
+                <TextView
+                    android:id="@+id/tv_handover"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/home_sign_handover_icon"
+                    android:drawablePadding="32px"
+                    android:gravity="center"
+                    android:text="交接班"
+                    android:textColor="@color/color2D3D6D"
+                    android:textSize="28px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="30px"
+            android:paddingTop="28px"
+            android:paddingBottom="18px"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="4px"
+                android:background="@color/color2D3D6D"
+                android:layout_height="30px"/>
+            <TextView
+                android:layout_marginLeft="8px"
+                android:layout_width="wrap_content"
+                android:textColor="@color/color333333"
+                android:text="常用功能"
+                android:textStyle="bold"
+                android:textSize="30px"
+                android:layout_height="wrap_content" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="30px"
+            android:paddingRight="30px"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_add_weibao"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="发起维保"
+                android:drawableTop="@mipmap/home_add_weibao_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_my_weibao"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:layout_marginLeft="16px"
+                android:layout_marginRight="16px"
+                android:text="我的维保"
+                android:drawableTop="@mipmap/home_my_weibao_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_warning_record"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="警报统计"
+                android:layout_marginRight="16px"
+                android:drawableTop="@mipmap/home_warning_record_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_look_gang"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="查岗"
+                android:drawableTop="@mipmap/home_look_gang_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="30px"
+            android:paddingTop="28px"
+            android:paddingBottom="18px"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="4px"
+                android:background="@color/color2D3D6D"
+                android:layout_height="30px"/>
+            <TextView
+                android:layout_marginLeft="8px"
+                android:layout_width="wrap_content"
+                android:textColor="@color/color333333"
+                android:text="更多功能"
+                android:textStyle="bold"
+                android:textSize="30px"
+                android:layout_height="wrap_content" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="30px"
+            android:paddingRight="30px"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_weibao_order"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="维保订单"
+                android:drawableTop="@mipmap/home_weibao_order_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_fire_control"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:layout_marginLeft="16px"
+                android:layout_marginRight="16px"
+                android:text="消防微岗"
+                android:drawableTop="@mipmap/home_fire_control_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_peixun"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="培训教育"
+                android:layout_marginRight="16px"
+                android:drawableTop="@mipmap/home_peixun_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="水压监控"
+                android:drawableTop="@mipmap/home_shuiya_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="30px"
+            android:layout_marginTop="20px"
+            android:paddingRight="30px"
+            android:layout_marginBottom="60px"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="水位监控"
+                android:drawableTop="@mipmap/home_shuiwei_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:layout_marginLeft="16px"
+                android:layout_marginRight="16px"
+                android:text="电气监控"
+                android:drawableTop="@mipmap/home_dianqi_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="培训教育"
+                android:layout_marginRight="16px"
+                android:drawableTop="@mipmap/home_peixun_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:paddingBottom="22px"
+                android:visibility="invisible"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="26px"
+                android:text="水压监控"
+                android:drawableTop="@mipmap/home_shuiya_icon"
+                android:gravity="center"
+                android:paddingTop="44px"
+                android:visibility="invisible"
+                android:paddingBottom="22px"
+                android:background="@drawable/shape_white"
+                android:drawablePadding="30px"
+                android:textColor="@color/color333333"
+                android:layout_height="wrap_content" />
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

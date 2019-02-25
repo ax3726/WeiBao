@@ -19,7 +19,8 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
-import com.wb.weibao.ui.earlywarning.EarlyWarningFragment;
+import com.wb.weibao.ui.earlywarning.WarningFragment;
+import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
 import com.wb.weibao.ui.maintenance.MainTenanceFragment;
 import com.wb.weibao.ui.mine.MineFragment;
@@ -37,9 +38,10 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     private FragmentTransaction mTransaction;
     private List<Fragment> mFragments = new ArrayList<>();
     private DoubleClickExitHelper mDoubleClickExit;//
-    private EarlyWarningFragment mEarlyWarningFragment;
-    private RecordFragment mRecordFragment;
-    private MainTenanceFragment mMainTenanceFragment;
+    private HomeFragment mHomeFragment;
+    private WarningFragment WarningFragment;
+  /*  private RecordFragment mRecordFragment;
+    private MainTenanceFragment mMainTenanceFragment;*/
     private MineFragment mMineFragment;
     private List<ProjectListModel.DataBean.ListBean> mProjectList = new ArrayList<>();//项目列表
     private int mIndex = 0;//当前模块下标
@@ -71,15 +73,23 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.rb_forewarning:
+                    case R.id.rb_home:
                         if (currentFragmentPosition != 0) {
                             mIndex = 0;
-                            mBinding.rlyHead.setVisibility(View.VISIBLE);
+                            mBinding.rlyHead.setVisibility(View.GONE);
                             mBinding.tvAddOrder.setVisibility(View.GONE);
                             changeFragment(0);
                         }
                         break;
-                    case R.id.rb_record:
+                    case R.id.rb_forewarning:
+                        if (currentFragmentPosition != 1) {
+                            mIndex = 1;
+                         mBinding.rlyHead.setVisibility(View.GONE);
+                            mBinding.tvAddOrder.setVisibility(View.GONE);
+                            changeFragment(1);
+                        }
+                        break;
+                   /* case R.id.rb_record:
                         if (currentFragmentPosition != 1) {
                             mIndex = 1;
                             mBinding.rlyHead.setVisibility(View.VISIBLE);
@@ -95,12 +105,12 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                             mBinding.tvAddOrder.setVisibility(View.VISIBLE);
                             changeFragment(2);
                         }
-                        break;
+                        break;*/
                     case R.id.rb_myuser:
-                        if (currentFragmentPosition != 3) {
+                        if (currentFragmentPosition != 2) {
                             mBinding.rlyHead.setVisibility(View.GONE);
-                            mIndex = 3;
-                            changeFragment(3);
+                            mIndex = 2;
+                            changeFragment(2);
                         }
                         break;
                 }
@@ -117,18 +127,20 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     }
 
     private void initFragment() {
-        mEarlyWarningFragment = new EarlyWarningFragment();
-        mRecordFragment = new RecordFragment();
-        mMainTenanceFragment = new MainTenanceFragment();
+        mHomeFragment= new HomeFragment();
+        WarningFragment = new WarningFragment();
+       /* mRecordFragment = new RecordFragment();
+        mMainTenanceFragment = new MainTenanceFragment();*/
         mMineFragment = new MineFragment();
 
-        mFragments.add(mEarlyWarningFragment);
-        mFragments.add(mRecordFragment);
-        mFragments.add(mMainTenanceFragment);
+        mFragments.add(mHomeFragment);
+        mFragments.add(WarningFragment);
+        /*mFragments.add(mRecordFragment);
+        mFragments.add(mMainTenanceFragment);*/
         mFragments.add(mMineFragment);
         mFm = getSupportFragmentManager();
         mTransaction = mFm.beginTransaction();
-        mTransaction.add(R.id.lly_body, mEarlyWarningFragment);
+        mTransaction.add(R.id.lly_body, mHomeFragment);
         mTransaction.show(mFragments.get(0));
         mTransaction.commitAllowingStateLoss();
     }
@@ -203,12 +215,12 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
     private void toLoadData() {
 
-        if (mEarlyWarningFragment != null) {
-            mEarlyWarningFragment.loadData();
-        }
-        if (mRecordFragment != null) {
+//        if (WarningFragment != null) {
+//            WarningFragment.loadData();
+//        }
+     /*   if (mRecordFragment != null) {
             mRecordFragment.loadData();
-        }
+        }*/
     }
 
 

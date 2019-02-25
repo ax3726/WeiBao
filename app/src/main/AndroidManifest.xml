@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- 读写sdcard，storage等等 -->
     <application
@@ -16,7 +19,12 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
+        <!-- 高德地图 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="6443b3106159d510fb1105bec164e469" />
 
+        <service android:name="com.amap.api.location.APSService" />
         <!-- AUTO LAYOUT -->
         <meta-data
             android:name="design_width"
@@ -56,7 +64,15 @@
         <service android:name=".utils.update.DownloadService" />
 
         <activity android:name=".ui.Login.ForgetPwdActivity" />
-        <activity android:name=".ui.Login.RegisterActivity"></activity>
+        <activity android:name=".ui.Login.RegisterActivity" />
+        <activity android:name=".ui.home.InitiateWeibaoActivity" />
+        <activity android:name=".ui.home.InitiateStateActivity" />
+        <activity android:name=".ui.home.SentriesActivity" />
+        <activity android:name=".ui.home.SignActivity" />
+        <activity android:name=".ui.home.AddDayWeiBaoActivity" />
+        <activity android:name=".ui.home.ChangeShiftsActivity" />
+        <activity android:name=".widget.zxing.android.CaptureActivity" />
+        <activity android:name=".ui.home.HandEditActivity" />
     </application>
 
 </manifest>

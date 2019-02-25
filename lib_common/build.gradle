@@ -9,7 +9,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -60,5 +60,6 @@ dependencies {
     compile Dependencies.smartRefreshHeader
     compile Dependencies.eventbus
     compile Dependencies.cardview
+    compile Dependencies.multidex
 
 }

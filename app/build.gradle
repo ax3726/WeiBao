@@ -9,6 +9,7 @@ android {
         targetSdkVersion build_versions.target_sdk
         versionCode 3
         versionName "1.0.2"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -52,6 +53,7 @@ android {
     dataBinding {
         enabled = true
     }
+
 }
 
 dependencies {
@@ -68,4 +70,6 @@ dependencies {
     compile 'com.zhihu.android:matisse:0.4.3'
     implementation files('lib/core-3.0.0.jar')
     compile 'com.jiang.android.viewpagertransformer:transformer:1.0.1'
+
+
 }

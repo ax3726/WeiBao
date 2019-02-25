@@ -18,7 +18,7 @@ ext {
     rxandroidVersion = '2.0.1'
     rxjavaVersion = '2.1.3'
     smartRefreshVersion = '1.0.4-alpha-12'
-
+    multidexVersion = '1.0.2'
 
     Dependencies = [
             gson                  : "com.google.code.gson:gson:$gsonVersion",
@@ -41,6 +41,7 @@ ext {
             rxjava                : "io.reactivex.rxjava2:rxjava:$rxjavaVersion",
             smartRefreshLayout    : "com.scwang.smartrefresh:SmartRefreshLayout:$smartRefreshVersion",
             smartRefreshHeader    : "com.scwang.smartrefresh:SmartRefreshHeader:$smartRefreshVersion",
+            multidex              : "com.android.support:multidex:$multidexVersion"
     ]
 
 

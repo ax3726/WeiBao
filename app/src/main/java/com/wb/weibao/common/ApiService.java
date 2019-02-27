@@ -8,6 +8,7 @@ import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.DetailBean;
+import com.wb.weibao.model.home.SignListModel;
 import com.wb.weibao.model.record.RecordListModel;
 
 import io.reactivex.Flowable;
@@ -185,5 +186,33 @@ public interface ApiService {
     Flowable<VersionBean> getversion();
 
 
+    /**
+     * 签到签退接口地址
+     * @return
+     */
+    @POST("signup/list")
+    Flowable<SignListModel> getSignList(@Query("userId") String userId);
+
+    /**
+     * 签到
+     * @return
+     */
+    @POST("signup/add")
+    Flowable<BaseBean> addSignIn(@Query("userId") String userId);
+
+    /**
+     * 签退
+     * @return
+     */
+    @POST("signup/update")
+    Flowable<BaseBean> addSignOut(@Query("userId") String userId);
+
+
+    /**
+     *交接班记录
+     * @return
+     */
+    @POST("/earlywarn/handover/list")
+    Flowable<BaseBean> getHandoverList(@Query("userId") String userId);
 
 }

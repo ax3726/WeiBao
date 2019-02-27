@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:paddingTop="26px"
+        android:paddingLeft="30px"
+        android:paddingRight="30px"
+        android:background="@color/colorWhite"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="198px"
+            android:layout_height="130px"
+            android:layout_marginRight="20px"
+            android:src="@color/color666666" />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img"
+            android:lines="2"
+            android:text="xxx突发火灾，消防队是怎么及时处理的xxx突发火灾，"
+            android:textColor="@color/color333333"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img"
+            android:text="2017.09.09 12:30"
+            android:layout_alignBottom="@+id/img"
+            android:textColor="@color/color999999"
+            android:textSize="30px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/img"
+            android:layout_marginTop="24px"
+            android:background="@color/colorLine"
+            />
+    </com.zhy.autolayout.AutoRelativeLayout>
+</layout>

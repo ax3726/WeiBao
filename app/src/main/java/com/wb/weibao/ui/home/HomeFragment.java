@@ -53,7 +53,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(InitiateWeibaoActivity.class);
                 break;
             case R.id.tv_my_weibao://我的维保
-
+                startActivity(MySecurityActivity.class);
                 break;
             case R.id.tv_warning_record://警报统计
 
@@ -65,10 +65,10 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
                 break;
             case R.id.tv_fire_control://消防微岗
-
+                startActivity(FireControlActivity.class);
                 break;
             case R.id.tv_peixun://培训教育
-
+                startActivity(TrainingEducationActivity.class);
                 break;
         }
     }

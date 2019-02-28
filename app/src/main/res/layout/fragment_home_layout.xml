@@ -26,7 +26,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23px"
-                android:text="西湖科技园"
+                android:drawablePadding="10px"
+                android:gravity="center"
+                android:drawableLeft="@mipmap/location_icon"
                 android:textColor="@color/colorWhite"
                 android:textSize="32px" />
 

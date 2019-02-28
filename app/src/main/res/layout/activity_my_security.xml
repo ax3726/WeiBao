@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tb_head"
+            app:tabIndicatorColor="@color/colorDefault"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorDefault"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabTextColor="@color/color333333"
+            android:layout_width="match_parent"
+            android:layout_height="115px"
+            android:background="#ffffff" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10px"
+            android:layout_weight="1">
+
+        </android.support.v4.view.ViewPager>
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

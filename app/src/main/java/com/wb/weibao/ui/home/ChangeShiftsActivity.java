@@ -1,8 +1,6 @@
 package com.wb.weibao.ui.home;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -10,9 +8,13 @@ import com.wb.weibao.R;
 import com.wb.weibao.adapters.recyclerview.CommonAdapter;
 import com.wb.weibao.adapters.recyclerview.base.ViewHolder;
 import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityChangeShiftsBinding;
 import com.wb.weibao.databinding.ItemChangeShiftsLayoutBinding;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.widget.zxing.android.CaptureActivity;
 
 import java.util.ArrayList;
@@ -78,7 +80,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
         };
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
         mBinding.rcBody.setAdapter(mAdapter);
-
+        getDataList();
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -91,5 +93,31 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
 
             }
         }
+    }
+    /**
+     * 交接班记录
+     */
+    private void getDataList() {
+        Api.getApi().getHandoverList(MyApplication.getInstance().getUserData().getId() + "")
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(this, true) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
+                        if (baseBean.getData() != null) {
+                        /*    List<SignListModel.DataBean.ListBean> list = baseBean.getData().getList();
+                            mDataList.clear();
+                            if (list != null && list.size() > 0) {
+                                mDataList.addAll(list);
+                            }
+                            mAdapter.notifyDataSetChanged();*/
+                        }
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+                    }
+                });
+
     }
 }

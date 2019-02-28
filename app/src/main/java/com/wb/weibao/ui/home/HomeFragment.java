@@ -1,11 +1,23 @@
 package com.wb.weibao.ui.home;
 
+import android.text.TextUtils;
 import android.view.View;
 
 import com.wb.weibao.R;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragmentHomeLayoutBinding;
+import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.event.ProjectChangeEvent;
+import com.wb.weibao.utils.SpfKey;
+import com.wb.weibao.utils.SpfUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by LiMing
@@ -35,6 +47,14 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
         mBinding.tvWeibaoOrder.setOnClickListener(this);
         mBinding.tvFireControl.setOnClickListener(this);
         mBinding.tvPeixun.setOnClickListener(this);
+        mBinding.tvProject.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        EventBus.getDefault().register(this);
+        getProjectList();
     }
 
     @Override
@@ -53,23 +73,76 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(InitiateWeibaoActivity.class);
                 break;
             case R.id.tv_my_weibao://我的维保
-
+                startActivity(MySecurityActivity.class);
                 break;
             case R.id.tv_warning_record://警报统计
 
                 break;
             case R.id.tv_look_gang://查岗
-                  startActivity(SentriesActivity.class);
+                startActivity(SentriesActivity.class);
                 break;
             case R.id.tv_weibao_order://维保订单
 
                 break;
             case R.id.tv_fire_control://消防微岗
-
+                startActivity(FireControlActivity.class);
                 break;
             case R.id.tv_peixun://培训教育
-
+                startActivity(TrainingEducationActivity.class);
+                break;
+            case R.id.tv_project://选择项目
+                startActivity(ProjectListActivity.class);
                 break;
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onProjectChange(ProjectChangeEvent message) {
+        mBinding.tvProject.setText(SpfUtils.getInstance(aty).getSpfString(SpfKey.INST_NAME));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 获取项目列表
+     */
+    private void getProjectList() {
+        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
+                "" + MyApplication.getInstance().getUserData().getId()).compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
+                    @Override
+                    public void onSuccess(ProjectListModel baseBean) {
+                        ProjectListModel.DataBean data = baseBean.getData();
+                        if (data != null) {
+                            if (data.getList() != null && data.getList().size() > 0) {
+                                ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
+                                SpfUtils spfUtils = SpfUtils.getInstance(aty);
+                                if (!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID))) {
+
+                                    MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                                    mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+                                } else {
+                                    spfUtils.setSpfString(SpfKey.INST_ID,  String.valueOf(listBean.getId()));
+                                    spfUtils.setSpfString(SpfKey.INST_NAME, listBean.getName());
+                                    MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                                    mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+    }
+
 }

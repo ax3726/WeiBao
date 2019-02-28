@@ -63,8 +63,8 @@ public class Api {
     public static OkHttpClient getOkHttpClient(final DownloadResponseBody.DownLoadListener... downLoadListener) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                .addInterceptor(new LoggerInterceptor("msg", true))
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS);
+                .connectTimeout(60000L, TimeUnit.MILLISECONDS)
+                .readTimeout(30000L, TimeUnit.MILLISECONDS);
 
         if (downLoadListener.length > 0) {
             builder.addNetworkInterceptor(new Interceptor() {

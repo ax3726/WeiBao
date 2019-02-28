@@ -6,10 +6,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.wb.weibao.R;
+import com.wb.weibao.adapters.recyclerview.CommonAdapter;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntWarningBinding;
+import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.earlywarning.ErrorListModel;
+import com.wb.weibao.ui.Login.ForgetPwdActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,12 +55,16 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     private FireFragment fireFragment;
     private AlarmFragment alarmFragment;
 
+
+
+
     @Override
     protected void initData() {
         super.initData();
         initFragment();
         mBinding.pager.setOnPageChangeListener(this);
         mBinding.pager.setAdapter(new EventsPageAdpater(getChildFragmentManager()));
+
 
     }
 
@@ -93,11 +106,14 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     @Override
     public void onPageSelected(int position) {
         if (position == 0) {
-           mBinding.tabTvLine.setVisibility(View.VISIBLE);
+            mBinding.tabTvLine.setVisibility(View.VISIBLE);
             mBinding.tabTvLine1.setVisibility(View.INVISIBLE);
         } else {
             mBinding.tabTvLine.setVisibility(View.INVISIBLE);
             mBinding.tabTvLine1.setVisibility(View.VISIBLE);
         }
     }
+
+
+
 }

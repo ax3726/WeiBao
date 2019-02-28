@@ -6,10 +6,23 @@
         android:background="@color/colorBackground"
         android:orientation="vertical">
 
-       <TextView
-           android:text="333333"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srl_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

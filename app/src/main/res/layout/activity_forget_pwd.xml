@@ -58,8 +58,8 @@
                     android:textSize="28px" />
 
                 <TextView
-                    android:id="@+id/tv_add_order"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_phone_code"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20px"
@@ -68,6 +68,7 @@
                     android:paddingLeft="15px"
                     android:paddingRight="15px"
                     android:paddingTop="8px"
+                    android:gravity="center_horizontal"
                     android:text="获取验证码"
                     android:textColor="#2D3D6D"
                     android:textSize="30px" />

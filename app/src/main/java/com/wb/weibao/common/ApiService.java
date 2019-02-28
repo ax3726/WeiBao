@@ -185,5 +185,41 @@ public interface ApiService {
     Flowable<VersionBean> getversion();
 
 
+    /**
+     * 忘记密码
+     * @return
+     */
+    @POST("login/phoneCode")
+    Flowable<BaseBean> getphoneCode(@Query("phoneNo") String phoneNo);
+
+
+    /**
+     * 更新密码
+     * @param phoneNo
+     * @param code
+     * @param password
+     * @return
+     */
+    @POST("login/updatePassword")
+    Flowable<BaseBean> getupdatePassword(@Query("phoneNo") String phoneNo,@Query("code") String code,@Query("password") String password);
+
+
+    /**
+     * 预警模块
+     * @param userId
+     * @param instCode
+     * @param projectId
+     * @param type
+     * @param status
+     * @param warnFlag
+     * @param page
+     * @param size
+     * @return
+     */
+    @POST("early/record/list1")
+    Flowable<RecordListModel> getRecordList(@Query("userId") String userId,@Query("instCode") String instCode,@Query("projectId") String projectId,@Query("type") String type,@Query("status") String status,@Query("warnFlag") String warnFlag,@Query("page") int page,@Query("size") int size);
+
+
+
 
 }

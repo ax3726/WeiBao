@@ -38,52 +38,40 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
     @Override
     protected void initTitleBar() {
         super.initTitleBar();
-        mTitleBarLayout.setTitle("预警记录详情");
+
     }
     private String mId = "";
     private String muserId = "";
     @Override
     protected void initData() {
         super.initData();
+        mTitleBarLayout.setTitle(getIntent().getStringExtra("title").toString());
         list= (RecordListModel.DataBean.ListBean) getIntent().getSerializableExtra("item");
         mId=getIntent().getStringExtra("id");
         muserId=getIntent().getStringExtra("userId");
         Log.e("qw",list.toString());
         Log.e("qw",list.getPloop());
-        mBinding.tv1.setText(list.getInstName());
-        mBinding.tv2.setText((list.getFlowNo() == null) ? "" : ""+list.getFlowNo());
+        mBinding.tv1.setText(list.getWarningTime());
         switch (list.getStatus())
         {
             case "1":
-                mBinding.tv3.setText("预警中");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.color00A0F1));
+                mBinding.tv2.setText("待确认");
+                mBinding.tv2.setTextColor(getResources().getColor(R.color.color00A0F1));
                 mBinding.aly.setVisibility(View.VISIBLE);
                 mBinding.affirm3.setVisibility(View.VISIBLE);
                 break;
             case "2":
-                mBinding.tv3.setText("处理中");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorFACF28));
+                mBinding.tv2.setText("待处理");
+                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
                 mBinding.aly.setVisibility(View.VISIBLE);
                 mBinding.affirm1.setVisibility(View.VISIBLE);
-                mBinding.affirm2.setVisibility(View.VISIBLE);
-                break;
-            case "3":
-                mBinding.tv3.setText("无灾情");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.color00A0F1));
-                break;
-            case "4":
-                mBinding.tv3.setText("有灾情");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.colorF15453));
-                break;
-            case "5":
-                mBinding.tv3.setText("系统复位");
-                mBinding.tv3.setTextColor(getResources().getColor(R.color.color00A0F1));
                 break;
         }
+        mBinding.tv3.setText("火警");
+        mBinding.tv4.setText(list.getEquipmentType());
         switch (list.getWarningType()) {
             case "1":
                 mBinding.tv4.setText("采集器预警");
-
                 break;
             case "2":
                 mBinding.tv4.setText("主机预警");
@@ -188,10 +176,10 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
         mBinding.tv9.setText(list.getLevel());
         mBinding.tv10.setText(list.getProjectName());
         mBinding.tv11.setText(list.getProjectId());
-        mBinding.tv12.setText((list.getProjectPrincipalName() == null) ? "" : ""+list.getProjectPrincipalName());
-        mBinding.tv13.setText((list.getProjectPrincipalPhone() == null) ? "" : ""+list.getProjectPrincipalPhone());
-        mBinding.tv14.setText(list.getProjectArea());
-        mBinding.tv15.setText((list.getRdescribe() == null) ? "" : ""+list.getRdescribe());
+//        mBinding.tv12.setText((list.getProjectPrincipalName() == null) ? "" : ""+list.getProjectPrincipalName());
+//        mBinding.tv13.setText((list.getProjectPrincipalPhone() == null) ? "" : ""+list.getProjectPrincipalPhone());
+//        mBinding.tv14.setText(list.getProjectArea());
+//        mBinding.tv15.setText((list.getRdescribe() == null) ? "" : ""+list.getRdescribe());
         mBinding.affirm3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,43 +205,10 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
         mBinding.affirm1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().getId(),"4",MyApplication.getInstance().getUserData().getName(),mId)
-                        .compose(callbackOnIOToMainThread())
-                        .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
-                            @Override
-                            public void onSuccess(BaseBean baseBean) {
 
-                                EventBus.getDefault().post(new RecordDetailEvent());
-                                finish();
-                            }
-
-                            @Override
-                            public void onFail(String errMsg) {
-
-                            }
-                        });
             }
         });
-        mBinding.affirm2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate2("" + MyApplication.getInstance().getUserData().getId(),"3",MyApplication.getInstance().getUserData().getName(),mId)
-                        .compose(callbackOnIOToMainThread())
-                        .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
-                            @Override
-                            public void onSuccess(BaseBean baseBean) {
 
-                                EventBus.getDefault().post(new RecordDetailEvent());
-                                finish();
-                            }
-
-                            @Override
-                            public void onFail(String errMsg) {
-
-                            }
-                        });
-            }
-        });
     }
 
 }

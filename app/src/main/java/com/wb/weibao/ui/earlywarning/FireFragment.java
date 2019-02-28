@@ -57,13 +57,15 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_left_title:
-                        if (currentFragmentPosition != 0) {
-                            mIndex = 0;
 
+                        if (currentFragmentPosition != 0) {
+
+                            mIndex = 0;
                             changeFragment(0);
                         }
                         break;
                     case R.id.rb_center_title:
+
                         if (currentFragmentPosition != 1) {
                             mIndex = 1;
 
@@ -105,8 +107,10 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         mFm = getChildFragmentManager();
         mTransaction = mFm.beginTransaction();
         if (position != currentFragmentPosition) {
+
             mTransaction.hide(mFragments.get(currentFragmentPosition));
             if (!mFragments.get(position).isAdded()) {
+
                 mTransaction.add(R.id.lly_body, mFragments.get(position));
             }
             mTransaction.show(mFragments.get(position));

@@ -9,10 +9,11 @@ import java.util.List;
 
 public class RecordListModel implements Serializable {
 
+
     /**
      * code : 200
      * message : SUCCESS
-     * data : {"pageNum":1,"pageSize":15,"size":1,"orderBy":null,"startRow":1,"endRow":1,"total":1,"pages":1,"list":[{"startTime":null,"endTime":null,"id":4,"instCode":"0001","instName":"卡檬","projectId":"3","flowNo":null,"projectName":"商城","projectPrincipalName":null,"projectPrincipalPhone":null,"projectArea":"文二路199号","projectAreaCode":null,"mechanismId":"1","status":"1","rdescribe":null,"ploop":"","ppoint":"","confirmTime":null,"warningTime":"2018-08-31 15:21:18","warningType":"","subWarningType":"","changeStatus":"","confirmUserId":null,"closeUserId":null,"closeTime":null,"type":"1","level":"2","equipmentId":"1","equipmentType":"2","equipmentDetails":null,"latitude":null,"longitude":null,"earlyNum":0,"earlyTime":1535700078000,"createUserId":"1","updateUserId":null,"createTime":1536032512000,"updateTime":null}],"prePage":0,"nextPage":0,"isFirstPage":true,"isLastPage":true,"hasPreviousPage":false,"hasNextPage":false,"navigatePages":8,"navigatepageNums":[1],"navigateFirstPage":1,"navigateLastPage":1,"firstPage":1,"lastPage":1}
+     * data : {"pageNum":1,"pageSize":2,"size":2,"orderBy":null,"startRow":1,"endRow":2,"total":10,"pages":5,"list":[{"startTime":null,"endTime":null,"id":229,"instCode":"00010001","instName":"","projectId":"1","flowNo":"2018111833601793","projectName":"宜家时代大厦","projectPrincipalName":"陈静","projectPrincipalPhone":"15868476323","projectArea":"滨江区1号大街000号","projectAreaCode":"3310","mechanismId":"10","status":"1","rdescribe":"火灾报警系统通用：5，3。２＃４层送风口   监管","ploop":"5","ppoint":"3","confirmTime":null,"warningTime":"2018-11-18 03:30:00","warningType":"3","subWarningType":"34","changeStatus":"2","confirmUserId":null,"closeUserId":null,"closeTime":null,"type":"1","level":"1","equipmentId":"803","equipmentType":"3","equipmentDetails":"宜家时代大厦111","latitude":"30.221700","longitude":"120.228200","earlyNum":0,"earlyTime":1542483091000,"earlyType":"3","createUserId":"system","updateUserId":null,"createTime":1542483091000,"updateTime":null},{"startTime":null,"endTime":null,"id":205,"instCode":"00010001","instName":"宜家时代大厦","projectId":"1","flowNo":"20181107291","projectName":"宜家时代大厦","projectPrincipalName":"陈静","projectPrincipalPhone":"15868476323","projectArea":"滨江区1号大街000号","projectAreaCode":"3310","mechanismId":"1","status":"1","rdescribe":"火灾报警系统通用：1，4。地下室       监管","ploop":"1","ppoint":"4","confirmTime":null,"warningTime":"2018-11-07 20:16:00","warningType":"3","subWarningType":"34","changeStatus":"2","confirmUserId":null,"closeUserId":null,"closeTime":null,"type":"1","level":"1","equipmentId":"4","equipmentType":"3","equipmentDetails":"宜家时代大厦111","latitude":"30.221700","longitude":"120.228200","earlyNum":0,"earlyTime":1541593044000,"earlyType":"3","createUserId":"system","updateUserId":null,"createTime":1541593044000,"updateTime":null}],"prePage":0,"nextPage":2,"isFirstPage":true,"isLastPage":false,"hasPreviousPage":false,"hasNextPage":true,"navigatePages":8,"navigatepageNums":[1,2,3,4,5],"navigateFirstPage":1,"navigateLastPage":5,"firstPage":1,"lastPage":5}
      */
 
     private String code;
@@ -46,26 +47,26 @@ public class RecordListModel implements Serializable {
     public static class DataBean implements Serializable{
         /**
          * pageNum : 1
-         * pageSize : 15
-         * size : 1
+         * pageSize : 2
+         * size : 2
          * orderBy : null
          * startRow : 1
-         * endRow : 1
-         * total : 1
-         * pages : 1
-         * list : [{"startTime":null,"endTime":null,"id":4,"instCode":"0001","instName":"卡檬","projectId":"3","flowNo":null,"projectName":"商城","projectPrincipalName":null,"projectPrincipalPhone":null,"projectArea":"文二路199号","projectAreaCode":null,"mechanismId":"1","status":"1","rdescribe":null,"ploop":"","ppoint":"","confirmTime":null,"warningTime":"2018-08-31 15:21:18","warningType":"","subWarningType":"","changeStatus":"","confirmUserId":null,"closeUserId":null,"closeTime":null,"type":"1","level":"2","equipmentId":"1","equipmentType":"2","equipmentDetails":null,"latitude":null,"longitude":null,"earlyNum":0,"earlyTime":1535700078000,"createUserId":"1","updateUserId":null,"createTime":1536032512000,"updateTime":null}]
+         * endRow : 2
+         * total : 10
+         * pages : 5
+         * list : [{"startTime":null,"endTime":null,"id":229,"instCode":"00010001","instName":"","projectId":"1","flowNo":"2018111833601793","projectName":"宜家时代大厦","projectPrincipalName":"陈静","projectPrincipalPhone":"15868476323","projectArea":"滨江区1号大街000号","projectAreaCode":"3310","mechanismId":"10","status":"1","rdescribe":"火灾报警系统通用：5，3。２＃４层送风口   监管","ploop":"5","ppoint":"3","confirmTime":null,"warningTime":"2018-11-18 03:30:00","warningType":"3","subWarningType":"34","changeStatus":"2","confirmUserId":null,"closeUserId":null,"closeTime":null,"type":"1","level":"1","equipmentId":"803","equipmentType":"3","equipmentDetails":"宜家时代大厦111","latitude":"30.221700","longitude":"120.228200","earlyNum":0,"earlyTime":1542483091000,"earlyType":"3","createUserId":"system","updateUserId":null,"createTime":1542483091000,"updateTime":null},{"startTime":null,"endTime":null,"id":205,"instCode":"00010001","instName":"宜家时代大厦","projectId":"1","flowNo":"20181107291","projectName":"宜家时代大厦","projectPrincipalName":"陈静","projectPrincipalPhone":"15868476323","projectArea":"滨江区1号大街000号","projectAreaCode":"3310","mechanismId":"1","status":"1","rdescribe":"火灾报警系统通用：1，4。地下室       监管","ploop":"1","ppoint":"4","confirmTime":null,"warningTime":"2018-11-07 20:16:00","warningType":"3","subWarningType":"34","changeStatus":"2","confirmUserId":null,"closeUserId":null,"closeTime":null,"type":"1","level":"1","equipmentId":"4","equipmentType":"3","equipmentDetails":"宜家时代大厦111","latitude":"30.221700","longitude":"120.228200","earlyNum":0,"earlyTime":1541593044000,"earlyType":"3","createUserId":"system","updateUserId":null,"createTime":1541593044000,"updateTime":null}]
          * prePage : 0
-         * nextPage : 0
+         * nextPage : 2
          * isFirstPage : true
-         * isLastPage : true
+         * isLastPage : false
          * hasPreviousPage : false
-         * hasNextPage : false
+         * hasNextPage : true
          * navigatePages : 8
-         * navigatepageNums : [1]
+         * navigatepageNums : [1,2,3,4,5]
          * navigateFirstPage : 1
-         * navigateLastPage : 1
+         * navigateLastPage : 5
          * firstPage : 1
-         * lastPage : 1
+         * lastPage : 5
          */
 
         private int pageNum;
@@ -262,41 +263,42 @@ public class RecordListModel implements Serializable {
             /**
              * startTime : null
              * endTime : null
-             * id : 4
-             * instCode : 0001
-             * instName : 卡檬
-             * projectId : 3
-             * flowNo : null
-             * projectName : 商城
-             * projectPrincipalName : null
-             * projectPrincipalPhone : null
-             * projectArea : 文二路199号
-             * projectAreaCode : null
-             * mechanismId : 1
+             * id : 229
+             * instCode : 00010001
+             * instName :
+             * projectId : 1
+             * flowNo : 2018111833601793
+             * projectName : 宜家时代大厦
+             * projectPrincipalName : 陈静
+             * projectPrincipalPhone : 15868476323
+             * projectArea : 滨江区1号大街000号
+             * projectAreaCode : 3310
+             * mechanismId : 10
              * status : 1
-             * rdescribe : null
-             * ploop :
-             * ppoint :
+             * rdescribe : 火灾报警系统通用：5，3。２＃４层送风口   监管
+             * ploop : 5
+             * ppoint : 3
              * confirmTime : null
-             * warningTime : 2018-08-31 15:21:18
-             * warningType :
-             * subWarningType :
-             * changeStatus :
+             * warningTime : 2018-11-18 03:30:00
+             * warningType : 3
+             * subWarningType : 34
+             * changeStatus : 2
              * confirmUserId : null
              * closeUserId : null
              * closeTime : null
              * type : 1
-             * level : 2
-             * equipmentId : 1
-             * equipmentType : 2
-             * equipmentDetails : null
-             * latitude : null
-             * longitude : null
+             * level : 1
+             * equipmentId : 803
+             * equipmentType : 3
+             * equipmentDetails : 宜家时代大厦111
+             * latitude : 30.221700
+             * longitude : 120.228200
              * earlyNum : 0
-             * earlyTime : 1535700078000
-             * createUserId : 1
+             * earlyTime : 1542483091000
+             * earlyType : 3
+             * createUserId : system
              * updateUserId : null
-             * createTime : 1536032512000
+             * createTime : 1542483091000
              * updateTime : null
              */
 
@@ -306,15 +308,15 @@ public class RecordListModel implements Serializable {
             private String instCode;
             private String instName;
             private String projectId;
-            private Object flowNo;
+            private String flowNo;
             private String projectName;
-            private Object projectPrincipalName;
-            private Object projectPrincipalPhone;
+            private String projectPrincipalName;
+            private String projectPrincipalPhone;
             private String projectArea;
-            private Object projectAreaCode;
+            private String projectAreaCode;
             private String mechanismId;
             private String status;
-            private Object rdescribe;
+            private String rdescribe;
             private String ploop;
             private String ppoint;
             private Object confirmTime;
@@ -329,11 +331,12 @@ public class RecordListModel implements Serializable {
             private String level;
             private String equipmentId;
             private String equipmentType;
-            private Object equipmentDetails;
-            private Object latitude;
-            private Object longitude;
+            private String equipmentDetails;
+            private String latitude;
+            private String longitude;
             private int earlyNum;
             private long earlyTime;
+            private String earlyType;
             private String createUserId;
             private Object updateUserId;
             private long createTime;
@@ -387,11 +390,11 @@ public class RecordListModel implements Serializable {
                 this.projectId = projectId;
             }
 
-            public Object getFlowNo() {
+            public String getFlowNo() {
                 return flowNo;
             }
 
-            public void setFlowNo(Object flowNo) {
+            public void setFlowNo(String flowNo) {
                 this.flowNo = flowNo;
             }
 
@@ -403,19 +406,19 @@ public class RecordListModel implements Serializable {
                 this.projectName = projectName;
             }
 
-            public Object getProjectPrincipalName() {
+            public String getProjectPrincipalName() {
                 return projectPrincipalName;
             }
 
-            public void setProjectPrincipalName(Object projectPrincipalName) {
+            public void setProjectPrincipalName(String projectPrincipalName) {
                 this.projectPrincipalName = projectPrincipalName;
             }
 
-            public Object getProjectPrincipalPhone() {
+            public String getProjectPrincipalPhone() {
                 return projectPrincipalPhone;
             }
 
-            public void setProjectPrincipalPhone(Object projectPrincipalPhone) {
+            public void setProjectPrincipalPhone(String projectPrincipalPhone) {
                 this.projectPrincipalPhone = projectPrincipalPhone;
             }
 
@@ -427,11 +430,11 @@ public class RecordListModel implements Serializable {
                 this.projectArea = projectArea;
             }
 
-            public Object getProjectAreaCode() {
+            public String getProjectAreaCode() {
                 return projectAreaCode;
             }
 
-            public void setProjectAreaCode(Object projectAreaCode) {
+            public void setProjectAreaCode(String projectAreaCode) {
                 this.projectAreaCode = projectAreaCode;
             }
 
@@ -451,11 +454,11 @@ public class RecordListModel implements Serializable {
                 this.status = status;
             }
 
-            public Object getRdescribe() {
+            public String getRdescribe() {
                 return rdescribe;
             }
 
-            public void setRdescribe(Object rdescribe) {
+            public void setRdescribe(String rdescribe) {
                 this.rdescribe = rdescribe;
             }
 
@@ -571,27 +574,27 @@ public class RecordListModel implements Serializable {
                 this.equipmentType = equipmentType;
             }
 
-            public Object getEquipmentDetails() {
+            public String getEquipmentDetails() {
                 return equipmentDetails;
             }
 
-            public void setEquipmentDetails(Object equipmentDetails) {
+            public void setEquipmentDetails(String equipmentDetails) {
                 this.equipmentDetails = equipmentDetails;
             }
 
-            public Object getLatitude() {
+            public String getLatitude() {
                 return latitude;
             }
 
-            public void setLatitude(Object latitude) {
+            public void setLatitude(String latitude) {
                 this.latitude = latitude;
             }
 
-            public Object getLongitude() {
+            public String getLongitude() {
                 return longitude;
             }
 
-            public void setLongitude(Object longitude) {
+            public void setLongitude(String longitude) {
                 this.longitude = longitude;
             }
 
@@ -609,6 +612,14 @@ public class RecordListModel implements Serializable {
 
             public void setEarlyTime(long earlyTime) {
                 this.earlyTime = earlyTime;
+            }
+
+            public String getEarlyType() {
+                return earlyType;
+            }
+
+            public void setEarlyType(String earlyType) {
+                this.earlyType = earlyType;
             }
 
             public String getCreateUserId() {

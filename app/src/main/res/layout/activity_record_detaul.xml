@@ -3,7 +3,7 @@
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EFEEF3"
+        android:background="#F2F4F8"
         android:orientation="vertical">
         <ScrollView
             android:layout_weight="1"
@@ -12,23 +12,23 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#EFEEF3"
+                android:background="#F2F4F8"
                 android:orientation="vertical">
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rly_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_white"
-                    android:paddingBottom="30px"
+                    android:paddingBottom="10px"
                     android:paddingLeft="20px"
                     android:paddingRight="20px"
-                    android:paddingTop="30px">
+                    android:paddingTop="20px">
                     <TextView
                         android:id="@+id/tv_hint_1"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
-                        android:text="所属机构名称"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="预警时间："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
                     <TextView
                         android:id="@+id/tv_1"
@@ -41,12 +41,13 @@
                         android:textSize="28px" />
                     <!--下游流水号-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_1"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -54,8 +55,8 @@
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line"
-                        android:text="下游流水号"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="状态："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -70,12 +71,13 @@
                         android:textSize="28px" />
                     <!--状态-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line2"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_2"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -83,8 +85,8 @@
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line2"
-                        android:text="状态"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="预警类型："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -99,12 +101,13 @@
                         android:textSize="28px" />
                     <!--预警类型-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line3"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_3"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -112,8 +115,8 @@
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line3"
-                        android:text="预警类型"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="设备："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -128,12 +131,13 @@
                         android:textSize="28px" />
                     <!--预警子类型-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line4"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_4"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -141,8 +145,8 @@
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line4"
-                        android:text="预警子类型"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="设备点位："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -157,12 +161,13 @@
                         android:textSize="28px" />
                     <!--预警时间-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line5"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_5"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -170,8 +175,8 @@
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line5"
-                        android:text="预警时间"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="级别："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -186,21 +191,24 @@
                         android:textSize="28px" />
                     <!--位号-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line6"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_6"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
                         android:id="@+id/tv_hint_7"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
                         android:layout_below="@+id/view_line6"
-                        android:text="位号"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="楼层："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -216,21 +224,22 @@
 
                     <!--区号-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line7"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_7"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
                         android:id="@+id/tv_hint_8"
-                        android:layout_width="190px"
+                        android:layout_width="200px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line7"
-                        android:text="区号"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="设备安装地址："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -245,21 +254,32 @@
                         android:textSize="28px" />
                     <!--级别-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line8"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_8"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+                <com.zhy.autolayout.AutoRelativeLayout
 
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_white"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
+                    android:paddingRight="20px"
+                    android:paddingTop="20px">
                     <TextView
                         android:id="@+id/tv_hint_9"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line8"
-                        android:text="级别"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="所属机构："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -274,12 +294,13 @@
                         android:textSize="28px" />
                     <!--设备类型-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line81"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_9"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -287,8 +308,8 @@
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line81"
-                        android:text="设备类型"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="所属单位："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -303,12 +324,13 @@
                         android:textSize="28px" />
                     <!--项目名称-->
                     <View
+                        android:visibility="invisible"
                         android:id="@+id/view_line9"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_91"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
@@ -316,8 +338,8 @@
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line9"
-                        android:text="项目名称"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="联系人："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
@@ -332,27 +354,27 @@
                         android:textSize="28px" />
                     <!--项目Id-->
                     <View
-android:visibility="gone"
+
+                        android:visibility="invisible"
                         android:id="@+id/view_line10"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_10"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/tv_hint_11"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line10"
-                        android:text="项目Id"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="联系电话："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
-                        android:visibility="gone"
+                        android:visibility="invisible"
                         android:id="@+id/tv_11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -364,134 +386,88 @@ android:visibility="gone"
                         android:textSize="28px" />
                     <!--项目负责人-->
                     <View
-
+                        android:visibility="invisible"
                         android:id="@+id/view_line11"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_11"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
-
                         android:id="@+id/tv_hint_12"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line11"
-                        android:text="项目负责人"
-                        android:textColor="@color/colord9d9d9"
-                        android:textSize="28px" />
-
-                    <TextView
-
-                        android:id="@+id/tv_12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/view_line11"
-                        android:layout_toRightOf="@+id/tv_hint_12"
-                        android:layout_alignBaseline="@+id/tv_hint_12"
-                        android:background="@color/colorWhite"
+                        android:text="单位地址："
                         android:textColor="@color/color333333"
                         android:textSize="28px" />
-                    <!--负责人电话-->
-                    <View
 
-                        android:id="@+id/view_line12"
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_below="@+id/tv_hint_12"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
-                        android:background="@color/colorLine" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_white"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="10px"
+                    android:paddingLeft="20px"
+                    android:paddingRight="20px"
+                    android:paddingTop="20px">
 
                     <TextView
-
                         android:id="@+id/tv_hint_13"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view_line12"
-                        android:text="负责人电话"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="处理结果："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
-
                     <TextView
-
                         android:id="@+id/tv_13"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view_line12"
                         android:layout_toRightOf="@+id/tv_hint_13"
                         android:layout_alignBaseline="@+id/tv_hint_13"
                         android:background="@color/colorWhite"
                         android:textColor="@color/color333333"
                         android:textSize="28px" />
-                    <!--项目地址-->
+                    <!--下游流水号-->
                     <View
-
+                        android:visibility="invisible"
                         android:id="@+id/view_line13"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_below="@+id/tv_hint_13"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
+                        android:layout_marginBottom="20px"
+                        android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
 
                     <TextView
-
                         android:id="@+id/tv_hint_14"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_line13"
-                        android:text="项目地址"
-                        android:textColor="@color/colord9d9d9"
+                        android:text="处理描述："
+                        android:textColor="@color/color333333"
                         android:textSize="28px" />
 
                     <TextView
-
                         android:id="@+id/tv_14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/view_line13"
+                        android:layout_below="@+id/view_line"
                         android:layout_toRightOf="@+id/tv_hint_14"
-                        android:layout_alignBaseline="@+id/tv_hint_14"
+                        android:layout_alignBaseline="@+id/tv_hint_142"
                         android:background="@color/colorWhite"
                         android:textColor="@color/color333333"
                         android:textSize="28px" />
-                    <!--描述-->
-                    <View
-
-                        android:id="@+id/view_line14"
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_below="@+id/tv_hint_14"
-                        android:layout_marginBottom="30px"
-                        android:layout_marginTop="30px"
-                        android:background="@color/colorLine" />
-
-                    <TextView
-
-                        android:id="@+id/tv_hint_15"
-                        android:layout_width="190px"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/view_line14"
-                        android:text="描述"
-                        android:textColor="@color/colord9d9d9"
-                        android:textSize="28px" />
-
-                    <TextView
-
-                        android:id="@+id/tv_15"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/view_line14"
-                        android:layout_toRightOf="@+id/tv_hint_15"
-                        android:layout_alignBaseline="@+id/tv_hint_15"
-                        android:background="@color/colorWhite"
-                        android:textColor="@color/color333333"
-                        android:textSize="28px" />
+                    <!--状态-->
 
                 </com.zhy.autolayout.AutoRelativeLayout>
+
             </com.zhy.autolayout.AutoLinearLayout>
         </ScrollView>
         <com.zhy.autolayout.AutoLinearLayout
@@ -509,23 +485,8 @@ android:visibility="gone"
                 android:layout_weight="1"
                 android:textColor="@color/white"
                 android:layout_height="70px"
-                android:layout_marginLeft="24px"
-                android:layout_marginRight="24px"
-                android:text="确认有灾情"
+                android:text="处理"
                 android:layout_width="0px" />
-            <Button
-                android:visibility="gone"
-                android:background="@drawable/shape_common_theme"
-                android:id="@+id/affirm2"
-                android:layout_weight="1"
-                android:layout_width="0px"
-                android:textColor="@color/white"
-                android:layout_height="70px"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
-                android:text="确认无灾情"
-                />
-
             <Button
                 android:visibility="gone"
                 android:background="@drawable/shape_common_theme"
@@ -534,9 +495,7 @@ android:visibility="gone"
                 android:layout_width="0px"
                 android:textColor="@color/white"
                 android:layout_height="70px"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
-                android:text="已确认通知到信息"
+                android:text="确认收到通知"
                 />
         </com.zhy.autolayout.AutoLinearLayout>
 

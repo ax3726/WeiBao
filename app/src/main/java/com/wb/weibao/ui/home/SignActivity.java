@@ -17,6 +17,7 @@ import com.wb.weibao.databinding.ActivitySignBinding;
 import com.wb.weibao.databinding.ItemSignLayoutBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.SignListModel;
+import com.wb.weibao.utils.DemoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
 
     private List<SignListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<SignListModel.DataBean.ListBean> mAdapter;
+    private int mSignType = -1;// 1签到   0签退
 
     @Override
     protected int getLayoutId() {
@@ -53,7 +55,17 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
         mBinding.tvSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addSignIn();
+                if (mSignType > -1) {
+                    if (mSignType == 1) {
+                        addSignOut();
+                    } else {
+                        addSignIn();
+                    }
+                } else {
+                    showToast("数据错误!");
+                }
+
+
             }
         });
     }
@@ -66,6 +78,10 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
             @Override
             protected void convert(ViewHolder holder, SignListModel.DataBean.ListBean item, int position) {
                 ItemSignLayoutBinding binding = holder.getBinding(ItemSignLayoutBinding.class);
+
+                binding.tvState.setSelected(!"1".equals( item.getStatus()));
+                binding.tvState.setText("1".equals( item.getStatus())?"签到":"签退");
+                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getSignTime(), "yyyy/MM/dd HH:mm:ss"));
             }
         };
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
@@ -88,6 +104,28 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
 
 
         addSignList();
+        checkSign();
+    }
+
+    /**
+     * 检查状态
+     */
+    private void checkSign() {
+        Api.getApi().checkSign(MyApplication.getInstance().getUserData().getId() + "")
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(this, true) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
+                        mSignType = "1".equals(baseBean.getData().toString()) ? 1 : 0;
+                        mBinding.tvSign.setText(mSignType == 1 ? "值班签退" : "值班签到");
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
     }
 
     /**

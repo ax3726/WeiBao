@@ -6,9 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.TextUtils;
 
-import com.wb.weibao.base.ThisApplication;
+import com.lling.photopicker.PhotoPickerApplication;
 import com.lm.lib_common.utils.CacheUtils;
 import com.lm.lib_common.utils.Utils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -19,6 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.wb.weibao.base.ThisApplication;
 import com.wb.weibao.model.LoginModel;
 
 import java.util.LinkedList;
@@ -47,7 +47,7 @@ public class MyApplication extends ThisApplication {
         super.onCreate();
         instance = this;
         Base_Path = Utils.getCacheDirectory(this, Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-
+        PhotoPickerApplication.setUp(this);
         //缓存初始化
         CacheUtils.getInstance().init(CacheUtils.CacheMode.CACHE_MAX,
                 Utils.getCacheDirectory(this, Environment.DIRECTORY_DOCUMENTS).getAbsolutePath());

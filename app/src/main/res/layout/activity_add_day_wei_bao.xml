@@ -188,22 +188,23 @@
                     android:text="上传图片（选填，最多上传5张）"
                     android:textColor="#333333" />
 
-                <com.wb.weibao.utils.imageshowpicker.ImageShowPickerView
-                    android:id="@+id/it_picker_view"
-                    android:layout_width="wrap_content"
+                <GridView
+                    android:id="@+id/gv_body"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:layout_below="@+id/tv_picture"
                     android:layout_marginTop="20dp"
-                    android:background="@color/white"
-                    app:is_show_del="true">
+                    android:layout_marginBottom="20dp"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="4" />
 
-                </com.wb.weibao.utils.imageshowpicker.ImageShowPickerView>
 
                 <EditText
                     android:id="@+id/et_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/it_picker_view"
+                    android:layout_below="@+id/gv_body"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/shape_white2"
                     android:gravity="left"
@@ -223,7 +224,7 @@
                 android:layout_marginTop="63px"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="50px"
-                android:enabled="false"
+
                 android:text="确认添加" />
 
         </com.zhy.autolayout.AutoLinearLayout>

@@ -10,11 +10,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.lm.lib_common.utils.DoubleClickExitHelper;
+import com.wb.weibao.R;
 import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
-import com.lm.lib_common.utils.DoubleClickExitHelper;
-import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityMainBinding;
@@ -22,9 +22,7 @@ import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
-import com.wb.weibao.ui.maintenance.MainTenanceFragment;
 import com.wb.weibao.ui.mine.MineFragment;
-import com.wb.weibao.ui.record.RecordFragment;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
@@ -40,8 +38,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     private DoubleClickExitHelper mDoubleClickExit;//
     private HomeFragment mHomeFragment;
     private WarningFragment WarningFragment;
-  /*  private RecordFragment mRecordFragment;
-    private MainTenanceFragment mMainTenanceFragment;*/
+    /*  private RecordFragment mRecordFragment;
+      private MainTenanceFragment mMainTenanceFragment;*/
     private MineFragment mMineFragment;
     private List<ProjectListModel.DataBean.ListBean> mProjectList = new ArrayList<>();//项目列表
     private int mIndex = 0;//当前模块下标
@@ -84,7 +82,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                     case R.id.rb_forewarning:
                         if (currentFragmentPosition != 1) {
                             mIndex = 1;
-                         mBinding.rlyHead.setVisibility(View.GONE);
+                            mBinding.rlyHead.setVisibility(View.GONE);
                             mBinding.tvAddOrder.setVisibility(View.GONE);
                             changeFragment(1);
                         }
@@ -116,7 +114,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                 }
             }
         });
-        getProjectList();
+      //  getProjectList();
     }
 
     @Override
@@ -127,7 +125,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     }
 
     private void initFragment() {
-        mHomeFragment= new HomeFragment();
+        mHomeFragment = new HomeFragment();
         WarningFragment = new WarningFragment();
        /* mRecordFragment = new RecordFragment();
         mMainTenanceFragment = new MainTenanceFragment();*/
@@ -185,7 +183,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                                 mProjectList.addAll(data.getList());
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
 
-                                if(!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID)))
+                              if(!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID)))
                                 {
 
                                     MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
@@ -197,6 +195,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                                         MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                         mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
                                     }
+
+
 
                                 toLoadData();
 
@@ -241,8 +241,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                         @Override
                         public void onClick(String reason) {
                             ProjectListModel.DataBean.ListBean listBean = mProjectList.get(Integer.parseInt(reason));
-                            spfUtils.setSpfString(SpfKey.INST_ID,""+listBean.getId());
-                            spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getName());
+                            spfUtils.setSpfString(SpfKey.INST_ID, "" + listBean.getId());
+                            spfUtils.setSpfString(SpfKey.INST_NAME, listBean.getName());
                             MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                             mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
 //                            MyApplication.getInstance().setProjectId(listBean.getInstId());

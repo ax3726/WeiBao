@@ -15,5 +15,6 @@ public interface SpfKey {
     String INST_NAME = "InstName";
     String LatiTude = "latitude";
     String LongiTude = "longitude";
+    String InstCode = "InstCode";
     String IS_LOGIN = "IsLogin";
 }

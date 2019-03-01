@@ -77,6 +77,12 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
 
             }
         });
+        mBinding.tvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocationHelper.getInstance().startLocation(aty);
+            }
+        });
     }
 
     @Override

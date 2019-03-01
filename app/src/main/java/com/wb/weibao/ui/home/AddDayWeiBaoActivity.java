@@ -175,6 +175,8 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
         mIndex = 0;
         if (mImgs.size() > 0) {
             loadImg(mImgs.get(mIndex));
+        } else {
+            addRecord();
         }
     }
 
@@ -254,11 +256,12 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
                             public void run() {
                                 super.run();
                                 try {
-                                    sleep(15000);
+                                    sleep(1000);
+                                    finish();
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                finish();
+
                             }
                         }.start();
                     }
@@ -281,7 +284,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
                     mImgs.add("");
                 }
                 mAdapter.notifyDataSetChanged();
-                ;
+
             }
         }
     }

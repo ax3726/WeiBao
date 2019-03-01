@@ -11,6 +11,20 @@ android {
         versionName "1.0.2"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "9836f120436c8e8475374ced", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
     }
     signingConfigs {
         xxconfig {
@@ -68,5 +82,10 @@ dependencies {
     implementation 'com.zhihu.android:matisse:0.4.3'
     implementation files('lib/core-3.0.0.jar')
     implementation 'com.jiang.android.viewpagertransformer:transformer:1.0.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation project(':Photopicker')
+    compile 'cn.jiguang.sdk:jpush:3.1.1'
+    // 此处以JPush 3.1.1 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.9'
+
 }

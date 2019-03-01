@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wb.weibao">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,12 +21,28 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.home.SecurityInfoActivity"></activity>
+        <activity android:name=".ui.home.StatisticsActivity"></activity>
+        <activity android:name=".ui.home.SecurityInfoActivity" />
         <activity android:name=".ui.home.ProjectListActivity" />
         <activity android:name=".ui.home.FireControlActivity" />
         <activity android:name=".ui.home.MySecurityActivity" />
         <activity android:name=".ui.home.TrainingEducationActivity" />
 
+        <!-- 极光 -->
+        <!-- Required SDK 核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":multiprocess"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" /> <!-- 高德地图 -->

@@ -77,7 +77,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(MySecurityActivity.class);
                 break;
             case R.id.tv_warning_record://警报统计
-
+                startActivity(StatisticsActivity.class);
                 break;
             case R.id.tv_look_gang://查岗
                 startActivity(SentriesActivity.class);

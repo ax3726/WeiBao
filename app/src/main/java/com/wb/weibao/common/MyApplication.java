@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 
 import com.lling.photopicker.PhotoPickerApplication;
 import com.lm.lib_common.utils.CacheUtils;
@@ -24,6 +25,8 @@ import com.wb.weibao.model.LoginModel;
 import java.util.LinkedList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * Created by Administrator on 2017/11/22 0022.
@@ -35,6 +38,8 @@ public class MyApplication extends ThisApplication {
     private String token = "";//token
     private LoginModel.Data mUserData=null;//用户信息
     private String mProjectId = "";//当前项目id
+    private String mRegistrationID = "";//RegistrationID
+
     public static MyApplication getInstance() {
         return instance;
     }
@@ -51,6 +56,7 @@ public class MyApplication extends ThisApplication {
         //缓存初始化
         CacheUtils.getInstance().init(CacheUtils.CacheMode.CACHE_MAX,
                 Utils.getCacheDirectory(this, Environment.DIRECTORY_DOCUMENTS).getAbsolutePath());
+        initJpush();//初始化极光
         this.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
@@ -81,7 +87,23 @@ public class MyApplication extends ThisApplication {
 
     }
 
+    public String getRegistrationID() {
+        if (TextUtils.isEmpty(mRegistrationID)) {
+            mRegistrationID = JPushInterface.getRegistrationID(this);
+        }
+        return mRegistrationID;
+    }
 
+
+
+    public void initJpush() {
+        JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
+        // 通过极光推送，推送了很多通知到客户端时，如果用户不去处理，就会有很多保留在那里。
+//        新版本 SDK (v1.3.0) 增加此功能，限制保留的通知条数。默认为保留最近 5 条通知。
+        JPushInterface.setLatestNotificationNumber(this, 5);
+        mRegistrationID = JPushInterface.getRegistrationID(this);
+    }
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器

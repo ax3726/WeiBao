@@ -13,6 +13,7 @@ import com.wb.weibao.model.home.FrieControlModel;
 import com.wb.weibao.model.home.MaintenanceListModel;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
+import com.wb.weibao.model.home.StatisticsModel;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
 
@@ -294,6 +295,7 @@ public interface ApiService {
      */
     @POST("order/detail")
     Flowable<SecurityInfoModel> getMyWeiBaoInfo(@Query("id") String id, @Query("userId") String userId);
+
     /**
      * 消防微站
      *
@@ -308,7 +310,7 @@ public interface ApiService {
      * @return
      */
     @POST("/earlywarn/order/handle")
-    Flowable<BaseBean> handleWeiBao(@Query("id") String id,@Query("userId") String userId,@Query("processingName") String processingName, @Query("status") String status);
+    Flowable<BaseBean> handleWeiBao(@Query("id") String id, @Query("userId") String userId, @Query("processingName") String processingName, @Query("status") String status);
 
     /**
      * 交接班记录
@@ -389,6 +391,30 @@ public interface ApiService {
     Flowable<BaseBean> addWeiBao(@Query("userId") String userId, @Query("instCode") String instCode, @Query("type") String type,
                                  @Query("equipmentType") String equipmentType, @Query("faultType") String faultType, @Query("projectId") String projectId,
                                  @Query("picturesOssKeys") String picturesOssKeys, @Query("memo") String memo);
+
+    /**
+     * 极光推送别名绑定接口
+     *
+     * @return
+     */
+    @POST("/earlywarn/jpush/bindAlias")
+    Flowable<BaseBean> setJPush(@Query("userId") String userId, @Query("registrationId") String registrationId);
+
+    /**
+     * 警报系统
+     *
+     * @return
+     */
+    @POST("early/record/statisticsByWeek")
+    Flowable<StatisticsModel> getErrorData(@Query("userId") String userId, @Query("projecId") String projecId,@Query("instCode") String instCode, @Query("flag") String flag);
+
+    /**
+     * 故障率
+     *
+     * @return
+     */
+    @POST("early/record/statisticsFaultRateByWeek")
+    Flowable<StatisticsModel> getFaultData(@Query("userId") String userId, @Query("projecId") String projecId, @Query("instCode") String instCode, @Query("flag") String flag);
 
 
 }

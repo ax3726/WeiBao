@@ -18,6 +18,7 @@ import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityMainBinding;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
@@ -123,6 +124,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         super.initView(savedInstanceState);
         mDoubleClickExit = new DoubleClickExitHelper(this);
         initFragment();
+        setJPush();
     }
 
     private void initFragment() {
@@ -259,6 +261,24 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                 break;
         }
     }
+    /**
+     * 设置推送
+     */
+    private void setJPush() {
+        Api.getApi().setJPush(MyApplication.getInstance().getUserData().getId() + "", MyApplication.getInstance().getRegistrationID())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(this, true) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
 
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.wb.weibao.ui.record;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
@@ -183,7 +184,17 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
         mBinding.affirm1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(CLActivity.class);
+                if(getIntent().getStringExtra("title2").equals("告警")) {
+                    Intent intent=new Intent(aty,CLActivity.class);
+                    intent.putExtra("id",mId);
+                    startActivity(intent);
+
+                }else
+                    {
+                        Intent intent=new Intent(aty,AlarmCLActivity.class);
+                        intent.putExtra("id",mId);
+                        startActivity(intent);
+                    }
             }
         });
         mBinding.affirm4.setOnClickListener(new View.OnClickListener() {

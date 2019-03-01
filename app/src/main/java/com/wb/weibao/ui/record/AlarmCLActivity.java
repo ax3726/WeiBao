@@ -17,14 +17,12 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
-import com.wb.weibao.databinding.ActivityAddDayWeiBaoBinding;
+import com.wb.weibao.databinding.ActivityAlarmclBinding;
 import com.wb.weibao.databinding.ActivityClBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
-import com.wb.weibao.utils.picker.picker.DatePicker;
-import com.wb.weibao.utils.picker.picker.DateTimePicker;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
 
 import java.io.File;
@@ -35,7 +33,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class CLActivity extends BaseActivity<BasePresenter, ActivityClBinding> {
+public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmclBinding> {
 
     public final int RequestCode = 1001;
     private List<String> mImgs = new ArrayList<>();
@@ -43,7 +41,7 @@ public class CLActivity extends BaseActivity<BasePresenter, ActivityClBinding> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_cl;
+        return R.layout.activity_alarmcl;
     }
 
     @Override
@@ -179,21 +177,18 @@ public class CLActivity extends BaseActivity<BasePresenter, ActivityClBinding> {
         String name = mBinding.tv1.getText().toString().trim();
         String content = mBinding.etContent.getText().toString().trim();
 
+
         if (TextUtils.isEmpty(content)) {
             showToast("请输入内容!");
             return;
         }
-        int isfault;
-if(name.equals("是"))
-{
-    isfault=1;
-}else
-    {
-        isfault=2;
-    }
-
+        if(TextUtils.isEmpty(name))
+        {
+            showToast("请选择事件");
+            return;
+        }
         String str = DemoUtils.ListToString(mImageUUid, ";");
-        Api.getApi().getReportadd(MyApplication.getInstance().getUserData().getId() + "","2","",""+isfault,content,str,getIntent().getStringExtra("id").toString())
+        Api.getApi().getReportadd(MyApplication.getInstance().getUserData().getId() + "","1",name,"",content,str,getIntent().getStringExtra("id").toString())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -242,7 +237,7 @@ if(name.equals("是"))
     @SuppressLint("ResourceAsColor")
     public void project() {
         SinglePicker<String> picker = new SinglePicker<>(this,
-                new String[]{"是", "否"} );
+                new String[]{"发生火灾", "无火灾","其他"} );
         picker.setCanLoop(false);//不禁用循环
         picker.setTopBackgroundColor(0xFFEEEEEE);
         picker.setTopHeight(50);

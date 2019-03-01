@@ -27,7 +27,7 @@
                     android:id="@+id/tv_hint1"
                     android:layout_width="190px"
                     android:layout_height="wrap_content"
-                    android:text="是否设备故障"
+                    android:text="事件类型"
                     android:textColor="@color/color333333"
                     android:textSize="28px" />
 
@@ -39,7 +39,8 @@
                     android:layout_toRightOf="@+id/tv_hint1"
                     android:background="@color/colorWhite"
                     android:drawableRight="@drawable/bottom_jiantou"
-                    android:text="是"
+                    android:text=""
+                    android:hint="请选择"
                     android:drawablePadding="8dp"
                     android:gravity="right"
                     android:textColor="@color/color333333"
@@ -103,7 +104,7 @@
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="50px"
 
-                android:text="确定" />
+                android:text="确认" />
 
         </com.zhy.autolayout.AutoLinearLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -182,6 +182,9 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
             showToast("请输入内容!");
             return;
         }
+
+
+
         if(TextUtils.isEmpty(name))
         {
             showToast("请选择事件");

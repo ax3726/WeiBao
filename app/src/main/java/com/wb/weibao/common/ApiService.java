@@ -304,7 +304,7 @@ public interface ApiService {
      * @return
      */
     @POST("/earlywarn/early/record/count")
-    Flowable<RecordCount> getRecordcount(@Query("userId") String userId, @Query("instCode") String instCode, @Query("projecId") String projecId);
+    Flowable<RecordCount> getRecordcount(@Query("userId") String userId, @Query("instCode") String instCode, @Query("projectId") String projecId);
 
 
     /**

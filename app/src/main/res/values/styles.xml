@@ -104,6 +104,13 @@
         <item name="android:textColor">@color/events_list_activity_toolbar_tab__title_text_color_selector</item>
         <item name="android:textSize">14sp</item>
     </style>
-
+    <!--webView-->
+    <declare-styleable name="WebViewWithProgress">
+        <attr name="progressStyle" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="circle" value="1" />
+        </attr>
+        <attr name="barHeight" format="dimension" />
+    </declare-styleable>
 
 </resources>

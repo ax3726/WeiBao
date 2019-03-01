@@ -188,12 +188,13 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
                     Intent intent=new Intent(aty,CLActivity.class);
                     intent.putExtra("id",mId);
                     startActivity(intent);
-
+finish();
                 }else
                     {
                         Intent intent=new Intent(aty,AlarmCLActivity.class);
                         intent.putExtra("id",mId);
                         startActivity(intent);
+                        finish();
                     }
             }
         });

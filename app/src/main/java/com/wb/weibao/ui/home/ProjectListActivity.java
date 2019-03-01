@@ -69,6 +69,7 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
                         spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf( item.getId()));
                         spfUtils.setSpfString(SpfKey.INST_NAME, item.getName());
                         MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+
                         notifyDataSetChanged();
                         EventBus.getDefault().post(new ProjectChangeEvent());
 

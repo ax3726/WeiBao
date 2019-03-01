@@ -111,7 +111,9 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
                     public void onClick(View v) {
                         Intent intent = new Intent(aty, RecordDetailActivity.class);
                         intent.putExtra("title", "已处理详情");
+                        intent.putExtra("title2", "火警");
                         intent.putExtra("item", (Serializable) item);
+
                         intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getId());
                         intent.putExtra("id", "" + item.getId());
                         startActivity(intent);
@@ -158,7 +160,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), "1", "1", "3,4", "", mPage, mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "3,4", "37,53","", mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

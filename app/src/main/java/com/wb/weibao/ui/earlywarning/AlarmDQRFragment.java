@@ -1,16 +1,10 @@
 package com.wb.weibao.ui.earlywarning;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.lidroid.xutils.util.LogUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wb.weibao.R;
@@ -23,7 +17,6 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragmentDclBinding;
 import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
-import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.record.RecordDetailActivity;
@@ -36,7 +29,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDclBinding> {
+public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, FragmentDclBinding> {
 
 
     @Override
@@ -81,30 +74,76 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
 
                 }
 
-//                switch (item.getStatus())
-//                {
-//                    case "1":
-//                        binding.tvError.setText("预警中");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
-//                        break;
-//                    case "2":
-                        binding.tvError.setText("火警待处理");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.colorFACF28));
-//                        break;
-//                    case "3":
-//                        binding.tvError.setText("无灾情");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
-//                        break;
-//                    case "4":
-//                        binding.tvError.setText("有灾情");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.colorF15453));
-//                        break;
-//                    case "5":
-//                        binding.tvError.setText("系统复位");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
-//                        break;
-//                }
 
+                switch (item.getSubWarningType())
+                {
+                    case "11":
+                        binding.tvError.setText("采集器监测连接线路故障");
+                        break;
+                    case "12":
+                        binding.tvError.setText("采集器监控中心通信信道故障");
+                        break;
+                    case "13":
+                        binding.tvError.setText("采集器备电源故障");
+                        break;
+                    case "14":
+                        binding.tvError.setText("采集器主电源故障");
+                        break;
+                    case "21":
+                        binding.tvError.setText("主机复位");
+                        break;
+                    case "22":
+                        binding.tvError.setText("主机备电源故障");
+                        break;
+                    case "23":
+                        binding.tvError.setText("主机主电源故障");
+                        break;
+                    case "31":
+                        binding.tvError.setText("延时");
+                        break;
+                    case "32":
+                        binding.tvError.setText("反馈");
+                        break;
+                    case "33":
+                        binding.tvError.setText("启动");
+                        break;
+                    case "34":
+                        binding.tvError.setText("监管");
+                        break;
+                    case "35":
+                        binding.tvError.setText("屏蔽");
+                        break;
+                    case "36":
+                        binding.tvError.setText("故障");
+                        break;
+                    case "37":
+                        binding.tvError.setText("火警");
+                        break;
+                    case "38":
+                        binding.tvError.setText("测试");
+                        break;
+                    case "39":
+                        binding.tvError.setText("电源故障");
+                        break;
+                    case "41":
+                        binding.tvError.setText("漏电报警");
+                        break;
+                    case "42":
+                        binding.tvError.setText("漏电短路");
+                        break;
+                    case "43":
+                        binding.tvError.setText("漏电开路");
+                        break;
+                    case "45":
+                        binding.tvError.setText("温度报警");
+                        break;
+                    case "46":
+                        binding.tvError.setText("温度短路");
+                        break;
+                    case "47":
+                        binding.tvError.setText("温度开路");
+                        break;
+                }
 
 
                 RelativeLayout rly_item = holder.getView(R.id.rly);
@@ -113,7 +152,7 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
                     public void onClick(View v) {
                         Intent intent=new Intent(aty,RecordDetailActivity.class);
                         intent.putExtra("title", "待处理详情");
-                        intent.putExtra("title2", "火警");
+                        intent.putExtra("title2", "告警");
                         intent.putExtra("item", (Serializable) item);
                         intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getId());
                         intent.putExtra("id", ""+item.getId());
@@ -161,7 +200,7 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId(),"1","2","37,53","",mPage,mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId(),"1","2","","1",mPage,mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

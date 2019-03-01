@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                             mIndex = 1;
                             mBinding.rlyHead.setVisibility(View.GONE);
                             mBinding.tvAddOrder.setVisibility(View.GONE);
+                            toLoadData();
                             changeFragment(1);
                         }
                         break;
@@ -215,9 +216,11 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
     private void toLoadData() {
 
-//        if (WarningFragment != null) {
-//            WarningFragment.loadData();
-//        }
+        if (WarningFragment != null) {
+            WarningFragment.toLoadData();
+        }
+
+
      /*   if (mRecordFragment != null) {
             mRecordFragment.loadData();
         }*/

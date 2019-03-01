@@ -41,21 +41,21 @@ public class TrainingEducationActivity extends BaseActivity<BasePresenter, Activ
     @Override
     protected void initData() {
         super.initData();
-        mDataList.add("");
-        mDataList.add("");
-        mDataList.add("");
-        mDataList.add("");
-        mDataList.add("");
-        mDataList.add("");
-        mDataList.add("");
-        mDataList.add("");
-        mAdapter = new CommonAdapter<String>(aty, R.layout.item_train_education_layout, mDataList) {
-            @Override
-            protected void convert(ViewHolder holder, String s, int position) {
-
-            }
-        };
-        mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
-        mBinding.rcBody.setAdapter(mAdapter);
+//        mDataList.add("");
+//        mDataList.add("");
+//        mDataList.add("");
+//        mDataList.add("");
+//        mDataList.add("");
+//        mDataList.add("");
+//        mDataList.add("");
+//        mDataList.add("");
+//        mAdapter = new CommonAdapter<String>(aty, R.layout.item_train_education_layout, mDataList) {
+//            @Override
+//            protected void convert(ViewHolder holder, String s, int position) {
+//
+//            }
+//        };
+//        mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
+//        mBinding.rcBody.setAdapter(mAdapter);
     }
 }

@@ -30,7 +30,7 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
     protected void initTitleBar() {
         super.initTitleBar();
         mTitleBarLayout.setLeftShow(false);
-        mTitleBarLayout.setTitle("预警日志");
+        mTitleBarLayout.setTitle("我的");
         mTitleBarLayout.setTextSize(20);
     }
 
@@ -49,7 +49,8 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
     protected void initData() {
         super.initData();
         spfUtils = SpfUtils.getInstance(aty);
-
+        mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().name);
+        mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

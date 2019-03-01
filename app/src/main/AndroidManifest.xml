@@ -76,6 +76,7 @@
         <activity android:name=".widget.zxing.android.CaptureActivity" />
         <activity android:name=".ui.home.HandEditActivity" />
         <activity android:name="com.lling.photopicker.PhotoPickerActivity" />
+        <activity android:name=".ui.record.CLActivity"/>
     </application>
 
 </manifest>

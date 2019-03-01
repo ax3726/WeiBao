@@ -75,6 +75,21 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
         mFragments.add(alarmFragment);
     }
 
+    public void toLoadData() {
+
+        if (fireFragment != null) {
+            fireFragment.toLoadData();
+        }
+        if (alarmFragment != null) {
+            alarmFragment.toLoadData();
+        }
+
+     /*   if (mRecordFragment != null) {
+            mRecordFragment.loadData();
+        }*/
+    }
+
+
     class EventsPageAdpater extends FragmentPagerAdapter {
 
         public EventsPageAdpater(FragmentManager fm) {

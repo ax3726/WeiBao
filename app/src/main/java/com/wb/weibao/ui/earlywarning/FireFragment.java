@@ -14,13 +14,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wb.weibao.R;
 import com.google.android.gms.plus.PlusOneButton;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
+import com.wb.weibao.base.BaseNetListener;
+import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntEarlyWarningBinding;
 import com.wb.weibao.databinding.FragmentFireBinding;
+import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.record.RecordCount;
+import com.wb.weibao.ui.Login.ForgetPwdActivity;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.mine.MineFragment;
 
@@ -52,6 +59,9 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
     protected void initData() {
         super.initData();
         initFragment();
+        count();
+
+
         mBinding.tabTitleGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -62,6 +72,10 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
 
                             mIndex = 0;
                             changeFragment(0);
+                            if (tbcFragment != null) {
+                                tbcFragment.loadData();
+                            }
+                            count();
                         }
                         break;
                     case R.id.rb_center_title:
@@ -70,6 +84,10 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
                             mIndex = 1;
 
                             changeFragment(1);
+                            if (dclFragment != null) {
+                                dclFragment.loadData();
+                            }
+                            count();
                         }
                         break;
 
@@ -77,7 +95,12 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
                         if (currentFragmentPosition != 2) {
                             mIndex = 2;
                             changeFragment(2);
+                            if (yclFragment != null) {
+                                yclFragment.loadData();
+                            }
+                            count();
                         }
+
                         break;
                 }
             }
@@ -101,6 +124,27 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         mTransaction.commitAllowingStateLoss();
     }
 
+    public void toLoadData() {
+
+        count();
+        if (tbcFragment != null) {
+            tbcFragment.loadData();
+
+        }
+        if (dclFragment != null) {
+            dclFragment.loadData();
+
+        }
+        if (yclFragment != null) {
+            yclFragment.loadData();
+
+        }
+     /*   if (mRecordFragment != null) {
+            mRecordFragment.loadData();
+        }*/
+    }
+
+
     private int currentFragmentPosition = 0;
 
     public void changeFragment(final int position) {
@@ -119,5 +163,24 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         currentFragmentPosition = position;
     }
 
+   public  void count()
+   {
+       Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
+               .compose(callbackOnIOToMainThread())
+               .subscribe(new BaseNetListener<RecordCount>(FireFragment.this, false) {
+                   @Override
+                   public void onSuccess(RecordCount baseBean) {
+                       LogUtils.e("baseBean" + baseBean.toString());
+                        mBinding.rbLeftTitle.setText("待确认("+baseBean.getData().getFireWaitConfirmNum()+")");
+                        mBinding.rbCenterTitle.setText("待处理("+baseBean.getData().getFireWaitProccessNum()+")");
+
+                   }
+
+                   @Override
+                   public void onFail(String errMsg) {
+
+                   }
+               });
+   }
 
 }

@@ -9,6 +9,7 @@ import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.DetailBean;
 import com.wb.weibao.model.home.SignListModel;
+import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
 
 import io.reactivex.Flowable;
@@ -228,7 +229,7 @@ public interface ApiService {
      * @return
      */
     @POST("early/record/list1")
-    Flowable<RecordListModel> getRecordList(@Query("userId") String userId,@Query("instCode") String instCode,@Query("projectId") String projectId,@Query("type") String type,@Query("status") String status,@Query("warnFlag") String warnFlag,@Query("page") int page,@Query("size") int size);
+    Flowable<RecordListModel> getRecordList(@Query("userId") String userId,@Query("instCode") String instCode,@Query("projectId") String projectId,@Query("type") String type,@Query("status") String status,@Query("subWarningType") String subWarningType,@Query("warnFlag") String warnFlag,@Query("page") int page,@Query("size") int size);
 
 
 
@@ -294,4 +295,42 @@ public interface ApiService {
     @Multipart
     @POST("/earlywarn/oss/upload")
     Flowable<BaseBean> upLoad(@Part MultipartBody.Part file);
+
+    /**
+     * 预警日志记录数量查询
+     * @param userId
+     * @param instCode
+     * @param projecId
+     * @return
+     */
+    @POST("/earlywarn/early/record/count")
+    Flowable<RecordCount> getRecordcount(@Query("userId") String userId, @Query("instCode") String instCode, @Query("projecId") String projecId);
+
+
+    /**
+     * 预警处理上报接口
+     * @param userId
+     * @param eventType
+     * @param cause
+     * @param isFault
+     * @param detailReasons
+     * @param picturesOssKeys
+     * @param earlyRecordId
+     * @return
+     */
+    @POST("/earlywarn/early/event/report/add")
+    Flowable<BaseBean> getReportadd(@Query("userId") String userId, @Query("eventType") String eventType, @Query("cause") String cause, @Query("isFault") String isFault, @Query("detailReasons") String detailReasons, @Query("picturesOssKeys") String picturesOssKeys, @Query("earlyRecordId") String earlyRecordId);
+
+
+    /**
+     * 一键更新预警状态
+     * @param userId
+     * @param status
+     * @param id
+     * @return
+     */
+    @POST("/earlywarn/early/record/batchUpdateStatus")
+    Flowable<BaseBean> getBatchUpdateStatus(@Query("userId") String userId, @Query("status") String status, @Query("id") String id);
+
+
 }

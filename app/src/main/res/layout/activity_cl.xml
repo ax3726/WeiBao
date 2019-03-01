@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/lly_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F2F4F8"
+            android:orientation="vertical">
+
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_white"
+                android:paddingLeft="20px"
+                android:paddingTop="30px"
+                android:paddingRight="20px"
+                android:paddingBottom="30px">
+
+                <TextView
+                    android:id="@+id/tv_hint1"
+                    android:layout_width="190px"
+                    android:layout_height="wrap_content"
+                    android:text="是否设备故障"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <TextView
+                    android:id="@+id/tv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_hint1"
+                    android:layout_toRightOf="@+id/tv_hint1"
+                    android:background="@color/colorWhite"
+                    android:drawableRight="@drawable/bottom_jiantou"
+                    android:text="是"
+                    android:drawablePadding="8dp"
+                    android:gravity="right"
+                    android:textColor="@color/color333333"
+                    android:textSize="28px" />
+
+                <EditText
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_1"
+                    android:layout_marginTop="15dp"
+
+                    android:background="@drawable/shape_white2"
+                    android:gravity="left"
+                    android:hint="请描述具体详细信息"
+                    android:minHeight="200px"
+                    android:paddingLeft="5px"
+                    android:paddingTop="10px"
+                    android:paddingRight="5px"
+                    android:textColor="@color/color333333"
+                    android:textSize="26px" />
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_white"
+                android:paddingLeft="20px"
+                android:paddingTop="30px"
+                android:paddingRight="20px"
+                android:paddingBottom="30px">
+
+                <TextView
+                    android:id="@+id/tv_picture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="上传图片（选填，最多上传5张）"
+                    android:textColor="#333333" />
+
+                <GridView
+                    android:id="@+id/gv_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_below="@+id/tv_picture"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="4" />
+
+
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+
+            <Button
+                android:id="@+id/affirm"
+                style="@style/SmsButton"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="63px"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="50px"
+
+                android:text="提交" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>
+

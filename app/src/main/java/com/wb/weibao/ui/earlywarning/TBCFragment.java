@@ -94,7 +94,9 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                                 });
                     }
                 });
-                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH.mm.ss"));
+//                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH.mm.ss"));
+                binding.tvTime.setText(item.getWarningTime());
+
                 switch (item.getEquipmentType())
                 {
                     case "1":
@@ -144,6 +146,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                     public void onClick(View v) {
                         Intent intent=new Intent(aty,RecordDetailActivity.class);
                         intent.putExtra("title", "待确认详情");
+                        intent.putExtra("title2", "火警");
                         intent.putExtra("item", (Serializable) item);
                         intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getId());
                         intent.putExtra("id", ""+item.getId());
@@ -193,7 +196,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),"1","1","1","",mPage,mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId(),"1","1","37,53","",mPage,mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

@@ -32,6 +32,12 @@
             android:background="@drawable/events_list_activity_toolbar_tab__right_title_bg_selector"
             android:text="已处理" />
     </RadioGroup>
+        <com.zhy.autolayout.AutoFrameLayout
+            android:id="@+id/lly_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorBackground" />
 
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

@@ -245,7 +245,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
         mBinding.affirm.setEnabled(false);
         String str = DemoUtils.ListToString(mImageUUid, ";");
         Api.getApi().addRecord(MyApplication.getInstance().getUserData().getId() + "",
-                mDataList.get(mProjectIndex).getInstCode(), name, phone,time+"\" 00:00:00\"" ,NextTime +"\" 00:00:00\"", str, content)
+                mDataList.get(mProjectIndex).getInstCode(), name, phone,time+" 00:00:00" ,NextTime +" 00:00:00", str, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

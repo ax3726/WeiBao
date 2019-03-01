@@ -14,6 +14,8 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityRecordDetaulBinding;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
+import com.wb.weibao.ui.home.ChangeShiftsActivity;
+import com.wb.weibao.view.MyAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -201,6 +203,27 @@ finish();
         mBinding.affirm4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Api.getApi().getQuickAdd("" + MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),"1",MyApplication.getInstance().getProjectId(),mId)
+                        .compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
+                            @Override
+                            public void onSuccess(BaseBean baseBean) {
+                                new MyAlertDialog(RecordDetailActivity.this).builder().setTitle("提示").setMsg("一键发起维保成功，请在首页-我的维保中查看具体进度").setPositiveButton("我知道了", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        EventBus.getDefault().post(new RecordDetailEvent());
+                                        finish();
+                                    }
+                                }).show();
+
+                            }
+
+                            @Override
+                            public void onFail(String errMsg) {
+
+                            }
+                        });
 
             }
         });

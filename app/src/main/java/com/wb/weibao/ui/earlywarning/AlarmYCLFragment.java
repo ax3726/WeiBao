@@ -22,6 +22,7 @@ import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.record.RecordDetailActivity;
 import com.wb.weibao.utils.DemoUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -52,6 +53,7 @@ public class AlarmYCLFragment extends BaseFragment<BaseFragmentPresenter, Fragme
     @Override
     protected void initData() {
         super.initData();
+        EventBus.getDefault().register(this);
         mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_tbc_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, RecordListModel.DataBean.ListBean item, int position) {

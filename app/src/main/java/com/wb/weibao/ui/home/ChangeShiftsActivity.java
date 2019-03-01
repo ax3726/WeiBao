@@ -67,9 +67,35 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
         mBinding.tvJiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(aty,
-                        CaptureActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_SCAN);
+                if(isLocation==0)
+                {
+                    new MyAlertDialog(ChangeShiftsActivity.this).builder().setTitle("提示").setMsg("您已超出考勤范围，无法交接班，请在考勤范内交接班").setPositiveButton("我知道了", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    }).setNegativeButton("重新定位", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            LocationHelper.getInstance().startLocation(aty);
+                        }
+                    }).show();
+                }else {
+                    if(mSignType==1)
+                    {
+                        new MyAlertDialog(ChangeShiftsActivity.this).builder().setTitle("提示").setMsg("您还未签到，请先签到，再进行交接班").setPositiveButton("我知道了", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        }).show();
+                    }else
+                    {
+                        Intent intent = new Intent(aty,
+                                CaptureActivity.class);
+                        startActivityForResult(intent, REQUEST_CODE_SCAN);
+                    }
+                }
             }
         });
 
@@ -108,6 +134,8 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
         });
 
 
+
+
     }
 
     @Override
@@ -144,12 +172,11 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                     mLatitude = location.getLatitude();
                     mLongitude = location.getLongitude();
                     if (checkLocation()) {
-                        showToast("您已进入考勤范围");
                         isLocation=1;
 //                        mBinding.tvResult.setText("您已进入考勤范围…");
                     } else {
                         isLocation=0;
-                        showToast("您不在考勤范围");
+
 //                        mBinding.tvResult.setText("您不在考勤范围…");
                     }
                 }

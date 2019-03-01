@@ -19,6 +19,7 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityAddDayWeiBaoBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
@@ -84,6 +85,12 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
             @Override
             public void onClick(View v) {
                 submit();
+            }
+        });
+        mBinding.tv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getProjectList();
             }
         });
         initAdapter();
@@ -163,7 +170,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
     private int mIndex = 0;
 
     public void submit() {
-        mBinding.affirm.setEnabled(false);
+
         mImageUUid.clear();
         mIndex = 0;
         if (mImgs.size() > 0) {
@@ -229,9 +236,14 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
             showToast("请选择下次维保时间!");
             return;
         }
+        if (mProjectIndex==-1) {
+            showToast("请选择维修单位!");
+            return;
+        }
+        mBinding.affirm.setEnabled(false);
         String str = DemoUtils.ListToString(mImageUUid, ";");
         Api.getApi().addRecord(MyApplication.getInstance().getUserData().getId() + "",
-                MyApplication.getInstance().getProjectId(), name, phone,time ,NextTime , str, content)
+                mDataList.get(mProjectIndex).getInstCode(), name, phone,time ,NextTime , str, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -275,13 +287,46 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
     }
 
 
+    private List<ProjectListModel.DataBean.ListBean> mDataList=null;
+    private int mProjectIndex=-1;
 
+    /**
+     * 获取项目列表
+     */
+    private void getProjectList() {
+        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
+                "" + MyApplication.getInstance().getUserData().getId()).compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<ProjectListModel>(this, true) {
+                    @Override
+                    public void onSuccess(ProjectListModel baseBean) {
+                        ProjectListModel.DataBean data = baseBean.getData();
+                        if (data != null) {
+                            if (data.getList() != null && data.getList().size() > 0) {
+                                mDataList=data.getList();
+
+                                List<String> lists=new ArrayList<>();
+                                for (ProjectListModel.DataBean.ListBean bean:data.getList()) {
+                                    lists.add(bean.getInstName());
+                                }
+                                project(lists.toArray(new String[lists.size()]));
+
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+    }
 
     @SuppressLint("ResourceAsColor")
-    public void project() {
+    public void project(String [] strs) {
         SinglePicker<String> picker = new SinglePicker<>(this,
-                new String[]{"水瓶座", "双鱼座", "白羊", "金牛座", "双子座", "巨蟹座",
-                        "狮子座", "处女座", "天秤座", "天蝎座", "射手", "摩羯座"} );
+                strs );
         picker.setCanLoop(false);//不禁用循环
         picker.setTopBackgroundColor(0xFFEEEEEE);
         picker.setTopHeight(50);
@@ -309,6 +354,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
             @Override
             public void onItemPicked(int index, String item) {
                 mBinding.tv1.setText(item);
+                mProjectIndex=index;
             }
         });
         picker.show();

@@ -1,8 +1,10 @@
 package com.wb.weibao.ui.home;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 
+import com.amap.api.location.AMapLocation;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wb.weibao.R;
@@ -18,6 +20,9 @@ import com.wb.weibao.databinding.ItemSignLayoutBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.SignListModel;
 import com.wb.weibao.utils.DemoUtils;
+import com.wb.weibao.utils.LocationHelper;
+import com.wb.weibao.utils.SpfKey;
+import com.wb.weibao.utils.SpfUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +61,14 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
             @Override
             public void onClick(View v) {
                 if (mSignType > -1) {
-                    if (mSignType == 1) {
-                        addSignOut();
+                    if (checkLocation()) {
+                        if (mSignType == 1) {
+                            addSignOut();
+                        } else {
+                            addSignIn();
+                        }
                     } else {
-                        addSignIn();
+
                     }
                 } else {
                     showToast("数据错误!");
@@ -79,8 +88,8 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
             protected void convert(ViewHolder holder, SignListModel.DataBean.ListBean item, int position) {
                 ItemSignLayoutBinding binding = holder.getBinding(ItemSignLayoutBinding.class);
 
-                binding.tvState.setSelected(!"1".equals( item.getStatus()));
-                binding.tvState.setText("1".equals( item.getStatus())?"签到":"签退");
+                binding.tvState.setSelected(!"1".equals(item.getStatus()));
+                binding.tvState.setText("1".equals(item.getStatus()) ? "签到" : "签退");
                 binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getSignTime(), "yyyy/MM/dd HH:mm:ss"));
             }
         };
@@ -105,6 +114,41 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
 
         addSignList();
         checkSign();
+        LocationHelper.getInstance().setILocationListener(new LocationHelper.ILocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation location) {
+                if (location != null) {
+                    mLatitude = location.getLatitude();
+                    mLongitude = location.getLongitude();
+                    if (checkLocation()) {
+                        mBinding.tvResult.setText("您已进入考勤范围…");
+                    } else {
+                        mBinding.tvResult.setText("您不在考勤范围…");
+                    }
+                }
+            }
+        });
+        LocationHelper.getInstance().startLocation(aty);
+        SpfUtils spfUtils = SpfUtils.getInstance(aty);
+        mProjectLatitude = TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.LatiTude)) ? 0 : Double.valueOf(spfUtils.getSpfString(SpfKey.LatiTude));
+        mProjectLongitude = TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.LongiTude)) ? 0 : Double.valueOf(spfUtils.getSpfString(SpfKey.LongiTude));
+    }
+
+    private double mLatitude = 0;
+    private double mLongitude = 0;
+    private double mProjectLatitude = 0;
+    private double mProjectLongitude = 0;
+
+    private boolean checkLocation() {
+        if (mLatitude == 0 || mLongitude == 0) {
+            return false;
+        }
+        double m = DemoUtils.DistanceOfTwoPoints(mProjectLatitude, mProjectLongitude, mLatitude, mLongitude);
+        if (m <= 200) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -138,6 +182,9 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
                     @Override
                     public void onSuccess(BaseBean baseBean) {
                         showToast("签到成功!");
+                        mSignType = 1;
+                        mBinding.tvSign.setText( "值班签退" );
+                        addSignList();
                     }
 
                     @Override
@@ -158,6 +205,9 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
                     @Override
                     public void onSuccess(BaseBean baseBean) {
                         showToast("签退成功!");
+                        mSignType = 0;
+                        mBinding.tvSign.setText( "值班签到" );
+                        addSignList();
                     }
 
                     @Override

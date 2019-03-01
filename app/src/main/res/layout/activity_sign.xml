@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/selector_sign_result"
                         android:drawablePadding="14px"
-                        android:text="您已进入考勤范围…"
+                        android:text="您不在考勤范围…"
                         android:textColor="@color/color333333"
                         android:textSize="30px" />
 

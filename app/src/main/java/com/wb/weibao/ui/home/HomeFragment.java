@@ -128,6 +128,9 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                                 } else {
                                     spfUtils.setSpfString(SpfKey.INST_ID,  String.valueOf(listBean.getId()));
                                     spfUtils.setSpfString(SpfKey.INST_NAME, listBean.getName());
+                                    spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(listBean.getLatitude()));
+                                    spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(listBean.getLongitude()));
+                                    spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(listBean.getInstCode()));
                                     MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                     mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
                                 }

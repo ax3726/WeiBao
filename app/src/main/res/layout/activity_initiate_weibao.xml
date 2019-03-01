@@ -121,22 +121,25 @@
             <TextView
                 android:id="@+id/tv_picture"
                 android:textColor="#333333"
-                android:text="上传图片（选填，最多上传5张）"
+                android:text="上传图片（选填，最多上传4张）"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-              <com.wb.weibao.utils.imageshowpicker.ImageShowPickerView
-                  android:layout_marginTop="20dp"
-                  android:layout_below="@+id/tv_picture"
-                  android:id="@+id/it_picker_view"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:background="@color/white"
-                  app:is_show_del="true">
 
-              </com.wb.weibao.utils.imageshowpicker.ImageShowPickerView>
+
+            <GridView
+                android:id="@+id/gv_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/tv_picture"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4" />
+
             <EditText
                 android:layout_marginTop="15dp"
-                android:layout_below="@+id/it_picker_view"
+                android:layout_below="@+id/gv_body"
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +161,6 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="63px"
             android:layout_marginBottom="50px"
-            android:enabled="false"
             android:text="提交" />
 
     </com.zhy.autolayout.AutoLinearLayout>

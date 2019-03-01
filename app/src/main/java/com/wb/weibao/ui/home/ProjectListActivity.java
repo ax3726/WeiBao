@@ -68,6 +68,9 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
                         SpfUtils spfUtils = SpfUtils.getInstance(aty);
                         spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf( item.getId()));
                         spfUtils.setSpfString(SpfKey.INST_NAME, item.getName());
+                        spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(item.getLatitude()));
+                        spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(item.getLongitude()));
+                        spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(item.getInstCode()));
                         MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
 
                         notifyDataSetChanged();

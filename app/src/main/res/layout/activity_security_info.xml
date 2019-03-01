@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="24px"
+            android:paddingLeft="30px"
+            android:paddingTop="34px"
+            android:paddingBottom="34px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20px"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="24px"
+            android:paddingLeft="30px"
+            android:paddingTop="34px"
+            android:paddingBottom="24px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:paddingLeft="30px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:text="图片:"
+                android:textColor="@color/color333333"
+                android:textSize="28px" />
+
+            <GridView
+                android:id="@+id/gv_body"
+                android:layout_width="0dp"
+                android:numColumns="5"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+            </GridView>
+
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="6px"
+            android:paddingLeft="30px"
+            android:paddingTop="24px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="24px"
+            android:paddingLeft="30px"
+            android:paddingTop="24px"
+            android:paddingBottom="34px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+        <TextView
+            android:id="@+id/tv_4"
+            android:layout_marginTop="20px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="24px"
+            android:paddingLeft="30px"
+            android:paddingTop="34px"
+            android:paddingBottom="24px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+        <TextView
+            android:id="@+id/tv_info1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="6px"
+            android:paddingLeft="30px"
+
+            android:paddingBottom="24px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

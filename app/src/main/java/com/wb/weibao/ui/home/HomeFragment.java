@@ -1,5 +1,6 @@
 package com.wb.weibao.ui.home;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -82,7 +83,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(SentriesActivity.class);
                 break;
             case R.id.tv_weibao_order://维保订单
-
+                startActivity(new Intent(aty,MySecurityActivity.class).putExtra("type",1));
                 break;
             case R.id.tv_fire_control://消防微岗
                 startActivity(FireControlActivity.class);

@@ -31,6 +31,8 @@ import com.wb.weibao.ui.Login.ForgetPwdActivity;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.mine.MineFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 

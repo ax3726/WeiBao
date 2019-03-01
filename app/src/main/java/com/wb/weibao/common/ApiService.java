@@ -9,6 +9,7 @@ import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.DetailBean;
 import com.wb.weibao.model.home.DeviceTypeModel;
+import com.wb.weibao.model.home.Handoverbean;
 import com.wb.weibao.model.home.FrieControlModel;
 import com.wb.weibao.model.home.MaintenanceListModel;
 import com.wb.weibao.model.home.SecurityInfoModel;
@@ -51,6 +52,9 @@ public interface ApiService {
     @POST("project/list")
     Flowable<ProjectListModel> getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
 
+
+    @POST("project/list")
+    Flowable<ProjectListModel> getProject_list2(@Query("instCode") String instCode, @Query("userId") String userId,@Query("sMaintenance") String sMaintenance);
 
     /**
      * 预警列表接口
@@ -318,7 +322,7 @@ public interface ApiService {
      * @return
      */
     @POST("/earlywarn/handover/list")
-    Flowable<BaseBean> getHandoverList(@Query("userId") String userId);
+    Flowable<Handoverbean> getHandoverList(@Query("userId") String userId);
 
     /**
      * 设备：equipmentType， 故障：faultType 维保：maintenanceOrderType
@@ -334,7 +338,7 @@ public interface ApiService {
      * @return
      */
     @POST("/earlywarn/maintenance/record/add")
-    Flowable<BaseBean> addRecord(@Query("userId") String userId, @Query("projectCode") String projectCode, @Query("contractName") String contractName
+    Flowable<BaseBean> addRecord(@Query("userId") String userId, @Query("projectId") String projectId, @Query("contractName") String contractName
             , @Query("contractPhone") String contractPhone, @Query("maintenanceDate") String maintenanceDate, @Query("maintenanceNextDate") String maintenanceNextDate
             , @Query("picturesOssKeys") String picturesOssKeys, @Query("maintenanceContent") String maintenanceContent);
 
@@ -391,6 +395,18 @@ public interface ApiService {
     Flowable<BaseBean> addWeiBao(@Query("userId") String userId, @Query("instCode") String instCode, @Query("type") String type,
                                  @Query("equipmentType") String equipmentType, @Query("faultType") String faultType, @Query("projectId") String projectId,
                                  @Query("picturesOssKeys") String picturesOssKeys, @Query("memo") String memo);
+
+    /**
+     * 一键发起维保
+     * @param userId
+     * @param instCode
+     * @param type
+     * @param projectId
+     * @param recordId
+     * @return
+     */
+    @POST("/earlywarn/order/quickAdd")
+    Flowable<BaseBean> getQuickAdd(@Query("userId") String userId, @Query("instCode") String instCode, @Query("type") String type, @Query("projectId") String projectId, @Query("recordId") String recordId);
 
     /**
      * 极光推送别名绑定接口

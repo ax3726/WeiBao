@@ -61,7 +61,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
     private int mPage = 1;
-    private int mPageSize = 1;
+    private int mPageSize = 15;
     private String name="";
 
     @Override

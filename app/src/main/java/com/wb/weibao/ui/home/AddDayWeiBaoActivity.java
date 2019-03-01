@@ -146,7 +146,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
         datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
-                mBinding.tvTime.setText(year + "/" + month + "/" + day );
+                mBinding.tvTime.setText(year + "-" + month + "-" + day );
             }
         });
         datePicker.show();
@@ -159,7 +159,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
         datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
-                mBinding.tvNextTime.setText(year + "/" + month + "/" + day );
+                mBinding.tvNextTime.setText(year + "-" + month + "-" + day );
             }
         });
         datePicker.show();
@@ -245,7 +245,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
         mBinding.affirm.setEnabled(false);
         String str = DemoUtils.ListToString(mImageUUid, ";");
         Api.getApi().addRecord(MyApplication.getInstance().getUserData().getId() + "",
-                mDataList.get(mProjectIndex).getInstCode(), name, phone,time ,NextTime , str, content)
+                mDataList.get(mProjectIndex).getInstCode(), name, phone,time+" 00:00:00" ,NextTime +" 00:00:00", str, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -297,8 +297,8 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
      * 获取项目列表
      */
     private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getId()).compose(callbackOnIOToMainThread())
+        Api.getApi().getProject_list2(MyApplication.getInstance().getUserData().getCompanyId(),
+                "" + MyApplication.getInstance().getUserData().getId(),"1").compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, true) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {
@@ -312,7 +312,6 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
                                     lists.add(bean.getInstName());
                                 }
                                 project(lists.toArray(new String[lists.size()]));
-
                             }
 
                         }

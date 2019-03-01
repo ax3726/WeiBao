@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:textColor="@color/color2D3D6D"
                 android:textSize="32px"
-                android:text="交班于消防保安 章三"
+                android:text=""
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/tv_time"

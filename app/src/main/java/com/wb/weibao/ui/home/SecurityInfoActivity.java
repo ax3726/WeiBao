@@ -14,6 +14,7 @@ import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySecurityInfoBinding;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.utils.DemoUtils;
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySecurityInfoBinding> {
     private List<String> mImgs = new ArrayList<>();
     private CommonAdapter<String> mAdapter;
+    private int mType = -1;
 
     @Override
     protected int getLayoutId() {
@@ -47,11 +49,20 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
     }
 
     @Override
+    protected void initEvent() {
+        super.initEvent();
+
+    }
+
+    @Override
     protected void initData() {
         super.initData();
         String id = getIntent().getStringExtra("id");
+        mType = getIntent().getIntExtra("type", -1);
+
         getDataList(id);
         initAdapter();
+
     }
 
     /**
@@ -81,14 +92,30 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
         }
         SecurityInfoModel.DataBean data = baseBean.getData();
         String state = "";
-        String time="";
-        String CreateTime = data.getCreateTime()==0 ? "" : DemoUtils.ConvertTimeFormat(data.getCreateTime(), "yyyy.MM.dd HH.mm.ss");
-        String ProcessingTime = data.getProcessingTime()==0 ? "" : DemoUtils.ConvertTimeFormat(data.getProcessingTime(), "yyyy.MM.dd HH.mm.ss");
+        String time = "";
+        String CreateTime = data.getCreateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(data.getCreateTime(), "yyyy.MM.dd HH.mm.ss");
+        String ProcessingTime = data.getProcessingTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(data.getProcessingTime(), "yyyy.MM.dd HH.mm.ss");
         switch (data.getStatus()) {
             case "1"://待审核
                 state = "待审批";
                 mBinding.tv4.setVisibility(View.GONE);
                 mBinding.tvInfo1.setVisibility(View.GONE);
+                if (mType == 1) {
+                    mBinding.llyButtom.setVisibility(View.VISIBLE);
+                    mBinding.tvFail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            handleWeiBao(data.getId() + "", data.getProcessingName(), "5");
+                        }
+                    });
+                    mBinding.tvOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            handleWeiBao(data.getId() + "", data.getProcessingName(), "5");
+                        }
+                    });
+                }
+
                 break;
             case "2"://审核失败
                 state = "审批失败";
@@ -99,19 +126,19 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
                 state = "待维保";
                 mBinding.tv4.setVisibility(View.VISIBLE);
                 mBinding.tvInfo1.setVisibility(View.GONE);
-               time= "审核时间："+CreateTime ;
+                time = "审核时间：" + CreateTime;
                 break;
             case "4"://维保成功
                 state = "已完成";
                 mBinding.tv4.setVisibility(View.VISIBLE);
                 mBinding.tvInfo1.setVisibility(View.VISIBLE);
-                time= "审核时间："+CreateTime + "\n完成时间：" + ProcessingTime;
+                time = "审核时间：" + CreateTime + "\n完成时间：" + ProcessingTime;
                 break;
             case "5"://维保失败
                 state = "维保失败";
                 mBinding.tv4.setVisibility(View.VISIBLE);
                 mBinding.tvInfo1.setVisibility(View.VISIBLE);
-                time= "审核时间："+CreateTime ;
+                time = "审核时间：" + CreateTime;
                 break;
             default://已取消
                 state = "已取消";
@@ -128,7 +155,7 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
         mBinding.tv3.setText("维保发起人：" + data.getPrincipalName() + "\n发起人电话：" + data.getPrincipalPhone());
 
         mBinding.tv4.setText(time
-                +"\n维保联系人：" + data.getPrincipalName() + "\n维保联系人电话：" + data.getPrincipalPhone()
+                + "\n维保联系人：" + data.getPrincipalName() + "\n维保联系人电话：" + data.getPrincipalPhone()
 
         );
         mBinding.tvInfo1.setText("详情描述：" + data.getMemo());
@@ -159,5 +186,39 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
             }
         };
         mBinding.gvBody.setAdapter(mAdapter);
+    }
+
+    /**
+     * 维保
+     */
+    private void handleWeiBao(String id, String processingName, String state) {
+        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getId() + "", processingName, state)
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(this, true) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
+                        showToast("操作成功!");
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                super.run();
+                                try {
+                                    sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                finish();
+                            }
+                        }.start();
+
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
     }
 }

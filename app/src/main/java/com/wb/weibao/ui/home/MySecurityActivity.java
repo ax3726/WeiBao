@@ -72,6 +72,12 @@ public class MySecurityActivity extends BaseActivity<BasePresenter, ActivityMySe
         fragments.add(mSecurityFragment4);
 
         initTablayout();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getDataList();
     }
 

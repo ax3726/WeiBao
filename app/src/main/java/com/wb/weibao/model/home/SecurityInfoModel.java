@@ -87,7 +87,7 @@ public class SecurityInfoModel {
         private String memo;
         private Object inventory;
         private Object returnMsg;
-        private Object processingName;
+        private String processingName;
         private Object processingRet;
         private long processingTime;
         private String createUserId;
@@ -237,11 +237,11 @@ public class SecurityInfoModel {
             this.returnMsg = returnMsg;
         }
 
-        public Object getProcessingName() {
+        public String getProcessingName() {
             return processingName;
         }
 
-        public void setProcessingName(Object processingName) {
+        public void setProcessingName(String processingName) {
             this.processingName = processingName;
         }
 

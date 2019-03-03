@@ -97,7 +97,7 @@ public class SecurityFragment extends BaseFragment<BaseFragmentPresenter, Fragme
                 binding.rlyItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(aty, SecurityInfoActivity.class).putExtra("id", listBean.getId() + ""));
+                        startActivity(new Intent(aty, SecurityInfoActivity.class).putExtra("id", listBean.getId() + "").putExtra("type",mType));
                     }
                 });
             }

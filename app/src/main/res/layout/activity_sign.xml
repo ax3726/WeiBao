@@ -4,9 +4,9 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srl_body"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_height="match_parent">
+        android:focusableInTouchMode="true">
 
 
         <android.support.v4.widget.NestedScrollView
@@ -48,11 +48,12 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/selector_sign_result"
                         android:drawablePadding="14px"
-                        android:text="您已进入考勤范围…"
+                        android:text="您不在考勤范围…"
                         android:textColor="@color/color333333"
                         android:textSize="30px" />
 
                     <TextView
+                        android:id="@+id/tv_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="重新定位"

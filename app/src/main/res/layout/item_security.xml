@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rly_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
@@ -11,11 +12,12 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="150px"
+            android:singleLine="true"
             android:text="设备故障"
             android:textColor="@color/color333333"
-
             android:textSize="28px" />
 
         <TextView
@@ -25,7 +27,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="30px"
             android:text="已完成"
-            android:textColor="@color/color666666"
+            android:textColor="@color/weibao_state_color"
             android:textSize="28px" />
 
         <TextView
@@ -41,19 +43,19 @@
 
         <TextView
             android:id="@+id/tv_btn"
-            android:layout_alignParentRight="true"
-            android:layout_alignBaseline="@+id/tv_time"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_time"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="30px"
+            android:background="@drawable/shape_btn"
             android:paddingLeft="18px"
             android:paddingTop="5px"
-            android:paddingBottom="5px"
             android:paddingRight="18px"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_btn"
+            android:paddingBottom="5px"
             android:text="删除"
-            android:textSize="22px"
-            android:textColor="@color/color36519E" />
+            android:textColor="@color/color36519E"
+            android:textSize="22px" />
 
         <View
             android:layout_width="match_parent"

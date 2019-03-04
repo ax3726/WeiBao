@@ -64,7 +64,22 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
         initFragment();
         mBinding.pager.setOnPageChangeListener(this);
         mBinding.pager.setAdapter(new EventsPageAdpater(getChildFragmentManager()));
-
+        mBinding.tabTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               mBinding.pager.setCurrentItem(0);
+                mBinding.tabTvLine.setVisibility(View.VISIBLE);
+                mBinding.tabTvLine1.setVisibility(View.INVISIBLE);
+            }
+        });
+        mBinding.tabTv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBinding.pager.setCurrentItem(1);
+                mBinding.tabTvLine.setVisibility(View.INVISIBLE);
+                mBinding.tabTvLine1.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 

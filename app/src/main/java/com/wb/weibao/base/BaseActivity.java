@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.WidgetLayoutEmptyBinding;
 import com.wb.weibao.ui.Login.LoginActivity;
+import com.wb.weibao.utils.AppManager;
 import com.wb.weibao.widget.LoadingDialog;
 import com.wb.weibao.widget.TitleBarLayout;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -80,6 +81,7 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
         initData();
         initView(savedInstanceState);
         initEvent();
+        AppManager.addActivity(this);
     }
 
     /**

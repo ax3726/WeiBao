@@ -42,16 +42,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:paddingBottom="15dp"
+            android:paddingBottom="3dp"
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/color000000"
                 android:id="@+id/tv_timeline_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:text="查岗时间" />
             <TextView
+                android:textColor="@color/colorcccccc"
                 android:id="@+id/tv_timeline_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,12 +69,14 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textColor="@color/color000000"
                 android:id="@+id/tv_timeline_header2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:text="应答时间" />
             <TextView
+                android:textColor="@color/colorTheme"
                 android:id="@+id/tv_timeline_time2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

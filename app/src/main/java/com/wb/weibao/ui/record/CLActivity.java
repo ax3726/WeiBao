@@ -208,6 +208,7 @@ if(name.equals("是"))
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
+
                                 finish();
                             }
                         }.start();

@@ -8,8 +8,17 @@ import android.view.View;
 
 import com.wb.weibao.R;
 import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityHandEditBinding;
+import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.home.ChangEvent;
+import com.wb.weibao.utils.AppManager;
+import com.wb.weibao.widget.zxing.android.CaptureActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class HandEditActivity extends BaseActivity<BasePresenter, ActivityHandEditBinding> {
 
@@ -46,8 +55,26 @@ public class HandEditActivity extends BaseActivity<BasePresenter, ActivityHandEd
                     showToast("输入内容不能为空!");
                     return;
                 }
-                setResult(RESULT_OK, new Intent().putExtra("data", trim));
-                finish();
+                Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getId() + "",trim)
+                        .compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(HandEditActivity.this, false) {
+                            @Override
+                            public void onSuccess(BaseBean baseBean) {
+                                com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
+                                showToast("交班成功");
+                                AppManager.finishActivity2(CaptureActivity.class);
+                                EventBus.getDefault().post(new ChangEvent());
+                                finish();
+
+                            }
+
+                            @Override
+                            public void onFail(String errMsg) {
+
+                            }
+                        });
+//                setResult(RESULT_OK, new Intent().putExtra("data", trim));
+//                finish();
 
             }
         });

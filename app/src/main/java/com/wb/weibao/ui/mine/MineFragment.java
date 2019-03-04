@@ -1,6 +1,8 @@
 package com.wb.weibao.ui.mine;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.wb.weibao.base.BaseFragment;
@@ -67,5 +69,26 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
                 spfUtils.setSpfString(SpfKey.IS_LOGIN, "");
             }
         });
+        mBinding.phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                call("0571-56260119");
+            }
+        });
+
+    }
+
+    /**
+     * 调用拨号界面
+     *
+     * @param phone 电话号码
+     */
+    private void call(String phone) {
+        if (TextUtils.isEmpty(phone)) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

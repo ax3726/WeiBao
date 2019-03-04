@@ -292,8 +292,8 @@ public class ProjectListModel {
             private String memo;
             private String status;
             private int num;
-            private Object latitude;
-            private Object longitude;
+            private double latitude;
+            private double longitude;
             private String instCode;
             private String instId;
             private String instName;
@@ -378,19 +378,19 @@ public class ProjectListModel {
                 this.num = num;
             }
 
-            public Object getLatitude() {
+            public double getLatitude() {
                 return latitude;
             }
 
-            public void setLatitude(Object latitude) {
+            public void setLatitude(double latitude) {
                 this.latitude = latitude;
             }
 
-            public Object getLongitude() {
+            public double getLongitude() {
                 return longitude;
             }
 
-            public void setLongitude(Object longitude) {
+            public void setLongitude(double longitude) {
                 this.longitude = longitude;
             }
 

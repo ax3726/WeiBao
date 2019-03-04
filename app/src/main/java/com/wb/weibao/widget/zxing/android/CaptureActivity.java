@@ -96,7 +96,8 @@ public final class CaptureActivity extends BaseActivity<BasePresenter, CaptureBi
         mBinding.tvHand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(HandEditActivity.class,1001);
+//                startActivityForResult(HandEditActivity.class,1001);
+                startActivity(HandEditActivity.class);
             }
         });
     }

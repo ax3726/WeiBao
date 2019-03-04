@@ -14,6 +14,8 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityRecordDetaulBinding;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
+import com.wb.weibao.ui.home.ChangeShiftsActivity;
+import com.wb.weibao.view.MyAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -57,16 +59,17 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
         {
             case "1":
                 mBinding.tv2.setText("待确认");
-                mBinding.tv2.setTextColor(getResources().getColor(R.color.color00A0F1));
+//                mBinding.tv2.setTextColor(getResources().getColor(R.color.color00A0F1));
                 mBinding.aly.setVisibility(View.VISIBLE);
                 mBinding.affirm3.setVisibility(View.VISIBLE);
                 break;
             case "2":
                 mBinding.tv2.setText("待处理");
-                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
+//                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
                 if(getIntent().getStringExtra("title2").equals("火警")){
                     mBinding.aly.setVisibility(View.VISIBLE);
                     mBinding.affirm1.setVisibility(View.VISIBLE);
+                    mBinding.affirm1.setBackgroundColor(getResources().getColor(R.color.color36519E));
                 }else
                     {
                         mBinding.aly.setVisibility(View.VISIBLE);
@@ -81,7 +84,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
             case "3":
             case "4":
                 mBinding.tv2.setText("已处理");
-                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
+//                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
 //                mBinding.aly.setVisibility(View.VISIBLE);
 //                mBinding.affirm1.setVisibility(View.VISIBLE);
 //                mBinding.tv13.setText();
@@ -188,18 +191,40 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter,ActivityRec
                     Intent intent=new Intent(aty,CLActivity.class);
                     intent.putExtra("id",mId);
                     startActivity(intent);
-
+finish();
                 }else
                     {
                         Intent intent=new Intent(aty,AlarmCLActivity.class);
                         intent.putExtra("id",mId);
                         startActivity(intent);
+                        finish();
                     }
             }
         });
         mBinding.affirm4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Api.getApi().getQuickAdd("" + MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),"1",MyApplication.getInstance().getProjectId(),mId)
+                        .compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
+                            @Override
+                            public void onSuccess(BaseBean baseBean) {
+                                new MyAlertDialog(RecordDetailActivity.this).builder().setTitle("提示").setMsg("一键发起维保成功，请在首页-我的维保中查看具体进度").setPositiveButton("我知道了", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        EventBus.getDefault().post(new RecordDetailEvent());
+                                        finish();
+                                    }
+                                }).show();
+
+                            }
+
+                            @Override
+                            public void onFail(String errMsg) {
+
+                            }
+                        });
 
             }
         });

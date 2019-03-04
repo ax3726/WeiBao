@@ -97,7 +97,7 @@
                         android:layout_toRightOf="@+id/tv_hint_3"
                         android:layout_alignBaseline="@+id/tv_hint_3"
                         android:background="@color/colorWhite"
-                        android:textColor="@color/color333333"
+                        android:textColor="@color/colorC8241D"
                         android:textSize="28px" />
                     <!--预警类型-->
                     <View

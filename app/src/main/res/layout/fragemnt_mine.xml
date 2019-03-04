@@ -119,6 +119,7 @@
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/phone"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="90px"
@@ -197,11 +198,14 @@
                 android:textColor="@color/color4a4a4a"
                 android:textSize="14sp" />
 
-            <ImageView
+            <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:switchMinWidth="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:track="@drawable/track"
+                android:thumb="@drawable/thumb"
                  />
 
         </com.zhy.autolayout.AutoRelativeLayout>

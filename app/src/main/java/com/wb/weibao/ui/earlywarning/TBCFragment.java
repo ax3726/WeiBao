@@ -61,7 +61,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
     private int mPage = 1;
-    private int mPageSize = 1;
+    private int mPageSize = 15;
     private String name="";
 
     @Override
@@ -118,7 +118,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
 //                {
 //                    case "1":
                         binding.tvError.setText("火警待确认");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
+                        binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
 //                        break;
 //                    case "2":
 //                        binding.tvError.setText("待处理详情");

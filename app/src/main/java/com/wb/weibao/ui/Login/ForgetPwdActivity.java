@@ -128,7 +128,8 @@ public class ForgetPwdActivity extends BaseActivity<BasePresenter,ActivityForget
                            @Override
                            public void onSuccess(BaseBean baseBean) {
                                LogUtils.e("baseBean" + baseBean.toString());
-
+                                showToast("修改成功");
+                                finish();
 
                            }
 

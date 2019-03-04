@@ -20,6 +20,7 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityAlarmclBinding;
 import com.wb.weibao.databinding.ActivityClBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.home.DeviceTypeModel;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
@@ -78,7 +79,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
         mBinding.tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                project();
+               getFaultList();
             }
         });
     }
@@ -125,7 +126,32 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
         mBinding.gvBody.setAdapter(mAdapter);
     }
 
+    /**
+     * 类型列表
+     */
+    private void getFaultList() {
+        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getId() + "", "earlyWarningReason")
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<DeviceTypeModel>(this, true) {
+                    @Override
+                    public void onSuccess(DeviceTypeModel baseBean) {
+                        List<DeviceTypeModel.DataBean> data = baseBean.getData();
+                        if (data != null && data.size() > 0) {
+                            List<String> lists = new ArrayList<>();
+                            for (DeviceTypeModel.DataBean bean : data) {
+                                lists.add(bean.getName());
+                            }
+                            project(lists.toArray(new String[lists.size()]));
+                        }
+                    }
 
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
+    }
 
 
 
@@ -182,6 +208,9 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
             showToast("请输入内容!");
             return;
         }
+
+
+
         if(TextUtils.isEmpty(name))
         {
             showToast("请选择事件");
@@ -235,9 +264,9 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
 
 
     @SuppressLint("ResourceAsColor")
-    public void project() {
+    public void project(String[] strs ) {
         SinglePicker<String> picker = new SinglePicker<>(this,
-                new String[]{"发生火灾", "无火灾","其他"} );
+                strs);
         picker.setCanLoop(false);//不禁用循环
         picker.setTopBackgroundColor(0xFFEEEEEE);
         picker.setTopHeight(50);

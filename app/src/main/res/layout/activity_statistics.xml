@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68px"
+                android:layout_marginTop="40px"
+                android:layout_marginBottom="30px"
+                android:text="火警报告"
+                android:textColor="@color/color333333"
+                android:textSize="28px" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_head"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            android:layout_marginTop="20px"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68px"
+                android:layout_marginTop="40px"
+                android:layout_marginBottom="30px"
+                android:text="设备完好率"
+                android:textColor="@color/color333333"
+                android:textSize="28px" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_footer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

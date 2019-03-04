@@ -225,7 +225,7 @@
                 android:paddingLeft="30px"
                 android:paddingRight="30px">
 
-                <LinearLayout
+                <com.zhy.autolayout.AutoLinearLayout
                     android:id="@+id/tv_weibao_order"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -269,7 +269,7 @@
                     <!--android:textColor="@color/color333333"-->
                     <!--android:textSize="26px" />-->
 
-                </LinearLayout>
+                </com.zhy.autolayout.AutoLinearLayout>
 
                 <TextView
                     android:id="@+id/tv_fire_control"

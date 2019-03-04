@@ -1,5 +1,6 @@
 package com.wb.weibao.ui.home;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +15,6 @@ import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySecurityInfoBinding;
-import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.utils.DemoUtils;
 
@@ -104,13 +104,16 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
                     mBinding.tvFail.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            handleWeiBao(data.getId() + "", data.getProcessingName(), "5");
+
+                            startActivityForResult(new Intent(aty, HandleMaintenanceActivity.class).putExtra("id", data.getId() + "")
+                                    .putExtra("name", data.getPrincipalName()).putExtra("type", "5"), 1001);
                         }
                     });
                     mBinding.tvOk.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            handleWeiBao(data.getId() + "", data.getProcessingName(), "5");
+                            startActivityForResult(new Intent(aty, HandleMaintenanceActivity.class).putExtra("id", data.getId() + "")
+                                    .putExtra("name", data.getPrincipalName()).putExtra("type", "4"), 1001);
                         }
                     });
                 }
@@ -187,37 +190,11 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
         mBinding.gvBody.setAdapter(mAdapter);
     }
 
-    /**
-     * 维保
-     */
-    private void handleWeiBao(String id, String processingName, String state) {
-        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getId() + "", state)
-                .compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(this, true) {
-                    @Override
-                    public void onSuccess(BaseBean baseBean) {
-                        showToast("操作成功!");
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                super.run();
-                                try {
-                                    sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                finish();
-                            }
-                        }.start();
-
-
-                    }
-
-                    @Override
-                    public void onFail(String errMsg) {
-
-                    }
-                });
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            finish();
+        }
     }
 }

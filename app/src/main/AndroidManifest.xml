@@ -25,6 +25,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.home.HandleMaintenanceActivity"></activity>
         <activity android:name=".ui.home.StatisticsActivity" />
         <activity android:name=".ui.home.SecurityInfoActivity" />
         <activity android:name=".ui.home.ProjectListActivity" />
@@ -51,8 +52,7 @@
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <category android:name="com.wb.weibao" />
             </intent-filter>
-        </receiver>
-        <!-- 极光 -->
+        </receiver> <!-- 极光 -->
         <!-- Required SDK 核心功能 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -127,7 +127,7 @@
         <activity android:name=".ui.record.CLActivity" />
         <activity android:name=".ui.record.AlarmCLActivity" />
         <activity android:name=".ui.home.QrcodeActivity" />
-        <activity android:name=".ui.mine.ProposalActivity"></activity>
+        <activity android:name=".ui.mine.ProposalActivity" />
     </application>
 
 </manifest>

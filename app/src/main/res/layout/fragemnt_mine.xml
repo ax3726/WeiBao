@@ -251,10 +251,11 @@
             android:enabled="true"
             android:id="@+id/btn_tui"
             style="@style/SmsButton"
+            android:background="@drawable/shape_blue2"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-
             android:layout_marginBottom="40px"
+            android:textColor="@color/color000000"
             android:text="退出登陆"
             />
     </com.zhy.autolayout.AutoLinearLayout>

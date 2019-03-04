@@ -105,7 +105,6 @@
             android:background="@color/colorWhite"
             android:lineSpacingExtra="6px"
             android:paddingLeft="30px"
-
             android:paddingBottom="24px"
             android:textColor="@color/color333333"
             android:textSize="28px" />

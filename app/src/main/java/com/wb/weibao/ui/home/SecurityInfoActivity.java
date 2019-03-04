@@ -59,7 +59,6 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
         super.initData();
         String id = getIntent().getStringExtra("id");
         mType = getIntent().getIntExtra("type", -1);
-
         getDataList(id);
         initAdapter();
 
@@ -131,7 +130,7 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
             case "4"://维保成功
                 state = "已完成";
                 mBinding.tv4.setVisibility(View.VISIBLE);
-                mBinding.tvInfo1.setVisibility(View.VISIBLE);
+                mBinding.tvInfo1.setVisibility(View.GONE);
                 time = "审核时间：" + CreateTime + "\n完成时间：" + ProcessingTime;
                 break;
             case "5"://维保失败
@@ -192,7 +191,7 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
      * 维保
      */
     private void handleWeiBao(String id, String processingName, String state) {
-        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getId() + "", processingName, state)
+        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getId() + "", state)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

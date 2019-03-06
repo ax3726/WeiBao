@@ -29,7 +29,47 @@
                 android:id="@+id/lc_head"
 
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30px"
+                android:layout_marginTop="30px"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content">
+                
+                <View
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:background="#0000FF"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/color333333"
+                    android:textSize="24px"
+                    android:text="本周"
+                    android:layout_marginLeft="20px"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:layout_marginLeft="100px"
+                    android:background="#FC5C5E"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/color333333"
+                    android:textSize="24px"
+                    android:text="上周"
+                    android:layout_marginLeft="20px"
+                    android:layout_height="wrap_content" />
+                
+            </com.zhy.autolayout.AutoLinearLayout>
+            
 
         </com.zhy.autolayout.AutoLinearLayout>
 
@@ -54,7 +94,46 @@
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lc_footer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30px"
+                android:layout_marginTop="30px"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:background="#0000FF"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/color333333"
+                    android:textSize="24px"
+                    android:text="本周"
+                    android:layout_marginLeft="20px"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="25px"
+                    android:layout_height="25px"
+                    android:layout_marginLeft="100px"
+                    android:background="#FC5C5E"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/color333333"
+                    android:textSize="24px"
+                    android:text="上周"
+                    android:layout_marginLeft="20px"
+                    android:layout_height="wrap_content" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
 
         </com.zhy.autolayout.AutoLinearLayout>
 

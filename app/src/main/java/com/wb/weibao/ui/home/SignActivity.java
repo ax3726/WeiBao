@@ -71,7 +71,8 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
 
                     }
                 } else {
-                    showToast("数据错误!");
+                    showToast("考勤状态获取失败!");
+                    checkSign();
                 }
 
 
@@ -189,7 +190,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
                     public void onSuccess(BaseBean baseBean) {
                         showToast("签到成功!");
                         mSignType = 1;
-                        mBinding.tvSign.setText( "值班签退" );
+                        mBinding.tvSign.setText("值班签退");
                         addSignList();
                     }
 
@@ -212,7 +213,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
                     public void onSuccess(BaseBean baseBean) {
                         showToast("签退成功!");
                         mSignType = 0;
-                        mBinding.tvSign.setText( "值班签到" );
+                        mBinding.tvSign.setText("值班签到");
                         addSignList();
                     }
 

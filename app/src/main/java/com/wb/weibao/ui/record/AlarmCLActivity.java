@@ -21,10 +21,13 @@ import com.wb.weibao.databinding.ActivityAlarmclBinding;
 import com.wb.weibao.databinding.ActivityClBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.DeviceTypeModel;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -228,13 +231,15 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
                             public void run() {
                                 super.run();
                                 try {
-                                    sleep(15000);
+                                    sleep(1500);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
+                                EventBus.getDefault().post(new RecordDetailEvent());
                                 finish();
                             }
                         }.start();
+
                     }
 
                     @Override

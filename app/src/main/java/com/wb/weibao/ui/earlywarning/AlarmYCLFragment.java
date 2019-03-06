@@ -60,7 +60,7 @@ public class AlarmYCLFragment extends BaseFragment<BaseFragmentPresenter, Fragme
                 ItemRecordTbcLayoutBinding binding = holder.getBinding(ItemRecordTbcLayoutBinding.class);
 
 //                binding.tvError.setText(item.getProjectName());
-                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH.mm.ss"));
+                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
                 switch (item.getEquipmentType()) {
                     case "1":
                         binding.tvDianwei.setText("采集器");

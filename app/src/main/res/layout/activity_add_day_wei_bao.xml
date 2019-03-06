@@ -32,6 +32,7 @@
                     android:textSize="28px" />
 
                 <TextView
+                    android:paddingLeft="30dp"
                     android:id="@+id/tv_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,6 +63,7 @@
                     android:textSize="28px" />
 
                 <EditText
+                    android:paddingLeft="30dp"
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,6 +93,7 @@
                     android:textSize="28px" />
 
                 <EditText
+                    android:paddingLeft="30dp"
                     android:id="@+id/et_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,6 +126,7 @@
                     android:textSize="28px" />
 
                 <TextView
+                    android:paddingLeft="30dp"
                     android:id="@+id/tv_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,6 +160,7 @@
                     android:textSize="28px" />
 
                 <TextView
+                    android:paddingLeft="10dp"
                     android:id="@+id/tv_next_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

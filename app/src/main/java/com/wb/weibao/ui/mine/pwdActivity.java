@@ -43,6 +43,7 @@ public class pwdActivity extends BaseActivity<BasePresenter,ActivityPwdBinding> 
         mBinding.affirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 updatePwd();
             }
         });

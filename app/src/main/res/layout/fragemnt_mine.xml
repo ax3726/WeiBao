@@ -2,10 +2,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.zhy.autolayout.AutoLinearLayout
-        android:background="#F3F3F3"
         android:id="@+id/lly_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#F3F3F3"
         android:orientation="vertical">
 
         <com.zhy.autolayout.AutoLinearLayout
@@ -14,35 +14,38 @@
             android:background="@color/colorTheme"
             android:gravity="center"
             android:orientation="vertical">
-              <ImageView
-                  android:id="@+id/name"
-                 android:background="@drawable/touxiang"
-                  android:textSize="20sp"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/touxiang"
+                android:textSize="20sp" />
+
             <TextView
 
-                android:layout_marginTop="10dp"
                 android:id="@+id/tv_phone"
-                android:textColor="@color/white"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white" />
         </com.zhy.autolayout.AutoLinearLayout>
+
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/pwd"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="90px"
+            android:layout_marginTop="20dp"
             android:background="@color/colorWhite"
             android:paddingLeft="15px"
             android:paddingRight="20px">
 
             <TextView
-                android:drawableLeft="@drawable/mima"
                 android:id="@+id/tv_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/mima"
                 android:drawablePadding="8px"
                 android:gravity="center"
                 android:text="密码设置"
@@ -67,11 +70,11 @@
             android:paddingRight="20px">
 
             <TextView
-                android:drawableLeft="@drawable/danwei"
                 android:id="@+id/tv_danwei"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/danwei"
                 android:drawablePadding="8px"
                 android:gravity="center"
                 android:text="所属单位"
@@ -83,20 +86,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                 />
+                android:layout_centerVertical="true" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
 
         <com.zhy.autolayout.AutoRelativeLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="90px"
             android:layout_marginTop="1px"
             android:background="@color/colorWhite"
             android:paddingLeft="15px"
-            android:paddingRight="20px">
+            android:paddingRight="20px"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_huancun"
@@ -120,19 +122,19 @@
 
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/phone"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="90px"
+            android:layout_marginTop="20dp"
             android:background="@color/colorWhite"
             android:paddingLeft="15px"
             android:paddingRight="20px">
 
             <TextView
-                android:drawableLeft="@drawable/dianhua"
                 android:id="@+id/tv_women"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/dianhua"
                 android:drawablePadding="8px"
                 android:gravity="center"
                 android:text="联系我们"
@@ -140,16 +142,16 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:text="0571-56260119"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                 />
+                android:text="0571-56260119" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/jianyi"
             android:layout_width="match_parent"
             android:layout_height="90px"
             android:layout_marginTop="1px"
@@ -158,11 +160,11 @@
             android:paddingRight="20px">
 
             <TextView
-                android:drawableLeft="@drawable/jianyi"
                 android:id="@+id/tv_jianyi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/jianyi"
                 android:drawablePadding="8px"
                 android:gravity="center"
                 android:text="提建议"
@@ -180,6 +182,7 @@
 
 
         <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
             android:layout_height="90px"
             android:background="@color/colorWhite"
@@ -187,11 +190,11 @@
             android:paddingRight="20px">
 
             <TextView
-                android:drawableLeft="@drawable/kaiguan"
                 android:id="@+id/tv_kaiguan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/kaiguan"
                 android:drawablePadding="8px"
                 android:gravity="center"
                 android:text="预警声音开关"
@@ -201,16 +204,17 @@
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:switchMinWidth="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:track="@drawable/track"
+                android:checked="true"
+                android:switchMinWidth="20dp"
                 android:thumb="@drawable/thumb"
-                 />
+                android:track="@drawable/track" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
             android:layout_height="90px"
             android:background="@color/colorWhite"
@@ -218,11 +222,11 @@
             android:paddingRight="20px">
 
             <TextView
-                android:drawableLeft="@drawable/banben"
                 android:id="@+id/tv_banben"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/banben"
                 android:drawablePadding="8px"
                 android:gravity="center"
                 android:text="版本信息"
@@ -230,12 +234,11 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:text="当前版本1.0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                 />
+                android:text="当前版本1.0" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -248,15 +251,14 @@
             />
 
         <Button
-            android:enabled="true"
             android:id="@+id/btn_tui"
             style="@style/SmsButton"
-            android:background="@drawable/shape_blue2"
+            android:layout_marginBottom="40px"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:layout_marginBottom="40px"
-            android:textColor="@color/color000000"
-            android:text="退出登陆"
-            />
+            android:background="@drawable/shape_blue2"
+            android:enabled="true"
+            android:text="退出登录"
+            android:textColor="@color/color36519E" />
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

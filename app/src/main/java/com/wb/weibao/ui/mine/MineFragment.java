@@ -51,7 +51,7 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
     protected void initData() {
         super.initData();
         spfUtils = SpfUtils.getInstance(aty);
-        mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().name);
+        mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().getName());
         mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +75,13 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
                 call("0571-56260119");
             }
         });
+        mBinding.jianyi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(ProposalActivity.class);
+            }
+        });
+
 
     }
 

@@ -20,8 +20,6 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityStatisticsBinding;
 import com.wb.weibao.model.home.StatisticsModel;
-import com.wb.weibao.utils.SpfKey;
-import com.wb.weibao.utils.SpfUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,8 +169,9 @@ public class StatisticsActivity extends BaseActivity<BasePresenter, ActivityStat
         lineChart.getAxisRight().setEnabled(false);
         // 不显示图例
         Legend legend = lineChart.getLegend();
+        legend.setEnabled(false);
         legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        legend.setYOffset(10f);
+        legend.setYOffset(8f);
         legend.setXOffset(-10f);
 
 

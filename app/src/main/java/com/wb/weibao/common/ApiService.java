@@ -322,7 +322,7 @@ public interface ApiService {
      *
      * @return
      */
-    @POST("/earlywarn/order/handle{user}")
+    @POST("/earlywarn/order/handle")
     Flowable<BaseBean> handleWeiBao1(@Query("id") String id, @Query("userId") String userId, @Query("status") String status,
                                      @Query("processingOssKeys") String processingOssKeys, @Query("processingRet") String processingRet);
 

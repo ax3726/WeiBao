@@ -103,6 +103,16 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                     startActivity(ProjectListActivity.class);
                 }
                 break;
+            case R.id.tv_sy://水压
+                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 1));
+                break;
+            case R.id.tv_sw://水位
+                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 2));
+                break;
+            case R.id.tv_dq://电气
+                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 3));
+                break;
+
         }
     }
 
@@ -131,18 +141,14 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                             if (data.getList() != null && data.getList().size() > 0) {
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
                                 SpfUtils spfUtils = SpfUtils.getInstance(aty);
-//                                    if (!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID))) {
-//                                        MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
-//                                        mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
-//                                    } else {
-                                spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(listBean.getId()));
-                                spfUtils.setSpfString(SpfKey.INST_NAME, listBean.getName());
-                                spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(listBean.getLatitude()));
-                                spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(listBean.getLongitude()));
-                                spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(listBean.getInstCode()));
-                                MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
-                                mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
-//                                    }
+                                    spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(listBean.getId()));
+                                    spfUtils.setSpfString(SpfKey.INST_NAME, listBean.getName());
+                                    spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(listBean.getLatitude()));
+                                    spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(listBean.getLongitude()));
+                                    spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(listBean.getInstCode()));
+                                    MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                                    mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+
                             }
 
                         }

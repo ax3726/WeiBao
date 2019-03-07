@@ -122,7 +122,7 @@ public class ForgetPwdActivity extends BaseActivity<BasePresenter,ActivityForget
                    showToast("两次输入的新密码不一致!");
                    return;
                }
-               Api.getApi().getupdatePassword(mBinding.etName.getText().toString(),mBinding.etPhone.getText().toString(), MD5Utils.encryptMD5(mBinding.etNewpwd.getText().toString()))
+               Api.getApi().getupdatePassword(mBinding.etName.getText().toString(),mBinding.etPhone.getText().toString(),  MD5Utils.encryptMD5(mBinding.etNewpwd.getText().toString()))
                        .compose(callbackOnIOToMainThread())
                        .subscribe(new BaseNetListener<BaseBean>(ForgetPwdActivity.this, false) {
                            @Override

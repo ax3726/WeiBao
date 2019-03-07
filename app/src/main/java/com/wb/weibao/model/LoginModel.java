@@ -8,9 +8,16 @@ import java.util.List;
  */
 
 public class LoginModel implements Serializable {
-    public String code  ;
-    public String message  ;
-    public  Data data;
+
+    /**
+     * code : 200
+     * message : SUCCESS
+     * data : {"startTime":null,"endTime":null,"id":1,"name":"超级管理员","loginAccount":"admin","password":"******","salt":"***","phoneNo":"15868476323","email":"1","status":"0","companyId":"0001","createTime":1504681409000,"updateTime":1534847417000,"createUserId":"1","updateUserId":"1","projectId":null,"projectName":null,"companyCode":null,"companyName":null,"type":"1","userRoles":[{"startTime":null,"endTime":null,"id":9,"userId":1,"roleId":1}],"roleIds":null,"institutions":{"startTime":null,"endTime":null,"id":1,"code":"0001","name":"浙江创源消防科技有限公司","shortName":"创源消防","instType":"0","level":1,"type":0,"status":"0","areaCityCode":"310101","areaId":null,"principalArea":"浙江杭州","principalName":"王一晓","certificateType":"1","certificateNo":"2154656464","parentId":"null","parentName":"null","parentCode":"null","createUserId":"1","updateUserId":"1","createTime":1536752936000,"updateTime":1539605118000,"linkMan":"王一晓","linkPhone":"13777810881","linkType":"tel","linkEmail":"13425636325@qq.com","linkEmergencyPhone":"13777810881","latitude":"29.891850"}}
+     */
+
+    private String code;
+    private String message;
+    private DataBean data;
 
     public String getCode() {
         return code;
@@ -28,129 +35,64 @@ public class LoginModel implements Serializable {
         this.message = message;
     }
 
-    public Data getData() {
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(Data data) {
+    public void setData(DataBean data) {
         this.data = data;
     }
 
-    @Override
-    public String toString() {
-        return "Userbean{" +
-                "code='" + code + '\'' +
-                ", message='" + message + '\'' +
-                ", data=" + data +
-                '}';
-    }
+    public static class DataBean {
+        /**
+         * startTime : null
+         * endTime : null
+         * id : 1
+         * name : 超级管理员
+         * loginAccount : admin
+         * password : ******
+         * salt : ***
+         * phoneNo : 15868476323
+         * email : 1
+         * status : 0
+         * companyId : 0001
+         * createTime : 1504681409000
+         * updateTime : 1534847417000
+         * createUserId : 1
+         * updateUserId : 1
+         * projectId : null
+         * projectName : null
+         * companyCode : null
+         * companyName : null
+         * type : 1
+         * userRoles : [{"startTime":null,"endTime":null,"id":9,"userId":1,"roleId":1}]
+         * roleIds : null
+         * institutions : {"startTime":null,"endTime":null,"id":1,"code":"0001","name":"浙江创源消防科技有限公司","shortName":"创源消防","instType":"0","level":1,"type":0,"status":"0","areaCityCode":"310101","areaId":null,"principalArea":"浙江杭州","principalName":"王一晓","certificateType":"1","certificateNo":"2154656464","parentId":"null","parentName":"null","parentCode":"null","createUserId":"1","updateUserId":"1","createTime":1536752936000,"updateTime":1539605118000,"linkMan":"王一晓","linkPhone":"13777810881","linkType":"tel","linkEmail":"13425636325@qq.com","linkEmergencyPhone":"13777810881","latitude":"29.891850"}
+         */
 
-    public class Data implements Serializable  {
-        public String loginAccount  ;
-        public String createUserId  ;
-        public String salt  ;
-        public String updateUserId  ;
-        public long updateTime  ;
-        public String phoneNo  ;
-        public String password  ;
-        public String companyId  ;
-        public Object roleIds  ;
-        public long createTime  ;
-        public String name  ;
-        public Object startTime  ;
-        public Object endTime  ;
-        public int id  ;
-        public String email  ;
-        public String status  ;
-        public  Institutions institutions;
-
-        public String getLoginAccount() {
-            return loginAccount;
-        }
-
-        public void setLoginAccount(String loginAccount) {
-            this.loginAccount = loginAccount;
-        }
-
-        public String getCreateUserId() {
-            return createUserId;
-        }
-
-        public void setCreateUserId(String createUserId) {
-            this.createUserId = createUserId;
-        }
-
-        public String getSalt() {
-            return salt;
-        }
-
-        public void setSalt(String salt) {
-            this.salt = salt;
-        }
-
-        public String getUpdateUserId() {
-            return updateUserId;
-        }
-
-        public void setUpdateUserId(String updateUserId) {
-            this.updateUserId = updateUserId;
-        }
-
-        public long getUpdateTime() {
-            return updateTime;
-        }
-
-        public void setUpdateTime(long updateTime) {
-            this.updateTime = updateTime;
-        }
-
-        public String getPhoneNo() {
-            return phoneNo;
-        }
-
-        public void setPhoneNo(String phoneNo) {
-            this.phoneNo = phoneNo;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getCompanyId() {
-            return companyId;
-        }
-
-        public void setCompanyId(String companyId) {
-            this.companyId = companyId;
-        }
-
-        public Object getRoleIds() {
-            return roleIds;
-        }
-
-        public void setRoleIds(Object roleIds) {
-            this.roleIds = roleIds;
-        }
-
-        public long getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(long createTime) {
-            this.createTime = createTime;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+        private Object startTime;
+        private Object endTime;
+        private int id;
+        private String name;
+        private String loginAccount;
+        private String password;
+        private String salt;
+        private String phoneNo;
+        private String email;
+        private String status;
+        private String companyId;
+        private long createTime;
+        private long updateTime;
+        private String createUserId;
+        private String updateUserId;
+        private String projectId;
+        private Object projectName;
+        private Object companyCode;
+        private Object companyName;
+        private String type;
+        private Object roleIds;
+        private InstitutionsBean institutions;
+        private List<UserRolesBean> userRoles;
 
         public Object getStartTime() {
             return startTime;
@@ -176,6 +118,46 @@ public class LoginModel implements Serializable {
             this.id = id;
         }
 
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getLoginAccount() {
+            return loginAccount;
+        }
+
+        public void setLoginAccount(String loginAccount) {
+            this.loginAccount = loginAccount;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public String getSalt() {
+            return salt;
+        }
+
+        public void setSalt(String salt) {
+            this.salt = salt;
+        }
+
+        public String getPhoneNo() {
+            return phoneNo;
+        }
+
+        public void setPhoneNo(String phoneNo) {
+            this.phoneNo = phoneNo;
+        }
+
         public String getEmail() {
             return email;
         }
@@ -192,132 +174,172 @@ public class LoginModel implements Serializable {
             this.status = status;
         }
 
-        public Institutions getInstitutions() {
+        public String getCompanyId() {
+            return companyId;
+        }
+
+        public void setCompanyId(String companyId) {
+            this.companyId = companyId;
+        }
+
+        public long getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(long createTime) {
+            this.createTime = createTime;
+        }
+
+        public long getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(long updateTime) {
+            this.updateTime = updateTime;
+        }
+
+        public String getCreateUserId() {
+            return createUserId;
+        }
+
+        public void setCreateUserId(String createUserId) {
+            this.createUserId = createUserId;
+        }
+
+        public String getUpdateUserId() {
+            return updateUserId;
+        }
+
+        public void setUpdateUserId(String updateUserId) {
+            this.updateUserId = updateUserId;
+        }
+
+        public String getProjectId() {
+            return projectId;
+        }
+
+        public void setProjectId(String projectId) {
+            this.projectId = projectId;
+        }
+
+        public Object getProjectName() {
+            return projectName;
+        }
+
+        public void setProjectName(Object projectName) {
+            this.projectName = projectName;
+        }
+
+        public Object getCompanyCode() {
+            return companyCode;
+        }
+
+        public void setCompanyCode(Object companyCode) {
+            this.companyCode = companyCode;
+        }
+
+        public Object getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(Object companyName) {
+            this.companyName = companyName;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public Object getRoleIds() {
+            return roleIds;
+        }
+
+        public void setRoleIds(Object roleIds) {
+            this.roleIds = roleIds;
+        }
+
+        public InstitutionsBean getInstitutions() {
             return institutions;
         }
 
-        public void setInstitutions(Institutions institutions) {
+        public void setInstitutions(InstitutionsBean institutions) {
             this.institutions = institutions;
         }
 
-        @Override
-        public String toString() {
-            return "Data{" +
-                    "loginAccount='" + loginAccount + '\'' +
-                    ", createUserId='" + createUserId + '\'' +
-                    ", salt='" + salt + '\'' +
-                    ", updateUserId='" + updateUserId + '\'' +
-                    ", updateTime=" + updateTime +
-                    ", phoneNo='" + phoneNo + '\'' +
-                    ", password='" + password + '\'' +
-                    ", companyId='" + companyId + '\'' +
-                    ", roleIds=" + roleIds +
-                    ", createTime=" + createTime +
-                    ", name='" + name + '\'' +
-                    ", startTime=" + startTime +
-                    ", endTime=" + endTime +
-                    ", id=" + id +
-                    ", email='" + email + '\'' +
-                    ", status='" + status + '\'' +
-                    ", institutions=" + institutions +
-                    ", userRoles=" + userRoles +
-                    '}';
+        public List<UserRolesBean> getUserRoles() {
+            return userRoles;
         }
 
-        public class Institutions implements Serializable  {
-            public String areaCityCode  ;
-            public String createUserId  ;
-            public String linkPhone  ;
-            public String code  ;
-            public String latitude  ;
-            public int type  ;
-            public String linkMan  ;
-            public String parentCode  ;
-            public Object startTime  ;
-            public int id  ;
-            public String longitude  ;
-            public int level  ;
-            public String updateUserId  ;
-            public String principalName  ;
-            public long updateTime  ;
-            public String certificateNo  ;
-            public String parentId  ;
-            public String instType  ;
-            public String parentName  ;
-            public long createTime  ;
-            public String linkEmergencyPhone  ;
-            public Object principalArea  ;
-            public String name  ;
-            public String linkType  ;
-            public Object endTime  ;
-            public String shortName  ;
-            public String status  ;
-            public String certificateType  ;
-            public String linkEmail  ;
+        public void setUserRoles(List<UserRolesBean> userRoles) {
+            this.userRoles = userRoles;
+        }
 
-            public String getAreaCityCode() {
-                return areaCityCode;
-            }
+        public static class InstitutionsBean {
+            /**
+             * startTime : null
+             * endTime : null
+             * id : 1
+             * code : 0001
+             * name : 浙江创源消防科技有限公司
+             * shortName : 创源消防
+             * instType : 0
+             * level : 1
+             * type : 0
+             * status : 0
+             * areaCityCode : 310101
+             * areaId : null
+             * principalArea : 浙江杭州
+             * principalName : 王一晓
+             * certificateType : 1
+             * certificateNo : 2154656464
+             * parentId : null
+             * parentName : null
+             * parentCode : null
+             * createUserId : 1
+             * updateUserId : 1
+             * createTime : 1536752936000
+             * updateTime : 1539605118000
+             * linkMan : 王一晓
+             * linkPhone : 13777810881
+             * linkType : tel
+             * linkEmail : 13425636325@qq.com
+             * linkEmergencyPhone : 13777810881
+             * latitude : 29.891850
+             */
 
-            public void setAreaCityCode(String areaCityCode) {
-                this.areaCityCode = areaCityCode;
-            }
-
-            public String getCreateUserId() {
-                return createUserId;
-            }
-
-            public void setCreateUserId(String createUserId) {
-                this.createUserId = createUserId;
-            }
-
-            public String getLinkPhone() {
-                return linkPhone;
-            }
-
-            public void setLinkPhone(String linkPhone) {
-                this.linkPhone = linkPhone;
-            }
-
-            public String getCode() {
-                return code;
-            }
-
-            public void setCode(String code) {
-                this.code = code;
-            }
-
-            public String getLatitude() {
-                return latitude;
-            }
-
-            public void setLatitude(String latitude) {
-                this.latitude = latitude;
-            }
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
-            }
-
-            public String getLinkMan() {
-                return linkMan;
-            }
-
-            public void setLinkMan(String linkMan) {
-                this.linkMan = linkMan;
-            }
-
-            public String getParentCode() {
-                return parentCode;
-            }
-
-            public void setParentCode(String parentCode) {
-                this.parentCode = parentCode;
-            }
+            private Object startTime;
+            private Object endTime;
+            private int id;
+            private String code;
+            private String name;
+            private String shortName;
+            private String instType;
+            private int level;
+            private int type;
+            private String status;
+            private String areaCityCode;
+            private Object areaId;
+            private String principalArea;
+            private String principalName;
+            private String certificateType;
+            private String certificateNo;
+            private String parentId;
+            private String parentName;
+            private String parentCode;
+            private String createUserId;
+            private String updateUserId;
+            private long createTime;
+            private long updateTime;
+            private String linkMan;
+            private String linkPhone;
+            private String linkType;
+            private String linkEmail;
+            private String linkEmergencyPhone;
+            private String latitude;
 
             public Object getStartTime() {
                 return startTime;
@@ -325,6 +347,14 @@ public class LoginModel implements Serializable {
 
             public void setStartTime(Object startTime) {
                 this.startTime = startTime;
+            }
+
+            public Object getEndTime() {
+                return endTime;
+            }
+
+            public void setEndTime(Object endTime) {
+                this.endTime = endTime;
             }
 
             public int getId() {
@@ -335,12 +365,36 @@ public class LoginModel implements Serializable {
                 this.id = id;
             }
 
-            public String getLongitude() {
-                return longitude;
+            public String getCode() {
+                return code;
             }
 
-            public void setLongitude(String longitude) {
-                this.longitude = longitude;
+            public void setCode(String code) {
+                this.code = code;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getShortName() {
+                return shortName;
+            }
+
+            public void setShortName(String shortName) {
+                this.shortName = shortName;
+            }
+
+            public String getInstType() {
+                return instType;
+            }
+
+            public void setInstType(String instType) {
+                this.instType = instType;
             }
 
             public int getLevel() {
@@ -351,12 +405,44 @@ public class LoginModel implements Serializable {
                 this.level = level;
             }
 
-            public String getUpdateUserId() {
-                return updateUserId;
+            public int getType() {
+                return type;
             }
 
-            public void setUpdateUserId(String updateUserId) {
-                this.updateUserId = updateUserId;
+            public void setType(int type) {
+                this.type = type;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getAreaCityCode() {
+                return areaCityCode;
+            }
+
+            public void setAreaCityCode(String areaCityCode) {
+                this.areaCityCode = areaCityCode;
+            }
+
+            public Object getAreaId() {
+                return areaId;
+            }
+
+            public void setAreaId(Object areaId) {
+                this.areaId = areaId;
+            }
+
+            public String getPrincipalArea() {
+                return principalArea;
+            }
+
+            public void setPrincipalArea(String principalArea) {
+                this.principalArea = principalArea;
             }
 
             public String getPrincipalName() {
@@ -367,12 +453,12 @@ public class LoginModel implements Serializable {
                 this.principalName = principalName;
             }
 
-            public long getUpdateTime() {
-                return updateTime;
+            public String getCertificateType() {
+                return certificateType;
             }
 
-            public void setUpdateTime(long updateTime) {
-                this.updateTime = updateTime;
+            public void setCertificateType(String certificateType) {
+                this.certificateType = certificateType;
             }
 
             public String getCertificateNo() {
@@ -391,20 +477,36 @@ public class LoginModel implements Serializable {
                 this.parentId = parentId;
             }
 
-            public String getInstType() {
-                return instType;
-            }
-
-            public void setInstType(String instType) {
-                this.instType = instType;
-            }
-
             public String getParentName() {
                 return parentName;
             }
 
             public void setParentName(String parentName) {
                 this.parentName = parentName;
+            }
+
+            public String getParentCode() {
+                return parentCode;
+            }
+
+            public void setParentCode(String parentCode) {
+                this.parentCode = parentCode;
+            }
+
+            public String getCreateUserId() {
+                return createUserId;
+            }
+
+            public void setCreateUserId(String createUserId) {
+                this.createUserId = createUserId;
+            }
+
+            public String getUpdateUserId() {
+                return updateUserId;
+            }
+
+            public void setUpdateUserId(String updateUserId) {
+                this.updateUserId = updateUserId;
             }
 
             public long getCreateTime() {
@@ -415,28 +517,28 @@ public class LoginModel implements Serializable {
                 this.createTime = createTime;
             }
 
-            public String getLinkEmergencyPhone() {
-                return linkEmergencyPhone;
+            public long getUpdateTime() {
+                return updateTime;
             }
 
-            public void setLinkEmergencyPhone(String linkEmergencyPhone) {
-                this.linkEmergencyPhone = linkEmergencyPhone;
+            public void setUpdateTime(long updateTime) {
+                this.updateTime = updateTime;
             }
 
-            public Object getPrincipalArea() {
-                return principalArea;
+            public String getLinkMan() {
+                return linkMan;
             }
 
-            public void setPrincipalArea(Object principalArea) {
-                this.principalArea = principalArea;
+            public void setLinkMan(String linkMan) {
+                this.linkMan = linkMan;
             }
 
-            public String getName() {
-                return name;
+            public String getLinkPhone() {
+                return linkPhone;
             }
 
-            public void setName(String name) {
-                this.name = name;
+            public void setLinkPhone(String linkPhone) {
+                this.linkPhone = linkPhone;
             }
 
             public String getLinkType() {
@@ -447,38 +549,6 @@ public class LoginModel implements Serializable {
                 this.linkType = linkType;
             }
 
-            public Object getEndTime() {
-                return endTime;
-            }
-
-            public void setEndTime(Object endTime) {
-                this.endTime = endTime;
-            }
-
-            public String getShortName() {
-                return shortName;
-            }
-
-            public void setShortName(String shortName) {
-                this.shortName = shortName;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public void setStatus(String status) {
-                this.status = status;
-            }
-
-            public String getCertificateType() {
-                return certificateType;
-            }
-
-            public void setCertificateType(String certificateType) {
-                this.certificateType = certificateType;
-            }
-
             public String getLinkEmail() {
                 return linkEmail;
             }
@@ -487,56 +557,37 @@ public class LoginModel implements Serializable {
                 this.linkEmail = linkEmail;
             }
 
-            @Override
-            public String toString() {
-                return "Institutions{" +
-                        "areaCityCode='" + areaCityCode + '\'' +
-                        ", createUserId='" + createUserId + '\'' +
-                        ", linkPhone='" + linkPhone + '\'' +
-                        ", code='" + code + '\'' +
-                        ", latitude='" + latitude + '\'' +
-                        ", type=" + type +
-                        ", linkMan='" + linkMan + '\'' +
-                        ", parentCode='" + parentCode + '\'' +
-                        ", startTime=" + startTime +
-                        ", id=" + id +
-                        ", longitude='" + longitude + '\'' +
-                        ", level=" + level +
-                        ", updateUserId='" + updateUserId + '\'' +
-                        ", principalName='" + principalName + '\'' +
-                        ", updateTime=" + updateTime +
-                        ", certificateNo='" + certificateNo + '\'' +
-                        ", parentId='" + parentId + '\'' +
-                        ", instType='" + instType + '\'' +
-                        ", parentName='" + parentName + '\'' +
-                        ", createTime=" + createTime +
-                        ", linkEmergencyPhone='" + linkEmergencyPhone + '\'' +
-                        ", principalArea=" + principalArea +
-                        ", name='" + name + '\'' +
-                        ", linkType='" + linkType + '\'' +
-                        ", endTime=" + endTime +
-                        ", shortName='" + shortName + '\'' +
-                        ", status='" + status + '\'' +
-                        ", certificateType='" + certificateType + '\'' +
-                        ", linkEmail='" + linkEmail + '\'' +
-                        '}';
+            public String getLinkEmergencyPhone() {
+                return linkEmergencyPhone;
+            }
+
+            public void setLinkEmergencyPhone(String linkEmergencyPhone) {
+                this.linkEmergencyPhone = linkEmergencyPhone;
+            }
+
+            public String getLatitude() {
+                return latitude;
+            }
+
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
             }
         }
-        public List<UserRoles> userRoles;
-        public class UserRoles implements Serializable  {
-            public int roleId  ;
-            public Object startTime  ;
-            public Object endTime  ;
-            public int id  ;
-            public int userId  ;
 
-            public int getRoleId() {
-                return roleId;
-            }
+        public static class UserRolesBean {
+            /**
+             * startTime : null
+             * endTime : null
+             * id : 9
+             * userId : 1
+             * roleId : 1
+             */
 
-            public void setRoleId(int roleId) {
-                this.roleId = roleId;
-            }
+            private Object startTime;
+            private Object endTime;
+            private int id;
+            private int userId;
+            private int roleId;
 
             public Object getStartTime() {
                 return startTime;
@@ -570,15 +621,12 @@ public class LoginModel implements Serializable {
                 this.userId = userId;
             }
 
-            @Override
-            public String toString() {
-                return "UserRoles{" +
-                        "roleId=" + roleId +
-                        ", startTime=" + startTime +
-                        ", endTime=" + endTime +
-                        ", id=" + id +
-                        ", userId=" + userId +
-                        '}';
+            public int getRoleId() {
+                return roleId;
+            }
+
+            public void setRoleId(int roleId) {
+                this.roleId = roleId;
             }
         }
     }

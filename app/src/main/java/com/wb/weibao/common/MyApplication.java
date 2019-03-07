@@ -36,7 +36,7 @@ public class MyApplication extends ThisApplication {
     private static MyApplication instance;
     public static String Base_Path = "";
     private String token = "";//token
-    private LoginModel.Data mUserData=null;//用户信息
+    private LoginModel.DataBean mUserData=null;//用户信息
     private String mProjectId = "";//当前项目id
     private String mRegistrationID = "";//RegistrationID
 
@@ -132,11 +132,11 @@ public class MyApplication extends ThisApplication {
         this.mProjectId = mProjectId;
     }
 
-    public LoginModel.Data getUserData() {
+    public LoginModel.DataBean getUserData() {
         return mUserData;
     }
 
-    public void setUserData(LoginModel.Data mUserData) {
+    public void setUserData(LoginModel.DataBean mUserData) {
         this.mUserData = mUserData;
     }
 

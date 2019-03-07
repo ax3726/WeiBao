@@ -30,6 +30,7 @@
                 android:textSize="28px" />
 
             <TextView
+                android:paddingLeft="40dp"
                 android:drawableRight="@drawable/bottom_jiantou"
                 android:id="@+id/tv_1"
                 android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                 android:layout_toRightOf="@+id/tv_hint1"
                 android:layout_alignBaseline="@+id/tv_hint1"
                 android:background="@color/colorWhite"
-                android:hint=""
+                android:hint="请选择"
                 android:textColor="@color/color333333"
                 android:textSize="28px" />
 
@@ -61,6 +62,7 @@
                 android:textSize="28px" />
 
             <TextView
+                android:paddingLeft="40dp"
                 android:drawableRight="@drawable/bottom_jiantou"
                 android:id="@+id/tv_2"
                 android:layout_width="match_parent"
@@ -69,7 +71,7 @@
                 android:layout_toRightOf="@+id/tv_hint2"
                 android:layout_alignBaseline="@+id/tv_hint2"
                 android:background="@color/colorWhite"
-                android:hint=""
+                android:hint="请选择"
                 android:textColor="@color/color333333"
                 android:textSize="28px" />
 
@@ -95,6 +97,7 @@
                 android:textSize="28px" />
 
             <TextView
+                android:paddingLeft="40dp"
                 android:drawableRight="@drawable/bottom_jiantou"
                 android:id="@+id/tv_3"
                 android:layout_width="match_parent"
@@ -103,7 +106,7 @@
                 android:layout_toRightOf="@+id/tv_hint3"
                 android:layout_alignBaseline="@+id/tv_hint3"
                 android:background="@color/colorWhite"
-                android:hint=""
+                android:hint="请选择"
                 android:textColor="@color/color333333"
                 android:textSize="28px" />
 

@@ -313,11 +313,11 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
     private void SettingVisibility(int countcount) {
         if (countcount == 0) {
             mBinding.LoginRecyclerView.setVisibility(View.VISIBLE);
-            mBinding.LoginSeleteBtn.setImageResource(R.drawable.shang);
+            mBinding.LoginSeleteBtn.setImageResource(R.drawable.top_jiantou);
             count = 1;
         } else if (countcount == 1) {
             mBinding.LoginRecyclerView.setVisibility(View.GONE);
-            mBinding.LoginSeleteBtn.setImageResource(R.drawable.login_more_up);
+            mBinding.LoginSeleteBtn.setImageResource(R.drawable.bottom_jiantou);
             count = 0;
         }
     }

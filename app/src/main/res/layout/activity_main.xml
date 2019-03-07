@@ -79,7 +79,7 @@
                 android:button="@null"
                 android:checked="true"
                 android:drawablePadding="4dp"
-                android:drawableTop="@drawable/selector_forewarning"
+                android:drawableTop="@drawable/selector_home"
                 android:gravity="center"
                 android:text="首页"
                 android:textColor="@color/color999999"

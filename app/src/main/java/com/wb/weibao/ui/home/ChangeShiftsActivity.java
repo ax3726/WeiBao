@@ -97,9 +97,9 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                             }
                         }).show();
                     } else {
-                        Intent intent = new Intent(aty,
-                                CaptureActivity.class);
-                        startActivityForResult(intent, REQUEST_CODE_SCAN);
+
+                        startActivity(QrcodeActivity.class);
+                        finish();
                     }
                 }
             }
@@ -130,8 +130,10 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                             }
                         }).show();
                     } else {
-                        startActivity(QrcodeActivity.class);
-                        finish();
+
+                        Intent intent = new Intent(aty,
+                                CaptureActivity.class);
+                        startActivityForResult(intent, REQUEST_CODE_SCAN);
 
                     }
                 }

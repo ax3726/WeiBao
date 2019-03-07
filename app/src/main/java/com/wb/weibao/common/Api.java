@@ -8,6 +8,7 @@ import com.wb.weibao.net.GsonConverterFactory;
 import com.wb.weibao.net.LoggerInterceptor;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -50,21 +51,21 @@ public class Api {
      *
      * @param   {@link Request}
      * @return NoSign
-     *//*
-    private static String obtainNoSignNameFromHeaders(Request request) {
-        List<String> headers = request.headers(NO_SIGN);
-        if (headers == null || headers.size() == 0)
-            return null;
-        if (headers.size() > 1)
-            throw new IllegalArgumentException("Only one NoSign-Name in the headers");
-        return request.header(NO_SIGN);
-    }*/
+     */
+//    private static String obtainNoSignNameFromHeaders(Request request) {
+//        List<String> headers = request.headers(NO_SIGN);
+//        if (headers == null || headers.size() == 0)
+//            return null;
+//        if (headers.size() > 1)
+//            throw new IllegalArgumentException("Only one NoSign-Name in the headers");
+//        return request.header(NO_SIGN);
+//    }
 
     public static OkHttpClient getOkHttpClient(final DownloadResponseBody.DownLoadListener... downLoadListener) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                .addInterceptor(new LoggerInterceptor("msg", true))
-                .connectTimeout(60000L, TimeUnit.MILLISECONDS)
-                .readTimeout(30000L, TimeUnit.MILLISECONDS);
+                .connectTimeout(30000L, TimeUnit.MILLISECONDS)
+                .readTimeout(15000L, TimeUnit.MILLISECONDS);
 
         if (downLoadListener.length > 0) {
             builder.addNetworkInterceptor(new Interceptor() {

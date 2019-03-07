@@ -94,7 +94,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                                 });
                     }
                 });
-//                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH.mm.ss"));
+//                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getWarningTime(), "yyyy.MM.dd HH.mm.ss"));
                 binding.tvTime.setText(item.getWarningTime());
 
                 switch (item.getEquipmentType())

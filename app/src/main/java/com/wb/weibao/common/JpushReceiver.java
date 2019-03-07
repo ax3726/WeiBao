@@ -1,19 +1,17 @@
 package com.wb.weibao.common;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.wb.weibao.R;
 import com.wb.weibao.utils.DemoUtils;
-import com.wb.weibao.view.MyAlertDialog;
+import com.wb.weibao.utils.SpfKey;
+import com.wb.weibao.utils.SpfUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +27,9 @@ import cn.jpush.android.api.JPushInterface;
 
 public class JpushReceiver extends BroadcastReceiver {
     private static final String TAG = "JPush";
+
+    private int num = 0;
+    MediaPlayer mMediaPlayer = null;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -50,29 +51,32 @@ public class JpushReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             //唤醒屏幕
             DemoUtils.wakeUpAndUnlock(context);
-            if (MyApplication.getList() != null && MyApplication.getList().size() > 0) {//应用在后台
-                Activity activity = MyApplication.getList().get(MyApplication.getList().size() - 1);
-                //直接创建，不需要设置setDataSource
-                MediaPlayer mMediaPlayer = MediaPlayer.create(activity, R.raw.huojing);
+            // if (MyApplication.getList() != null && MyApplication.getList().size() > 0) {//应用在后台
+            //    Activity activity = MyApplication.getList().get(MyApplication.getList().size() - 1);
+            //直接创建，不需要设置setDataSource
+            if (mMediaPlayer == null && SpfUtils.getInstance(context).getSpfBoolean(SpfKey.IS_PUSH_PLAY) && !PlayNumService.getIntance().isIsPlay()) {
+                PlayNumService.getIntance().setIsPlay(true);
+                mMediaPlayer = MediaPlayer.create(context, R.raw.huojing);
                 mMediaPlayer.setLooping(true);//设置是否循环播放
                 mMediaPlayer.start();
-                new MyAlertDialog(activity)
-                        .builder().setTitle("提示")
-                        .setMsg("收到紧急通知，请立即查看!").setPositiveButton("我知道了", new View.OnClickListener() {
+                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
-                    public void onClick(View v) {
-
-                    }
-                }).setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (mMediaPlayer != null) {
-                            mMediaPlayer.stop();
-                            mMediaPlayer.release();
+                    public void onCompletion(MediaPlayer mp) {
+                        num++;
+                        if (num == 3) {
+                            if (mMediaPlayer != null) {
+                                mMediaPlayer.stop();
+                                mMediaPlayer.release();
+                            }
+                            num = 0;
+                            mMediaPlayer = null;
+                            PlayNumService.getIntance().setIsPlay(false);
                         }
                     }
-                }).show();
+                });
             }
+
+            //  }
 
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {

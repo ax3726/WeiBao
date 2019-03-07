@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
@@ -53,6 +54,14 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
         spfUtils = SpfUtils.getInstance(aty);
         mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().name);
         mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+
+        mBinding.swBtn.setChecked(spfUtils.getSpfBoolean(SpfKey.IS_PUSH_PLAY));
+        mBinding.swBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                spfUtils.setSpfBoolean(SpfKey.IS_PUSH_PLAY, isChecked);
+            }
+        });
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,6 +1,5 @@
 package com.wb.weibao.common;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -52,32 +51,36 @@ public class JpushReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             //唤醒屏幕
             DemoUtils.wakeUpAndUnlock(context);
-             if (MyApplication.getList() != null && MyApplication.getList().size() > 0) {//应用在后台
-                Activity activity = MyApplication.getList().get(MyApplication.getList().size() - 1);
-            //直接创建，不需要设置setDataSource
-            if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(activity).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
-                PlayNumService.getIntance().setIsPlay(true);
-                mMediaPlayer = MediaPlayer.create(activity, R.raw.huojing);
+           /* if (MyApplication.getList() != null && MyApplication.getList().size() > 0) {//应用在后台
+                Activity activity = MyApplication.getList().get(MyApplication.getList().size() - 1);*/
+                //直接创建，不需要设置setDataSource
+                if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(context).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
+                    PlayNumService.getIntance().setIsPlay(true);
+                    mMediaPlayer = MediaPlayer.create(context, R.raw.huojing);
 //                mMediaPlayer.setLooping(false);//设置是否循环播放
-                mMediaPlayer.start();
-//                mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                    @Override
-//                    public void onCompletion(MediaPlayer mp) {
-//                        num++;
-//                        if (num == 3) {
-//                            if (mMediaPlayer != null) {
-//                                mMediaPlayer.stop();
-//                                mMediaPlayer.release();
-//                            }
-//                            num = 0;
-//                            mMediaPlayer = null;
-//                            PlayNumService.getIntance().setIsPlay(false);
-//                        }
-//                    }
-//                });
-            }
+                    mMediaPlayer.start();
+                    mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
 
-              }
+                            num++;
+                            if (num == 3) {
+                                if (mMediaPlayer != null) {
+                                    mMediaPlayer.stop();
+                                    mMediaPlayer.release();
+                                }
+                                num = 0;
+                                mMediaPlayer = null;
+                                PlayNumService.getIntance().setIsPlay(false);
+                            } else {
+                                mMediaPlayer.start();
+                            }
+
+                        }
+                    });
+              //  }
+
+            }
 
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {

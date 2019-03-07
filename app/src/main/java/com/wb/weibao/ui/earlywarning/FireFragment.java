@@ -27,11 +27,14 @@ import com.wb.weibao.databinding.FragemntEarlyWarningBinding;
 import com.wb.weibao.databinding.FragmentFireBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.record.RecordCount;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.ui.Login.ForgetPwdActivity;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.mine.MineFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +65,7 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         super.initData();
         initFragment();
         count();
-
-
+        EventBus.getDefault().register(this);
         mBinding.tabTitleGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -107,6 +109,12 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
                 }
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(RecordDetailEvent event) {
+        count();
+
     }
 
     private void initFragment() {

@@ -156,6 +156,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
         mBinding.srlBody.resetNoMoreData();
         mPage = 1;
         getErrorList();
+
     }
 
     /**

@@ -19,6 +19,11 @@ public class NoDataActivity extends BaseActivity<BasePresenter, ActivityNoDataBi
     }
 
     @Override
+    protected boolean isTitleBar() {
+        return true;
+    }
+
+    @Override
     protected void initTitleBar() {
         super.initTitleBar();
         int type = getIntent().getIntExtra("type", 0);

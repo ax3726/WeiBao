@@ -54,12 +54,19 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
         spfUtils = SpfUtils.getInstance(aty);
         mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().getName());
         mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+        String  str= spfUtils.getSpfString(SpfKey.IS_PUSH_PLAY);
+        if(TextUtils.isEmpty(str))
+        {
+            str="ok";
+            spfUtils.setSpfString(SpfKey.IS_PUSH_PLAY,str);
+        }
+        mBinding.swBtn.setChecked("ok".equals(str));
 
-        mBinding.swBtn.setChecked(spfUtils.getSpfBoolean(SpfKey.IS_PUSH_PLAY));
         mBinding.swBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                spfUtils.setSpfBoolean(SpfKey.IS_PUSH_PLAY, isChecked);
+
+                spfUtils.setSpfString(SpfKey.IS_PUSH_PLAY, isChecked?"ok":"nook");
             }
         });
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {

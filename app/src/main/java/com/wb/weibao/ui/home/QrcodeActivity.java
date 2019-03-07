@@ -45,7 +45,7 @@ public class QrcodeActivity extends BaseActivity<BasePresenter,ActivityQrcodeBin
     protected void initTitleBar() {
         super.initTitleBar();
 
-        mTitleBarLayout.setTitle("我要接班");
+        mTitleBarLayout.setTitle("我要交班");
     }
 
     @Override

@@ -55,6 +55,11 @@ public interface ApiService {
 
 
     @POST("project/list")
+    Flowable<ProjectListModel> getProject_list3(@Query("instCode") String instCode, @Query("projectId") String projectId);
+
+
+
+    @POST("project/list")
     Flowable<ProjectListModel> getProject_list2(@Query("instCode") String instCode, @Query("userId") String userId,@Query("sMaintenance") String sMaintenance);
 
     /**

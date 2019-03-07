@@ -170,7 +170,7 @@
                     android:layout_toRightOf="@+id/tv_hint3"
                     android:background="@color/colorWhite"
                     android:drawableRight="@drawable/bottom_jiantou"
-                    android:hint=""
+                    android:hint="请选择日期"
                     android:textColor="@color/color333333"
                     android:textSize="28px" />
 

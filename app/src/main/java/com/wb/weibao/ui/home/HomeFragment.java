@@ -59,7 +59,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
             getProjectList();
         }else
             {
-                showToast("11");
+//                getProjectList();
                 getProjectList2();
             }
     }
@@ -164,7 +164,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
      */
     private void getProjectList2() {
         Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getProjectId()).compose(callbackOnIOToMainThread())
+               MyApplication.getInstance().getUserData().getProjectId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {

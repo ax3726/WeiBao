@@ -85,7 +85,7 @@ public class LoginModel implements Serializable {
         private long updateTime;
         private String createUserId;
         private String updateUserId;
-        private Object projectId;
+        private String projectId;
         private Object projectName;
         private Object companyCode;
         private Object companyName;
@@ -214,11 +214,11 @@ public class LoginModel implements Serializable {
             this.updateUserId = updateUserId;
         }
 
-        public Object getProjectId() {
+        public String getProjectId() {
             return projectId;
         }
 
-        public void setProjectId(Object projectId) {
+        public void setProjectId(String projectId) {
             this.projectId = projectId;
         }
 

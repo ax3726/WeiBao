@@ -109,6 +109,23 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
             @Override
             public void onClick(View v) {
 
+                Api.getApi().getQrcodeProccess2(MyApplication.getInstance().getUserData().getId() + "")
+                        .compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(ChangeShiftsActivity.this, true) {
+                            @Override
+                            public void onSuccess(BaseBean baseBean) {
+                                com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
+                                showToast("交班成功");
+                                getDataList();
+                            }
+
+                            @Override
+                            public void onFail(String errMsg) {
+
+                            }
+                        });
+
+
                 if (isLocation == 0) {
                     new MyAlertDialog(ChangeShiftsActivity.this).builder().setTitle("提示").setMsg("您已超出考勤范围，无法交接班，请在考勤范内交接班").setPositiveButton("我知道了", new View.OnClickListener() {
                         @Override
@@ -131,9 +148,31 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                         }).show();
                     } else {
 
-                        Intent intent = new Intent(aty,
-                                CaptureActivity.class);
-                        startActivityForResult(intent, REQUEST_CODE_SCAN);
+                        Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getId() + "","")
+                                .compose(callbackOnIOToMainThread())
+                                .subscribe(new BaseNetListener<BaseBean>(ChangeShiftsActivity.this, true) {
+                                    @Override
+                                    public void onSuccess(BaseBean baseBean) {
+                                        com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
+                                        showToast("交班成功");
+                                        getDataList();
+                                    }
+
+                                    @Override
+                                    public void onFail(String errMsg) {
+
+                                    }
+                                });
+
+
+
+
+
+
+
+//                        Intent intent = new Intent(aty,
+//                                CaptureActivity.class);
+//                        startActivityForResult(intent, REQUEST_CODE_SCAN);
 
                     }
                 }
@@ -281,7 +320,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
     }
 
 
-    private int mSignType = -1;// 1签到   0签退
+    private int mSignType = -1;// 0签到   1签退
 
     /**
      * 检查状态
@@ -292,7 +331,8 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
-                        mSignType = "1".equals(baseBean.getData().toString()) ? 1 : 0;
+//                        mSignType = "1".equals(baseBean.getData().toString()) ? 1 : 0;
+                        mSignType=Integer.parseInt(baseBean.getData().toString());
 
                     }
 

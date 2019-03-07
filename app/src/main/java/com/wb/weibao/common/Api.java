@@ -3,6 +3,8 @@ package com.wb.weibao.common;
 
 
 
+import android.util.Log;
+
 import com.wb.weibao.net.DownloadResponseBody;
 import com.wb.weibao.net.GsonConverterFactory;
 import com.wb.weibao.net.LoggerInterceptor;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -66,6 +69,9 @@ public class Api {
                .addInterceptor(new LoggerInterceptor("msg", true))
                 .connectTimeout(30000L, TimeUnit.MILLISECONDS)
                 .readTimeout(15000L, TimeUnit.MILLISECONDS);
+
+
+
 
         if (downLoadListener.length > 0) {
             builder.addNetworkInterceptor(new Interceptor() {

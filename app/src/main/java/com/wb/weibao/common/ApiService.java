@@ -54,8 +54,15 @@ public interface ApiService {
     Flowable<ProjectListModel> getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
 
 
+    /**
+     *
+     * @param instCode
+     * @param userId
+     * @param projectId
+     * @return
+     */
     @POST("project/list")
-    Flowable<ProjectListModel> getProject_list3(@Query("instCode") String instCode, @Query("projectId") String projectId);
+    Flowable<ProjectListModel> getProject_list3(@Query("instCode") String instCode,@Query("userId") String userId, @Query("projectId") String projectId);
 
 
 
@@ -493,6 +500,19 @@ public interface ApiService {
      */
     @POST("/earlywarn/handover/proccess")
     Flowable<BaseBean> getQrcodeProccess(@Query("userId") String userId,@Query("msg") String msg);
+
+
+
+    /**
+     * 扫码交班
+     * @param userId
+     * @param
+     * @return
+     */
+    @POST("/earlywarn/handover/proccess")
+    Flowable<BaseBean> getQrcodeProccess2(@Query("userId") String userId);
+
+
 
 
     /**

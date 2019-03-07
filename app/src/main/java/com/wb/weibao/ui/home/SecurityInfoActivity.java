@@ -99,6 +99,19 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
                 state = "待审批";
                 mBinding.tv4.setVisibility(View.GONE);
                 mBinding.tvInfo1.setVisibility(View.GONE);
+
+                break;
+            case "2"://审核失败
+                state = "审批失败";
+                mBinding.tv4.setVisibility(View.GONE);
+                mBinding.tvInfo1.setVisibility(View.GONE);
+                break;
+            case "3"://待维保
+                state = "待维保";
+                mBinding.tv4.setVisibility(View.VISIBLE);
+                mBinding.tvInfo1.setVisibility(View.GONE);
+                time = "审核时间：" + CreateTime;
+
                 if (mType == 1) {
                     mBinding.llyButtom.setVisibility(View.VISIBLE);
                     mBinding.tvFail.setOnClickListener(new View.OnClickListener() {
@@ -118,17 +131,7 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
                     });
                 }
 
-                break;
-            case "2"://审核失败
-                state = "审批失败";
-                mBinding.tv4.setVisibility(View.GONE);
-                mBinding.tvInfo1.setVisibility(View.GONE);
-                break;
-            case "3"://待维保
-                state = "待维保";
-                mBinding.tv4.setVisibility(View.VISIBLE);
-                mBinding.tvInfo1.setVisibility(View.GONE);
-                time = "审核时间：" + CreateTime;
+
                 break;
             case "4"://维保成功
                 state = "已完成";

@@ -1,7 +1,6 @@
 package com.wb.weibao.ui.home;
 
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.wb.weibao.R;
@@ -49,6 +48,9 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
         mBinding.tvFireControl.setOnClickListener(this);
         mBinding.tvPeixun.setOnClickListener(this);
         mBinding.tvProject.setOnClickListener(this);
+        mBinding.tvSy.setOnClickListener(this);
+        mBinding.tvSw.setOnClickListener(this);
+        mBinding.tvDq.setOnClickListener(this);
     }
 
     @Override

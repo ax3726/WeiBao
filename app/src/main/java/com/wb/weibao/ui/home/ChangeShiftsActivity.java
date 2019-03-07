@@ -109,21 +109,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
             @Override
             public void onClick(View v) {
 
-                Api.getApi().getQrcodeProccess2(MyApplication.getInstance().getUserData().getId() + "")
-                        .compose(callbackOnIOToMainThread())
-                        .subscribe(new BaseNetListener<BaseBean>(ChangeShiftsActivity.this, true) {
-                            @Override
-                            public void onSuccess(BaseBean baseBean) {
-                                com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
-                                showToast("交班成功");
-                                getDataList();
-                            }
 
-                            @Override
-                            public void onFail(String errMsg) {
-
-                            }
-                        });
 
 
                 if (isLocation == 0) {
@@ -160,6 +146,9 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
 
                                     @Override
                                     public void onFail(String errMsg) {
+                                        Intent intent = new Intent(aty,
+                                                CaptureActivity.class);
+                                        startActivityForResult(intent, REQUEST_CODE_SCAN);
 
                                     }
                                 });
@@ -169,10 +158,6 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
 
 
 
-
-//                        Intent intent = new Intent(aty,
-//                                CaptureActivity.class);
-//                        startActivityForResult(intent, REQUEST_CODE_SCAN);
 
                     }
                 }

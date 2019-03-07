@@ -58,6 +58,7 @@ public class QrcodeActivity extends BaseActivity<BasePresenter,ActivityQrcodeBin
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
+                        mBinding.code.setText(baseBean.getData().toString());
                         com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
                         String url= Link.SEREVE+"handover/proccess?msg={"+baseBean.getData().toString()+"}&userId={"+MyApplication.getInstance().getUserData().getId()+"}";
                         mBinding.imageView.setImageBitmap(QrCodeUtil.createQRCode(url,600));

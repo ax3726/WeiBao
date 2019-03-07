@@ -93,11 +93,11 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
 //                        binding.tvError.setTextColor(getResources().getColor(R.color.colorFACF28));
 //                        break;
                     case "3":
-                        binding.tvError.setText("确认无灾情");
+                        binding.tvError.setText("无灾情");
                         binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
                         break;
                     case "4":
-                        binding.tvError.setText("确认有灾情");
+                        binding.tvError.setText("有灾情");
                         binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
                         break;
 //                    case "5":

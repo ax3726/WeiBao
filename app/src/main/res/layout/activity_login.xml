@@ -114,6 +114,7 @@
                 android:background="#dddddd" />
         </LinearLayout>
         <LinearLayout
+            android:visibility="gone"
             android:layout_marginTop="25px"
             android:orientation="horizontal"
             android:layout_width="match_parent"

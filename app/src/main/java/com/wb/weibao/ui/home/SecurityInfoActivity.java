@@ -157,7 +157,7 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
         mBinding.tv3.setText("维保发起人：" + data.getPrincipalName() + "\n发起人电话：" + data.getPrincipalPhone());
 
         mBinding.tv4.setText(time
-                + "\n维保联系人：" + data.getPrincipalName() + "\n维保联系人电话：" + data.getPrincipalPhone()
+                + "\n维保联系人：孙先生\n维保联系人电话：0571- 56260119/ 13123941267"
 
         );
         mBinding.tvInfo1.setText("详情描述：" + data.getMemo());

@@ -23,6 +23,7 @@ import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.LocationHelper;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
+import com.wb.weibao.view.MyAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,20 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
                 if (mSignType > -1) {
                     if (checkLocation()) {
                         if (mSignType == 1) {
-                            addSignOut();
+
+                            new MyAlertDialog(aty).builder().setTitle("提示")
+                                    .setMsg("确定要签退？").setPositiveButton("取消", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            }).setNegativeButton("签退", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    addSignOut();
+                                }
+                            }).show();
+
                         } else {
                             addSignIn();
                         }
@@ -127,9 +141,12 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
                 if (location != null) {
                     mLatitude = location.getLatitude();
                     mLongitude = location.getLongitude();
+
                     if (checkLocation()) {
+                        mBinding.tvResult.setSelected(true);
                         mBinding.tvResult.setText("您已进入考勤范围…");
                     } else {
+                        mBinding.tvResult.setSelected(false);
                         mBinding.tvResult.setText("您不在考勤范围…");
                     }
                 }

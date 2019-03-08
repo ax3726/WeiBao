@@ -81,6 +81,7 @@ public class AlarmYCLFragment extends BaseFragment<BaseFragmentPresenter, Fragme
 
                 switch (item.getSubWarningType())
                 {
+
                     case "11":
                         binding.tvError.setText("采集器监测连接线路故障");
                         break;
@@ -205,7 +206,7 @@ public class AlarmYCLFragment extends BaseFragment<BaseFragmentPresenter, Fragme
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "3,4", "","1", mPage, mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "9,10,11", "","1", mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

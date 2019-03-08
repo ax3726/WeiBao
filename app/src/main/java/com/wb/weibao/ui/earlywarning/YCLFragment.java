@@ -83,27 +83,40 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
 
                 }
 
+
                 switch (item.getStatus()) {
-//                    case "1":
-//                        binding.tvError.setText("预警中");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
-//                        break;
-//                    case "2":
-//                        binding.tvError.setText("处理中");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.colorFACF28));
-//                        break;
+                    case "1":
+                        binding.tvError.setText("预警中");
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
+                        break;
+                    case "2":
+                        binding.tvError.setText("处理中");
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
+                        break;
                     case "3":
                         binding.tvError.setText("无灾情");
                         binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
                         break;
                     case "4":
-                        binding.tvError.setText("有灾情");
+                        binding.tvError.setText("发生火灾");
                         binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
                         break;
-//                    case "5":
-//                        binding.tvError.setText("系统复位");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
-//                        break;
+                    case "5":
+                        binding.tvError.setText("系统复位");
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
+                        break;
+                    case "6":
+                        binding.tvError.setText("火灾误报");
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
+                        break;
+                    case "7":
+                        binding.tvError.setText("测试");
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
+                        break;
+                    case "8":
+                        binding.tvError.setText("其他");
+                        binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
+                        break;
                 }
 
 
@@ -163,7 +176,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "3,4", "37,53","", mPage, mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "3,4,5,6,7,8", "37,53","", mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

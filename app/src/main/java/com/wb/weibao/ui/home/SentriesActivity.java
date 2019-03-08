@@ -31,8 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-public class SentriesActivity extends BaseActivity<BasePresenter,ActivitySentriesBinding> implements TimelineObjectClickListener {
-
+public class SentriesActivity extends BaseActivity<BasePresenter, ActivitySentriesBinding> implements TimelineObjectClickListener {
 
 
     @Override
@@ -52,6 +51,7 @@ public class SentriesActivity extends BaseActivity<BasePresenter,ActivitySentrie
     }
 
     ArrayList<TimelineObject> objs;
+
     @Override
     protected void initTitleBar() {
         super.initTitleBar();
@@ -59,6 +59,7 @@ public class SentriesActivity extends BaseActivity<BasePresenter,ActivitySentrie
     }
 
     private TimelineFragment mFragment;
+
     @Override
     protected void initData() {
         super.initData();
@@ -71,12 +72,12 @@ public class SentriesActivity extends BaseActivity<BasePresenter,ActivitySentrie
         mBinding.affirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getCheckadd2(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getProjectId())
+                Api.getApi().getCheckadd2(MyApplication.getInstance().getUserData().getId() + "", MyApplication.getInstance().getProjectId())
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(SentriesActivity.this, true) {
                             @Override
                             public void onSuccess(BaseBean baseBean) {
-                               showToast("采集器已查岗");
+                                showToast("采集器已查岗");
                             }
 
                             @Override
@@ -91,7 +92,6 @@ public class SentriesActivity extends BaseActivity<BasePresenter,ActivitySentrie
     }
 
 
-
     private void loadFragment(Fragment newFragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, newFragment);
@@ -100,53 +100,56 @@ public class SentriesActivity extends BaseActivity<BasePresenter,ActivitySentrie
 
     @Override
     public void onTimelineObjectClicked(TimelineObject timelineObject) {
-        Toast.makeText(getApplicationContext(),"Clicked: "+timelineObject.getTimestamp(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Clicked: " + timelineObject.getTimestamp(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onTimelineObjectLongClicked(TimelineObject timelineObject) {
-        Toast.makeText(getApplicationContext(),"LongClicked: "+timelineObject.getTimestamp(),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "LongClicked: " + timelineObject.getTimestamp(), Toast.LENGTH_LONG).show();
     }
 
 
+    public void getchecklist() {
+        Api.getApi().getChecklist("1", "30", MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<CheckListbean>(this, true) {
+                    @Override
+                    public void onSuccess(CheckListbean baseBean) {
+                        LogUtils.d("baseBean==", baseBean.toString());
+                        objs = new ArrayList<>();
+                        for (int i = 0; i < baseBean.getData().getList().size(); i++) {
+                            String updateTime = "";
+                            if (baseBean.getData().getList().get(i).getStatus().equals("2")) {
+                                updateTime = transferLongToDate("yyyy.MM.dd HH:mm:ss", baseBean.getData().getList().get(i).getConfirmTime());
+                            } else {
+//                                updateTime = "未应答(10分中内未应答)";
+                                updateTime = "超时未确认";
+                            }
 
-   public void getchecklist()
-   {
-       Api.getApi().getChecklist("1", "30",MyApplication.getInstance().getProjectId())
-               .compose(callbackOnIOToMainThread())
-               .subscribe(new BaseNetListener<CheckListbean>(this, true) {
-                   @Override
-                   public void onSuccess(CheckListbean baseBean) {
-                       LogUtils.d("baseBean==",baseBean.toString());
-                        objs  = new ArrayList<>();
-                       for (int i = 0; i < baseBean.getData().getList().size(); i++) {
-                           String updateTime="";
-                           if(baseBean.getData().getList().get(i).getStatus().equals("2"))
-                           {
-                               updateTime=transferLongToDate("yyyy.MM.dd HH:mm:ss",baseBean.getData().getList().get(i).getUpdateTime());
-                           }else
-                               {
-                                   updateTime="未应答(10分中内未应答)";
-                               }
-                               long createTime=baseBean.getData().getList().get(i).getCreateTime();
-                           objs.add(new TestO(transferLongToDate("yyyy-MM-dd HH:mm:ss",createTime),updateTime));
-                       }
+//                            if (baseBean.getData().getList().get(i).getStatus().equals("3")) {
+//                                updateTime = "超时未确认";
+//                            } else {
+//                                updateTime = transferLongToDate("yyyy-MM-dd HH:mm:ss", baseBean.getData().getList().get(i).getConfirmTime());
+//
+//                            }
+                            objs.add(new TestO(transferLongToDate("yyyy-MM-dd HH:mm:ss", baseBean.getData().getList().get(i).getCreateTime()), updateTime));
+                        }
 
-                       //Set data
-                       mFragment.setData(objs, TimelineGroupType.MONTH);
-                       //Set configurations
+                        //Set data
+                        mFragment.setData(objs, TimelineGroupType.MONTH);
+                        //Set configurations
 
-                       loadFragment(mFragment);
+                        loadFragment(mFragment);
 
-                   }
+                    }
 
-                   @Override
-                   public void onFail(String errMsg) {
+                    @Override
+                    public void onFail(String errMsg) {
 
-                   }
-               });
+                    }
+                });
 
-   }
+    }
 
 
     public String transferLongToDate(String dateFormat, Long millSec) {
@@ -154,10 +157,6 @@ public class SentriesActivity extends BaseActivity<BasePresenter,ActivitySentrie
         Date date = new Date(millSec);
         return sdf.format(date);
     }
-
-
-
-
 
 
 }

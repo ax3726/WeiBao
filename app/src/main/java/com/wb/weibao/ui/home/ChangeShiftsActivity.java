@@ -72,6 +72,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
     @Override
     protected void initEvent() {
         super.initEvent();
+        startActivity(QrcodeActivity.class);
         mBinding.tvJiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,8 +111,6 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
             public void onClick(View v) {
 
 
-
-
                 if (isLocation == 0) {
                     new MyAlertDialog(ChangeShiftsActivity.this).builder().setTitle("提示").setMsg("您已超出考勤范围，无法交接班，请在考勤范内交接班").setPositiveButton("我知道了", new View.OnClickListener() {
                         @Override
@@ -140,7 +139,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                                     @Override
                                     public void onSuccess(BaseBean baseBean) {
                                         com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
-                                        showToast("交班成功");
+                                        showToast("接班成功");
                                         getDataList();
                                     }
 
@@ -241,7 +240,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                             @Override
                             public void onSuccess(BaseBean baseBean) {
                                 com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
-                              showToast("交班成功");
+                                showToast("接班成功");
                                 getDataList();
                             }
 

@@ -66,7 +66,9 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                spfUtils.setSpfString(SpfKey.IS_PUSH_PLAY, isChecked?"ok":"nook");
+                spfUtils.setSpfString(SpfKey.IS_PUSH_PLAY, isChecked ? "ok":"nook");
+
+
             }
         });
         mBinding.pwd.setOnClickListener(new View.OnClickListener() {

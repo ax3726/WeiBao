@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -60,6 +61,7 @@ public class LocationHelper {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             getAppDetailSettingIntent(mAty);
+
                         }
                     });
                     //为构造器设置取消按钮,若点击按钮后不需要做任何操作则直接为第二个参数赋值null
@@ -107,16 +109,18 @@ public class LocationHelper {
             return;
         }
 
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT >= 9) {
-            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-            intent.setData(Uri.fromParts("package", mAty.getPackageName(), null));
-        } else if (Build.VERSION.SDK_INT <= 8) {
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
-            intent.putExtra("com.android.settings.ApplicationPkgName", mAty.getPackageName());
-        }
+//        Intent intent = new Intent();
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        if (Build.VERSION.SDK_INT >= 9) {
+//            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+//            intent.setData(Uri.fromParts("package", mAty.getPackageName(), null));
+//        } else if (Build.VERSION.SDK_INT <= 8) {
+//            intent.setAction(Intent.ACTION_VIEW);
+//            intent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+//            intent.putExtra("com.android.settings.ApplicationPkgName", mAty.getPackageName());
+//        }
+
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         mAty.startActivity(intent);
     }
 

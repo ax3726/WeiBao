@@ -142,7 +142,7 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
             case "5"://维保失败
                 state = "维保失败";
                 mBinding.tv4.setVisibility(View.VISIBLE);
-                mBinding.tvInfo1.setVisibility(View.VISIBLE);
+                mBinding.tvInfo1.setVisibility(View.GONE);
                 time = "审核时间：" + CreateTime;
                 break;
             default://已取消

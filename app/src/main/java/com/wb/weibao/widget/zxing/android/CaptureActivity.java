@@ -235,7 +235,7 @@ public final class CaptureActivity extends BaseActivity<BasePresenter, CaptureBi
         //这里处理解码完成后的结果，此处将参数回传到Activity处理
         if (fromLiveScan) {
             beepManager.playBeepSoundAndVibrate();
-            Toast.makeText(this, "扫描成功"+rawResult.getText(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "扫描成功"+rawResult.getText(), Toast.LENGTH_SHORT).show();
             setResult(rawResult, barcode);
 
         }

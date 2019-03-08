@@ -272,7 +272,7 @@ public class CheckListbean {
             private int id;
             private String collectorId;
             private String status;
-            private Object confirmTime;
+            private long confirmTime;
             private long createTime;
             private String createUserId;
             private Object updateUserId;
@@ -302,11 +302,11 @@ public class CheckListbean {
                 this.status = status;
             }
 
-            public Object getConfirmTime() {
+            public long getConfirmTime() {
                 return confirmTime;
             }
 
-            public void setConfirmTime(Object confirmTime) {
+            public void setConfirmTime(long confirmTime) {
                 this.confirmTime = confirmTime;
             }
 

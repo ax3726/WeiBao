@@ -338,6 +338,18 @@ public interface ApiService {
     Flowable<BaseBean> handleWeiBao1(@Query("id") String id, @Query("userId") String userId, @Query("status") String status,
                                      @Query("processingOssKeys") String processingOssKeys, @Query("processingRet") String processingRet);
 
+
+
+    /**
+     * 维保上报
+     *
+     * @return
+     */
+    @POST("/earlywarn/order/handle")
+    Flowable<BaseBean> handleWeiBao2(@Query("id") String id, @Query("userId") String userId, @Query("status") String status,
+                                     @Query("processingOssKeys") String processingOssKeys, @Query("processingRet") String processingRet, @Query("processingName") String processingName);
+
+
     /**
      * 交接班记录
      *

@@ -75,7 +75,7 @@ public class HandleMaintenanceActivity extends BaseActivity<BasePresenter, Activ
         id = getIntent().getStringExtra("id");
         name = getIntent().getStringExtra("name");
         type = getIntent().getStringExtra("type");
-        mBinding.tvName.setText(TextUtils.isEmpty(name) ? "实际维保人:" : "实际维保人:" + name);
+//        mBinding.tvName.setText(TextUtils.isEmpty(name) ? "实际维保人:" : "实际维保人:" + name);
         mBinding.tvState.setText("4".equals(type) ? "维保状态:维保成功" : "维保状态:维保失败");
         initAdapter();
     }
@@ -185,14 +185,17 @@ public class HandleMaintenanceActivity extends BaseActivity<BasePresenter, Activ
     }
 
     public void addRecord() {
-
+        if (TextUtils.isEmpty(mBinding.etName.getText())) {
+            showToast("请输入实际维保人");
+            return;
+        }
         String content = mBinding.etContent.getText().toString().trim();
 
         mBinding.affirm.setEnabled(false);
 
         String str = DemoUtils.ListToString(mImageUUid, ";");
 
-        Api.getApi().handleWeiBao1(id, MyApplication.getInstance().getUserData().getId() + "", type, str, content)
+        Api.getApi().handleWeiBao2(id, MyApplication.getInstance().getUserData().getId() + "", type, str, content,mBinding.etName.getText().toString())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

@@ -35,6 +35,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,7 +74,6 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
     @Override
     protected void initEvent() {
         super.initEvent();
-        startActivity(QrcodeActivity.class);
         mBinding.tvJiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +101,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                     } else {
 
                         startActivity(QrcodeActivity.class);
-                        finish();
+
                     }
                 }
             }
@@ -152,12 +153,6 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                                     }
                                 });
 
-
-
-
-
-
-
                     }
                 }
             }
@@ -176,10 +171,16 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
             protected void convert(ViewHolder holder, Handoverbean.DataBean.ListBean listBean, int position) {
                 ItemChangeShiftsLayoutBinding binding = holder.getBinding(ItemChangeShiftsLayoutBinding.class);
                 binding.viewLine.setVisibility(position == mDataList.size() - 1 ? View.GONE : View.VISIBLE);
-                if (listBean.getCrossUserId().equals("" + MyApplication.getInstance().getUserData().getId())) {
-                    binding.tvTitle.setText("交班于消防保安" + listBean.getConnectUserName());
-                } else if (listBean.getConnectUserId().equals("" + MyApplication.getInstance().getUserData().getId())) {
-                    binding.tvTitle.setText("接班于消防保安" + listBean.getConnectUserName());
+                if(listBean.getCrossUserId()!=null)
+                {
+                    if (listBean.getCrossUserId().equals("" + MyApplication.getInstance().getUserData().getId())) {
+                        binding.tvTitle.setText("交班于消防保安" + listBean.getConnectUserName());
+                    }
+                }
+                if(listBean.getConnectUserId()!=null) {
+                    if (listBean.getConnectUserId().equals("" + MyApplication.getInstance().getUserData().getId())) {
+                        binding.tvTitle.setText("接班于消防保安" + listBean.getConnectUserName());
+                    }
                 }
                 long handoverTime = listBean.getHandoverTime();
                 binding.tvTime.setText(transferLongToDate("yyyy-MM-dd HH:mm:ss", handoverTime));
@@ -220,7 +221,15 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
 //        LocationHelper.getInstance().startLocation(aty);  重新定位
     }
 
-
+    public  String  getInsideString(String  str, String strStart, String strEnd ) {
+        if ( str.indexOf(strStart) < 0 ){
+            return "";
+        }
+        if ( str.indexOf(strEnd) < 0 ){
+            return "";
+        }
+        return str.substring(str.indexOf(strStart) + strStart.length(), str.indexOf(strEnd));
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refersh(ChangEvent event) {
@@ -234,21 +243,24 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
         if (requestCode == REQUEST_CODE_SCAN && resultCode == RESULT_OK) {
             if (data != null) {
                 String content = data.getStringExtra(DECODED_CONTENT_KEY);
-                Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getId() + "",content)
-                        .compose(callbackOnIOToMainThread())
-                        .subscribe(new BaseNetListener<BaseBean>(this, true) {
-                            @Override
-                            public void onSuccess(BaseBean baseBean) {
-                                com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
-                                showToast("接班成功");
-                                getDataList();
-                            }
+                String result2 = getInsideString(content,"=","&");
 
-                            @Override
-                            public void onFail(String errMsg) {
+                    Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getId() + "",result2)
+                            .compose(callbackOnIOToMainThread())
+                            .subscribe(new BaseNetListener<BaseBean>(this, true) {
+                                @Override
+                                public void onSuccess(BaseBean baseBean) {
+                                    com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
+                                    showToast("接班成功");
+                                    getDataList();
+                                }
 
-                            }
-                        });
+                                @Override
+                                public void onFail(String errMsg) {
+                                    showToast("接班失败");
+                                }
+                            });
+
 
 
             }
@@ -268,7 +280,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                         Handoverbean.DataBean data = baseBean.getData();
                         List<Handoverbean.DataBean.ListBean> list = data.getList();
                         mDataList.addAll(list);
-
+                        mAdapter.notifyDataSetChanged();
                     }
 
                     @Override

@@ -119,7 +119,9 @@ public class SentriesActivity extends BaseActivity<BasePresenter, ActivitySentri
                         objs = new ArrayList<>();
                         for (int i = 0; i < baseBean.getData().getList().size(); i++) {
                             String updateTime = "";
-                            if (baseBean.getData().getList().get(i).getStatus().equals("2")) {
+                            if (baseBean.getData().getList().get(i).getStatus().equals("1")) {
+                                updateTime = "待确认";
+                            }else  if (baseBean.getData().getList().get(i).getStatus().equals("2")) {
                                 updateTime = transferLongToDate("yyyy.MM.dd HH:mm:ss", baseBean.getData().getList().get(i).getConfirmTime());
                             } else {
 //                                updateTime = "未应答(10分中内未应答)";

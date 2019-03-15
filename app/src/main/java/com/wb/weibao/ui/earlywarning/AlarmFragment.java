@@ -20,6 +20,11 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragmentAlarmBinding;
 import com.wb.weibao.databinding.FragmentFireBinding;
 import com.wb.weibao.model.record.RecordCount;
+import com.wb.weibao.model.record.RecordDetailEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +55,7 @@ public class AlarmFragment extends BaseFragment<BaseFragmentPresenter, FragmentA
         super.initData();
         count();
         initFragment();
+        EventBus.getDefault().register(this);
         mBinding.tabTitleGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -139,6 +145,12 @@ public class AlarmFragment extends BaseFragment<BaseFragmentPresenter, FragmentA
 
                     }
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(RecordDetailEvent event) {
+        count();
+
     }
 
 }

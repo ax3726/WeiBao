@@ -17,7 +17,13 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntWarningBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
+import com.wb.weibao.model.record.RecordCount;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.ui.Login.ForgetPwdActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +68,8 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     protected void initData() {
         super.initData();
         initFragment();
+        count();
+        EventBus.getDefault().register(this);
         mBinding.pager.setOnPageChangeListener(this);
         mBinding.pager.setAdapter(new EventsPageAdpater(getChildFragmentManager()));
         mBinding.tabTv.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +152,30 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
         }
     }
 
+    public  void count()
+    {
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<RecordCount>(WarningFragment.this, false) {
+                    @Override
+                    public void onSuccess(RecordCount baseBean) {
+                        LogUtils.e("baseBean" + baseBean.toString());
+                        mBinding.tabTv1.setText("告警("+baseBean.getData().getAlarmWaitProccessNum()+")");
+                       int sum=Integer.parseInt(String.valueOf(baseBean.getData().getFireWaitConfirmNum()))+Integer.parseInt(String.valueOf(baseBean.getData().getFireWaitProccessNum()));
+                       mBinding.tabTv.setText("火警("+sum+")");
+                    }
 
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(RecordDetailEvent event) {
+        count();
+
+    }
 
 }

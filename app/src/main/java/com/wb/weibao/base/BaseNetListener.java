@@ -76,10 +76,13 @@ public abstract class BaseNetListener<T> implements Subscriber<T> {
         }
         if ( this.baseHttpListener!=null) {
             this.baseHttpListener.hideWaitDialog();
-            if(!err_msg.equals("交接不允许")&&!err_msg.equals("交接人已存在")&&!err_msg.equals("交接不存在"))
+            if(err_msg.equals("交接不允许")||err_msg.equals("交接人已存在")||err_msg.equals("交接不存在"))
             {
-                this.baseHttpListener.showToast(err_msg);
-            }
+
+            }else
+                {
+                    this.baseHttpListener.showToast(err_msg);
+                }
 
         }
         onFail(err_msg);

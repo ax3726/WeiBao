@@ -114,7 +114,7 @@
                 android:background="#dddddd" />
         </LinearLayout>
         <LinearLayout
-            android:visibility="gone"
+
             android:layout_marginTop="25px"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -174,7 +174,7 @@
             android:id="@+id/banben"
             android:drawablePadding="8px"
             android:textColor="#c8c8c8"
-            android:text="当前版本2.0.0"
+            android:text="当前版本1.0.5"
             android:textSize="14sp"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"

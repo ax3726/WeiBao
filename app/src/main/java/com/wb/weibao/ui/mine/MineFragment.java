@@ -15,9 +15,7 @@ import com.wb.weibao.ui.Login.LoginActivity;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 
-/**
- * Created by Administrator on 2018/10/8.
- */
+
 
 public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMineBinding> {
 

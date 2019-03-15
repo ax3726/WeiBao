@@ -16,6 +16,7 @@ import com.wb.weibao.model.home.MaintenanceListModel;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
 import com.wb.weibao.model.home.StatisticsModel;
+import com.wb.weibao.model.record.EventReportListbean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
 
@@ -67,7 +68,7 @@ public interface ApiService {
 
 
     @POST("project/list")
-    Flowable<ProjectListModel> getProject_list2(@Query("instCode") String instCode, @Query("userId") String userId,@Query("sMaintenance") String sMaintenance);
+    Flowable<ProjectListModel> getProject_list2(@Query("instCode") String instCode, @Query("userId") String userId,@Query("isMaintenance") String isMaintenance);
 
     /**
      * 预警列表接口
@@ -305,6 +306,17 @@ public interface ApiService {
     @POST("order/list")
     Flowable<MaintenanceListModel> getMyWeiBao(@Query("userId") String userId);
 
+
+
+    /**
+     * 我的维保
+     *
+     * @return
+     */
+    @POST("order/list")
+    Flowable<MaintenanceListModel> getMyWeiBao2(@Query("userId") String userId,@Query("instCode") String instCode,@Query("projectId") String projectId );
+
+
     /**
      * 维保详情
      *
@@ -368,7 +380,14 @@ public interface ApiService {
 
     /**
      * 新增维保记录
-     *
+     * @param userId
+     * @param projectId
+     * @param contractName
+     * @param contractPhone
+     * @param maintenanceDate
+     * @param maintenanceNextDate
+     * @param picturesOssKeys
+     * @param maintenanceContent
      * @return
      */
     @POST("/earlywarn/maintenance/record/add")
@@ -407,6 +426,14 @@ public interface ApiService {
      */
     @POST("/earlywarn/early/event/report/add")
     Flowable<BaseBean> getReportadd(@Query("userId") String userId, @Query("eventType") String eventType, @Query("cause") String cause, @Query("isFault") String isFault, @Query("detailReasons") String detailReasons, @Query("picturesOssKeys") String picturesOssKeys, @Query("earlyRecordId") String earlyRecordId);
+
+
+
+
+    @POST("/earlywarn/early/event/report/add")
+    Flowable<BaseBean> getReportadd2(@Query("createUserId") String createUserId, @Query("eventType") String eventType, @Query("cause") String cause,@Query("causeName") String causeName, @Query("isFault") String isFault, @Query("detailReasons") String detailReasons, @Query("picturesOssKeys") String picturesOssKeys, @Query("earlyRecordId") String earlyRecordId);
+
+
 
 
     /**
@@ -535,4 +562,16 @@ public interface ApiService {
      */
     @POST("advice/add")
     Flowable<BaseBean> getAdviceadd(@Query("userId") String userId,@Query("text") String text);
+
+
+    /**
+     *
+     * @param userId
+     * @param earlyRecordId
+     * @return
+     */
+    @POST("/earlywarn/early/event/report/list")
+    Flowable<EventReportListbean> getEventReportList(@Query("userId") String userId, @Query("earlyRecordId") String earlyRecordId);
+
+
 }

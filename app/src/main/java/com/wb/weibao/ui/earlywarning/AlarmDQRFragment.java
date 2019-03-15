@@ -145,6 +145,24 @@ public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, Fragme
                     case "47":
                         binding.tvError.setText("温度开路");
                         break;
+                    case "51":
+                        binding.tvError.setText("测试");
+                        break;
+                    case "52":
+                        binding.tvError.setText("自检");
+                        break;
+                    case "53":
+                        binding.tvError.setText("手动报警");
+                        break;
+                    case "54":
+                        binding.tvError.setText("消音");
+                        break;
+                    case "55":
+                        binding.tvError.setText("复位");
+                        break;
+                    case "56":
+                        binding.tvError.setText("查岗应答");
+                        break;
                 }
                 binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
 
@@ -202,7 +220,7 @@ public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, Fragme
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId(),"1","2","","1",mPage,mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId(),"1","1,2","","1",mPage,mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

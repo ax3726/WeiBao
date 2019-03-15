@@ -24,6 +24,7 @@ import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
 import com.wb.weibao.ui.mine.MineFragment;
+import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
@@ -67,6 +68,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     @Override
     protected void initData() {
         super.initData();
+
         spfUtils = SpfUtils.getInstance(MainActivity.this);
         mBinding.rgButtom.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -117,6 +119,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
             }
         });
       //  getProjectList();
+
     }
 
     @Override
@@ -125,6 +128,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         mDoubleClickExit = new DoubleClickExitHelper(this);
         initFragment();
         setJPush();
+
     }
 
     private void initFragment() {
@@ -141,6 +145,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         mFragments.add(mMineFragment);
         mFm = getSupportFragmentManager();
         mTransaction = mFm.beginTransaction();
+
         mTransaction.add(R.id.lly_body, mHomeFragment);
         mTransaction.show(mFragments.get(0));
         mTransaction.commitAllowingStateLoss();

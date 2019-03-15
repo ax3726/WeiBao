@@ -22,12 +22,14 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityAddDayWeiBaoBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.utils.DataUtils;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
 import com.wb.weibao.utils.picker.picker.DatePicker;
 import com.wb.weibao.utils.picker.picker.DateTimePicker;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
+import com.wb.weibao.utils.picker.util.LogUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -292,8 +294,10 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
         }
         mBinding.affirm.setEnabled(false);
         String str = DemoUtils.ListToString(mImageUUid, ";");
+
+
         Api.getApi().addRecord(MyApplication.getInstance().getUserData().getId() + "",
-                mDataList.get(mProjectIndex).getInstCode(), name, phone,time+" 00:00:00" ,NextTime +" 00:00:00", str, content)
+                mDataList.get(mProjectIndex).getId()+"", name, phone,DataUtils.formatDate(time+" 00:00:00","yyyy-MM-dd HH:mm:s") ,DataUtils.formatDate(NextTime+" 00:00:00","yyyy-MM-dd HH:mm:ss") +" 00:00:00", str, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -357,7 +361,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
 
                                 List<String> lists=new ArrayList<>();
                                 for (ProjectListModel.DataBean.ListBean bean:data.getList()) {
-                                    lists.add(bean.getInstName());
+                                    lists.add(bean.getName());
                                 }
                                 project(lists.toArray(new String[lists.size()]));
                             }

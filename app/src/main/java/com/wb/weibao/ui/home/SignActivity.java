@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
+import com.lidroid.xutils.util.LogUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wb.weibao.R;
@@ -141,6 +142,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
                 if (location != null) {
                     mLatitude = location.getLatitude();
                     mLongitude = location.getLongitude();
+//                    mBinding.gps.setText("mLatitude=="+mLatitude+"mLongitude==="+mLongitude+"相差距离==="+DemoUtils.DistanceOfTwoPoints(mProjectLatitude, mProjectLongitude, mLatitude, mLongitude));
 
                     if (checkLocation()) {
                         mBinding.tvResult.setSelected(true);
@@ -156,6 +158,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
         SpfUtils spfUtils = SpfUtils.getInstance(aty);
         mProjectLatitude = TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.LatiTude)) ? 0 : Double.valueOf(spfUtils.getSpfString(SpfKey.LatiTude));
         mProjectLongitude = TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.LongiTude)) ? 0 : Double.valueOf(spfUtils.getSpfString(SpfKey.LongiTude));
+
     }
 
     private double mLatitude = 0;
@@ -168,6 +171,8 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
             return false;
         }
         double m = DemoUtils.DistanceOfTwoPoints(mProjectLatitude, mProjectLongitude, mLatitude, mLongitude);
+//        LogUtils.d("mProjectLatitude="+mProjectLatitude+"mProjectLongitude="+mProjectLongitude+"mLatitude="+mLatitude+"mLongitude="+mLongitude);
+//       showToast("==="+m);
         if (m <= 200) {
             return true;
         } else {

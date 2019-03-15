@@ -73,10 +73,10 @@ public class FireControlActivity extends BaseActivity<BasePresenter, ActivityFir
         if (list != null && list.size() > 0) {
             FrieControlModel.DataBean.ListBean listBean = list.get(0);
             mBinding.tvName.setText(TextUtils.isEmpty(listBean.getName()) ? "" : listBean.getName());
-            mBinding.tvPhone.setText(TextUtils.isEmpty(listBean.getPhone()) ? "" : listBean.getMasterPhone());
+            mBinding.tvPhone.setText(TextUtils.isEmpty(listBean.getPhone()) ? "" : listBean.getPhone());
             mBinding.tvAddress.setText(TextUtils.isEmpty(listBean.getAreaDetail()) ? "" : listBean.getAreaDetail());
             mBinding.tvZhan.setText(TextUtils.isEmpty(listBean.getMaster()) ? "" : listBean.getMaster());
-            mBinding.tvZhanPhone.setText(TextUtils.isEmpty(listBean.getMasterPhone()) ? "" : listBean.getPhone());
+            mBinding.tvZhanPhone.setText(TextUtils.isEmpty(listBean.getMasterPhone()) ? "" : listBean.getMasterPhone());
 
         }
     }

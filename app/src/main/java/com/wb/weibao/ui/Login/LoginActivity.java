@@ -144,6 +144,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                            {
                                if(spfUtils.getSpfString(SpfKey.IS_LOGIN).length()>0) {
                                    if (spfUtils.getSpfString(SpfKey.LOGIN_NAME).length() > 0 && spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD).length() > 0) {
+
                                        checkLogin();
                                    }
                                }
@@ -257,9 +258,12 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                         refreshData();
 
                         spfUtils.setSpfString(SpfKey.IS_LOGIN, "true");
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+
+
                     }
 
                     @Override
@@ -289,7 +293,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
     // 用来处理选中或者删除下拉项消息
     private DbUtils MDbUtils;
     private SpfUtils spfUtils;
-    private boolean RememberPasswordCheckBoxFlag = true;
+    private boolean RememberPasswordCheckBoxFlag;
     int count = 0;
 
     private void initWedget() {

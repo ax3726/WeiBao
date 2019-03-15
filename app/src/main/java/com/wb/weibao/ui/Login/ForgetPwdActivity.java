@@ -17,6 +17,7 @@ import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityForgetPwdBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.VersionBean;
@@ -83,6 +84,7 @@ public class ForgetPwdActivity extends BaseActivity<BasePresenter,ActivityForget
                                     public void onSuccess(BaseBean baseBean) {
                                         LogUtils.e("baseBean" + baseBean.toString());
                                         countDownTimer.start();
+                                        MyApplication.getInstance().setJSESSIONID(baseBean.getData().toString());
 
                                     }
 
@@ -122,7 +124,7 @@ public class ForgetPwdActivity extends BaseActivity<BasePresenter,ActivityForget
                    showToast("两次输入的新密码不一致!");
                    return;
                }
-               Api.getApi().getupdatePassword(mBinding.etName.getText().toString(),mBinding.etPhone.getText().toString(),  MD5Utils.encryptMD5(mBinding.etNewpwd.getText().toString()))
+               Api.getApi2().getupdatePassword(mBinding.etName.getText().toString(),mBinding.etPhone.getText().toString(),  MD5Utils.encryptMD5(mBinding.etNewpwd.getText().toString()))
                        .compose(callbackOnIOToMainThread())
                        .subscribe(new BaseNetListener<BaseBean>(ForgetPwdActivity.this, false) {
                            @Override

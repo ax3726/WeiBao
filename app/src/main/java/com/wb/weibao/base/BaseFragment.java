@@ -33,10 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-/**
- * Created by lm on 2017/11/22.
- * Description:
- */
+
 
 public abstract class BaseFragment<P extends BaseFragmentPresenter, B extends ViewDataBinding> extends RxFragment implements BaseFragmentView, BaseHttpListener {
 

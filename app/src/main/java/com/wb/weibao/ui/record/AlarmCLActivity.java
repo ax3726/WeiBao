@@ -132,13 +132,14 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
     /**
      * 类型列表
      */
+    List<DeviceTypeModel.DataBean> data;
     private void getFaultList() {
         Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getId() + "", "earlyWarningReason")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<DeviceTypeModel>(this, true) {
                     @Override
                     public void onSuccess(DeviceTypeModel baseBean) {
-                        List<DeviceTypeModel.DataBean> data = baseBean.getData();
+                         data = baseBean.getData();
                         if (data != null && data.size() > 0) {
                             List<String> lists = new ArrayList<>();
                             for (DeviceTypeModel.DataBean bean : data) {
@@ -201,7 +202,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
         }
 
     }
-
+   String causename="";
     public void addRecord() {
         String name = mBinding.tv1.getText().toString().trim();
         String content = mBinding.etContent.getText().toString().trim();
@@ -220,7 +221,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
             return;
         }
         String str = DemoUtils.ListToString(mImageUUid, ";");
-        Api.getApi().getReportadd(MyApplication.getInstance().getUserData().getId() + "","1",name,"",content,str,getIntent().getStringExtra("id").toString())
+        Api.getApi().getReportadd(MyApplication.getInstance().getUserData().getId() + "","1",causename,"",content,str,getIntent().getStringExtra("id").toString())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -260,7 +261,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
                     mImgs.add("");
                 }
                 mAdapter.notifyDataSetChanged();
-                ;
+
             }
         }
     }
@@ -298,7 +299,10 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
         picker.setOnItemPickListener(new OnItemPickListener<String>() {
             @Override
             public void onItemPicked(int index, String item) {
+
                 mBinding.tv1.setText(item);
+                causename=data.get(index).getCodeValue();
+
             }
         });
         picker.show();

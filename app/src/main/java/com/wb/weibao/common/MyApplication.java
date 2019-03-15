@@ -39,13 +39,20 @@ public class MyApplication extends ThisApplication {
     private LoginModel.DataBean mUserData=null;//用户信息
     private String mProjectId = "";//当前项目id
     private String mRegistrationID = "";//RegistrationID
-
+private String JSESSIONID="";
     public static MyApplication getInstance() {
         return instance;
     }
 
     public static List<Activity> mList = new LinkedList<>();
 
+    public String getJSESSIONID() {
+        return JSESSIONID;
+    }
+
+    public void setJSESSIONID(String JSESSIONID) {
+        this.JSESSIONID = JSESSIONID;
+    }
 
     @Override
     public void onCreate() {

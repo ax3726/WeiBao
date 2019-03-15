@@ -13,6 +13,7 @@ import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.Link;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySecurityInfoBinding;
 import com.wb.weibao.model.home.SecurityInfoModel;
@@ -169,7 +170,7 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
             String[] split = data.getPicturesOssKeys().split(";");
             if (split != null && split.length > 0) {
                 for (String str : split) {
-                    mImgs.add("http://47.110.184.79:8300/earlywarn/oss/download?fileName=" + str);
+                    mImgs.add(Link.SEREVE+"oss/download?fileName=" + str);
                 }
             }
             mAdapter.notifyDataSetChanged();

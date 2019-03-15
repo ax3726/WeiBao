@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.PowerManager;
 import android.util.Log;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +24,21 @@ public class DemoUtils {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
 
         return sdf.format(new Date(time));
+    }
+
+    /**
+     * 格式化日期
+     */
+    public static String formatDate(String date ,String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+        Date curDate = null;//获取当前时间
+        try {
+            curDate = formatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String str = formatter.format(curDate);
+        return str;
     }
 
     public static Date parseServerTime(String serverTime, String format) {
@@ -98,8 +114,13 @@ public class DemoUtils {
                 + Math.cos(radLat1) * Math.cos(radLat2)
                 * Math.pow(Math.sin(b / 2), 2)));
         s = s * EARTH_RADIUS;
-        s = Math.round(s * 10000) / 10;
+//        s = Math.round(s * 10000) / 10;
+//        Log.i("距离", s + "");
+
+        s = Math.round(s * 10000d) / 10000d;
         Log.i("距离", s + "");
+        s=s*1000;
+
         return s;
     }
 

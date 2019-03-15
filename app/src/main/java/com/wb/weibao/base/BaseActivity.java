@@ -35,11 +35,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-/**
- * Created by lm on 2017/11/22.
- * Description:
- */
-
 public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBinding> extends RxAppCompatActivity implements BaseView, BaseHttpListener {
 
     protected P mPresenter;
@@ -141,6 +136,7 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
     protected void startActivityForResult(Class<?> cls, int requestCode) {
         startActivityForResult(new Intent(aty, cls), requestCode);
     }
+
     protected void startActivity(Class<?> cls) {
         startActivity(new Intent(aty, cls));
     }
@@ -201,6 +197,7 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
         intent.putExtra("id", id);
         startActivity(intent);
     }
+
     @Override
     public void showToast(final int id) {
         if (aty != null) {

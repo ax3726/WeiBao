@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/lly_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/black">
+
+            <TextureView
+                android:id="@+id/texture_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/result_hint_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+            <ImageView
+                android:id="@+id/start"
+                android:visibility="visible"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_view_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_height="wrap_content">
+           <ImageView
+               android:id="@+id/capture_button"
+               android:background="@drawable/ic_view_photo"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/record_button"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/ic_view_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>
+
+

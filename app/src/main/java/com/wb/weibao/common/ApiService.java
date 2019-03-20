@@ -573,5 +573,22 @@ public interface ApiService {
     @POST("/earlywarn/early/event/report/list")
     Flowable<EventReportListbean> getEventReportList(@Query("userId") String userId, @Query("earlyRecordId") String earlyRecordId);
 
+    /**
+     * 获取摄像头ID
+     * @param userId
+     * @return
+     */
+    @POST("/earlywarn/camera/list")
+    Flowable<BaseBean> getCameraList(@Query("userId") String userId);
+
+    /**
+     *
+     * @param userId
+     * @param id
+     * @return
+     */
+    @POST("camera/preview_urls")
+    Flowable<BaseBean> getCameraurl(@Query("userId") String userId,@Query("id") String id);
+
 
 }

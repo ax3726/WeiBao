@@ -3,6 +3,7 @@ package com.wb.weibao.ui.home;
 import android.content.Intent;
 import android.view.View;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.wb.weibao.R;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
@@ -10,6 +11,7 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragmentHomeLayoutBinding;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ProjectChangeEvent;
 import com.wb.weibao.utils.SpfKey;
@@ -63,19 +65,35 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 //                getProjectList();
             getProjectList2();
         }
+
+        Api.getApi().getCameraurl(""+ MyApplication.getInstance().getUserData().getId(),"38")
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(HomeFragment.this, false) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
+                        LogUtils.e("baseBean" + baseBean.getData().toString());
+//                        previewUri=baseBean.getData().toString();
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_sign://值班签到
-                startActivity(SignActivity.class);
+            case R.id.tv_sign://视频监控
+                startActivity(PreviewActivity.class);
                 break;
             case R.id.tv_day_record://日常维保记录
                 startActivity(AddDayWeiBaoActivity.class);
                 break;
-            case R.id.tv_handover://交接班
-                startActivity(ChangeShiftsActivity.class);
+            case R.id.tv_handover://查岗
+                startActivity(SentriesActivity.class);
                 break;
             case R.id.tv_add_weibao://发起维保
                 startActivity(InitiateWeibaoActivity.class);
@@ -86,27 +104,24 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
             case R.id.tv_warning_record://警报统计
                 startActivity(StatisticsActivity.class);
                 break;
-            case R.id.tv_look_gang://查岗
-                startActivity(SentriesActivity.class);
+            case R.id.tv_look_gang://消防微站
+                startActivity(FireControlActivity.class);
                 break;
             case R.id.tv_weibao_order://维保订单
                 if (MyApplication.getInstance().getUserData().getType().equals("1")) {
                     startActivity(new Intent(aty, MySecurityActivity.class).putExtra("type", 1));
                 }
                 break;
-            case R.id.tv_fire_control://消防微岗
-                startActivity(FireControlActivity.class);
-                break;
+
             case R.id.tv_peixun://培训教育
                 startActivity(TrainingEducationActivity.class);
                 break;
-            case R.id.tv_project://选择项目
-                if (MyApplication.getInstance().getUserData().getType().equals("1")) {
-                    startActivity(ProjectListActivity.class);
-                }
+            case R.id.tv_fire_control://值班签到
+                startActivity(SignActivity.class);
                 break;
-            case R.id.tv_sy://水压
-                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 1));
+            case R.id.tv_sy://交接班
+                startActivity(ChangeShiftsActivity.class);
+//                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 1));
                 break;
             case R.id.tv_sw://水位
                 startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 2));
@@ -114,7 +129,11 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
             case R.id.tv_dq://电气
                 startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 3));
                 break;
-
+            case R.id.tv_project://选择项目
+                if (MyApplication.getInstance().getUserData().getType().equals("1")) {
+                    startActivity(ProjectListActivity.class);
+                }
+                break;
         }
     }
 
@@ -203,6 +222,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                     }
                 });
     }
+
 
 
 }

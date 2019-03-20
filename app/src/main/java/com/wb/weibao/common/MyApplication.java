@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.hikvision.open.hikvideoplayer.HikVideoPlayerFactory;
 import com.lling.photopicker.PhotoPickerApplication;
 import com.lm.lib_common.utils.CacheUtils;
 import com.lm.lib_common.utils.Utils;
@@ -60,6 +61,7 @@ private String JSESSIONID="";
         instance = this;
         Base_Path = Utils.getCacheDirectory(this, Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         PhotoPickerApplication.setUp(this);
+        HikVideoPlayerFactory.initLib(null, true);
         //缓存初始化
         CacheUtils.getInstance().init(CacheUtils.CacheMode.CACHE_MAX,
                 Utils.getCacheDirectory(this, Environment.DIRECTORY_DOCUMENTS).getAbsolutePath());

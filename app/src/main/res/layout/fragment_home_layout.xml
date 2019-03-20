@@ -47,10 +47,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableTop="@mipmap/home_sign_icon"
+                        android:drawableTop="@drawable/home_11"
                         android:drawablePadding="32px"
                         android:gravity="center"
-                        android:text="值班签到"
+                        android:text="视频监控"
                         android:textColor="@color/color2D3D6D"
                         android:textSize="28px" />
 
@@ -81,10 +81,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableTop="@mipmap/home_sign_handover_icon"
+                        android:drawableTop="@drawable/home_12"
                         android:drawablePadding="32px"
                         android:gravity="center"
-                        android:text="交接班"
+                        android:text="查岗"
                         android:textColor="@color/color2D3D6D"
                         android:textSize="28px" />
 
@@ -180,12 +180,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
-                    android:drawableTop="@drawable/home_04"
+                    android:drawableTop="@drawable/home_06"
                     android:drawablePadding="30px"
                     android:gravity="center"
                     android:paddingTop="44px"
                     android:paddingBottom="22px"
-                    android:text="查岗"
+                    android:text="消防微站"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
 
@@ -251,6 +251,7 @@
                         android:textSize="26px" />
 
                     <TextView
+                        android:layout_marginTop="4dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="机构管理员可查看"
@@ -273,26 +274,11 @@
                 </com.zhy.autolayout.AutoLinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_fire_control"
+                    android:id="@+id/tv_peixun"
+
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16px"
-                    android:layout_marginRight="16px"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_white"
-                    android:drawableTop="@drawable/home_06"
-                    android:drawablePadding="30px"
-                    android:gravity="center"
-                    android:paddingTop="44px"
-                    android:paddingBottom="22px"
-                    android:text="消防微站"
-                    android:textColor="@color/color333333"
-                    android:textSize="26px" />
-
-                <TextView
-                    android:id="@+id/tv_peixun"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_marginRight="16px"
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
@@ -306,17 +292,33 @@
                     android:textSize="26px" />
 
                 <TextView
+                    android:id="@+id/tv_fire_control"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16px"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_white"
+                    android:drawableTop="@drawable/home_13"
+                    android:drawablePadding="30px"
+                    android:gravity="center"
+                    android:paddingTop="44px"
+                    android:paddingBottom="22px"
+                    android:text="值班签到"
+                    android:textColor="@color/color333333"
+                    android:textSize="26px" />
+
+                <TextView
                     android:id="@+id/tv_sy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
-                    android:drawableTop="@drawable/home_08"
+                    android:drawableTop="@drawable/home_14"
                     android:drawablePadding="30px"
                     android:gravity="center"
                     android:paddingTop="44px"
                     android:paddingBottom="22px"
-                    android:text="水压监控"
+                    android:text="交接班"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
 

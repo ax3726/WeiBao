@@ -18,6 +18,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
+    <!-- 允许程序录制音频 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+
     <application
         android:name=".common.MyApplication"
         android:allowBackup="true"
@@ -129,6 +133,12 @@
         <activity android:name=".ui.record.AlarmCLActivity" />
         <activity android:name=".ui.home.QrcodeActivity" />
         <activity android:name=".ui.mine.ProposalActivity" />
+        <activity android:name=".ui.home.PreviewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_preview"
+            android:windowSoftInputMode="adjustResize">
+
+    </activity>
     </application>
 
 </manifest>

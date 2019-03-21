@@ -7,11 +7,14 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.lidroid.xutils.util.LogUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
 import java.util.Locale;
 
+import static android.os.Environment.DIRECTORY_DCIM;
 import static android.os.Environment.DIRECTORY_MOVIES;
 import static android.os.Environment.DIRECTORY_PICTURES;
 
@@ -48,27 +51,15 @@ public class MyUtils {
 //        Log.i(TAG, "getLocalRecordPath: " + path);
 
 
-        // 首先保存图片
-        File appDir = Environment.getExternalStorageDirectory();
+        // 首先保存图片/DICM
+        File appDir = Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM);
         if (!appDir.exists()) {
             appDir.mkdir();
         }
-        String fileName = "12" + ".mp4";
+        String fileName = "video_"+System.currentTimeMillis() + ".mp4";
+
         File file = new File(appDir, fileName);
-        Log.i(TAG, "getCaptureImagePath: " + file.getAbsolutePath());
-
-
-//        Intent captureImageCamera = new Intent(
-//                MediaStore.ACTION_VIDEO_CAPTURE);
-//        Uri uri = Uri.fromFile(file);
-//        captureImageCamera.setData(uri);
-//        context.sendBroadcast(captureImageCamera);
-
-
-//        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        Uri uri = Uri.fromFile(file);
-//        intent.setData(uri);
-//        context.sendBroadcast(intent);//这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！，记得要传你更新的file哦
+        LogUtils.e("getCaptureImagePath=="+file.getAbsolutePath());
         return file.getAbsolutePath();
     }
 

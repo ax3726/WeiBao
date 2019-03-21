@@ -1,27 +1,16 @@
 package com.wb.weibao.ui.home;
 
-import android.content.ContentValues;
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.graphics.SurfaceTexture;
-import android.hardware.Camera;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.WorkerThread;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.hikvision.open.hikvideoplayer.HikVideoPlayer;
@@ -36,11 +25,19 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityPreviewBinding;
 import com.wb.weibao.model.BaseBean;
-import com.wb.weibao.ui.Login.ForgetPwdActivity;
+import com.wb.weibao.model.home.CameraListBean;
 import com.wb.weibao.utils.MyUtils;
+import com.wb.weibao.utils.picker.common.LineConfig;
+import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
+import com.wb.weibao.utils.picker.picker.SinglePicker;
 
-import java.io.FileNotFoundException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import xyz.bboylin.universialtoast.UniversalToast;
 
 /**
  * 错误码开头：17是mgc或媒体取流SDK的错误，18是vod，19是dac
@@ -66,29 +63,62 @@ public class PreviewActivity extends BaseActivity<BasePresenter,ActivityPreviewB
 
     @Override
     protected boolean isTitleBar() {
-        return true;
+        return false;
     }
 
-    @Override
-    protected void initTitleBar() {
-        super.initTitleBar();
-        mTitleBarLayout.setTitle("视频监控");
-    }
+//    @Override
+//    protected void initTitleBar() {
+//        super.initTitleBar();
+//        mTitleBarLayout.setTitle("视频监控");
+//        mTitleBarLayout.getTitleView().setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.bottom_jiantou),null);
+//    }
     @Override
     protected void initData() {
         super.initData();
-
+        mBinding.tvTitle.setText("选择视频监控");
         mBinding.start.setOnClickListener(this);
         mBinding.captureButton.setOnClickListener(this);
         mBinding.recordButton.setOnClickListener(this);
         mBinding.textureView.setSurfaceTextureListener(this);
-        Api.getApi().getCameraurl(""+MyApplication.getInstance().getUserData().getId(),"38")
+
+        mPlayer = HikVideoPlayerFactory.provideHikVideoPlayer();
+        mBinding.tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getvideourl();
+            }
+        });
+mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        finish();
+    }
+});
+    }
+
+    private List<CameraListBean.DataBean.ListBean> mDataList=null;
+    private int mProjectIndex=-1;
+    public void getvideourl()
+    {
+        Api.getApi().getCameraList(""+MyApplication.getInstance().getUserData().getId())
                 .compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(PreviewActivity.this, false) {
+                .subscribe(new BaseNetListener<CameraListBean>(PreviewActivity.this, false) {
                     @Override
-                    public void onSuccess(BaseBean baseBean) {
-                        LogUtils.e("baseBean" + baseBean.getData().toString());
-                        previewUri=baseBean.getData().toString();
+                    public void onSuccess(CameraListBean cameraListBean) {
+                        LogUtils.e("baseBean" + cameraListBean.getData().toString());
+                        CameraListBean.DataBean data = cameraListBean.getData();
+                        if (data != null) {
+                            if (data.getList() != null && data.getList().size() > 0) {
+                                mDataList=data.getList();
+
+                                List<String> lists=new ArrayList<>();
+                                for (CameraListBean.DataBean.ListBean bean:data.getList()) {
+                                    lists.add(bean.getCameraName());
+                                }
+                                projectcameralist(lists.toArray(new String[lists.size()]));
+                            }
+
+                        }
 
                     }
 
@@ -97,7 +127,6 @@ public class PreviewActivity extends BaseActivity<BasePresenter,ActivityPreviewB
 
                     }
                 });
-        mPlayer = HikVideoPlayerFactory.provideHikVideoPlayer();
     }
 
 
@@ -105,9 +134,14 @@ public class PreviewActivity extends BaseActivity<BasePresenter,ActivityPreviewB
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.start) {
-            if (mPlayerStatus != PlayerStatus.SUCCESS && getPreviewUri()) {
-                startRealPlay(mBinding.textureView.getSurfaceTexture());
-                mBinding.start.setVisibility(View.GONE);
+            if (mProjectIndex != -1) {
+                if (mPlayerStatus != PlayerStatus.SUCCESS && getPreviewUri()) {
+                    startRealPlay(mBinding.textureView.getSurfaceTexture());
+                    mBinding.start.setVisibility(View.GONE);
+                }
+            }else
+            {
+                showToast("请先选择预览的监控视频");
             }
         }
 //        else if (view.getId() == R.id.stop) {
@@ -121,6 +155,7 @@ public class PreviewActivity extends BaseActivity<BasePresenter,ActivityPreviewB
 //            }
 //        }
          else if (view.getId() == R.id.capture_button) {
+
             executeCaptureEvent();
         } else if (view.getId() == R.id.record_button) {
             executeRecordEvent();
@@ -142,10 +177,10 @@ public class PreviewActivity extends BaseActivity<BasePresenter,ActivityPreviewB
 
         //抓图
         if (mPlayer.capturePicture(MyUtils.getCaptureImagePath(this))) {
-            ToastUtils.showShort("以保存到手机相册");
-
+            UniversalToast.makeText(PreviewActivity.this, "已保存到手机相册", UniversalToast.LENGTH_SHORT,UniversalToast.EMPHASIZE).setLeftIconRes(R.drawable.ic_view_error).show();
         }
     }
+
 
     /**
      * 执行录像事件
@@ -154,39 +189,138 @@ public class PreviewActivity extends BaseActivity<BasePresenter,ActivityPreviewB
         if (mPlayerStatus != PlayerStatus.SUCCESS) {
             ToastUtils.showShort("没有视频在播放");
         }
-        String path=  MyUtils.getLocalRecordPath(this);
+
+
         if (!mRecording) {
             //开始录像
 //            mRecordFilePathText.setText(null);
-
+            String path=  MyUtils.getLocalRecordPath(this);
             if (mPlayer.startRecord(path)) {
                 ToastUtils.showShort("开始录像");
                 mRecording = true;
                 mBinding.recordButton.setBackgroundResource(R.drawable.ic_view_video2);
-//                recordButton.setText(R.string.close_record);
-//                mRecordFilePathText.setText(MessageFormat.format("当前本地录像路径: {0}", path));
+                mBinding.time.setVisibility(View.VISIBLE);
+                startWatch();
+
             }
         } else {
             //关闭录像
             mPlayer.stopRecord();
             ToastUtils.showShort("关闭录像");
-            mBinding.recordButton.setBackgroundResource(R.drawable.ic_view_video);
             mRecording = false;
+            mBinding.recordButton.setBackgroundResource(R.drawable.ic_view_video);
+            stopTimeShow();
+            mBinding.time.setVisibility(View.GONE);
 
 
-            insertVideoToMediaStore(path);
-
-//            recordButton.setText(R.string.start_record);
         }
     }
 
-    public  void insertVideoToMediaStore( String filePath) {
-        ContentValues values = new ContentValues();
-        values.put(MediaStore.MediaColumns.DATA,filePath);
-        // video/*
-        values.put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4");
-        getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
+    private long mlCount = 0; //计时 次数
+    private int  mSecRate = 10; // 10 ms 刷新一次
+    private String timeShow = "";
+    private Timer mTimer1;
+    private TimerTask mTask1;
+
+    //开始计时
+    private void startWatch() {
+        if (mTimer1 == null && mTask1 == null) {
+            mTimer1 = new Timer();
+            mTask1 = new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = mHandler.obtainMessage(1);
+                    mHandler.sendMessage(message);
+                }
+            };
+            mTimer1.schedule(mTask1, 0, mSecRate);  //10 ms 刷新一次
+        }
+
     }
+
+
+    /**
+     * 计时器
+     */
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            switch (msg.what) {
+                case 1:
+                    mlCount++;
+                    judgeTimeShow(mlCount);
+                    break;
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+
+    };
+
+    //停止刷新显示
+    private void stopTimeShow() {
+        if (mTimer1 != null) {
+            mTimer1.cancel();
+            mTimer1 = null;
+        }
+        if (mTask1 != null) {
+            mTask1.cancel();
+            mTask1 = null;
+        }
+    }
+
+    //判断显示
+    private String  judgeTimeShow(long mlCount) {
+        String str ="";
+        long min = 0;
+        long sec = 0;
+        long mSec = 0;
+        if (mlCount <=0) {
+            str = "00:00:00";
+        } else {
+            sec = mlCount / (1000/mSecRate);  // 由毫秒 计算出 秒
+            if (sec < 60) {
+                mSec = mlCount % (1000/mSecRate);  //剩余下的 毫秒
+            } else {
+                min = sec / 60;    //由秒计算出 min
+                if (min > 99) {
+                    str = "99:59:59";
+                    mBinding.time.setText(str);
+                    return str;
+                }
+                sec = sec % 60;
+                mSec = mlCount - (min * 60 * (1000/mSecRate)) - (sec * (1000/mSecRate));
+            }
+
+            str = judgeSingleNum(min) + ":"+ judgeSingleNum(sec) + ":"+ judgeSingleNum(mSec);
+        }
+
+        Log.i(TAG,"时间是 mlCount：" + mlCount + "\n"
+                + "设置的时间是：" + str);
+        mBinding.time.setText(str);
+        return str;
+    }
+
+    //判断是不是要加上0
+    private String judgeSingleNum(long mlCount) {
+        String strData = "";
+        if (mlCount < 10) {
+            strData = "0" + mlCount;
+        } else {
+            strData = mlCount + "";
+        }
+        return strData;
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 
 
     /**
@@ -343,6 +477,61 @@ public class PreviewActivity extends BaseActivity<BasePresenter,ActivityPreviewB
 
     }
 
+
+    @SuppressLint("ResourceAsColor")
+    public void projectcameralist(String [] strs) {
+        SinglePicker<String> picker = new SinglePicker<>(this,
+                strs );
+        picker.setCanLoop(false);//不禁用循环
+        picker.setTopBackgroundColor(0xFFEEEEEE);
+        picker.setTopHeight(50);
+        picker.setTopLineColor(0xFF33B5E5);
+        picker.setTopLineHeight(1);
+        picker.setTitleText("");
+        picker.setTitleTextColor(0xFF999999);
+        picker.setTitleTextSize(12);
+        picker.setCancelTextColor(R.color.btn_cancel_color);
+        picker.setCancelTextSize(13);
+        picker.setSubmitTextColor(Color.BLUE);
+        picker.setSubmitTextSize(13);
+        picker.setSelectedTextColor(0x00000000);
+        picker.setUnSelectedTextColor(0xFF999999);
+        picker.setWheelModeEnable(false);
+        LineConfig config = new LineConfig();
+        config.setColor(Color.BLUE);//线颜色
+        config.setAlpha(120);//线透明度
+//        config.setRatio(1);//线比率
+        picker.setLineConfig(config);
+        picker.setItemWidth(200);
+        picker.setBackgroundColor(0xFFEEEEEE);
+        picker.setSelectedIndex(7);
+        picker.setOnItemPickListener(new OnItemPickListener<String>() {
+            @Override
+            public void onItemPicked(int index, String item) {
+                mBinding.tvTitle.setText(item);
+                mProjectIndex=index;
+                Api.getApi().getCameraurl(""+MyApplication.getInstance().getUserData().getId(),""+mDataList.get(mProjectIndex).getId())
+                        .compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(PreviewActivity.this, true) {
+                            @Override
+                            public void onSuccess(BaseBean baseBean) {
+                                LogUtils.e("baseBean" + baseBean.getData().toString());
+                                previewUri=baseBean.getData().toString();
+                                if (mPlayerStatus != PlayerStatus.SUCCESS && getPreviewUri()) {
+                                    startRealPlay(mBinding.textureView.getSurfaceTexture());
+                                    mBinding.start.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onFail(String errMsg) {
+
+                            }
+                        });
+            }
+        });
+        picker.show();
+    }
 
 
 

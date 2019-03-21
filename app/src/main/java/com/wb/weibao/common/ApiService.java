@@ -8,6 +8,7 @@ import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.DetailBean;
+import com.wb.weibao.model.home.CameraListBean;
 import com.wb.weibao.model.home.CheckListbean;
 import com.wb.weibao.model.home.DeviceTypeModel;
 import com.wb.weibao.model.home.Handoverbean;
@@ -579,7 +580,7 @@ public interface ApiService {
      * @return
      */
     @POST("/earlywarn/camera/list")
-    Flowable<BaseBean> getCameraList(@Query("userId") String userId);
+    Flowable<CameraListBean> getCameraList(@Query("userId") String userId);
 
     /**
      *

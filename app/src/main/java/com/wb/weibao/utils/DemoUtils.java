@@ -29,7 +29,7 @@ public class DemoUtils {
     /**
      * 格式化日期
      */
-    public static String formatDate(String date ,String format) {
+    public static String formatDate(String date, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         Date curDate = null;//获取当前时间
         try {
@@ -75,7 +75,7 @@ public class DemoUtils {
     }
 
     public static <T> String ListToString(ArrayList<String> array, String Separator) {
-        if (array == null||array.size()==0) {
+        if (array == null || array.size() == 0) {
             return "";
         }
         StringBuilder csvBuilder = new StringBuilder();
@@ -119,7 +119,7 @@ public class DemoUtils {
 
         s = Math.round(s * 10000d) / 10000d;
         Log.i("距离", s + "");
-        s=s*1000;
+        s = s * 1000;
 
         return s;
     }
@@ -138,5 +138,8 @@ public class DemoUtils {
         //释放
         wl.release();
     }
+
+
+
 
 }

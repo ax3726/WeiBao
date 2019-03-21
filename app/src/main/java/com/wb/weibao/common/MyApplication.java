@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hikvision.open.hikvideoplayer.HikVideoPlayerFactory;
 import com.lling.photopicker.PhotoPickerApplication;
 import com.lm.lib_common.utils.CacheUtils;
@@ -62,6 +63,7 @@ private String JSESSIONID="";
         Base_Path = Utils.getCacheDirectory(this, Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         PhotoPickerApplication.setUp(this);
         HikVideoPlayerFactory.initLib(null, true);
+        Fresco.initialize(this);
         //缓存初始化
         CacheUtils.getInstance().init(CacheUtils.CacheMode.CACHE_MAX,
                 Utils.getCacheDirectory(this, Environment.DIRECTORY_DOCUMENTS).getAbsolutePath());

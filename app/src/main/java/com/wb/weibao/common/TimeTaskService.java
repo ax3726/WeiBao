@@ -7,15 +7,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.wb.weibao.utils.picker.util.LogUtils;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Timer;
@@ -29,89 +42,101 @@ import cn.jpush.android.service.AlarmReceiver;
 
 public class TimeTaskService extends Service {
 
-    private Runnable runnable;
-    private Handler handler;
-    private int Time = 1000*3;//周期时间
-    private int anHour =8*60*60*1000;// 这是8小时的毫秒数 为了少消耗流量和电量，8小时自动更新一次
-    private Timer timer = new Timer();
+    private static final String TAG = "LocationService";
+
+
+
+
+
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        /**
-         * 方式一：采用Handler的postDelayed(Runnable, long)方法
-         */
-        handler = new Handler();
-        runnable = new Runnable() {
-
-            @Override
-            public void run() {
-                // handler自带方法实现定时器
-                System.out.println("33331");
-                handler.postDelayed(this, 1000*3);//每隔3s执行
-
-            }
-        };
-        handler.postDelayed(runnable, 1000*60);//延时多长时间启动定时器
-
-        /**
-         * 方式二：采用timer及TimerTask结合的方法
-         */
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("99999998");
-            }
-        };
-        timer.schedule(timerTask,
-                1000,//延迟1秒执行
-                Time);//周期时间
-
+        Log.i(TAG, "start LocationService!");
+        netThread.start();
 
     }
-    /**
-     * 方式三：采用AlarmManager机制
-     */
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new Thread(new Runnable() {
+        Log.i(TAG, "StartCommand LocationService!");
 
-            @Override
-            public void run() {
-
-                countDownTimer = new CountDownTimer(20*1000+50, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                       if((millisUntilFinished/1000)%2==0)
-                       {
-                          processOffFlash();
-                       }else
-                           {
-                               processOnFlash();
-                           }
-                }
-
-                @Override
-                public void onFinish() {
-                    processOffFlash();
-                }
-            };
-            countDownTimer.start();
-                System.out.println("99999988");//这是定时所执行的任务
-            }
-        }).start();
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
-        Intent intent2 = new Intent(this, AutoUpdateReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent2, 0);
-        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
+//        Message message = netHandler.obtainMessage(1);
+//        netHandler.sendMessage(message);
+        netThread.start();
         return super.onStartCommand(intent, flags, startId);
+
     }
+
+    Handler netHandler = null;
+
+    /**
+     * 收发网络数据的线程
+     */
+    Thread netThread = new Thread(){
+        @Override
+        public void run() {
+            Looper.prepare();
+            com.lidroid.xutils.util.LogUtils.e("qwqw===1");
+//            netHandler = new Handler(){
+//                public void dispatchMessage(Message msg) {
+//                    switch(msg.what){
+//                        case 1: //发送位置
+//
+//                            break;
+//
+//                    }
+//                };
+//            };
+            Looper.loop();
+        }
+    };
+
+
+
+//    /**
+//     * 方式三：采用AlarmManager机制
+//     */
+//    @Override
+//    public int onStartCommand(Intent intent, int flags, int startId) {
+//        new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//
+//                countDownTimer = new CountDownTimer(20*1000+50, 1000) {
+//                @Override
+//                public void onTick(long millisUntilFinished) {
+//                       if((millisUntilFinished/1000)%2==0)
+//                       {
+//                          processOffFlash();
+//                       }else
+//                           {
+//                               processOnFlash();
+//                           }
+//                }
+//
+//                @Override
+//                public void onFinish() {
+//                    processOffFlash();
+//                }
+//            };
+//            countDownTimer.start();
+//                System.out.println("99999988");//这是定时所执行的任务
+//                com.lidroid.xutils.util.LogUtils.e("99999988==1");
+//            }
+//        }).start();
+//        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//        long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
+//        Intent intent2 = new Intent(this, AutoUpdateReceiver.class);
+//        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent2, 0);
+//        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
+//        return super.onStartCommand(intent, flags, startId);
+//    }
 
     @Override
     public void onDestroy() {

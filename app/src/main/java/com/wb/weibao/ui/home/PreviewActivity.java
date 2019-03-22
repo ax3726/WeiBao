@@ -1,8 +1,11 @@
 package com.wb.weibao.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -26,18 +29,25 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityPreviewBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.CameraListBean;
+import com.wb.weibao.ui.main.MainActivity;
 import com.wb.weibao.utils.MyUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
 
+import java.lang.ref.WeakReference;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import xyz.bboylin.universialtoast.UniversalToast;
+
+import static android.os.Environment.DIRECTORY_DCIM;
 
 /**
  * 错误码开头：17是mgc或媒体取流SDK的错误，18是vod，19是dac
@@ -194,7 +204,7 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
         if (!mRecording) {
             //开始录像
 //            mRecordFilePathText.setText(null);
-            String path=  MyUtils.getLocalRecordPath(this);
+            String path=  MyUtils.getLocalRecordPath(this,mBinding.tvTitle.getText().toString());
             if (mPlayer.startRecord(path)) {
                 ToastUtils.showShort("开始录像");
                 mRecording = true;
@@ -211,8 +221,7 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
             mBinding.recordButton.setBackgroundResource(R.drawable.ic_view_video);
             stopTimeShow();
             mBinding.time.setVisibility(View.GONE);
-
-
+            MyApplication.getInstance().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM))));
         }
     }
 
@@ -319,6 +328,8 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mHandler.removeCallbacks(mRunnable);
+        mRunnable = null;
     }
 
 
@@ -510,6 +521,7 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
             public void onItemPicked(int index, String item) {
                 mBinding.tvTitle.setText(item);
                 mProjectIndex=index;
+                mBinding.name.setText(item);
                 Api.getApi().getCameraurl(""+MyApplication.getInstance().getUserData().getId(),""+mDataList.get(mProjectIndex).getId())
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(PreviewActivity.this, true) {
@@ -520,6 +532,10 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
                                 if (mPlayerStatus != PlayerStatus.SUCCESS && getPreviewUri()) {
                                     startRealPlay(mBinding.textureView.getSurfaceTexture());
                                     mBinding.start.setVisibility(View.GONE);
+                                    if (mRunnable == null) {
+                                        mRunnable = new MyRunnable();
+                                        mHandler.postDelayed(mRunnable, 0);
+                                    }
                                 }
                             }
 
@@ -532,6 +548,58 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
         });
         picker.show();
     }
+
+
+
+    private MyRunnable mRunnable;
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<PreviewActivity> mActivity;
+
+        private MyHandler(PreviewActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            PreviewActivity activity = mActivity.get();
+            if (activity != null) {
+                switch (msg.what) {
+                    case 5:
+                        this.removeMessages(4);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    private final MyHandler mHandlers = new MyHandler(this);
+
+
+
+    /**
+     * 获取时间
+     *
+     * @return 格式化后的时间
+     */
+    private static String getTime() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+        return format.format(new Date());
+    }
+
+    private class MyRunnable implements Runnable {
+        @Override
+        public void run() {
+            mBinding.cameraTime.setText(getTime());
+            mHandlers.postDelayed(this, 1000);
+        }
+    }
+
+
+
+
 
 
 

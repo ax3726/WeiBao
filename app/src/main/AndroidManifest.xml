@@ -117,6 +117,7 @@
         <activity android:name=".ui.Login.RelationActivity" />
 
         <service android:name=".utils.update.DownloadService" />
+        <service android:name=".common.TimeTaskService"/>
 
         <activity android:name=".ui.Login.ForgetPwdActivity" />
         <activity android:name=".ui.Login.RegisterActivity" />

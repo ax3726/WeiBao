@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
 
 import static android.os.Environment.DIRECTORY_DCIM;
 import static android.os.Environment.DIRECTORY_MOVIES;
@@ -45,23 +46,34 @@ public class MyUtils {
     /**
      * 录像路径格式：/storage/emulated/0/Android/data/com.hikvision.open.app/files/Movies/_20180917151636872.mp4
      */
-    public static String getLocalRecordPath(Context context) {
+    public static String getLocalRecordPath(Context context,String cameraname) {
 //        File file = context.getExternalFilesDir(DIRECTORY_MOVIES);
 //        String path = file.getAbsolutePath() + File.separator + MyUtils.getFileName("") + ".mp4";
 //        Log.i(TAG, "getLocalRecordPath: " + path);
 
+        Random rd = new Random();
+        String str = "";
+        for (int i = 0; i < 3; i++) {
 
+// 你想生成几个字符的，就把9改成几，如果改成１,那就生成一个随机字母．
+            str = str + (char) (Math.random() * 26 + 'a');
+        }
         // 首先保存图片/DICM
         File appDir = Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM);
         if (!appDir.exists()) {
             appDir.mkdir();
         }
-        String fileName = "video_"+System.currentTimeMillis() + ".mp4";
+        String fileName = "video_"+str+"_"+System.currentTimeMillis() + ".mp4";
 
         File file = new File(appDir, fileName);
         LogUtils.e("getCaptureImagePath=="+file.getAbsolutePath());
+
+
+
         return file.getAbsolutePath();
     }
+
+
 
     /**
      * 获取文件名称（监控点名称_年月日时分秒毫秒）

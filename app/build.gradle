@@ -104,7 +104,7 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:3.2.6'
     implementation 'com.blankj:utilcode:1.20.3'
     implementation files('libs/HikVideoPlayer.jar')
-    implementation project(':toast')
+  //  implementation project(':toast')
     implementation 'com.facebook.fresco:fresco:1.10.0'
     implementation 'com.facebook.fresco:animated-gif:1.10.0'
 }

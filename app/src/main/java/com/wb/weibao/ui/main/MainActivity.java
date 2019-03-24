@@ -1,6 +1,7 @@
 package com.wb.weibao.ui.main;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,7 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
+import com.wb.weibao.common.TimeService;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
@@ -24,7 +26,6 @@ import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
 import com.wb.weibao.ui.mine.MineFragment;
-import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
@@ -118,7 +119,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                 }
             }
         });
-      //  getProjectList();
+        //  getProjectList();
 
     }
 
@@ -128,6 +129,9 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         mDoubleClickExit = new DoubleClickExitHelper(this);
         initFragment();
         setJPush();
+        //启动后台服务
+        Intent service = new Intent(this, TimeService.class);
+        startService(service);
 
     }
 
@@ -191,19 +195,16 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                                 mProjectList.addAll(data.getList());
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
 
-                              if(!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID)))
-                                {
+                                if (!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID))) {
 
                                     MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                     mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
-                                }else
-                                    {
-                                        spfUtils.setSpfString(SpfKey.INST_ID,""+listBean.getId());
-                                        spfUtils.setSpfString(SpfKey.INST_NAME,listBean.getName());
-                                        MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
-                                        mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
-                                    }
-
+                                } else {
+                                    spfUtils.setSpfString(SpfKey.INST_ID, "" + listBean.getId());
+                                    spfUtils.setSpfString(SpfKey.INST_NAME, listBean.getName());
+                                    MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                                    mBinding.tvName.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+                                }
 
 
                                 toLoadData();
@@ -266,11 +267,12 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                 break;
         }
     }
+
     /**
      * 设置推送
      */
     private void setJPush() {
-        if(MyApplication.getInstance().getRegistrationID()!=null) {
+        if (MyApplication.getInstance().getRegistrationID() != null) {
             Api.getApi().setJPush(MyApplication.getInstance().getUserData().getId() + "", MyApplication.getInstance().getRegistrationID())
                     .compose(callbackOnIOToMainThread())
                     .subscribe(new BaseNetListener<BaseBean>(this, true) {

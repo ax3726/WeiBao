@@ -29,7 +29,6 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityPreviewBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.CameraListBean;
-import com.wb.weibao.ui.main.MainActivity;
 import com.wb.weibao.utils.MyUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
@@ -44,8 +43,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import xyz.bboylin.universialtoast.UniversalToast;
 
 import static android.os.Environment.DIRECTORY_DCIM;
 
@@ -187,7 +184,8 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
 
         //抓图
         if (mPlayer.capturePicture(MyUtils.getCaptureImagePath(this))) {
-            UniversalToast.makeText(PreviewActivity.this, "已保存到手机相册", UniversalToast.LENGTH_SHORT,UniversalToast.EMPHASIZE).setLeftIconRes(R.drawable.ic_view_error).show();
+//            UniversalToast.makeText(PreviewActivity.this, "已保存到手机相册", UniversalToast.LENGTH_SHORT,UniversalToast.EMPHASIZE).setLeftIconRes(R.drawable.ic_view_error).show();
+
         }
     }
 

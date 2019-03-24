@@ -40,10 +40,11 @@ public class MyApplication extends ThisApplication {
     private static MyApplication instance;
     public static String Base_Path = "";
     private String token = "";//token
-    private LoginModel.DataBean mUserData=null;//用户信息
+    private LoginModel.DataBean mUserData = null;//用户信息
     private String mProjectId = "";//当前项目id
     private String mRegistrationID = "";//RegistrationID
-    private String JSESSIONID="";
+    private String JSESSIONID = "";
+
     public static MyApplication getInstance() {
         return instance;
     }
@@ -97,10 +98,10 @@ public class MyApplication extends ThisApplication {
             }
         });
 
-        startAlarm();
+        //  startAlarm();
     }
 
-    public void startAlarm(){
+    public void startAlarm() {
         /**
          首先获得系统服务
          */
@@ -113,7 +114,7 @@ public class MyApplication extends ThisApplication {
         am.cancel(pendSender);
 
         /**AlarmManager.RTC_WAKEUP 这个参数表示系统会唤醒进程；我设置的间隔时间是10分钟 */
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3*1000, pendSender);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3 * 1000, pendSender);
     }
 
 
@@ -125,7 +126,6 @@ public class MyApplication extends ThisApplication {
     }
 
 
-
     public void initJpush() {
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
@@ -134,6 +134,7 @@ public class MyApplication extends ThisApplication {
         JPushInterface.setLatestNotificationNumber(this, 5);
         mRegistrationID = JPushInterface.getRegistrationID(this);
     }
+
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器

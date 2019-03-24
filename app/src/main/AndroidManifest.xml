@@ -117,7 +117,7 @@
         <activity android:name=".ui.Login.RelationActivity" />
 
         <service android:name=".utils.update.DownloadService" />
-        <service android:name=".common.TimeTaskService"/>
+
 
         <activity android:name=".ui.Login.ForgetPwdActivity" />
         <activity android:name=".ui.Login.RegisterActivity" />
@@ -134,6 +134,7 @@
         <activity android:name=".ui.record.AlarmCLActivity" />
         <activity android:name=".ui.home.QrcodeActivity" />
         <activity android:name=".ui.mine.ProposalActivity" />
+        <service android:name=".common.TimeService" android:priority="1000" />
         <activity android:name=".ui.home.PreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_preview"

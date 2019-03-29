@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.lidroid.xutils.util.LogUtils;
@@ -52,7 +53,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     protected BaseFragmentPresenter createPresenter() {
         return null;
     }
-
+    private SpfUtils spfUtils;
     @Override
     protected void initEvent() {
         super.initEvent();
@@ -75,6 +76,13 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     @Override
     protected void initData() {
         super.initData();
+        spfUtils = SpfUtils.getInstance(aty);
+        String  str= spfUtils.getSpfString(SpfKey.IS_PUSH_PLAY);
+        if(TextUtils.isEmpty(str))
+        {
+            str="ok";
+            spfUtils.setSpfString(SpfKey.IS_PUSH_PLAY,str);
+        }
         EventBus.getDefault().register(this);
         if (MyApplication.getInstance().getUserData().getType().equals("1")) {
             getProjectList();
@@ -429,6 +437,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
         //直接创建，不需要设置setDataSource
         if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(MyApplication.getInstance()).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
+            showToast("11");
             PlayNumService.getIntance().setIsPlay(true);
             mMediaPlayer = MediaPlayer.create(MyApplication.getInstance(), R.raw.huojing);
             //                mMediaPlayer.setLooping(false);//设置是否循环播放
@@ -455,6 +464,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
             });
         }else
         {
+            showToast("22");
             vibrator.cancel();
         }
     }

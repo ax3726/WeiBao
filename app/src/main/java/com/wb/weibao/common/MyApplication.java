@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.hikvision.open.hikvideoplayer.HikVideoPlayerFactory;
+import com.lidroid.xutils.util.LogUtils;
 import com.lling.photopicker.PhotoPickerApplication;
 import com.lm.lib_common.utils.CacheUtils;
 import com.lm.lib_common.utils.Utils;
@@ -23,8 +24,10 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.ThisApplication;
 import com.wb.weibao.model.LoginModel;
+import com.wb.weibao.model.record.RecordListModel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,6 +48,15 @@ public class MyApplication extends ThisApplication {
     private String mRegistrationID = "";//RegistrationID
     private String JSESSIONID = "";
 
+    public String getErrorlist() {
+        return errorlist;
+    }
+
+    public void setErrorlist(String errorlist) {
+        this.errorlist = errorlist;
+    }
+
+    private String errorlist = "";
     public static MyApplication getInstance() {
         return instance;
     }
@@ -99,6 +111,10 @@ public class MyApplication extends ThisApplication {
         });
 
         //  startAlarm();
+
+
+
+
     }
 
     public void startAlarm() {

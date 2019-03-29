@@ -1,5 +1,6 @@
 package com.wb.weibao.utils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,7 +12,9 @@ import com.lidroid.xutils.util.LogUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
@@ -28,17 +31,41 @@ public class MyUtils {
      */
     public static String getCaptureImagePath(Context context) {
         // 首先保存图片
-        File appDir = Environment.getExternalStorageDirectory();
+//        File appDir = Environment.getExternalStorageDirectory();
+//        if (!appDir.exists()) {
+//            appDir.mkdir();
+//        }
+//        String fileName = System.currentTimeMillis() + ".png";
+//        File file = new File(appDir, fileName);
+//        Log.i(TAG, "getCaptureImagePath: " + file.getAbsolutePath());
+//        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        Uri uri = Uri.fromFile(file);
+//        intent.setData(uri);
+//        context.sendBroadcast(intent);//这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！，记得要传你更新的file哦
+//        // 首先保存图片
+//        File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
+//        if (!appDir.exists()) {
+//            appDir.mkdir();
+//        }
+        // 首先保存图片/DICM
+        File appDir = Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM);
         if (!appDir.exists()) {
             appDir.mkdir();
         }
-        String fileName = System.currentTimeMillis() + ".png";
+        String fileName = System.currentTimeMillis() + ".jpg";
         File file = new File(appDir, fileName);
-        Log.i(TAG, "getCaptureImagePath: " + file.getAbsolutePath());
-        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri uri = Uri.fromFile(file);
-        intent.setData(uri);
-        context.sendBroadcast(intent);//这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！，记得要传你更新的file哦
+        // 其次把文件插入到系统图库
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+                    file.getAbsolutePath(), fileName, null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // 最后通知图库更新
+//        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(file.getPath()))));
+
+
         return file.getAbsolutePath();
     }
 
@@ -46,7 +73,7 @@ public class MyUtils {
     /**
      * 录像路径格式：/storage/emulated/0/Android/data/com.hikvision.open.app/files/Movies/_20180917151636872.mp4
      */
-    public static String getLocalRecordPath(Context context,String cameraname) {
+    public static String getLocalRecordPath(Context context, String cameraname) {
 //        File file = context.getExternalFilesDir(DIRECTORY_MOVIES);
 //        String path = file.getAbsolutePath() + File.separator + MyUtils.getFileName("") + ".mp4";
 //        Log.i(TAG, "getLocalRecordPath: " + path);
@@ -63,16 +90,45 @@ public class MyUtils {
         if (!appDir.exists()) {
             appDir.mkdir();
         }
-        String fileName = "video_"+str+"_"+System.currentTimeMillis() + ".mp4";
-
-        File file = new File(appDir, fileName);
-        LogUtils.e("getCaptureImagePath=="+file.getAbsolutePath());
+        String fileName = "video_"+ System.currentTimeMillis() + ".mp4";
+//        String fileName = str + "_"+System.currentTimeMillis() + ".mp4";
 
 
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/DCIM/Video", fileName);
+        LogUtils.e("getCaptureImagePath==" + file.getAbsolutePath());
 
+//        // 其次把文件插入到系统图库
+//        try {
+//            MediaStore.Images.Media.insertImage(context.getContentResolver(),
+//                    file.getAbsolutePath(), fileName, null);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        // 最后通知图库更新
+////        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
+//        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(file.getPath()))));
+
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//        String filename = "video_" + str +"_"+ sdf.format(new Date(System.currentTimeMillis())) + ".mp4";
+//        //需要在Environment.getExternalStorageDirectory().getAbsolutePath() 后边加上/DCIM/Camera
+//
+//
+//        File cameraFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera", filename);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+//        saveVideoToGallery(context,cameraFile.getAbsoluteFile());
         return file.getAbsolutePath();
     }
 
+//
+//    public static void saveVideoToGallery(Context context, File file) {
+//        Uri localUri = Uri.fromFile(file);
+//        Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
+//        context.sendBroadcast(localIntent);
+//    }
 
 
     /**

@@ -174,7 +174,7 @@
             android:id="@+id/banben"
             android:drawablePadding="8px"
             android:textColor="#c8c8c8"
-            android:text="当前版本1.0.5"
+            android:text="当前版本1.0.6"
             android:textSize="14sp"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"

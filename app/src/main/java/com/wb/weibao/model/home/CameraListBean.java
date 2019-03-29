@@ -8,10 +8,11 @@ import java.util.List;
 
 public class CameraListBean {
 
+
     /**
      * code : 200
      * message : SUCCESS
-     * data : {"pageNum":0,"pageSize":0,"size":1,"orderBy":null,"startRow":1,"endRow":1,"total":1,"pages":0,"list":[{"id":38,"cameraName":"Camera 01","mac":null,"ipUrl":null,"type":"1","status":"1","distributionStatus":"1","warningStatus":"1","principalName":null,"principalPhone":null,"instCode":null,"instId":null,"instName":null,"projectId":null,"projectName":null,"latitude":null,"longitude":null,"createUserId":"1","updateUserId":null,"createTime":1552632233000,"updateTime":null,"userUuid":"admin","netzoneUuid":"domain0","cameraUuid":"2dbd1c8c784f4ccfaaf03c31f6b83fbc","host":"120.199.24.122","appKey":"22552062","secret":"xKppLPCG600fh76wqd2u"}],"prePage":0,"nextPage":0,"isFirstPage":false,"isLastPage":true,"hasPreviousPage":false,"hasNextPage":false,"navigatePages":8,"navigatepageNums":[],"navigateFirstPage":0,"navigateLastPage":0,"firstPage":0,"lastPage":0}
+     * data : {"pageNum":0,"pageSize":0,"size":1,"orderBy":null,"startRow":1,"endRow":1,"total":1,"pages":0,"list":[{"id":38,"cameraName":"Camera 01","mac":null,"ipUrl":null,"type":"1","status":"1","distributionStatus":"2","warningStatus":"1","principalName":"","principalPhone":null,"instCode":"00010001","instId":"2","instName":"杭州分公司","projectId":"7","projectName":"创源总部","latitude":"30.296509","longitude":"120.126052","createUserId":"1","updateUserId":null,"createTime":1553508487000,"updateTime":null,"userUuid":"admin","netzoneUuid":"domain0","cameraUuid":"2dbd1c8c784f4ccfaaf03c31f6b83fbc","host":"120.199.24.122","appKey":"22552062","videoName":"消控室01","secret":"xKppLPCG600fh76wqd2u"}],"prePage":0,"nextPage":0,"isFirstPage":false,"isLastPage":true,"hasPreviousPage":false,"hasNextPage":false,"navigatePages":8,"navigatepageNums":[],"navigateFirstPage":0,"navigateLastPage":0,"firstPage":0,"lastPage":0}
      */
 
     private String code;
@@ -52,7 +53,7 @@ public class CameraListBean {
          * endRow : 1
          * total : 1
          * pages : 0
-         * list : [{"id":38,"cameraName":"Camera 01","mac":null,"ipUrl":null,"type":"1","status":"1","distributionStatus":"1","warningStatus":"1","principalName":null,"principalPhone":null,"instCode":null,"instId":null,"instName":null,"projectId":null,"projectName":null,"latitude":null,"longitude":null,"createUserId":"1","updateUserId":null,"createTime":1552632233000,"updateTime":null,"userUuid":"admin","netzoneUuid":"domain0","cameraUuid":"2dbd1c8c784f4ccfaaf03c31f6b83fbc","host":"120.199.24.122","appKey":"22552062","secret":"xKppLPCG600fh76wqd2u"}]
+         * list : [{"id":38,"cameraName":"Camera 01","mac":null,"ipUrl":null,"type":"1","status":"1","distributionStatus":"2","warningStatus":"1","principalName":"","principalPhone":null,"instCode":"00010001","instId":"2","instName":"杭州分公司","projectId":"7","projectName":"创源总部","latitude":"30.296509","longitude":"120.126052","createUserId":"1","updateUserId":null,"createTime":1553508487000,"updateTime":null,"userUuid":"admin","netzoneUuid":"domain0","cameraUuid":"2dbd1c8c784f4ccfaaf03c31f6b83fbc","host":"120.199.24.122","appKey":"22552062","videoName":"消控室01","secret":"xKppLPCG600fh76wqd2u"}]
          * prePage : 0
          * nextPage : 0
          * isFirstPage : false
@@ -265,26 +266,27 @@ public class CameraListBean {
              * ipUrl : null
              * type : 1
              * status : 1
-             * distributionStatus : 1
+             * distributionStatus : 2
              * warningStatus : 1
-             * principalName : null
+             * principalName :
              * principalPhone : null
-             * instCode : null
-             * instId : null
-             * instName : null
-             * projectId : null
-             * projectName : null
-             * latitude : null
-             * longitude : null
+             * instCode : 00010001
+             * instId : 2
+             * instName : 杭州分公司
+             * projectId : 7
+             * projectName : 创源总部
+             * latitude : 30.296509
+             * longitude : 120.126052
              * createUserId : 1
              * updateUserId : null
-             * createTime : 1552632233000
+             * createTime : 1553508487000
              * updateTime : null
              * userUuid : admin
              * netzoneUuid : domain0
              * cameraUuid : 2dbd1c8c784f4ccfaaf03c31f6b83fbc
              * host : 120.199.24.122
              * appKey : 22552062
+             * videoName : 消控室01
              * secret : xKppLPCG600fh76wqd2u
              */
 
@@ -296,15 +298,15 @@ public class CameraListBean {
             private String status;
             private String distributionStatus;
             private String warningStatus;
-            private Object principalName;
+            private String principalName;
             private Object principalPhone;
-            private Object instCode;
-            private Object instId;
-            private Object instName;
-            private Object projectId;
-            private Object projectName;
-            private Object latitude;
-            private Object longitude;
+            private String instCode;
+            private String instId;
+            private String instName;
+            private String projectId;
+            private String projectName;
+            private String latitude;
+            private String longitude;
             private String createUserId;
             private Object updateUserId;
             private long createTime;
@@ -314,6 +316,7 @@ public class CameraListBean {
             private String cameraUuid;
             private String host;
             private String appKey;
+            private String videoName;
             private String secret;
 
             public int getId() {
@@ -380,11 +383,11 @@ public class CameraListBean {
                 this.warningStatus = warningStatus;
             }
 
-            public Object getPrincipalName() {
+            public String getPrincipalName() {
                 return principalName;
             }
 
-            public void setPrincipalName(Object principalName) {
+            public void setPrincipalName(String principalName) {
                 this.principalName = principalName;
             }
 
@@ -396,59 +399,59 @@ public class CameraListBean {
                 this.principalPhone = principalPhone;
             }
 
-            public Object getInstCode() {
+            public String getInstCode() {
                 return instCode;
             }
 
-            public void setInstCode(Object instCode) {
+            public void setInstCode(String instCode) {
                 this.instCode = instCode;
             }
 
-            public Object getInstId() {
+            public String getInstId() {
                 return instId;
             }
 
-            public void setInstId(Object instId) {
+            public void setInstId(String instId) {
                 this.instId = instId;
             }
 
-            public Object getInstName() {
+            public String getInstName() {
                 return instName;
             }
 
-            public void setInstName(Object instName) {
+            public void setInstName(String instName) {
                 this.instName = instName;
             }
 
-            public Object getProjectId() {
+            public String getProjectId() {
                 return projectId;
             }
 
-            public void setProjectId(Object projectId) {
+            public void setProjectId(String projectId) {
                 this.projectId = projectId;
             }
 
-            public Object getProjectName() {
+            public String getProjectName() {
                 return projectName;
             }
 
-            public void setProjectName(Object projectName) {
+            public void setProjectName(String projectName) {
                 this.projectName = projectName;
             }
 
-            public Object getLatitude() {
+            public String getLatitude() {
                 return latitude;
             }
 
-            public void setLatitude(Object latitude) {
+            public void setLatitude(String latitude) {
                 this.latitude = latitude;
             }
 
-            public Object getLongitude() {
+            public String getLongitude() {
                 return longitude;
             }
 
-            public void setLongitude(Object longitude) {
+            public void setLongitude(String longitude) {
                 this.longitude = longitude;
             }
 
@@ -522,6 +525,14 @@ public class CameraListBean {
 
             public void setAppKey(String appKey) {
                 this.appKey = appKey;
+            }
+
+            public String getVideoName() {
+                return videoName;
+            }
+
+            public void setVideoName(String videoName) {
+                this.videoName = videoName;
             }
 
             public String getSecret() {

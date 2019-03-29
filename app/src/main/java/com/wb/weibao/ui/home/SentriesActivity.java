@@ -63,10 +63,11 @@ public class SentriesActivity extends BaseActivity<BasePresenter, ActivitySentri
     @Override
     protected void initData() {
         super.initData();
+
         getchecklist();
         // instantiate the TimelineFragment
-        mFragment = new TimelineFragment();
-        mFragment.addOnClickListener(this);
+
+
 
 
         mBinding.affirm.setOnClickListener(new View.OnClickListener() {
@@ -77,12 +78,14 @@ public class SentriesActivity extends BaseActivity<BasePresenter, ActivitySentri
                         .subscribe(new BaseNetListener<BaseBean>(SentriesActivity.this, true) {
                             @Override
                             public void onSuccess(BaseBean baseBean) {
+
                                 showToast("采集器已查岗");
+                                getchecklist();
                             }
 
                             @Override
                             public void onFail(String errMsg) {
-
+                                getchecklist();
                             }
                         });
             }
@@ -138,6 +141,7 @@ public class SentriesActivity extends BaseActivity<BasePresenter, ActivitySentri
                         }
 
                         //Set data
+                        mFragment = new TimelineFragment();
                         mFragment.setData(objs, TimelineGroupType.MONTH);
                         //Set configurations
 
@@ -150,6 +154,7 @@ public class SentriesActivity extends BaseActivity<BasePresenter, ActivitySentri
 
                     }
                 });
+//        mFragment.addOnClickListener(this);
 
     }
 

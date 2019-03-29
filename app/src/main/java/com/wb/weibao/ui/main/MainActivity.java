@@ -1,13 +1,23 @@
 package com.wb.weibao.ui.main;
 
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -18,17 +28,26 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
+import com.wb.weibao.common.PlayNumService;
 import com.wb.weibao.common.TimeService;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.event.ErrorEvent;
+import com.wb.weibao.model.record.RecordDetailEvent;
+import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
 import com.wb.weibao.ui.mine.MineFragment;
+import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +88,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     @Override
     protected void initData() {
         super.initData();
+
+        EventBus.getDefault().register(this);
 
         spfUtils = SpfUtils.getInstance(MainActivity.this);
         mBinding.rgButtom.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -120,6 +141,9 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
             }
         });
         //  getProjectList();
+
+
+
 
     }
 
@@ -290,4 +314,216 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(ErrorEvent event) {
+        getErrorList();
+
+    }
+
+    private int num = 0;
+    MediaPlayer mMediaPlayer = null;
+
+    /**
+     * 获取预警列表
+     */
+    public void getErrorList() {
+//        showToast("2323");
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "1", "37,53", "", 1, 15).compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<RecordListModel>(MainActivity.this, false) {
+                    @RequiresApi(api = Build.VERSION_CODES.M)
+                    @Override
+                    public void onSuccess(RecordListModel baseBean) {
+
+                        RecordListModel.DataBean data = baseBean.getData();
+                        if (data != null) {
+                            List<RecordListModel.DataBean.ListBean> list = data.getList();
+                            if (list != null && list.size() > 0) {
+                                MyApplication.getInstance().setErrorlist("1");
+                                geterrortoast();
+                            }
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+                        MyApplication.getInstance().setErrorlist("0");
+
+                    }
+                });
+
+
+    }
+
+    private CountDownTimer countDownTimer;
+    private CountDownTimer countDownTimer2;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(camera!=null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if(camera!=null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
+
+    }
+
+//    Camera camera = Camera.open();
+//    Camera.Parameters p = camera.getParameters();
+        Camera.Parameters p =null;
+        Camera camera =null;
+    private boolean mIsLight = false;
+    //手电筒闪光开启
+    private void processOnFlash() {
+
+        if(camera!=null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
+        if (camera == null) {
+            camera = Camera.open();
+            p = camera.getParameters();
+        }
+
+        p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(p);
+        camera.startPreview();
+//        if (!mIsLight) {
+//            if(camera!=null) {
+//                camera.stopPreview();
+//                camera.release();
+//                camera = null;
+//            }
+//            if (camera == null) {
+//                camera = Camera.open();
+//            }
+//            camera.startPreview();
+//            Camera.Parameters parameters = camera.getParameters();
+//            List<String> flashModes = parameters.getSupportedFlashModes();
+//            if (flashModes == null) {
+//                return;
+//            }
+//            String flashMode = parameters.getFlashMode();
+//            if (!flashMode.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
+//                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+//                camera.setParameters(parameters);
+//            }
+//            mIsLight = true;
+//        }
+
+
+    }
+
+    //手电筒闪光关闭
+    private void processOffFlash() {
+        if(camera!=null) {
+            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            camera.setParameters(p);
+            camera.stopPreview();
+            if (camera != null) {
+                camera.stopPreview();
+                camera.release();
+                camera = null;
+            }
+        }
+//        if (mIsLight) {
+//            Camera.Parameters parameters = camera.getParameters();
+//            List<String> flashModes = parameters.getSupportedFlashModes();
+//            if (flashModes == null) {
+//                return;
+//            }
+//            String flashMode = parameters.getFlashMode();
+//            if (!flashMode.contains(Camera.Parameters.FLASH_MODE_OFF)) {
+//                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//                camera.setParameters(parameters);
+//            }
+//            mIsLight = false;
+//            if(camera!=null) {
+//                camera.stopPreview();
+//                camera.release();
+//                camera = null;
+//            }
+//        }
+
+    }
+
+
+
+
+
+
+
+    public void geterrortoast()
+    {
+        //震动
+        Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+        long[] patter = {1000, 1000, 2000, 50};
+        vibrator.vibrate(patter, 0);
+
+
+        countDownTimer = new CountDownTimer(2 * 1000 + 50, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                if ((millisUntilFinished / 1000) % 2 == 0) {
+                    processOffFlash();
+                } else {
+                    processOnFlash();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                processOffFlash();
+
+            }
+        };
+        countDownTimer.start();
+        //唤醒屏幕
+        DemoUtils.wakeUpAndUnlock(MyApplication.getInstance());
+
+        //直接创建，不需要设置setDataSource
+                                if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(MyApplication.getInstance()).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
+                                    PlayNumService.getIntance().setIsPlay(true);
+                                    mMediaPlayer = MediaPlayer.create(MyApplication.getInstance(), R.raw.huojing);
+               //                mMediaPlayer.setLooping(false);//设置是否循环播放
+                                    mMediaPlayer.start();
+                                    mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                                        @Override
+                                        public void onCompletion(MediaPlayer mp) {
+
+                                            num++;
+                                            if (num == 3) {
+                                                if (mMediaPlayer != null) {
+                                                    mMediaPlayer.stop();
+                                                    mMediaPlayer.release();
+                                                    vibrator.cancel();
+                                                }
+                                                num = 0;
+                                                mMediaPlayer = null;
+                                                PlayNumService.getIntance().setIsPlay(false);
+                                            } else {
+                                                mMediaPlayer.start();
+                                            }
+
+                                        }
+                                    });
+                                }else
+                                    {
+                                        vibrator.cancel();
+                                    }
+    }
 }

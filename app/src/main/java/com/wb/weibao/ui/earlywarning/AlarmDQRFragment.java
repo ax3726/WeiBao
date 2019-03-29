@@ -58,7 +58,8 @@ public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, Fragme
             protected void convert(ViewHolder holder, RecordListModel.DataBean.ListBean item, int position) {
                 ItemRecordTbcLayoutBinding binding = holder.getBinding(ItemRecordTbcLayoutBinding.class);
 //                binding.tvError.setText(item.getProjectName());
-                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
+//                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
+                binding.tvTime.setText(item.getWarningTime());
                 switch (item.getEquipmentType())
                 {
                     case "1":

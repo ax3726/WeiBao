@@ -87,6 +87,7 @@ public final class CaptureActivity extends BaseActivity<BasePresenter, CaptureBi
     @Override
     protected void initEvent() {
         super.initEvent();
+
         mBinding.rlyLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

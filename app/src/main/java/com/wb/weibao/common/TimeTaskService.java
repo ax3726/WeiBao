@@ -138,7 +138,11 @@ public class TimeTaskService extends Service {
 //        return super.onStartCommand(intent, flags, startId);
 //    }
 
-    @Override
+
+private CountDownTimer countDownTimer;
+
+
+@Override
     public void onDestroy() {
         super.onDestroy();
         countDownTimer.cancel();
@@ -176,7 +180,7 @@ public class TimeTaskService extends Service {
 
 
 
-    private CountDownTimer countDownTimer;
+
 
 
 

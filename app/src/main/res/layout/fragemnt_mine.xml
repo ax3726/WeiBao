@@ -239,7 +239,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="当前版本1.0.5" />
+                android:text="当前版本1.0.6" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 

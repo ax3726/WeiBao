@@ -12,6 +12,7 @@ import com.wb.weibao.R;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntMineBinding;
 import com.wb.weibao.ui.Login.LoginActivity;
+import com.wb.weibao.utils.AppManager;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 
@@ -81,8 +82,10 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
             public void onClick(View v) {
                 startActivity(LoginActivity.class);
                 aty.finish();
+                AppManager.finishAllActivity();
                 MyApplication.getInstance().exit();
                 spfUtils.setSpfString(SpfKey.IS_LOGIN, "");
+
             }
         });
         mBinding.phone.setOnClickListener(new View.OnClickListener() {

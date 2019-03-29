@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.wb.weibao.R;
 import com.wb.weibao.ui.Login.LoginActivity;
+import com.wb.weibao.utils.AppManager;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
@@ -79,14 +80,16 @@ public class JpushReceiver extends BroadcastReceiver {
 
                         }
                     });
-              //  }
+                }
 
-            }
+//            }
 
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+            AppManager.finishAllActivity();
             Intent intent1=new Intent(context, LoginActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent1);
 
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -43,6 +44,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import xyz.bboylin.universialtoast.UniversalToast;
 
 import static android.os.Environment.DIRECTORY_DCIM;
 
@@ -120,7 +123,7 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
 
                                 List<String> lists=new ArrayList<>();
                                 for (CameraListBean.DataBean.ListBean bean:data.getList()) {
-                                    lists.add(bean.getCameraName());
+                                    lists.add(bean.getVideoName().toString());
                                 }
                                 projectcameralist(lists.toArray(new String[lists.size()]));
                             }
@@ -184,7 +187,7 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
 
         //抓图
         if (mPlayer.capturePicture(MyUtils.getCaptureImagePath(this))) {
-//            UniversalToast.makeText(PreviewActivity.this, "已保存到手机相册", UniversalToast.LENGTH_SHORT,UniversalToast.EMPHASIZE).setLeftIconRes(R.drawable.ic_view_error).show();
+            UniversalToast.makeText(PreviewActivity.this, "已保存到手机相册", UniversalToast.LENGTH_SHORT,UniversalToast.EMPHASIZE).setLeftIconRes(R.drawable.ic_view_error).show();
 
         }
     }
@@ -203,23 +206,26 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
             //开始录像
 //            mRecordFilePathText.setText(null);
             String path=  MyUtils.getLocalRecordPath(this,mBinding.tvTitle.getText().toString());
+
             if (mPlayer.startRecord(path)) {
                 ToastUtils.showShort("开始录像");
                 mRecording = true;
                 mBinding.recordButton.setBackgroundResource(R.drawable.ic_view_video2);
                 mBinding.time.setVisibility(View.VISIBLE);
                 startWatch();
+//                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
+//                MediaScannerConnection.scanFile(this, new String[]{path}, null, null);
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM))));
 
             }
         } else {
             //关闭录像
             mPlayer.stopRecord();
-            ToastUtils.showShort("关闭录像");
+            UniversalToast.makeText(PreviewActivity.this, "已保存到手机相册", UniversalToast.LENGTH_SHORT,UniversalToast.EMPHASIZE).setLeftIconRes(R.drawable.ic_view_error).show();
             mRecording = false;
             mBinding.recordButton.setBackgroundResource(R.drawable.ic_view_video);
             stopTimeShow();
             mBinding.time.setVisibility(View.GONE);
-            MyApplication.getInstance().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(Environment.getExternalStoragePublicDirectory(DIRECTORY_DCIM))));
         }
     }
 
@@ -530,10 +536,10 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
                                 if (mPlayerStatus != PlayerStatus.SUCCESS && getPreviewUri()) {
                                     startRealPlay(mBinding.textureView.getSurfaceTexture());
                                     mBinding.start.setVisibility(View.GONE);
-                                    if (mRunnable == null) {
-                                        mRunnable = new MyRunnable();
-                                        mHandler.postDelayed(mRunnable, 0);
-                                    }
+//                                    if (mRunnable == null) {
+//                                        mRunnable = new MyRunnable();
+//                                        mHandler.postDelayed(mRunnable, 0);
+//                                    }
                                 }
                             }
 

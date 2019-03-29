@@ -62,7 +62,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
         Log.e("qw", list.getPloop());
         mBinding.tv1.setText(list.getWarningTime());
 
-        mBinding.tv1.setText(DemoUtils.ConvertTimeFormat(list.getEarlyTime(), "yyyy-MM-dd HH:mm:ss"));
+//        mBinding.tv1.setText(DemoUtils.ConvertTimeFormat(list.getEarlyTime(), "yyyy-MM-dd HH:mm:ss"));
 //        showToast("11===="+list.getStatus());
         switch (list.getStatus()) {
             case "1":

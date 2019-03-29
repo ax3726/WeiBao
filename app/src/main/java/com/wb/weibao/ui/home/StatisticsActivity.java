@@ -91,7 +91,7 @@ public class StatisticsActivity extends BaseActivity<BasePresenter, ActivityStat
                 entries.add(new Entry((i + 1) * 10, data.get(i).getSum() * 10));
 
             } else {
-                entries.add(new Entry((i + 1) * 10, (int) (data.get(i).getRate() * 100)));
+                entries.add(new Entry((i + 1) * 10, (int) (Double.valueOf(1-data.get(i).getRate()) * 100)));
             }
         }
 

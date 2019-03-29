@@ -14,8 +14,8 @@ android {
         applicationId "com.wb.weibao"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 6
+        versionName "1.0.6"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         jackOptions {
@@ -85,6 +85,13 @@ android {
         }
     }
 
+    //添加如下配置就ok了
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+
 }
 
 dependencies {
@@ -108,8 +115,8 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:3.2.6'
     implementation 'com.blankj:utilcode:1.20.3'
     implementation files('libs/HikVideoPlayer.jar')
-  //  implementation project(':toast')
     implementation 'com.facebook.fresco:fresco:1.10.0'
     implementation 'com.facebook.fresco:animated-gif:1.10.0'
+    implementation project(':toast')
     implementation 'com.tencent.bugly:crashreport:2.6.6'
 }

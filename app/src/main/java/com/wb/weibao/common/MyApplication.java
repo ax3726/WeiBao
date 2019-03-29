@@ -23,9 +23,9 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.tencent.bugly.crashreport.CrashReport;
 import com.wb.weibao.base.ThisApplication;
 import com.wb.weibao.model.LoginModel;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -46,6 +46,15 @@ public class MyApplication extends ThisApplication {
     private String mRegistrationID = "";//RegistrationID
     private String JSESSIONID = "";
 
+    public String getErrorlist() {
+        return errorlist;
+    }
+
+    public void setErrorlist(String errorlist) {
+        this.errorlist = errorlist;
+    }
+
+    private String errorlist = "";
     public static MyApplication getInstance() {
         return instance;
     }
@@ -101,6 +110,10 @@ public class MyApplication extends ThisApplication {
         //Bugly
         CrashReport.initCrashReport(getApplicationContext(), "f7035a841a", false);
         //  startAlarm();
+
+
+
+
     }
 
     public void startAlarm() {

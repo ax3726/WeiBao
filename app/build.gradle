@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'bugly'
+bugly {
+    appId = "f7035a841a" // 注册时分配的App ID
+    appKey = "8ddda816-1b38-4eae-b9c1-97b201b908f1" // 注册时分配的App Key
+}
 android {
 
 
@@ -107,4 +111,5 @@ dependencies {
   //  implementation project(':toast')
     implementation 'com.facebook.fresco:fresco:1.10.0'
     implementation 'com.facebook.fresco:animated-gif:1.10.0'
+    implementation 'com.tencent.bugly:crashreport:2.6.6'
 }

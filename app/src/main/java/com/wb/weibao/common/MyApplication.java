@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.wb.weibao.base.ThisApplication;
 import com.wb.weibao.model.LoginModel;
 
@@ -97,7 +98,8 @@ public class MyApplication extends ThisApplication {
                 mList.remove(activity);
             }
         });
-
+        //Bugly
+        CrashReport.initCrashReport(getApplicationContext(), "f7035a841a", false);
         //  startAlarm();
     }
 

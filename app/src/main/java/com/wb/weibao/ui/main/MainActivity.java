@@ -136,7 +136,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     }
 
     private void initFragment() {
-        mHomeFragment = new HomeFragment();
+      mHomeFragment = new HomeFragment();
         WarningFragment = new WarningFragment();
        /* mRecordFragment = new RecordFragment();
         mMainTenanceFragment = new MainTenanceFragment();*/

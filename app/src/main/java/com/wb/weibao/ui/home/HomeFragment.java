@@ -437,7 +437,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
         //直接创建，不需要设置setDataSource
         if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(MyApplication.getInstance()).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
-            showToast("11");
+
             PlayNumService.getIntance().setIsPlay(true);
             mMediaPlayer = MediaPlayer.create(MyApplication.getInstance(), R.raw.huojing);
             //                mMediaPlayer.setLooping(false);//设置是否循环播放
@@ -464,7 +464,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
             });
         }else
         {
-            showToast("22");
+
             vibrator.cancel();
         }
     }

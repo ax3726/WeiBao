@@ -59,7 +59,6 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
             protected void convert(ViewHolder holder, ProjectListModel.DataBean.ListBean item, int position) {
                 ItemProjectListLayoutBinding binding = holder.getBinding(ItemProjectListLayoutBinding.class);
                 binding.tvName.setText(item.getName());
-
                 binding.tvName.setSelected(MyApplication.getInstance().getProjectId().equals(item.getId()+""));
                 binding.img.setVisibility(MyApplication.getInstance().getProjectId().equals(item.getId()+"") ? View.VISIBLE : View.GONE);
                 binding.rlyItem.setOnClickListener(new View.OnClickListener() {

@@ -59,13 +59,13 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
             protected void convert(ViewHolder holder, ProjectListModel.DataBean.ListBean item, int position) {
                 ItemProjectListLayoutBinding binding = holder.getBinding(ItemProjectListLayoutBinding.class);
                 binding.tvName.setText(item.getName());
-                binding.tvName.setSelected(MyApplication.getInstance().getProjectId().equals(item.getId()+""));
-                binding.img.setVisibility(MyApplication.getInstance().getProjectId().equals(item.getId()+"") ? View.VISIBLE : View.GONE);
+                binding.tvName.setSelected(MyApplication.getInstance().getProjectId().equals(item.getId() + ""));
+                binding.img.setVisibility(MyApplication.getInstance().getProjectId().equals(item.getId() + "") ? View.VISIBLE : View.GONE);
                 binding.rlyItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         SpfUtils spfUtils = SpfUtils.getInstance(aty);
-                        spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf( item.getId()));
+                        spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(item.getId()));
                         spfUtils.setSpfString(SpfKey.INST_NAME, item.getName());
                         spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(item.getLatitude()));
                         spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(item.getLongitude()));
@@ -97,6 +97,10 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
                         ProjectListModel.DataBean data = baseBean.getData();
                         if (data != null) {
                             mDataList.clear();
+                            ProjectListModel.DataBean.ListBean listBean = new ProjectListModel.DataBean.ListBean();
+                            listBean.setName("全部");
+                            listBean.setId(-1); //id等于-1代表全部
+                            mDataList.add(listBean);
                             if (data.getList() != null && data.getList().size() > 0) {
                                 mDataList.addAll(data.getList());
 

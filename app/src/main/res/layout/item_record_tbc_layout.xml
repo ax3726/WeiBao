@@ -6,7 +6,20 @@
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:orientation="vertical">
-
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/tv_projectname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="文二路196号"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+       <View
+           android:layerType="software"
+           android:background="@color/colorcccccc"
+           android:layout_width="match_parent"
+           android:layout_height="1dp"/>
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rly"
             android:layout_width="match_parent"

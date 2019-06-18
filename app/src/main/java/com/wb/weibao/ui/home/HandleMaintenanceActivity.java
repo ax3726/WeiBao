@@ -157,9 +157,9 @@ public class HandleMaintenanceActivity extends BaseActivity<BasePresenter, Activ
         if (!TextUtils.isEmpty(str)) {
             File file = new File(str);
             // MultipartBody.Part  和后端约定好Key，这里的partName是用image
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
 
+            MultipartBody.Part body =
+                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), DemoUtils.getimageByte(str)));
             Api.getApi().upLoad(body)
                     .compose(callbackOnIOToMainThread()).subscribe(new BaseNetListener<BaseBean>(this, true) {
                 @Override

@@ -47,7 +47,7 @@ public class Api {
     public static ApiService getApi() {
         if (apiService == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .client(getOkHttpClient())
+                    .client(getOkHttpClient2())
                     .baseUrl(Link.SEREVE)
                     .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
@@ -56,6 +56,7 @@ public class Api {
         }
         return apiService;
     }
+
     public static ApiService getApi2() {
         if (apiService2 == null) {
             Retrofit retrofit = new Retrofit.Builder()
@@ -68,6 +69,20 @@ public class Api {
         }
         return apiService2;
     }
+
+    public static ApiService getApi3() {
+        if (apiService2 == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(getOkHttpClient())
+                    .baseUrl(Link.SEREVE)
+                    .addConverterFactory(gsonConverterFactory)
+                    .addCallAdapterFactory(rxJavaCallAdapterFactory)
+                    .build();
+            apiService2 = retrofit.create(ApiService.class);
+        }
+        return apiService2;
+    }
+
 
   /*  *//**
      * 从 {@link Request#header(String)} 中取出 NoSign
@@ -134,7 +149,9 @@ public class Api {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = processRequest(chain.request());
+
             Response response = processResponse(chain.proceed(request));
+
             return response;
         }
     };

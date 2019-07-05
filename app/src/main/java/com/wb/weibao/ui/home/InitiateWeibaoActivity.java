@@ -99,6 +99,7 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
                             mImgs.add("");
                         }
                         mImgs.remove(position);
+                        mImageUUid.remove(position);
                         notifyDataSetChanged();
                     }
                 });
@@ -143,7 +144,7 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
      * 设备
      */
     private void getDeviceList() {
-        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getId() + "", "equipmentType")
+        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", "equipmentType")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<DeviceTypeModel>(this, true) {
                     @Override
@@ -170,7 +171,7 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
      * 故障
      */
     private void getFaultList() {
-        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getId() + "", "faultType")
+        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", "faultType")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<DeviceTypeModel>(this, true) {
                     @Override
@@ -197,7 +198,7 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
      * 维保
      */
     private void getMaintenanceOrderTypeList() {
-        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getId() + "", "maintenanceOrderType")
+        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", "maintenanceOrderType")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<DeviceTypeModel>(this, true) {
                     @Override
@@ -339,6 +340,7 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
                 if (mImgs.size() < 4) {
                     mImgs.add("");
                 }
+                loadImg(result.get(0));
                 mAdapter.notifyDataSetChanged();
 
             }
@@ -351,43 +353,45 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
 
     public void submit() {
 
-        mImageUUid.clear();
-        mIndex = 0;
-        if (mImgs.size() > 0) {
-            loadImg(mImgs.get(mIndex));
-        } else {
+//        mImageUUid.clear();
+//        mIndex = 0;
+//        if (mImgs.size() > 0) {
+//            loadImg(mImgs.get(mIndex));
+//        } else {
             addRecord();
-        }
+//        }
     }
 
     private void loadImg(String str) {
-        if (!TextUtils.isEmpty(str)) {
+//        if (!TextUtils.isEmpty(str)) {
             File file = new File(str);
+            byte[] bytes = DemoUtils.getimageByte(str);
             // MultipartBody.Part  和后端约定好Key，这里的partName是用image
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
+                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), bytes));
 
             Api.getApi().upLoad(body)
                     .compose(callbackOnIOToMainThread()).subscribe(new BaseNetListener<BaseBean>(this, true) {
                 @Override
                 public void onSuccess(BaseBean baseBean) {
                     mImageUUid.add(baseBean.getData().toString());
-                    mIndex++;
-                    if (mIndex < mImgs.size()) {
-                        loadImg(mImgs.get(mIndex));
-                    } else {
-                        addRecord();
-                    }
+//                    mIndex++;
+//                    if (mIndex < mImgs.size()) {
+//                        loadImg(mImgs.get(mIndex));
+//                    } else {
+//                        addRecord();
+//                    }
                 }
 
                 @Override
                 public void onFail(String errMsg) {
-                    mBinding.affirm.setEnabled(true);
+
+//                    mBinding.affirm.setEnabled(true);
                 }
             });
-        } else {
-            addRecord();
-        }
+//        } else {
+//            addRecord();
+//        }
 
     }
 
@@ -417,8 +421,8 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
         mBinding.affirm.setEnabled(false);
 
         String str = DemoUtils.ListToString(mImageUUid, ";");
-        Api.getApi().addWeiBao(MyApplication.getInstance().getUserData().getId() + "",
-                MyApplication.getInstance().getUserData().getCompanyId(), tv3, tv1, tv2, SpfUtils.getInstance(aty).getSpfString(SpfKey.INST_ID), str, content)
+        Api.getApi().addWeiBao(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
+                MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"", tv3, tv1, tv2, SpfUtils.getInstance(aty).getSpfString(SpfKey.INST_ID), str, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

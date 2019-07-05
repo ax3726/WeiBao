@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.wb.weibao.BuildConfig;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
 import com.wb.weibao.R;
@@ -52,7 +53,14 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
         super.initData();
         spfUtils = SpfUtils.getInstance(aty);
         mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().getName());
-        mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+        if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
+
+            mBinding.tvWeizhi.setText(MyApplication.getInstance().getUserData().getPrincipal().getUsername().toString());
+        } else {
+
+            mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+        }
+
         String  str= spfUtils.getSpfString(SpfKey.IS_PUSH_PLAY);
         if(TextUtils.isEmpty(str))
         {
@@ -101,7 +109,7 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
             }
         });
 
-
+        mBinding.banben.setText("当前版本"+ BuildConfig.VERSION_NAME);
     }
 
     /**

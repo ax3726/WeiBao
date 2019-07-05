@@ -130,7 +130,7 @@ public class AlarmFragment extends BaseFragment<BaseFragmentPresenter, FragmentA
 
     public  void count()
     {
-        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordCount>(AlarmFragment.this, false) {
                     @Override

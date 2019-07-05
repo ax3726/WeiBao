@@ -46,7 +46,7 @@ public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, Fragme
     private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
     private int mPage = 1;
-    private int mPageSize = 15;
+    private int mPageSize = 10;
     private String name="";
 
     @Override
@@ -59,6 +59,7 @@ public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, Fragme
                 ItemRecordTbcLayoutBinding binding = holder.getBinding(ItemRecordTbcLayoutBinding.class);
 //                binding.tvError.setText(item.getProjectName());
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
+                binding.tvProjectname.setText(item.getProjectName());
                 binding.tvTime.setText(item.getWarningTime());
                 switch (item.getEquipmentType())
                 {
@@ -175,7 +176,7 @@ public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, Fragme
                         intent.putExtra("title", "待处理详情");
                         intent.putExtra("title2", "告警");
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getId());
+                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                         intent.putExtra("id", ""+item.getId());
                         startActivity(intent);
                     }
@@ -221,7 +222,7 @@ public class AlarmDQRFragment extends BaseFragment<BaseFragmentPresenter, Fragme
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId(),"1","1,2","","1",mPage,mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getPrincipal().getUserId(),MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId(),"1","1,2","","1",mPage,mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

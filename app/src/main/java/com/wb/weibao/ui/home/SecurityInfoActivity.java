@@ -16,6 +16,9 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.Link;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySecurityInfoBinding;
+import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.home.DeviceTypeModel;
+import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.utils.DemoUtils;
 
@@ -60,21 +63,24 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
         super.initData();
         String id = getIntent().getStringExtra("id");
         mType = getIntent().getIntExtra("type", -1);
+        getDataList2(getIntent().getStringExtra("projectid"));
         getDataList(id);
         initAdapter();
 
-    }
 
+
+    }
+ public SecurityInfoModel baseBeans;
     /**
      * 我的维保
      */
     public void getDataList(String id) {
-        Api.getApi().getMyWeiBaoInfo(id, MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().getMyWeiBaoInfo(id, MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<SecurityInfoModel>(this, true) {
                     @Override
                     public void onSuccess(SecurityInfoModel baseBean) {
-
+                        baseBeans=baseBean;
                         initView(baseBean);
                     }
 
@@ -86,6 +92,27 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
 
     }
 
+
+    public void getDataList2(String id) {
+
+        Api.getApi().getMyWeiBaoInfodetail(id, MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<ProjectDetailbean>(this, true) {
+                    @Override
+                    public void onSuccess(ProjectDetailbean baseBean) {
+                        mBinding.tv5.setText("项目名称：" + baseBean.getData().getName()+ "\n项目地址：" + baseBean.getData().getArea());
+
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
+    }
+   public String type="";
     private void initView(SecurityInfoModel baseBean) {
         if (baseBean.getData() == null) {
             return;
@@ -153,10 +180,11 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
                 break;
         }
 
+        getMaintenanceOrderTypeList(data.getType());
         mBinding.tv1.setText("订单号：" + data.getOrderNo() + "\n订单状态：" + state
                 + "\n提交时间：" + DemoUtils.ConvertTimeFormat(data.getCreateTime(), "yyyy.MM.dd HH.mm.ss"));
         mBinding.tv2.setText("故障类型：" + data.getFaultTypeName() + "\n设备类型：" + data.getEquipmentTypeName()
-                + "\n维保类型：" + data.getType());
+                + "\n维保类型：" + type);
         mBinding.tvInfo.setText("详情描述：" + data.getMemo());
         mBinding.tv3.setText("维保发起人：" + data.getPrincipalName() + "\n发起人电话：" + data.getPrincipalPhone());
 
@@ -201,4 +229,32 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
             finish();
         }
     }
+
+
+    /**
+     * 维保
+     */
+    private void getMaintenanceOrderTypeList(String types) {
+        Api.getApi().getTypeListname( ""+MyApplication.getInstance().getUserData().getPrincipal().getUserId(),types, "maintenanceOrderType")
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(this, true) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
+                        if (baseBeans.getData() == null) {
+                            return;
+                        }
+                        SecurityInfoModel.DataBean data = baseBeans.getData();
+                        mBinding.tv2.setText("故障类型：" + data.getFaultTypeName() + "\n设备类型：" + data.getEquipmentTypeName()
+                                + "\n维保类型：" + baseBean.getData().toString());
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
+    }
+
+
 }

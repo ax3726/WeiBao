@@ -14,6 +14,7 @@ import com.wb.weibao.model.home.DeviceTypeModel;
 import com.wb.weibao.model.home.Handoverbean;
 import com.wb.weibao.model.home.FrieControlModel;
 import com.wb.weibao.model.home.MaintenanceListModel;
+import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
 import com.wb.weibao.model.home.StatisticsModel;
@@ -326,6 +327,16 @@ public interface ApiService {
     @POST("order/detail")
     Flowable<SecurityInfoModel> getMyWeiBaoInfo(@Query("id") String id, @Query("userId") String userId);
 
+
+    /**
+     * 维保详情
+     *
+     * @return
+     */
+    @POST("project/detail")
+    Flowable<ProjectDetailbean> getMyWeiBaoInfodetail(@Query("id") String id, @Query("userId") String userId);
+
+
     /**
      * 消防微站
      *
@@ -380,6 +391,16 @@ public interface ApiService {
     Flowable<DeviceTypeModel> getTypeList(@Query("userId") String userId, @Query("code") String code);
 
     /**
+     * 设备：equipmentType， 故障：faultType 维保：maintenanceOrderType
+     *
+     * @return
+     */
+    @POST("code/library/getName")
+    Flowable<BaseBean> getTypeListname(@Query("userId") String userId,@Query("codeValue") String codeValue, @Query("code") String code);
+
+
+
+    /**
      * 新增维保记录
      * @param userId
      * @param projectId
@@ -394,7 +415,7 @@ public interface ApiService {
     @POST("/earlywarn/maintenance/record/add")
     Flowable<BaseBean> addRecord(@Query("userId") String userId, @Query("projectId") String projectId, @Query("contractName") String contractName
             , @Query("contractPhone") String contractPhone, @Query("maintenanceDate") String maintenanceDate, @Query("maintenanceNextDate") String maintenanceNextDate
-            , @Query("picturesOssKeys") String picturesOssKeys, @Query("maintenanceContent") String maintenanceContent);
+            , @Query("picturesOssKeys") String picturesOssKeys, @Query("maintenanceContent") String maintenanceContent,@Query("coverProjectId") String coverProjectId,@Query("coverProjectName") String coverProjectName);
 
     // 上传图片
     @Multipart
@@ -484,7 +505,7 @@ public interface ApiService {
      * @return
      */
     @POST("early/record/statisticsByWeek")
-    Flowable<StatisticsModel> getErrorData(@Query("userId") String userId, @Query("projecId") String projecId,@Query("instCode") String instCode, @Query("flag") String flag);
+    Flowable<StatisticsModel> getErrorData(@Query("userId") String userId, @Query("projectId") String projecId,@Query("instCode") String instCode, @Query("flag") String flag);
 
     /**
      * 故障率
@@ -492,7 +513,7 @@ public interface ApiService {
      * @return
      */
     @POST("early/record/statisticsFaultRateByWeek")
-    Flowable<StatisticsModel> getFaultData(@Query("userId") String userId, @Query("projecId") String projecId, @Query("instCode") String instCode, @Query("flag") String flag);
+    Flowable<StatisticsModel> getFaultData(@Query("userId") String userId, @Query("projectId") String projecId, @Query("instCode") String instCode, @Query("flag") String flag);
 
 
     /**
@@ -580,7 +601,11 @@ public interface ApiService {
      * @return
      */
     @POST("/earlywarn/camera/list")
-    Flowable<CameraListBean> getCameraList(@Query("userId") String userId);
+    Flowable<CameraListBean> getCameraList(@Query("userId") String userI, @Query("projectId") String projectId, @Query("distributionStatus") String distributionStatus);
+
+    @POST("/earlywarn/camera/list")
+    Flowable<CameraListBean> getCameraList2(@Query("userId") String userI);
+
 
     /**
      *

@@ -97,7 +97,8 @@ public class SecurityFragment extends BaseFragment<BaseFragmentPresenter, Fragme
                 binding.rlyItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(aty, SecurityInfoActivity.class).putExtra("id", listBean.getId() + "").putExtra("type",mType));
+
+                        startActivity(new Intent(aty, SecurityInfoActivity.class).putExtra("id", listBean.getId() + "").putExtra("type",mType).putExtra("projectid",listBean.getProjectId()));
                     }
                 });
             }
@@ -122,7 +123,7 @@ public class SecurityFragment extends BaseFragment<BaseFragmentPresenter, Fragme
      */
     private void handleWeiBao(String id, String processingName) {
 //        processingName
-        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getId() + "", "6")
+        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", "6")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

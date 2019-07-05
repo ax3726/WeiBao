@@ -53,7 +53,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
     private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
     private int mPage = 1;
-    private int mPageSize = 15;
+    private int mPageSize = 10;
     private String name = "";
 
     @Override
@@ -67,6 +67,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
 
 //                binding.tvError.setText(item.getProjectName());
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
+                binding.tvProjectname.setText(item.getProjectName());
                 binding.tvTime.setText(item.getWarningTime());
                 switch (item.getEquipmentType()) {
                     case "1":
@@ -130,7 +131,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
                         intent.putExtra("title2", "火警");
                         intent.putExtra("item", (Serializable) item);
 
-                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getId());
+                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                         intent.putExtra("id", "" + item.getId());
                         startActivity(intent);
                     }
@@ -177,7 +178,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "3,4,5,6,7,8", "37,53","", mPage, mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"", MyApplication.getInstance().getProjectId(), "1", "3,4,5,6,7,8", "","2", mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

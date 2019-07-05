@@ -14,7 +14,9 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityProjectListBinding;
 import com.wb.weibao.databinding.ItemProjectListLayoutBinding;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.event.ErrorEvent;
 import com.wb.weibao.model.event.ProjectChangeEvent;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 
@@ -65,16 +67,22 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
                     @Override
                     public void onClick(View v) {
                         SpfUtils spfUtils = SpfUtils.getInstance(aty);
-                        spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(item.getId()));
-                        spfUtils.setSpfString(SpfKey.INST_NAME, item.getName());
+                        if(item.getName().equals("全部项目"))
+                        {
+                            spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(""));
+                            spfUtils.setSpfString(SpfKey.INST_NAME, item.getName());
+                        }else {
+                            spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(item.getId()));
+                            spfUtils.setSpfString(SpfKey.INST_NAME, item.getName());
+                        }
                         spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(item.getLatitude()));
                         spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(item.getLongitude()));
                         spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(item.getInstCode()));
                         MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
-
+                        MyApplication.getInstance().setmProjectName(spfUtils.getSpfString(SpfKey.INST_NAME));
                         notifyDataSetChanged();
                         EventBus.getDefault().post(new ProjectChangeEvent());
-
+                        EventBus.getDefault().post(new RecordDetailEvent());
                         finish();
                     }
                 });
@@ -89,8 +97,8 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
      * 获取项目列表
      */
     private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getId()).compose(callbackOnIOToMainThread())
+        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
+                "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {
@@ -98,8 +106,8 @@ public class ProjectListActivity extends BaseActivity<BasePresenter, ActivityPro
                         if (data != null) {
                             mDataList.clear();
                             ProjectListModel.DataBean.ListBean listBean = new ProjectListModel.DataBean.ListBean();
-                            listBean.setName("全部");
-                            listBean.setId(-1); //id等于-1代表全部
+                            listBean.setName("全部项目");
+                            listBean.setId(Integer.parseInt(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"")); //id等于-1代表全部
                             mDataList.add(listBean);
                             if (data.getList() != null && data.getList().size() > 0) {
                                 mDataList.addAll(data.getList());

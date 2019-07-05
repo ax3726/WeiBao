@@ -121,6 +121,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
                             mImgs.add("");
                         }
                         mImgs.remove(position);
+                        mImageUUid.remove(position);
                         notifyDataSetChanged();
                     }
                 });
@@ -134,7 +135,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
      */
     List<DeviceTypeModel.DataBean> data;
     private void getFaultList() {
-        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getId() + "", "earlyWarningReason")
+        Api.getApi().getTypeList(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", "earlyWarningReason")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<DeviceTypeModel>(this, true) {
                     @Override
@@ -165,41 +166,47 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
 
     public void submit() {
         mBinding.affirm.setEnabled(false);
-        mImageUUid.clear();
-        mIndex = 0;
-        if (mImgs.size() > 0) {
-            loadImg(mImgs.get(mIndex));
-        }
+//        mImageUUid.clear();
+//        mIndex = 0;
+//        if (mImgs.size() > 0) {
+//            loadImg(mImgs.get(mIndex));
+//        }
+        addRecord();
     }
 
+
+
+
     private void loadImg(String str) {
-        if (!TextUtils.isEmpty(str)) {
+//        if (!TextUtils.isEmpty(str)) {
             File file = new File(str);
+            byte[] bytes = DemoUtils.getimageByte(str);
             // MultipartBody.Part  和后端约定好Key，这里的partName是用image
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
+                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), bytes));
 
             Api.getApi().upLoad(body)
                     .compose(callbackOnIOToMainThread()).subscribe(new BaseNetListener<BaseBean>(this, true) {
                 @Override
                 public void onSuccess(BaseBean baseBean) {
                     mImageUUid.add(baseBean.getData().toString());
-                    mIndex++;
-                    if (mIndex < mImgs.size()) {
-                        loadImg(mImgs.get(mIndex));
-                    } else {
-                        addRecord();
-                    }
+//                    mIndex++;
+//                    if (mIndex < mImgs.size()) {
+//                        loadImg(mImgs.get(mIndex));
+//                    } else {
+//                        addRecord();
+//                    }
                 }
 
                 @Override
                 public void onFail(String errMsg) {
-                    mBinding.affirm.setEnabled(true);
+
+//                    mBinding.affirm.setEnabled(true);
                 }
             });
-        } else {
-            addRecord();
-        }
+//        } else {
+//            addRecord();
+//        }
 
     }
    String causename="";
@@ -210,6 +217,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
 
         if (TextUtils.isEmpty(content)) {
             showToast("请输入内容!");
+            mBinding.affirm.setEnabled(true);
             return;
         }
 
@@ -218,14 +226,16 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
         if(TextUtils.isEmpty(name))
         {
             showToast("请选择事件");
+            mBinding.affirm.setEnabled(true);
             return;
         }
         String str = DemoUtils.ListToString(mImageUUid, ";");
-        Api.getApi().getReportadd(MyApplication.getInstance().getUserData().getId() + "","1",causename,"",content,str,getIntent().getStringExtra("id").toString())
+        Api.getApi().getReportadd(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "","1",causename,"",content,str,getIntent().getStringExtra("id").toString())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
+                        mImageUUid.clear();
                         showToast("上报成功!");
                         new Thread() {
                             @Override
@@ -260,6 +270,7 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
                 if (mImgs.size() < 4) {
                     mImgs.add("");
                 }
+                loadImg(result.get(0));
                 mAdapter.notifyDataSetChanged();
 
             }

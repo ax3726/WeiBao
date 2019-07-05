@@ -48,7 +48,7 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
        muserId=getIntent().getStringExtra("userId");
         mstatus=getIntent().getStringExtra("status");
         mhasProcessing=getIntent().getStringExtra("hasProcessing");
-        Api.getApi().getorderDetail("" + MyApplication.getInstance().getUserData().getId(), mId)
+        Api.getApi().getorderDetail("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), mId)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<DetailBean>(this, true) {
                     @Override
@@ -157,7 +157,7 @@ public class DetailActivity extends BaseActivity<BasePresenter,ActivityDetailBin
                     finish();
                 }else
                 {
-                    Api.getApi().getorderUpdate("" + MyApplication.getInstance().getUserData().getId(),"6",mId).compose(callbackOnIOToMainThread())
+                    Api.getApi().getorderUpdate("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),"6",mId).compose(callbackOnIOToMainThread())
                             .subscribe(new BaseNetListener<BaseBean>(DetailActivity.this, false) {
                                 @Override
                                 public void onSuccess(BaseBean baseBean) {

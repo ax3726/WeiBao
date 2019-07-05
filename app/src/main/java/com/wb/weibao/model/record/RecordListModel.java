@@ -332,6 +332,7 @@ public class RecordListModel implements Serializable {
             private String equipmentId;
             private String equipmentType;
             private String equipmentDetails;
+            private String equipmentName;
             private String latitude;
             private String longitude;
             private int earlyNum;
@@ -580,6 +581,14 @@ public class RecordListModel implements Serializable {
 
             public void setEquipmentDetails(String equipmentDetails) {
                 this.equipmentDetails = equipmentDetails;
+            }
+
+            public String getEquipmentName() {
+                return equipmentName;
+            }
+
+            public void setEquipmentName(String equipmentName) {
+                this.equipmentName = equipmentName;
             }
 
             public String getLatitude() {

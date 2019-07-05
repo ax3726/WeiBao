@@ -134,7 +134,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                         }).show();
                     } else {
 
-                        Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getId() + "","")
+                        Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "","")
                                 .compose(callbackOnIOToMainThread())
                                 .subscribe(new BaseNetListener<BaseBean>(ChangeShiftsActivity.this, true) {
                                     @Override
@@ -173,12 +173,12 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                 binding.viewLine.setVisibility(position == mDataList.size() - 1 ? View.GONE : View.VISIBLE);
                 if(listBean.getCrossUserId()!=null)
                 {
-                    if (listBean.getCrossUserId().equals("" + MyApplication.getInstance().getUserData().getId())) {
+                    if (listBean.getCrossUserId().equals("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId())) {
                         binding.tvTitle.setText("交班于消防保安" + listBean.getConnectUserName());
                     }
                 }
                 if(listBean.getConnectUserId()!=null) {
-                    if (listBean.getConnectUserId().equals("" + MyApplication.getInstance().getUserData().getId())) {
+                    if (listBean.getConnectUserId().equals("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId())) {
                         binding.tvTitle.setText("接班于消防保安" + listBean.getConnectUserName());
                     }
                 }
@@ -245,7 +245,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
                 String content = data.getStringExtra(DECODED_CONTENT_KEY);
                 String result2 = getInsideString(content,"=","&");
 
-                    Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getId() + "",result2)
+                    Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",result2)
                             .compose(callbackOnIOToMainThread())
                             .subscribe(new BaseNetListener<BaseBean>(this, true) {
                                 @Override
@@ -271,7 +271,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
      * 交接班记录
      */
     private void getDataList() {
-        Api.getApi().getHandoverList(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().getHandoverList(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<Handoverbean>(this, true) {
                     @Override
@@ -322,7 +322,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
      * 检查状态
      */
     private void checkSign() {
-        Api.getApi().checkSign(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().checkSign(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

@@ -10,6 +10,9 @@ import org.reactivestreams.Subscription;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.security.cert.Certificate;
+
+import javax.net.ssl.SSLHandshakeException;
 
 import retrofit2.HttpException;
 
@@ -60,7 +63,7 @@ public abstract class BaseNetListener<T> implements Subscriber<T> {
             } else {
                 err_msg = "Aip异常";
             }
-
+         //
         } else if (e instanceof SocketTimeoutException) {
             err_msg="连接服务器超时";
         } else if (e instanceof ConnectException) {

@@ -169,12 +169,13 @@
             android:layout_height="wrap_content" />
     </com.zhy.autolayout.AutoLinearLayout>
         <TextView
+
             android:layout_marginBottom="15dp"
             android:layout_gravity="bottom"
             android:id="@+id/banben"
             android:drawablePadding="8px"
             android:textColor="#c8c8c8"
-            android:text="当前版本1.0.6"
+            android:text=""
             android:textSize="14sp"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"

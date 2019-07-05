@@ -3,6 +3,8 @@ package com.wb.weibao.net;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.wb.weibao.common.MyApplication;
+
 import java.io.IOException;
 
 import okhttp3.Headers;
@@ -19,40 +21,33 @@ import okio.Buffer;
  * Description：okhttp拦截器
  */
 
-public class LoggerInterceptor implements Interceptor
-{
+public class LoggerInterceptor implements Interceptor {
     public static final String TAG = "LoggerInterceptor";
     private String tag;
     private boolean showResponse;
 
-    public LoggerInterceptor(String tag, boolean showResponse)
-    {
-        if (TextUtils.isEmpty(tag))
-        {
+    public LoggerInterceptor(String tag, boolean showResponse) {
+        if (TextUtils.isEmpty(tag)) {
             tag = TAG;
         }
         this.showResponse = showResponse;
         this.tag = tag;
     }
 
-    public LoggerInterceptor(String tag)
-    {
+    public LoggerInterceptor(String tag) {
         this(tag, false);
     }
 
     @Override
-    public Response intercept(Chain chain) throws IOException
-    {
+    public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         logForRequest(request);
         Response response = chain.proceed(request);
         return logForResponse(response);
     }
 
-    private Response logForResponse(Response response)
-    {
-        try
-        {
+    private Response logForResponse(Response response) {
+        try {
             //===>response log
             Log.e(tag, "========response'log=======");
             Response.Builder builder = response.newBuilder();
@@ -60,27 +55,31 @@ public class LoggerInterceptor implements Interceptor
             Log.e(tag, "url : " + clone.request().url());
             Log.e(tag, "code : " + clone.code());
             Log.e(tag, "protocol : " + clone.protocol());
+            Log.e(tag, "protocol : " + clone.protocol());
+            Log.e(tag, "headers : " + clone.headers());
+
+//            Log.e(tag, "Set-Cookie2 : " + clone.headers().get("Set-Cookie").substring(11,clone.headers().get("Set-Cookie").indexOf(";path=")));
+
+            if (clone.headers().toString().indexOf("Set-Cookie") != -1) {
+                Log.e(tag, "Set-Cookie1 : " + clone.headers().get("Set-Cookie").toString());
+                MyApplication.getInstance().setJSESSIONID(clone.headers().get("Set-Cookie").substring(11, clone.headers().get("Set-Cookie").indexOf(";path=")));
+            }
             if (!TextUtils.isEmpty(clone.message()))
                 Log.e(tag, "message : " + clone.message());
 
-            if (showResponse)
-            {
+            if (showResponse) {
                 ResponseBody body = clone.body();
-                if (body != null)
-                {
+                if (body != null) {
                     MediaType mediaType = body.contentType();
-                    if (mediaType != null)
-                    {
+                    if (mediaType != null) {
                         Log.e(tag, "responseBody's contentType : " + mediaType.toString());
-                        if (isText(mediaType))
-                        {
+                        if (isText(mediaType)) {
                             String resp = body.string();
                             Log.e(tag, "responseBody's content : " + resp);
 
                             body = ResponseBody.create(mediaType, resp);
                             return response.newBuilder().body(body).build();
-                        } else
-                        {
+                        } else {
                             Log.e(tag, "responseBody's content : " + " maybe [file part] , too large too print , ignored!");
                         }
                     }
@@ -88,59 +87,47 @@ public class LoggerInterceptor implements Interceptor
             }
 
             Log.e(tag, "========response'log=======end");
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
 //            e.printStackTrace();
         }
 
         return response;
     }
 
-    private void logForRequest(Request request)
-    {
-        try
-        {
+    private void logForRequest(Request request) {
+        try {
             String url = request.url().toString();
             Headers headers = request.headers();
 
             Log.e(tag, "========request'log=======");
             Log.e(tag, "method : " + request.method());
             Log.e(tag, "url : " + url);
-            if (headers != null && headers.size() > 0)
-            {
+            if (headers != null && headers.size() > 0) {
                 Log.e(tag, "headers : " + headers.toString());
             }
             RequestBody requestBody = request.body();
-            if (requestBody != null)
-            {
+            if (requestBody != null) {
                 MediaType mediaType = requestBody.contentType();
-                if (mediaType != null)
-                {
+                if (mediaType != null) {
                     Log.e(tag, "requestBody's contentType : " + mediaType.toString());
-                    if (isText(mediaType))
-                    {
+                    if (isText(mediaType)) {
                         Log.e(tag, "requestBody's content : " + bodyToString(request));
-                    } else
-                    {
+                    } else {
                         Log.e(tag, "requestBody's content : " + " maybe [file part] , too large too print , ignored!");
                     }
                 }
             }
             Log.e(tag, "========request'log=======end");
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
 //            e.printStackTrace();
         }
     }
 
-    private boolean isText(MediaType mediaType)
-    {
-        if (mediaType.type() != null && mediaType.type().equals("text"))
-        {
+    private boolean isText(MediaType mediaType) {
+        if (mediaType.type() != null && mediaType.type().equals("text")) {
             return true;
         }
-        if (mediaType.subtype() != null)
-        {
+        if (mediaType.subtype() != null) {
             if (mediaType.subtype().equals("json") ||
                     mediaType.subtype().equals("xml") ||
                     mediaType.subtype().equals("html") ||
@@ -151,16 +138,13 @@ public class LoggerInterceptor implements Interceptor
         return false;
     }
 
-    private String bodyToString(final Request request)
-    {
-        try
-        {
+    private String bodyToString(final Request request) {
+        try {
             final Request copy = request.newBuilder().build();
             final Buffer buffer = new Buffer();
             copy.body().writeTo(buffer);
             return buffer.readUtf8();
-        } catch (final IOException e)
-        {
+        } catch (final IOException e) {
             return "something error when show requestBody.";
         }
     }

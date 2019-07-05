@@ -120,13 +120,14 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
             }
         });
         updateapp();
+        mBinding.banben.setText("当前版本"+BuildConfig.VERSION_NAME);
     }
 
 
 
     private void updateapp()
     {
-        Api.getApi().getversion()
+        Api.getApi3().getversion()
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<VersionBean>(LoginActivity.this, false) {
                     @Override
@@ -210,7 +211,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
             showToast("密码不能为空!");
             return;
         }
-        Api.getApi().getUserLogin(phone, MD5Utils.encryptMD5(password))
+        Api.getApi3().getUserLogin(phone, MD5Utils.encryptMD5(password))
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<LoginModel>(LoginActivity.this, true) {
                     @Override

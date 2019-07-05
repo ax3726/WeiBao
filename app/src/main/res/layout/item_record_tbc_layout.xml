@@ -2,24 +2,28 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <com.zhy.autolayout.AutoLinearLayout
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:orientation="vertical">
         <TextView
-            android:visibility="invisible"
+            android:layout_marginTop="20px"
             android:id="@+id/tv_projectname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="文二路196号"
-            android:layout_marginLeft="30dp"
+            android:text=""
+            android:layout_marginLeft="48px"
+            android:layout_marginBottom="20px"
             android:textColor="@color/color333333"
             android:textSize="28px" />
        <View
+           android:layout_marginLeft="28px"
+           android:layout_marginRight="28px"
            android:layerType="software"
-           android:background="@color/colorcccccc"
+           android:background="@drawable/line_view"
            android:layout_width="match_parent"
-           android:layout_height="1dp"/>
+           android:layout_height="2dp"/>
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rly"
             android:layout_width="match_parent"

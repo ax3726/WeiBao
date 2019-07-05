@@ -16,9 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.FlowableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+
 
 public class DataChangeReceiver extends BroadcastReceiver {
     @Override
@@ -26,7 +24,8 @@ public class DataChangeReceiver extends BroadcastReceiver {
 
         Date date = new Date(System.currentTimeMillis());
         int minutes = date.getMinutes();
-        if (minutes % 2 == 0) {//2的倍数
+        
+        if (minutes % 3 == 0) {//2的倍数
             LogUtils.e( "ee==开始获取接口");
             EventBus.getDefault().post(new ErrorEvent());
         } else {

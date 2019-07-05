@@ -175,7 +175,7 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
 
    public  void count()
    {
-       Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
+       Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
                .compose(callbackOnIOToMainThread())
                .subscribe(new BaseNetListener<RecordCount>(FireFragment.this, false) {
                    @Override

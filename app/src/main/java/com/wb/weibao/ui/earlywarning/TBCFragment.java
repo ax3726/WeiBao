@@ -61,7 +61,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
     private int mPage = 1;
-    private int mPageSize = 15;
+    private int mPageSize = 10;
     private String name="";
 
     @Override
@@ -73,11 +73,12 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
             protected void convert(ViewHolder holder, RecordListModel.DataBean.ListBean item, int position) {
                 ItemRecordTbcLayoutBinding binding = holder.getBinding(ItemRecordTbcLayoutBinding.class);
 //                binding.tvError.setText(item.getProjectName());
+                binding.tvProjectname.setText(item.getProjectName());
                 binding.affirm.setVisibility(View.VISIBLE);
                 binding.affirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().getId(),"2",MyApplication.getInstance().getUserData().getName(),item.getId()+"")
+                        Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),"2",MyApplication.getInstance().getUserData().getName(),item.getId()+"")
                                 .compose(callbackOnIOToMainThread())
                                 .subscribe(new BaseNetListener<BaseBean>(TBCFragment.this, true) {
                                     @Override
@@ -85,6 +86,8 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                                         mBinding.srlBody.resetNoMoreData();
                                         mPage = 1;
                                         getErrorList();
+                                        EventBus.getDefault().post(new RecordDetailEvent());
+
                                     }
 
                                     @Override
@@ -148,7 +151,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                         intent.putExtra("title", "待确认详情");
                         intent.putExtra("title2", "火警");
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getId());
+                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                         intent.putExtra("id", ""+item.getId());
                         startActivity(intent);
                     }
@@ -196,7 +199,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getId(),MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId(),"1","1","37,53","",mPage,mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getPrincipal().getUserId(),MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId(),"1","1","","2",mPage,mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {
@@ -214,6 +217,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                                 }
                             }
                             mAdapter.notifyDataSetChanged();
+//
                         }
 
                     }

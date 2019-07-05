@@ -9,15 +9,16 @@ import java.util.List;
 
 public class LoginModel implements Serializable {
 
+
     /**
      * code : 200
-     * message : SUCCESS
-     * data : {"startTime":null,"endTime":null,"id":1,"name":"超级管理员","loginAccount":"admin","password":"******","salt":"***","phoneNo":"15868476323","email":"1","status":"0","companyId":"0001","createTime":1504681409000,"updateTime":1534847417000,"createUserId":"1","updateUserId":"1","projectId":null,"projectName":null,"companyCode":null,"companyName":null,"type":"1","userRoles":[{"startTime":null,"endTime":null,"id":9,"userId":1,"roleId":1}],"roleIds":null,"institutions":{"startTime":null,"endTime":null,"id":1,"code":"0001","name":"浙江创源消防科技有限公司","shortName":"创源消防","instType":"0","level":1,"type":0,"status":"0","areaCityCode":"310101","areaId":null,"principalArea":"浙江杭州","principalName":"王一晓","certificateType":"1","certificateNo":"2154656464","parentId":"null","parentName":"null","parentCode":"null","createUserId":"1","updateUserId":"1","createTime":1536752936000,"updateTime":1539605118000,"linkMan":"王一晓","linkPhone":"13777810881","linkType":"tel","linkEmail":"13425636325@qq.com","linkEmergencyPhone":"13777810881","latitude":"29.891850"}}
+     * data : {"authenticated":true,"authorities":[{"authority":"1"},{"authority":"ConfigurationMenu"},{"authority":"RoleManage"},{"authority":"add"},{"authority":"advice/list"},{"authority":"application"},{"authority":"attendanceManagement"},{"authority":"camera/list"},{"authority":"collector/list"},{"authority":"controlSchedule"},{"authority":"device"},{"authority":"duty/shift/list"},{"authority":"earlyWarning"},{"authority":"handover/list"},{"authority":"institutions/list"},{"authority":"intention/list"},{"authority":"maintenance/record/list"},{"authority":"mechanism/list"},{"authority":"news/list"},{"authority":"newsManage"},{"authority":"order/list"},{"authority":"organizational"},{"authority":"project/control/person/list"},{"authority":"project/list"},{"authority":"record/list"},{"authority":"shift/schedule/list"},{"authority":"signup/list"},{"authority":"templet/list"},{"authority":"user/list"},{"authority":"videoManagement"}],"credentials":null,"details":{"remoteAddress":"112.17.170.163","sessionId":"","verifyCode":""},"name":"admin","principal":{"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"email":"1343411580@qq.com","enabled":true,"idNumber":"362330195603082255","idType":"01","instCode":"0001","isFireSafePerson":false,"name":"超级管理员","phoneNo":"15868476323","projectId":"","status":"0","type":"1","userId":"1","username":"admin"}}
+     * message : 登录成功
      */
 
     private String code;
-    private String message;
     private DataBean data;
+    private String message;
 
     public String getCode() {
         return code;
@@ -25,14 +26,6 @@ public class LoginModel implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public DataBean getData() {
@@ -43,79 +36,53 @@ public class LoginModel implements Serializable {
         this.data = data;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public static class DataBean {
         /**
-         * startTime : null
-         * endTime : null
-         * id : 1
-         * name : 超级管理员
-         * loginAccount : admin
-         * password : ******
-         * salt : ***
-         * phoneNo : 15868476323
-         * email : 1
-         * status : 0
-         * companyId : 0001
-         * createTime : 1504681409000
-         * updateTime : 1534847417000
-         * createUserId : 1
-         * updateUserId : 1
-         * projectId : null
-         * projectName : null
-         * companyCode : null
-         * companyName : null
-         * type : 1
-         * userRoles : [{"startTime":null,"endTime":null,"id":9,"userId":1,"roleId":1}]
-         * roleIds : null
-         * institutions : {"startTime":null,"endTime":null,"id":1,"code":"0001","name":"浙江创源消防科技有限公司","shortName":"创源消防","instType":"0","level":1,"type":0,"status":"0","areaCityCode":"310101","areaId":null,"principalArea":"浙江杭州","principalName":"王一晓","certificateType":"1","certificateNo":"2154656464","parentId":"null","parentName":"null","parentCode":"null","createUserId":"1","updateUserId":"1","createTime":1536752936000,"updateTime":1539605118000,"linkMan":"王一晓","linkPhone":"13777810881","linkType":"tel","linkEmail":"13425636325@qq.com","linkEmergencyPhone":"13777810881","latitude":"29.891850"}
+         * authenticated : true
+         * authorities : [{"authority":"1"},{"authority":"ConfigurationMenu"},{"authority":"RoleManage"},{"authority":"add"},{"authority":"advice/list"},{"authority":"application"},{"authority":"attendanceManagement"},{"authority":"camera/list"},{"authority":"collector/list"},{"authority":"controlSchedule"},{"authority":"device"},{"authority":"duty/shift/list"},{"authority":"earlyWarning"},{"authority":"handover/list"},{"authority":"institutions/list"},{"authority":"intention/list"},{"authority":"maintenance/record/list"},{"authority":"mechanism/list"},{"authority":"news/list"},{"authority":"newsManage"},{"authority":"order/list"},{"authority":"organizational"},{"authority":"project/control/person/list"},{"authority":"project/list"},{"authority":"record/list"},{"authority":"shift/schedule/list"},{"authority":"signup/list"},{"authority":"templet/list"},{"authority":"user/list"},{"authority":"videoManagement"}]
+         * credentials : null
+         * details : {"remoteAddress":"112.17.170.163","sessionId":"","verifyCode":""}
+         * name : admin
+         * principal : {"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"email":"1343411580@qq.com","enabled":true,"idNumber":"362330195603082255","idType":"01","instCode":"0001","isFireSafePerson":false,"name":"超级管理员","phoneNo":"15868476323","projectId":"","status":"0","type":"1","userId":"1","username":"admin"}
          */
 
-        private Object startTime;
-        private Object endTime;
-        private int id;
+        private boolean authenticated;
+        private Object credentials;
+        private DetailsBean details;
         private String name;
-        private String loginAccount;
-        private String password;
-        private String salt;
-        private String phoneNo;
-        private String email;
-        private String status;
-        private String companyId;
-        private long createTime;
-        private long updateTime;
-        private String createUserId;
-        private String updateUserId;
-        private String projectId;
-        private Object projectName;
-        private Object companyCode;
-        private Object companyName;
-        private String type;
-        private Object roleIds;
-        private InstitutionsBean institutions;
-        private List<UserRolesBean> userRoles;
+        private PrincipalBean principal;
+        private List<AuthoritiesBean> authorities;
 
-        public Object getStartTime() {
-            return startTime;
+        public boolean isAuthenticated() {
+            return authenticated;
         }
 
-        public void setStartTime(Object startTime) {
-            this.startTime = startTime;
+        public void setAuthenticated(boolean authenticated) {
+            this.authenticated = authenticated;
         }
 
-        public Object getEndTime() {
-            return endTime;
+        public Object getCredentials() {
+            return credentials;
         }
 
-        public void setEndTime(Object endTime) {
-            this.endTime = endTime;
+        public void setCredentials(Object credentials) {
+            this.credentials = credentials;
         }
 
-        public int getId() {
-            return id;
+        public DetailsBean getDetails() {
+            return details;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setDetails(DetailsBean details) {
+            this.details = details;
         }
 
         public String getName() {
@@ -126,251 +93,165 @@ public class LoginModel implements Serializable {
             this.name = name;
         }
 
-        public String getLoginAccount() {
-            return loginAccount;
+        public PrincipalBean getPrincipal() {
+            return principal;
         }
 
-        public void setLoginAccount(String loginAccount) {
-            this.loginAccount = loginAccount;
+        public void setPrincipal(PrincipalBean principal) {
+            this.principal = principal;
         }
 
-        public String getPassword() {
-            return password;
+        public List<AuthoritiesBean> getAuthorities() {
+            return authorities;
         }
 
-        public void setPassword(String password) {
-            this.password = password;
+        public void setAuthorities(List<AuthoritiesBean> authorities) {
+            this.authorities = authorities;
         }
 
-        public String getSalt() {
-            return salt;
-        }
-
-        public void setSalt(String salt) {
-            this.salt = salt;
-        }
-
-        public String getPhoneNo() {
-            return phoneNo;
-        }
-
-        public void setPhoneNo(String phoneNo) {
-            this.phoneNo = phoneNo;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getCompanyId() {
-            return companyId;
-        }
-
-        public void setCompanyId(String companyId) {
-            this.companyId = companyId;
-        }
-
-        public long getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(long createTime) {
-            this.createTime = createTime;
-        }
-
-        public long getUpdateTime() {
-            return updateTime;
-        }
-
-        public void setUpdateTime(long updateTime) {
-            this.updateTime = updateTime;
-        }
-
-        public String getCreateUserId() {
-            return createUserId;
-        }
-
-        public void setCreateUserId(String createUserId) {
-            this.createUserId = createUserId;
-        }
-
-        public String getUpdateUserId() {
-            return updateUserId;
-        }
-
-        public void setUpdateUserId(String updateUserId) {
-            this.updateUserId = updateUserId;
-        }
-
-        public String getProjectId() {
-            return projectId;
-        }
-
-        public void setProjectId(String projectId) {
-            this.projectId = projectId;
-        }
-
-        public Object getProjectName() {
-            return projectName;
-        }
-
-        public void setProjectName(Object projectName) {
-            this.projectName = projectName;
-        }
-
-        public Object getCompanyCode() {
-            return companyCode;
-        }
-
-        public void setCompanyCode(Object companyCode) {
-            this.companyCode = companyCode;
-        }
-
-        public Object getCompanyName() {
-            return companyName;
-        }
-
-        public void setCompanyName(Object companyName) {
-            this.companyName = companyName;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public Object getRoleIds() {
-            return roleIds;
-        }
-
-        public void setRoleIds(Object roleIds) {
-            this.roleIds = roleIds;
-        }
-
-        public InstitutionsBean getInstitutions() {
-            return institutions;
-        }
-
-        public void setInstitutions(InstitutionsBean institutions) {
-            this.institutions = institutions;
-        }
-
-        public List<UserRolesBean> getUserRoles() {
-            return userRoles;
-        }
-
-        public void setUserRoles(List<UserRolesBean> userRoles) {
-            this.userRoles = userRoles;
-        }
-
-        public static class InstitutionsBean {
+        public static class DetailsBean {
             /**
-             * startTime : null
-             * endTime : null
-             * id : 1
-             * code : 0001
-             * name : 浙江创源消防科技有限公司
-             * shortName : 创源消防
-             * instType : 0
-             * level : 1
-             * type : 0
-             * status : 0
-             * areaCityCode : 310101
-             * areaId : null
-             * principalArea : 浙江杭州
-             * principalName : 王一晓
-             * certificateType : 1
-             * certificateNo : 2154656464
-             * parentId : null
-             * parentName : null
-             * parentCode : null
-             * createUserId : 1
-             * updateUserId : 1
-             * createTime : 1536752936000
-             * updateTime : 1539605118000
-             * linkMan : 王一晓
-             * linkPhone : 13777810881
-             * linkType : tel
-             * linkEmail : 13425636325@qq.com
-             * linkEmergencyPhone : 13777810881
-             * latitude : 29.891850
+             * remoteAddress : 112.17.170.163
+             * sessionId :
+             * verifyCode :
              */
 
-            private Object startTime;
-            private Object endTime;
-            private int id;
-            private String code;
+            private String remoteAddress;
+            private String sessionId;
+            private String verifyCode;
+
+            public String getRemoteAddress() {
+                return remoteAddress;
+            }
+
+            public void setRemoteAddress(String remoteAddress) {
+                this.remoteAddress = remoteAddress;
+            }
+
+            public String getSessionId() {
+                return sessionId;
+            }
+
+            public void setSessionId(String sessionId) {
+                this.sessionId = sessionId;
+            }
+
+            public String getVerifyCode() {
+                return verifyCode;
+            }
+
+            public void setVerifyCode(String verifyCode) {
+                this.verifyCode = verifyCode;
+            }
+        }
+
+        public static class PrincipalBean {
+            /**
+             * accountNonExpired : true
+             * accountNonLocked : true
+             * credentialsNonExpired : true
+             * email : 1343411580@qq.com
+             * enabled : true
+             * idNumber : 362330195603082255
+             * idType : 01
+             * instCode : 0001
+             * isFireSafePerson : false
+             * name : 超级管理员
+             * phoneNo : 15868476323
+             * projectId :
+             * status : 0
+             * type : 1
+             * userId : 1
+             * username : admin
+             */
+
+            private boolean accountNonExpired;
+            private boolean accountNonLocked;
+            private boolean credentialsNonExpired;
+            private String email;
+            private boolean enabled;
+            private String idNumber;
+            private String idType;
+            private String instCode;
+            private boolean isFireSafePerson;
             private String name;
-            private String shortName;
-            private String instType;
-            private int level;
-            private int type;
+            private String phoneNo;
+            private String projectId;
             private String status;
-            private String areaCityCode;
-            private Object areaId;
-            private String principalArea;
-            private String principalName;
-            private String certificateType;
-            private String certificateNo;
-            private String parentId;
-            private String parentName;
-            private String parentCode;
-            private String createUserId;
-            private String updateUserId;
-            private long createTime;
-            private long updateTime;
-            private String linkMan;
-            private String linkPhone;
-            private String linkType;
-            private String linkEmail;
-            private String linkEmergencyPhone;
-            private String latitude;
+            private String type;
+            private String userId;
+            private String username;
 
-            public Object getStartTime() {
-                return startTime;
+            public boolean isAccountNonExpired() {
+                return accountNonExpired;
             }
 
-            public void setStartTime(Object startTime) {
-                this.startTime = startTime;
+            public void setAccountNonExpired(boolean accountNonExpired) {
+                this.accountNonExpired = accountNonExpired;
             }
 
-            public Object getEndTime() {
-                return endTime;
+            public boolean isAccountNonLocked() {
+                return accountNonLocked;
             }
 
-            public void setEndTime(Object endTime) {
-                this.endTime = endTime;
+            public void setAccountNonLocked(boolean accountNonLocked) {
+                this.accountNonLocked = accountNonLocked;
             }
 
-            public int getId() {
-                return id;
+            public boolean isCredentialsNonExpired() {
+                return credentialsNonExpired;
             }
 
-            public void setId(int id) {
-                this.id = id;
+            public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+                this.credentialsNonExpired = credentialsNonExpired;
             }
 
-            public String getCode() {
-                return code;
+            public String getEmail() {
+                return email;
             }
 
-            public void setCode(String code) {
-                this.code = code;
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+            public boolean isEnabled() {
+                return enabled;
+            }
+
+            public void setEnabled(boolean enabled) {
+                this.enabled = enabled;
+            }
+
+            public String getIdNumber() {
+                return idNumber;
+            }
+
+            public void setIdNumber(String idNumber) {
+                this.idNumber = idNumber;
+            }
+
+            public String getIdType() {
+                return idType;
+            }
+
+            public void setIdType(String idType) {
+                this.idType = idType;
+            }
+
+            public String getInstCode() {
+                return instCode;
+            }
+
+            public void setInstCode(String instCode) {
+                this.instCode = instCode;
+            }
+
+            public boolean isIsFireSafePerson() {
+                return isFireSafePerson;
+            }
+
+            public void setIsFireSafePerson(boolean isFireSafePerson) {
+                this.isFireSafePerson = isFireSafePerson;
             }
 
             public String getName() {
@@ -381,36 +262,20 @@ public class LoginModel implements Serializable {
                 this.name = name;
             }
 
-            public String getShortName() {
-                return shortName;
+            public String getPhoneNo() {
+                return phoneNo;
             }
 
-            public void setShortName(String shortName) {
-                this.shortName = shortName;
+            public void setPhoneNo(String phoneNo) {
+                this.phoneNo = phoneNo;
             }
 
-            public String getInstType() {
-                return instType;
+            public String getProjectId() {
+                return projectId;
             }
 
-            public void setInstType(String instType) {
-                this.instType = instType;
-            }
-
-            public int getLevel() {
-                return level;
-            }
-
-            public void setLevel(int level) {
-                this.level = level;
-            }
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
+            public void setProjectId(String projectId) {
+                this.projectId = projectId;
             }
 
             public String getStatus() {
@@ -421,212 +286,44 @@ public class LoginModel implements Serializable {
                 this.status = status;
             }
 
-            public String getAreaCityCode() {
-                return areaCityCode;
+            public String getType() {
+                return type;
             }
 
-            public void setAreaCityCode(String areaCityCode) {
-                this.areaCityCode = areaCityCode;
+            public void setType(String type) {
+                this.type = type;
             }
 
-            public Object getAreaId() {
-                return areaId;
-            }
-
-            public void setAreaId(Object areaId) {
-                this.areaId = areaId;
-            }
-
-            public String getPrincipalArea() {
-                return principalArea;
-            }
-
-            public void setPrincipalArea(String principalArea) {
-                this.principalArea = principalArea;
-            }
-
-            public String getPrincipalName() {
-                return principalName;
-            }
-
-            public void setPrincipalName(String principalName) {
-                this.principalName = principalName;
-            }
-
-            public String getCertificateType() {
-                return certificateType;
-            }
-
-            public void setCertificateType(String certificateType) {
-                this.certificateType = certificateType;
-            }
-
-            public String getCertificateNo() {
-                return certificateNo;
-            }
-
-            public void setCertificateNo(String certificateNo) {
-                this.certificateNo = certificateNo;
-            }
-
-            public String getParentId() {
-                return parentId;
-            }
-
-            public void setParentId(String parentId) {
-                this.parentId = parentId;
-            }
-
-            public String getParentName() {
-                return parentName;
-            }
-
-            public void setParentName(String parentName) {
-                this.parentName = parentName;
-            }
-
-            public String getParentCode() {
-                return parentCode;
-            }
-
-            public void setParentCode(String parentCode) {
-                this.parentCode = parentCode;
-            }
-
-            public String getCreateUserId() {
-                return createUserId;
-            }
-
-            public void setCreateUserId(String createUserId) {
-                this.createUserId = createUserId;
-            }
-
-            public String getUpdateUserId() {
-                return updateUserId;
-            }
-
-            public void setUpdateUserId(String updateUserId) {
-                this.updateUserId = updateUserId;
-            }
-
-            public long getCreateTime() {
-                return createTime;
-            }
-
-            public void setCreateTime(long createTime) {
-                this.createTime = createTime;
-            }
-
-            public long getUpdateTime() {
-                return updateTime;
-            }
-
-            public void setUpdateTime(long updateTime) {
-                this.updateTime = updateTime;
-            }
-
-            public String getLinkMan() {
-                return linkMan;
-            }
-
-            public void setLinkMan(String linkMan) {
-                this.linkMan = linkMan;
-            }
-
-            public String getLinkPhone() {
-                return linkPhone;
-            }
-
-            public void setLinkPhone(String linkPhone) {
-                this.linkPhone = linkPhone;
-            }
-
-            public String getLinkType() {
-                return linkType;
-            }
-
-            public void setLinkType(String linkType) {
-                this.linkType = linkType;
-            }
-
-            public String getLinkEmail() {
-                return linkEmail;
-            }
-
-            public void setLinkEmail(String linkEmail) {
-                this.linkEmail = linkEmail;
-            }
-
-            public String getLinkEmergencyPhone() {
-                return linkEmergencyPhone;
-            }
-
-            public void setLinkEmergencyPhone(String linkEmergencyPhone) {
-                this.linkEmergencyPhone = linkEmergencyPhone;
-            }
-
-            public String getLatitude() {
-                return latitude;
-            }
-
-            public void setLatitude(String latitude) {
-                this.latitude = latitude;
-            }
-        }
-
-        public static class UserRolesBean {
-            /**
-             * startTime : null
-             * endTime : null
-             * id : 9
-             * userId : 1
-             * roleId : 1
-             */
-
-            private Object startTime;
-            private Object endTime;
-            private int id;
-            private int userId;
-            private int roleId;
-
-            public Object getStartTime() {
-                return startTime;
-            }
-
-            public void setStartTime(Object startTime) {
-                this.startTime = startTime;
-            }
-
-            public Object getEndTime() {
-                return endTime;
-            }
-
-            public void setEndTime(Object endTime) {
-                this.endTime = endTime;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public int getUserId() {
+            public String getUserId() {
                 return userId;
             }
 
-            public void setUserId(int userId) {
+            public void setUserId(String userId) {
                 this.userId = userId;
             }
 
-            public int getRoleId() {
-                return roleId;
+            public String getUsername() {
+                return username;
             }
 
-            public void setRoleId(int roleId) {
-                this.roleId = roleId;
+            public void setUsername(String username) {
+                this.username = username;
+            }
+        }
+
+        public static class AuthoritiesBean {
+            /**
+             * authority : 1
+             */
+
+            private String authority;
+
+            public String getAuthority() {
+                return authority;
+            }
+
+            public void setAuthority(String authority) {
+                this.authority = authority;
             }
         }
     }

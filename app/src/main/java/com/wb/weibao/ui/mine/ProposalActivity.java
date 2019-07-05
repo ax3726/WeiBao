@@ -60,7 +60,7 @@ public class ProposalActivity extends BaseActivity<BasePresenter,ActivityProposa
                     showToast("建议不能为空");
                     return;
                 }
-                Api.getApi().getAdviceadd(MyApplication.getInstance().getUserData().getId() + "",mBinding.etContent.getText().toString())
+                Api.getApi().getAdviceadd(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",mBinding.etContent.getText().toString())
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(ProposalActivity.this, false) {
                             @Override

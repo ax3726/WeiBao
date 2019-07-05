@@ -10,18 +10,22 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.lm.lib_common.utils.DoubleClickExitHelper;
+import com.wb.weibao.BuildConfig;
 import com.wb.weibao.R;
 import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
@@ -32,10 +36,14 @@ import com.wb.weibao.common.PlayNumService;
 import com.wb.weibao.common.TimeService;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.VersionBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ErrorEvent;
+import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
+import com.wb.weibao.ui.Login.LoginActivity;
+import com.wb.weibao.ui.earlywarning.FireFragment;
 import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
@@ -43,6 +51,9 @@ import com.wb.weibao.ui.mine.MineFragment;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
+import com.wb.weibao.utils.update.AppUpdateProgressDialog;
+import com.wb.weibao.utils.update.DownloadReceiver;
+import com.wb.weibao.utils.update.DownloadService;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -92,6 +103,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         EventBus.getDefault().register(this);
 
         spfUtils = SpfUtils.getInstance(MainActivity.this);
+        updateapp();
         mBinding.rgButtom.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -143,8 +155,6 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         //  getProjectList();
 
 
-
-
     }
 
     @Override
@@ -160,7 +170,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     }
 
     private void initFragment() {
-      mHomeFragment = new HomeFragment();
+        mHomeFragment = new HomeFragment();
         WarningFragment = new WarningFragment();
        /* mRecordFragment = new RecordFragment();
         mMainTenanceFragment = new MainTenanceFragment();*/
@@ -207,8 +217,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
      * 获取项目列表
      */
     private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getId()).compose(callbackOnIOToMainThread())
+        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
+                "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {
@@ -297,7 +307,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
      */
     private void setJPush() {
         if (MyApplication.getInstance().getRegistrationID() != null) {
-            Api.getApi().setJPush(MyApplication.getInstance().getUserData().getId() + "", MyApplication.getInstance().getRegistrationID())
+            Api.getApi().setJPush(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getRegistrationID())
                     .compose(callbackOnIOToMainThread())
                     .subscribe(new BaseNetListener<BaseBean>(this, true) {
                         @Override
@@ -327,52 +337,49 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
      * 获取预警列表
      */
     public void getErrorList() {
-//        showToast("2323");
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "1", "37,53", "", 1, 15).compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<RecordListModel>(MainActivity.this, false) {
-                    @RequiresApi(api = Build.VERSION_CODES.M)
+
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<RecordCount>(MainActivity.this, false) {
                     @Override
-                    public void onSuccess(RecordListModel baseBean) {
-
-                        RecordListModel.DataBean data = baseBean.getData();
-                        if (data != null) {
-                            List<RecordListModel.DataBean.ListBean> list = data.getList();
-                            if (list != null && list.size() > 0) {
-                                MyApplication.getInstance().setErrorlist("1");
+                    public void onSuccess(RecordCount baseBean) {
+                        LogUtils.e("baseBean" + baseBean.toString());
+                        if(baseBean.getData().getFireWaitConfirmNum()>0)
+                        {
+                            MyApplication.getInstance().setErrorlist("1");
                                 geterrortoast();
-                            }
-
                         }
-
 
                     }
 
                     @Override
                     public void onFail(String errMsg) {
                         MyApplication.getInstance().setErrorlist("0");
-
                     }
                 });
+
 
 
     }
 
     private CountDownTimer countDownTimer;
     private CountDownTimer countDownTimer2;
+
     @Override
     protected void onPause() {
         super.onPause();
-        if(camera!=null) {
+        if (camera != null) {
             camera.stopPreview();
             camera.release();
             camera = null;
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if(camera!=null) {
+        if (camera != null) {
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -380,15 +387,16 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
     }
 
-//    Camera camera = Camera.open();
+    //    Camera camera = Camera.open();
 //    Camera.Parameters p = camera.getParameters();
-        Camera.Parameters p =null;
-        Camera camera =null;
+    Camera.Parameters p = null;
+    Camera camera = null;
     private boolean mIsLight = false;
+
     //手电筒闪光开启
     private void processOnFlash() {
 
-        if(camera!=null) {
+        if (camera != null) {
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -429,7 +437,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
     //手电筒闪光关闭
     private void processOffFlash() {
-        if(camera!=null) {
+        if (camera != null) {
             p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             camera.setParameters(p);
             camera.stopPreview();
@@ -461,69 +469,157 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     }
 
 
+    public void geterrortoast() {
+
+        //唤醒屏幕
+//        DemoUtils.wakeUpAndUnlock(MyApplication.getInstance());
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        //直接创建，不需要设置setDataSource
+        if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(MyApplication.getInstance()).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
+
+            //震动
+
+            long[] patter = {1000, 1000, 2000, 50};
+            vibrator.vibrate(patter, 0);
+
+            if (isCameraUseable() == true) {
+                countDownTimer = new CountDownTimer(2 * 1000 + 50, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                        if ((millisUntilFinished / 1000) % 2 == 0) {
+                            processOffFlash();
+                        } else {
+                            processOnFlash();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        processOffFlash();
+
+                    }
+                };
+                countDownTimer.start();
+            }
+            PlayNumService.getIntance().setIsPlay(true);
+            mMediaPlayer = MediaPlayer.create(MyApplication.getInstance(), R.raw.huojing);
+            //                mMediaPlayer.setLooping(false);//设置是否循环播放
+            mMediaPlayer.start();
+            mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+
+                    num++;
+                    if (num == 3) {
+                        if (mMediaPlayer != null) {
+                            mMediaPlayer.stop();
+                            mMediaPlayer.release();
+                            vibrator.cancel();
+                        }
+                        num = 0;
+                        mMediaPlayer = null;
+                        PlayNumService.getIntance().setIsPlay(false);
+                    } else {
+                        mMediaPlayer.start();
+                    }
+
+                }
+            });
+        } else {
+            vibrator.cancel();
+        }
+    }
 
 
+    public static boolean isCameraUseable() {
+        boolean canUse = true;
+        Camera mCamera = null;
+        try {
+            mCamera = Camera.open();
+// setParameters 是针对魅族MX5。MX5通过Camera.open()拿到的Camera对象不为null
+            Camera.Parameters mParameters = mCamera.getParameters();
+            mCamera.setParameters(mParameters);
+        } catch (Exception e) {
+            canUse = false;
+        }
+        if (mCamera != null) {
+            mCamera.release();
+        }
+
+        return canUse;
+    }
 
 
+    AppUpdateProgressDialog appUpdateProgressDialog;
 
-    public void geterrortoast()
+    private void updateapp()
     {
-        //震动
-        Vibrator vibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-        long[] patter = {1000, 1000, 2000, 50};
-        vibrator.vibrate(patter, 0);
+        Api.getApi().getversion()
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<VersionBean>(MainActivity.this, false) {
+                    @Override
+                    public void onSuccess(VersionBean versionBean) {
+                        LogUtils.e("baseBean"+versionBean.toString());
+                        if(compareVersion(BuildConfig.VERSION_NAME,versionBean.getData().getAndroidVersion())==-1)
+                        {
+                            appUpdateProgressDialog = new AppUpdateProgressDialog(MainActivity.this);
+                            appUpdateProgressDialog.show();
+                            Intent intent = new Intent(MainActivity.this, DownloadService.class);
+                            intent.putExtra("url",versionBean.getData().getAndroidUrl());
+                            intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
+                            startService(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
+    }
 
 
-        countDownTimer = new CountDownTimer(2 * 1000 + 50, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-                if ((millisUntilFinished / 1000) % 2 == 0) {
-                    processOffFlash();
-                } else {
-                    processOnFlash();
+    public static int compareVersion(String version1, String version2) {
+        if (version1.equals(version2)) {
+            return 0;
+        }
+        String[] version1Array = version1.split("\\.");
+        String[] version2Array = version2.split("\\.");
+        Log.d("HomePageActivity", "version1Array=="+version1Array.length);
+        Log.d("HomePageActivity", "version2Array=="+version2Array.length);
+        int index = 0;
+        // 获取最小长度值
+        int minLen = Math.min(version1Array.length, version2Array.length);
+        int diff = 0;
+        // 循环判断每位的大小
+        Log.d("HomePageActivity", "verTag2=2222="+version1Array[index]);
+        while (index < minLen
+                && (diff = Integer.parseInt(version1Array[index])
+                - Integer.parseInt(version2Array[index])) == 0) {
+            index++;
+        }
+        if (diff == 0) {
+            // 如果位数不一致，比较多余位数
+            for (int i = index; i < version1Array.length; i++) {
+                if (Integer.parseInt(version1Array[i]) > 0) {
+                    return 1;
                 }
             }
 
-            @Override
-            public void onFinish() {
-                processOffFlash();
-
+            for (int i = index; i < version2Array.length; i++) {
+                if (Integer.parseInt(version2Array[i]) > 0) {
+                    return -1;
+                }
             }
-        };
-        countDownTimer.start();
-        //唤醒屏幕
-        DemoUtils.wakeUpAndUnlock(MyApplication.getInstance());
-
-        //直接创建，不需要设置setDataSource
-                                if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(MyApplication.getInstance()).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
-                                    PlayNumService.getIntance().setIsPlay(true);
-                                    mMediaPlayer = MediaPlayer.create(MyApplication.getInstance(), R.raw.huojing);
-               //                mMediaPlayer.setLooping(false);//设置是否循环播放
-                                    mMediaPlayer.start();
-                                    mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                                        @Override
-                                        public void onCompletion(MediaPlayer mp) {
-
-                                            num++;
-                                            if (num == 3) {
-                                                if (mMediaPlayer != null) {
-                                                    mMediaPlayer.stop();
-                                                    mMediaPlayer.release();
-                                                    vibrator.cancel();
-                                                }
-                                                num = 0;
-                                                mMediaPlayer = null;
-                                                PlayNumService.getIntance().setIsPlay(false);
-                                            } else {
-                                                mMediaPlayer.start();
-                                            }
-
-                                        }
-                                    });
-                                }else
-                                    {
-                                        vibrator.cancel();
-                                    }
+            return 0;
+        } else {
+            return diff > 0 ? 1 : -1;
+        }
     }
+
+
+
+
 }

@@ -24,6 +24,7 @@ import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ErrorEvent;
 import com.wb.weibao.model.event.ProjectChangeEvent;
+import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.main.MainActivity;
 import com.wb.weibao.utils.DemoUtils;
@@ -53,7 +54,9 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     protected BaseFragmentPresenter createPresenter() {
         return null;
     }
+
     private SpfUtils spfUtils;
+
     @Override
     protected void initEvent() {
         super.initEvent();
@@ -77,63 +80,91 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     protected void initData() {
         super.initData();
         spfUtils = SpfUtils.getInstance(aty);
-        String  str= spfUtils.getSpfString(SpfKey.IS_PUSH_PLAY);
-        if(TextUtils.isEmpty(str))
-        {
-            str="ok";
-            spfUtils.setSpfString(SpfKey.IS_PUSH_PLAY,str);
+        String str = spfUtils.getSpfString(SpfKey.IS_PUSH_PLAY);
+        if (TextUtils.isEmpty(str)) {
+            str = "ok";
+            spfUtils.setSpfString(SpfKey.IS_PUSH_PLAY, str);
         }
         EventBus.getDefault().register(this);
-        if (MyApplication.getInstance().getUserData().getType().equals("1")) {
+        if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
             getProjectList();
         } else {
 //                getProjectList();
             getProjectList2();
         }
 
-        Api.getApi().getCameraurl(""+ MyApplication.getInstance().getUserData().getId(),"38")
-                .compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(HomeFragment.this, false) {
-                    @Override
-                    public void onSuccess(BaseBean baseBean) {
-                        LogUtils.e("baseBean" + baseBean.getData().toString());
-//                        previewUri=baseBean.getData().toString();
-
-                    }
-
-                    @Override
-                    public void onFail(String errMsg) {
-
-                    }
-                });
+//        Api.getApi().getCameraurl(""+ MyApplication.getInstance().getUserData().getId(),"38")
+//                .compose(callbackOnIOToMainThread())
+//                .subscribe(new BaseNetListener<BaseBean>(HomeFragment.this, false) {
+//                    @Override
+//                    public void onSuccess(BaseBean baseBean) {
+//                        LogUtils.e("baseBean" + baseBean.getData().toString());
+////                        previewUri=baseBean.getData().toString();
+//
+//                    }
+//
+//                    @Override
+//                    public void onFail(String errMsg) {
+//
+//                    }
+//                });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_sign://视频监控
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(PreviewActivity.class);
                 break;
             case R.id.tv_day_record://日常维保记录
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(AddDayWeiBaoActivity.class);
                 break;
             case R.id.tv_handover://查岗
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(SentriesActivity.class);
                 break;
             case R.id.tv_add_weibao://发起维保
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(InitiateWeibaoActivity.class);
                 break;
             case R.id.tv_my_weibao://我的维保
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(MySecurityActivity.class);
                 break;
             case R.id.tv_warning_record://警报统计
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(StatisticsActivity.class);
                 break;
             case R.id.tv_look_gang://消防微站
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(FireControlActivity.class);
                 break;
             case R.id.tv_weibao_order://维保订单
-                if (MyApplication.getInstance().getUserData().getType().equals("1")) {
+
+                if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
                     startActivity(new Intent(aty, MySecurityActivity.class).putExtra("type", 1));
                 }
                 break;
@@ -142,9 +173,17 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(TrainingEducationActivity.class);
                 break;
             case R.id.tv_fire_control://值班签到
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(SignActivity.class);
                 break;
             case R.id.tv_sy://交接班
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(ChangeShiftsActivity.class);
 //                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 1));
                 break;
@@ -155,7 +194,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 3));
                 break;
             case R.id.tv_project://选择项目
-                if (MyApplication.getInstance().getUserData().getType().equals("1")) {
+                if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
                     startActivity(ProjectListActivity.class);
                 }
                 break;
@@ -171,7 +210,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     public void onDestroy() {
         super.onDestroy();
 
-        if(camera!=null) {
+        if (camera != null) {
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -183,8 +222,8 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
      * 获取项目列表
      */
     private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getId()).compose(callbackOnIOToMainThread())
+        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
+                "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {
@@ -193,16 +232,16 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                             if (data.getList() != null && data.getList().size() > 0) {
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
                                 SpfUtils spfUtils = SpfUtils.getInstance(aty);
-                                    spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(listBean.getId()));
-                                    spfUtils.setSpfString(SpfKey.INST_NAME, listBean.getName());
-                                    spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(listBean.getLatitude()));
-                                    spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(listBean.getLongitude()));
-                                    spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(listBean.getInstCode()));
-                                    MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
-                                    mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
-                                getErrorList();
-                                        LogUtils.e( "ee==开始获取接口");
-//                                        EventBus.getDefault().post(new ErrorEvent());
+                                spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(""));
+                                spfUtils.setSpfString(SpfKey.INST_NAME, "全部项目");
+//                                    spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(listBean.getLatitude()));
+//                                    spfUtils.setSpfString(SpfKey.LongiTude, String.valueOf(listBean.getLongitude()));
+//                                    spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(listBean.getInstCode()));
+                                MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
+                                mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+//                                getErrorList();
+                                LogUtils.e("ee==开始获取接口");
+                                        EventBus.getDefault().post(new ErrorEvent());
 
 
                             }
@@ -223,14 +262,14 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
      * 获取项目列表
      */
     private void getProjectList2() {
-        Api.getApi().getProject_list3(MyApplication.getInstance().getUserData().getCompanyId(), "" + MyApplication.getInstance().getUserData().getId(),
-                MyApplication.getInstance().getUserData().getProjectId()).compose(callbackOnIOToMainThread())
+        Api.getApi().getProject_list3(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),
+                MyApplication.getInstance().getUserData().getPrincipal().getProjectId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {
                         ProjectListModel.DataBean data = baseBean.getData();
                         if (data != null) {
-                            if (data.getList() != null && data.getList().size() > 0) {
+                             if (data.getList() != null && data.getList().size() > 0) {
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
                                 SpfUtils spfUtils = SpfUtils.getInstance(aty);
 //                                if (!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID))) {
@@ -245,9 +284,9 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                                 MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                 mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
 //                                }
-                                getErrorList();
-                                    LogUtils.e( "ee==开始获取接口");
-//                                    EventBus.getDefault().post(new ErrorEvent());
+//                                getErrorList();
+                                LogUtils.e("ee==开始获取接口");
+                                    EventBus.getDefault().post(new ErrorEvent());
 
                             }
 
@@ -261,10 +300,6 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                     }
                 });
     }
-
-
-
-
 
 
     private int num = 0;
@@ -274,32 +309,27 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
      * 获取预警列表
      */
     public void getErrorList() {
-//        showToast("2323");
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), MyApplication.getInstance().getProjectId(), "1", "1", "37,53", "", 1, 15).compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<RecordListModel>(this, false) {
-                    @RequiresApi(api = Build.VERSION_CODES.M)
+//
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<RecordCount>(this, false) {
                     @Override
-                    public void onSuccess(RecordListModel baseBean) {
-
-                        RecordListModel.DataBean data = baseBean.getData();
-                        if (data != null) {
-                            List<RecordListModel.DataBean.ListBean> list = data.getList();
-                            if (list != null && list.size() > 0) {
-                                MyApplication.getInstance().setErrorlist("1");
-                                geterrortoast();
-                            }
-
+                    public void onSuccess(RecordCount baseBean) {
+                        LogUtils.e("baseBean" + baseBean.toString());
+                        if(baseBean.getData().getFireWaitConfirmNum()>0)
+                        {
+                            MyApplication.getInstance().setErrorlist("1");
+                            geterrortoast();
                         }
-
 
                     }
 
                     @Override
                     public void onFail(String errMsg) {
                         MyApplication.getInstance().setErrorlist("0");
-
                     }
                 });
+
 
 
     }
@@ -308,11 +338,10 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     private CountDownTimer countDownTimer2;
 
 
-
     @Override
     public void onPause() {
         super.onPause();
-        if(camera!=null) {
+        if (camera != null) {
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -322,13 +351,14 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
     //    Camera camera = Camera.open();
 //    Camera.Parameters p = camera.getParameters();
-    Camera.Parameters p =null;
-    Camera camera =null;
+    Camera.Parameters p = null;
+    Camera camera = null;
     private boolean mIsLight = false;
+
     //手电筒闪光开启
     private void processOnFlash() {
 
-        if(camera!=null) {
+        if (camera != null) {
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -369,7 +399,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
     //手电筒闪光关闭
     private void processOffFlash() {
-        if(camera!=null) {
+        if (camera != null) {
             p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             camera.setParameters(p);
             camera.stopPreview();
@@ -401,43 +431,40 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     }
 
 
-
-
-
-
-
-    public void geterrortoast()
-    {
+    public void geterrortoast() {
         //震动
-        Vibrator vibrator = (Vibrator)aty.getSystemService(VIBRATOR_SERVICE);
-        long[] patter = {1000, 1000, 2000, 50};
-        vibrator.vibrate(patter, 0);
+        Vibrator vibrator = (Vibrator) aty.getSystemService(VIBRATOR_SERVICE);
 
-
-        countDownTimer = new CountDownTimer(2 * 1000 + 50, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-                if ((millisUntilFinished / 1000) % 2 == 0) {
-                    processOffFlash();
-                } else {
-                    processOnFlash();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                processOffFlash();
-
-            }
-        };
-        countDownTimer.start();
         //唤醒屏幕
-        DemoUtils.wakeUpAndUnlock(MyApplication.getInstance());
+//        DemoUtils.wakeUpAndUnlock(MyApplication.getInstance());
 
         //直接创建，不需要设置setDataSource
         if (mMediaPlayer == null && "ok".equals(SpfUtils.getInstance(MyApplication.getInstance()).getSpfString(SpfKey.IS_PUSH_PLAY)) && !PlayNumService.getIntance().isIsPlay()) {
 
+
+            long[] patter = {1000, 1000, 2000, 50};
+            vibrator.vibrate(patter, 0);
+
+            if (isCameraUseable() == true) {
+                countDownTimer = new CountDownTimer(2 * 1000 + 50, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                        if ((millisUntilFinished / 1000) % 2 == 0) {
+                            processOffFlash();
+                        } else {
+                            processOnFlash();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        processOffFlash();
+
+                    }
+                };
+                countDownTimer.start();
+            }
             PlayNumService.getIntance().setIsPlay(true);
             mMediaPlayer = MediaPlayer.create(MyApplication.getInstance(), R.raw.huojing);
             //                mMediaPlayer.setLooping(false);//设置是否循环播放
@@ -462,15 +489,30 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
                 }
             });
-        }else
-        {
+        } else {
 
             vibrator.cancel();
         }
     }
 
 
+    public static boolean isCameraUseable() {
+        boolean canUse = true;
+        Camera mCamera = null;
+        try {
+            mCamera = Camera.open();
+// setParameters 是针对魅族MX5。MX5通过Camera.open()拿到的Camera对象不为null
+            Camera.Parameters mParameters = mCamera.getParameters();
+            mCamera.setParameters(mParameters);
+        } catch (Exception e) {
+            canUse = false;
+        }
+        if (mCamera != null) {
+            mCamera.release();
+        }
 
+        return canUse;
+    }
 
 
 }

@@ -154,7 +154,7 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
 
     public  void count()
     {
-        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordCount>(WarningFragment.this, false) {
                     @Override

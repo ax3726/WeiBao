@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.zhy.autolayout.AutoLinearLayout
         android:background="#F3F3F3"
@@ -10,6 +11,7 @@
 
     <com.zhy.autolayout.AutoLinearLayout
         android:paddingTop="15dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -62,6 +64,16 @@
                 android:background="@color/colorAccent"/>
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoLinearLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="#ffffff"
+            app:tabIndicatorColor="@color/colorDefault"
+          app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorDefault"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabTextColor="#4A4A4A"/>
 
         <!-- 内容区域 -->
         <android.support.v4.view.ViewPager

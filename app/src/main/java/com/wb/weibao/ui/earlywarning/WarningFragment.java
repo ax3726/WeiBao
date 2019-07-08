@@ -1,25 +1,20 @@
 package com.wb.weibao.ui.earlywarning;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
-import com.lidroid.xutils.util.LogUtils;
 import com.wb.weibao.R;
-import com.wb.weibao.adapters.recyclerview.CommonAdapter;
+import com.wb.weibao.adapters.CommonPagerAdapter;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragemntWarningBinding;
-import com.wb.weibao.model.BaseBean;
-import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordDetailEvent;
-import com.wb.weibao.ui.Login.ForgetPwdActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,9 +27,9 @@ import java.util.List;
  * Created by Administrator on 2018/10/8.
  */
 
-public class WarningFragment extends BaseFragment<BaseFragmentPresenter, FragemntWarningBinding> implements ViewPager.OnPageChangeListener {
+public class WarningFragment extends BaseFragment<BaseFragmentPresenter, FragemntWarningBinding>  {
 
-
+    private CommonPagerAdapter mMyPagerAdapter;
     @Override
     protected int getLayoutId() {
         return R.layout.fragemnt_warning;
@@ -60,42 +55,89 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private FireFragment fireFragment;
     private AlarmFragment alarmFragment;
-
+    private List<String> title = new ArrayList<>();
+    private List<TextView> title_views = new ArrayList<>();
 
 
 
     @Override
     protected void initData() {
         super.initData();
+        title.add("远程监控火警");
+        title.add("九小场所火警");
+        title.add("故障");
+        title.add("用电异常");
+        title.add("用水异常");
+        title.add("拆除");
+        title.add("其他");
+
         initFragment();
         count();
         EventBus.getDefault().register(this);
-        mBinding.pager.setOnPageChangeListener(this);
-        mBinding.pager.setAdapter(new EventsPageAdpater(getChildFragmentManager()));
-        mBinding.tabTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               mBinding.pager.setCurrentItem(0);
-                mBinding.tabTvLine.setVisibility(View.VISIBLE);
-                mBinding.tabTvLine1.setVisibility(View.INVISIBLE);
-            }
-        });
-        mBinding.tabTv1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBinding.pager.setCurrentItem(1);
-                mBinding.tabTvLine.setVisibility(View.INVISIBLE);
-                mBinding.tabTvLine1.setVisibility(View.VISIBLE);
-            }
-        });
+
 
     }
 
     private void initFragment() {
-        fireFragment= new FireFragment();
-        alarmFragment = new AlarmFragment();
-        mFragments.add(fireFragment);
-        mFragments.add(alarmFragment);
+      //  fireFragment= new FireFragment();
+       // alarmFragment = new AlarmFragment();
+        mFragments.add(new FireFragment());
+        mFragments.add(new FireFragment());
+        mFragments.add(new FireFragment());
+        mFragments.add(new FireFragment());
+        mFragments.add(new FireFragment());
+        mFragments.add(new FireFragment());
+        mFragments.add(new FireFragment());
+      //  mFragments.add(alarmFragment);
+        mMyPagerAdapter = new CommonPagerAdapter(getChildFragmentManager(), title, mFragments);
+        mBinding.pager.setAdapter(mMyPagerAdapter);
+        mBinding.tabLayout.setupWithViewPager(mBinding.pager);
+        setTitle();
+        mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                /**
+                 * 设置当前选中的Tab为特殊高亮样式。
+                 */
+                if (tab != null && tab.getCustomView() != null) {
+                    TextView tab_layout_text = (TextView) tab.getCustomView().findViewById(R.id.tv_txt);
+                    tab_layout_text.setTextColor(getResources().getColor(R.color.colorTheme));
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                /**
+                 * 重置所有未选中的Tab颜色、字体、背景恢复常态(未选中状态)。
+                 */
+                if (tab != null && tab.getCustomView() != null) {
+                    TextView tab_layout_text = (TextView) tab.getCustomView().findViewById(R.id.tv_txt);
+                    tab_layout_text.setTextColor(getResources().getColor(R.color.color666666));
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+    public void setTitle() {
+        for (int i = 0; i < title.size(); i++) {
+            TabLayout.Tab tab = mBinding.tabLayout.getTabAt(i);
+            if (tab != null) {
+                View view=View.inflate(aty,R.layout.tab_layout_item,null);
+                TextView textView = (TextView) view.findViewById(R.id.tv_txt);
+                textView.setText(title.get(i));
+                if (i==0) {
+                    textView.setTextColor(getResources().getColor(R.color.colorTheme));
+                }
+                title_views.add(textView);
+                tab.setCustomView(view);
+            }
+        }
+
     }
 
     public void toLoadData() {
@@ -113,45 +155,6 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     }
 
 
-    class EventsPageAdpater extends FragmentPagerAdapter {
-
-        public EventsPageAdpater(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
-
-    }
-
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        if (position == 0) {
-            mBinding.tabTvLine.setVisibility(View.VISIBLE);
-            mBinding.tabTvLine1.setVisibility(View.INVISIBLE);
-        } else {
-            mBinding.tabTvLine.setVisibility(View.INVISIBLE);
-            mBinding.tabTvLine1.setVisibility(View.VISIBLE);
-        }
-    }
-
     public  void count()
     {
         Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
@@ -159,10 +162,49 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
                 .subscribe(new BaseNetListener<RecordCount>(WarningFragment.this, false) {
                     @Override
                     public void onSuccess(RecordCount baseBean) {
+
+                        RecordCount.DataBean data = baseBean.getData();
+                        if (data==null) {
+                            return;
+                        }
+                        for (int i = 0; i <title.size() ; i++) {
+                            int num=0;
+                            switch (i) {
+                                case 0://远程监控火警
+                                    num=data.getRemoteMonitoringCountNum();
+                                    break;
+                                case 1://九小场所火警
+                                    num=data.getNineSmallPlacesCountNum();
+                                    break;
+                                case 2://故障111
+                                    num=0;
+                                    break;
+                                case 3://用电异常
+                                    num=data.getElectricityFaultCountNum();
+                                    break;
+                                case 4://用水异常111
+                                    num=0;
+                                    break;
+                                case 5://拆除
+                                    num=0;
+                                    break;
+                                case 6://其他
+                                    num=0;
+                                    break;
+                            }
+                            if (num==0) {
+                                title_views.get(i).setText(title.get(i));
+                            } else if (num < 100) {
+                                title_views.get(i).setText(title.get(i)+"("+num+")");
+                            } else {
+                                title_views.get(i).setText(title.get(i)+"(99+)");
+                            }
+                        }
+                      /*      title_views.get(0).setText(mt);
                         LogUtils.e("baseBean" + baseBean.toString());
                         mBinding.tabTv1.setText("告警("+baseBean.getData().getAlarmWaitProccessNum()+")");
                        int sum=Integer.parseInt(String.valueOf(baseBean.getData().getFireWaitConfirmNum()))+Integer.parseInt(String.valueOf(baseBean.getData().getFireWaitProccessNum()));
-                       mBinding.tabTv.setText("火警("+sum+")");
+                       mBinding.tabTv.setText("火警("+sum+")");*/
                     }
 
                     @Override

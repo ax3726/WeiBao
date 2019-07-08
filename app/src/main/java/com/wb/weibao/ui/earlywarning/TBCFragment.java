@@ -1,18 +1,10 @@
 package com.wb.weibao.ui.earlywarning;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.lidroid.xutils.util.LogUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wb.weibao.R;
@@ -23,18 +15,12 @@ import com.wb.weibao.base.BaseFragmentPresenter;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
-import com.wb.weibao.databinding.FragmentDclBinding;
 import com.wb.weibao.databinding.FragmentTbcBinding;
-import com.wb.weibao.databinding.ItemEarlyWarningLayoutBinding;
-import com.wb.weibao.databinding.ItemRecordLayoutBinding;
 import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
 import com.wb.weibao.model.BaseBean;
-import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
-import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.record.RecordDetailActivity;
-import com.wb.weibao.utils.DemoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -203,6 +189,9 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {
+                        if (mBinding.srlBody==null) {
+                            return;
+                        }
                         stopRefersh();
                         RecordListModel.DataBean data = baseBean.getData();
                         if (data != null) {
@@ -233,5 +222,10 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     private void stopRefersh() {
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

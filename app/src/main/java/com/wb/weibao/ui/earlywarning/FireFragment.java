@@ -1,36 +1,20 @@
 package com.wb.weibao.ui.earlywarning;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.lidroid.xutils.util.LogUtils;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wb.weibao.R;
-import com.google.android.gms.plus.PlusOneButton;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
-import com.wb.weibao.databinding.FragemntEarlyWarningBinding;
 import com.wb.weibao.databinding.FragmentFireBinding;
-import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordDetailEvent;
-import com.wb.weibao.ui.Login.ForgetPwdActivity;
-import com.wb.weibao.ui.home.HomeFragment;
-import com.wb.weibao.ui.mine.MineFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -193,4 +177,9 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
                });
    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -3,26 +3,13 @@ package com.wb.weibao.common;
 
 
 
-import android.util.Log;
-
-import com.lidroid.xutils.util.LogUtils;
 import com.wb.weibao.net.DownloadResponseBody;
 import com.wb.weibao.net.GsonConverterFactory;
 import com.wb.weibao.net.LoggerInterceptor;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
-
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -150,7 +137,7 @@ public class Api {
     //访问网络之后，处理Response(这里没有做特别处理)
     private static Response processResponse(Response response) {
         return response;
-    }
+    }//ceshi
 
 
 

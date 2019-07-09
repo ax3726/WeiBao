@@ -175,12 +175,15 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter, B extends Vi
 
     @Override
     public void showToast(final String s) {
-        aty.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(aty, s, Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (aty!=null) {
+            aty.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(aty, s, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 
     @Override

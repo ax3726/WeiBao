@@ -30,15 +30,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.SplashActivity"
-            android:theme="@style/SplashTheme"
-            >
+        <activity
+            android:name=".ui.main.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".ui.home.NoDataActivity" />
         <activity android:name=".ui.home.HandleMaintenanceActivity" />
@@ -112,9 +111,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.Login.LoginActivity">
-
-        </activity>
+        <activity android:name=".ui.Login.LoginActivity" />
         <activity android:name=".ui.maintenance.AddOrderActivity" />
         <activity android:name=".ui.maintenance.DetailActivity" />
         <activity android:name=".ui.mine.pwdActivity" />
@@ -147,7 +144,12 @@
             android:name=".ui.home.PreviewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_preview"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.home.WeiBaoRecordActivity" />
+        <activity android:name=".ui.home.LinkedServiceActivity" />
+        <activity android:name=".ui.home.WeibaoDetailActivity" />
+        <activity android:name=".ui.home.MaxPictureActivity" />
+        <activity android:name=".ui.home.MoreActivity"></activity>
     </application>
 
 </manifest>

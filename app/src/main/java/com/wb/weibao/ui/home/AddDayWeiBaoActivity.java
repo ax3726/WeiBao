@@ -22,6 +22,8 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityAddDayWeiBaoBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.event.ErrorEvent;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.utils.DataUtils;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
@@ -30,6 +32,9 @@ import com.wb.weibao.utils.picker.picker.DatePicker;
 import com.wb.weibao.utils.picker.picker.DateTimePicker;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
 import com.wb.weibao.utils.picker.util.LogUtils;
+import com.wb.weibao.view.MyAlertDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -298,38 +303,50 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
             showToast("请选择维修单位!");
             return;
         }
-        mBinding.affirm.setEnabled(false);
-        String str = DemoUtils.ListToString(mImageUUid, ";");
 
+        new MyAlertDialog(aty).builder()
+                .setMsg("是否要提交该维保记录").setPositiveButton("取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        Api.getApi().addRecord(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
-                mDataList.get(mProjectIndex).getId()+"", name, phone,DataUtils.formatDate(time+" 00:00:00","yyyy-MM-dd HH:mm:s") ,DataUtils.formatDate(NextTime+" 00:00:00","yyyy-MM-dd HH:mm:ss") +" 00:00:00", str, content,MyApplication.getInstance().getProjectId(),MyApplication.getInstance().getmProjectName())
-                .compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(this, true) {
-                    @Override
-                    public void onSuccess(BaseBean baseBean) {
-                        mImageUUid.clear();
-                        showToast("提交成功!");
-                        new Thread() {
+            }
+        }).setNegativeButton("确认", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBinding.affirm.setEnabled(false);
+                String str = DemoUtils.ListToString(mImageUUid, ";");
+                Api.getApi().addRecord(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
+                        mDataList.get(mProjectIndex).getId()+"", name, phone,DataUtils.formatDate(time+" 00:00:00","yyyy-MM-dd HH:mm:s") ,DataUtils.formatDate(NextTime+" 00:00:00","yyyy-MM-dd HH:mm:ss") +" 00:00:00", str, content,MyApplication.getInstance().getProjectId(),MyApplication.getInstance().getmProjectName())
+                        .compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(AddDayWeiBaoActivity.this, true) {
                             @Override
-                            public void run() {
-                                super.run();
-                                try {
-                                    sleep(1000);
-                                    finish();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                            public void onSuccess(BaseBean baseBean) {
+                                EventBus.getDefault().post(new RecordDetailEvent());
+                                mImageUUid.clear();
+                                showToast("提交成功!");
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        super.run();
+                                        try {
+                                            sleep(1000);
+                                            finish();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
 
+                                    }
+                                }.start();
                             }
-                        }.start();
-                    }
 
-                    @Override
-                    public void onFail(String errMsg) {
-                        mBinding.affirm.setEnabled(true);
-                    }
-                });
+                            @Override
+                            public void onFail(String errMsg) {
+                                mBinding.affirm.setEnabled(true);
+                            }
+                        });
+            }
+        }).show();
+
     }
 
     @Override

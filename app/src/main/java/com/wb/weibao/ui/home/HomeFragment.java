@@ -24,6 +24,7 @@ import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ErrorEvent;
 import com.wb.weibao.model.event.ProjectChangeEvent;
+import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.main.MainActivity;
@@ -60,20 +61,18 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     @Override
     protected void initEvent() {
         super.initEvent();
-        mBinding.tvSign.setOnClickListener(this);
-        mBinding.tvDayRecord.setOnClickListener(this);
-        mBinding.tvHandover.setOnClickListener(this);
-        mBinding.tvAddWeibao.setOnClickListener(this);
-        mBinding.tvMyWeibao.setOnClickListener(this);
-        mBinding.tvWarningRecord.setOnClickListener(this);
-        mBinding.tvLookGang.setOnClickListener(this);
-        mBinding.tvWeibaoOrder.setOnClickListener(this);
-        mBinding.tvFireControl.setOnClickListener(this);
-        mBinding.tvPeixun.setOnClickListener(this);
+        mBinding.tv01.setOnClickListener(this);
+        mBinding.tv02.setOnClickListener(this);
+        mBinding.tv03.setOnClickListener(this);
+        mBinding.tv04.setOnClickListener(this);
+        mBinding.tv05.setOnClickListener(this);
+        mBinding.tv06.setOnClickListener(this);
+        mBinding.tv07.setOnClickListener(this);
+        mBinding.tv08.setOnClickListener(this);
+        mBinding.tv09.setOnClickListener(this);
+        mBinding.tv10.setOnClickListener(this);
         mBinding.tvProject.setOnClickListener(this);
-        mBinding.tvSy.setOnClickListener(this);
-        mBinding.tvSw.setOnClickListener(this);
-        mBinding.tvDq.setOnClickListener(this);
+
     }
 
     @Override
@@ -92,118 +91,129 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 //                getProjectList();
             getProjectList2();
         }
+        getHomePageStatistics();
 
-//        Api.getApi().getCameraurl(""+ MyApplication.getInstance().getUserData().getId(),"38")
-//                .compose(callbackOnIOToMainThread())
-//                .subscribe(new BaseNetListener<BaseBean>(HomeFragment.this, false) {
-//                    @Override
-//                    public void onSuccess(BaseBean baseBean) {
-//                        LogUtils.e("baseBean" + baseBean.getData().toString());
-////                        previewUri=baseBean.getData().toString();
-//
-//                    }
-//
-//                    @Override
-//                    public void onFail(String errMsg) {
-//
-//                    }
-//                });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_sign://视频监控
+
+            case R.id.tv_01://视频监控
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
                 }
                 startActivity(PreviewActivity.class);
                 break;
-            case R.id.tv_day_record://日常维保记录
-                if (mBinding.tvProject.getText().equals("全部项目")) {
-                    showToast("请选择项目单位");
-                    return;
-                }
-                startActivity(AddDayWeiBaoActivity.class);
-                break;
-            case R.id.tv_handover://查岗
+            case R.id.tv_02://查岗
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
                 }
                 startActivity(SentriesActivity.class);
                 break;
-            case R.id.tv_add_weibao://发起维保
+            case R.id.tv_03://日常维保记录
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
                 }
-                startActivity(InitiateWeibaoActivity.class);
+                startActivity(WeiBaoRecordActivity.class);
                 break;
-            case R.id.tv_my_weibao://我的维保
-                if (mBinding.tvProject.getText().equals("全部项目")) {
-                    showToast("请选择项目单位");
-                    return;
-                }
-                startActivity(MySecurityActivity.class);
-                break;
-            case R.id.tv_warning_record://警报统计
+            case R.id.tv_04://警报统计
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
                 }
                 startActivity(StatisticsActivity.class);
                 break;
-            case R.id.tv_look_gang://消防微站
+            case R.id.tv_05://电气
+                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 3));
+                break;
+            case R.id.tv_06://水位
+                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 2));
+                break;
+            case R.id.tv_07://消防微站
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
                 }
                 startActivity(FireControlActivity.class);
                 break;
-            case R.id.tv_weibao_order://维保订单
-
-                if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
-                    startActivity(new Intent(aty, MySecurityActivity.class).putExtra("type", 1));
-                }
+            case R.id.tv_08://关联服务
+startActivity(LinkedServiceActivity.class);
                 break;
-
-            case R.id.tv_peixun://培训教育
+            case R.id.tv_09://培训教育
                 startActivity(TrainingEducationActivity.class);
                 break;
-            case R.id.tv_fire_control://值班签到
+            case R.id.tv_10://更多功能
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
                 }
-                startActivity(SignActivity.class);
-                break;
-            case R.id.tv_sy://交接班
-                if (mBinding.tvProject.getText().equals("全部项目")) {
-                    showToast("请选择项目单位");
-                    return;
-                }
-                startActivity(ChangeShiftsActivity.class);
-//                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 1));
-                break;
-            case R.id.tv_sw://水位
-                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 2));
-                break;
-            case R.id.tv_dq://电气
-                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 3));
+                    startActivity(MoreActivity.class);
                 break;
             case R.id.tv_project://选择项目
                 if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
                     startActivity(ProjectListActivity.class);
                 }
                 break;
+//            case R.id.tv_add_weibao://发起维保
+//                if (mBinding.tvProject.getText().equals("全部项目")) {
+//                    showToast("请选择项目单位");
+//                    return;
+//                }
+//                startActivity(InitiateWeibaoActivity.class);
+//                break;
+//            case R.id.tv_my_weibao://我的维保
+//                if (mBinding.tvProject.getText().equals("全部项目")) {
+//                    showToast("请选择项目单位");
+//                    return;
+//                }
+//                startActivity(MySecurityActivity.class);
+//                break;
+//            case R.id.tv_warning_record://警报统计
+//                if (mBinding.tvProject.getText().equals("全部项目")) {
+//                    showToast("请选择项目单位");
+//                    return;
+//                }
+//                startActivity(StatisticsActivity.class);
+//                break;
+//
+//            case R.id.tv_weibao_order://维保订单
+//
+//                if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
+//                    startActivity(new Intent(aty, MySecurityActivity.class).putExtra("type", 1));
+//                }
+//                break;
+//
+//            case R.id.tv_peixun://培训教育
+//                startActivity(TrainingEducationActivity.class);
+//                break;
+//            case R.id.tv_fire_control://值班签到
+//                if (mBinding.tvProject.getText().equals("全部项目")) {
+//                    showToast("请选择项目单位");
+//                    return;
+//                }
+//                startActivity(SignActivity.class);
+//                break;
+//            case R.id.tv_sy://交接班
+//                if (mBinding.tvProject.getText().equals("全部项目")) {
+//                    showToast("请选择项目单位");
+//                    return;
+//                }
+//                startActivity(ChangeShiftsActivity.class);
+//                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 1));
+//                break;
+//
+
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onProjectChange(ProjectChangeEvent message) {
         mBinding.tvProject.setText(SpfUtils.getInstance(aty).getSpfString(SpfKey.INST_NAME));
+        getHomePageStatistics();
     }
 
     @Override
@@ -333,6 +343,33 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
 
     }
+
+
+    //获取统计
+    public void getHomePageStatistics()
+    {
+        Api.getApi().getHomePageStatistics(""+ MyApplication.getInstance().getUserData().getPrincipal().getInstCode(),MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<HomePageStatisticsBean>(HomeFragment.this, false) {
+                    @Override
+                    public void onSuccess(HomePageStatisticsBean baseBean) {
+                        LogUtils.e("baseBean" + baseBean.getData().toString());
+//                        previewUri=baseBean.getData().toString();
+                        mBinding.todayAlarmsNumber.setText(""+baseBean.getData().getTodayAlarmsNumber());
+                        mBinding.historyToBeConfirmed.setText("历史待确认  "+baseBean.getData().getHistoryToBeConfirmed()+"    ");
+                        mBinding.historyToBeProcessed.setText("    历史待处理  "+baseBean.getData().getHistoryToBeProcessed());
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+    }
+
+
+
 
     private CountDownTimer countDownTimer;
     private CountDownTimer countDownTimer2;

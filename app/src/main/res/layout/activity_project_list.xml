@@ -7,9 +7,21 @@
         android:background="@color/colorWhite"
         android:orientation="vertical">
 
-
+<SearchView
+    android:gravity="clip_vertical"
+    android:layout_marginTop="20px"
+    android:layout_marginRight="30px"
+    android:layout_marginLeft="30px"
+    android:queryHint="查询项目单位"
+    android:id="@+id/searchview"
+    android:textSize="28px"
+    android:background="@drawable/searchview_line"
+    android:iconifiedByDefault="false"
+    android:layout_width="match_parent"
+    android:layout_height="90px"></SearchView>
 
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="20px"
             android:id="@+id/rc_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -13,11 +13,14 @@ import com.wb.weibao.model.home.CheckListbean;
 import com.wb.weibao.model.home.DeviceTypeModel;
 import com.wb.weibao.model.home.Handoverbean;
 import com.wb.weibao.model.home.FrieControlModel;
+import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.home.MaintenanceListModel;
+import com.wb.weibao.model.home.MaintenanceRecordDetailBean;
 import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
 import com.wb.weibao.model.home.StatisticsModel;
+import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.record.EventReportListbean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
@@ -56,6 +59,8 @@ public interface ApiService {
     @POST("project/list")
     Flowable<ProjectListModel> getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
 
+    @POST("project/list")
+    Flowable<ProjectListModel> getProject_listserach(@Query("instCode") String instCode, @Query("userId") String userId,@Query("name") String name);
 
     /**
      *
@@ -245,12 +250,12 @@ public interface ApiService {
 
     /**
      * 预警模块
-     *
      * @param userId
      * @param instCode
      * @param projectId
      * @param type
      * @param status
+     * @param subWarningType
      * @param warnFlag
      * @param page
      * @param size
@@ -573,9 +578,6 @@ public interface ApiService {
     @POST("/earlywarn/handover/proccess")
     Flowable<BaseBean> getQrcodeProccess2(@Query("userId") String userId);
 
-
-
-
     /**
      * 提建议
      * @param userId
@@ -615,6 +617,34 @@ public interface ApiService {
      */
     @POST("camera/preview_urls")
     Flowable<BaseBean> getCameraurl(@Query("userId") String userId,@Query("id") String id);
+
+
+    /**
+     * 首页统计接口
+     * @param instCode
+     * @param projectId
+     * @return
+     */
+
+    @POST("early/record/homePageStatistics")
+    Flowable<HomePageStatisticsBean> getHomePageStatistics(@Query("instCode") String instCode, @Query("projectId") String projectId);
+
+    /**
+     * 日常维保记录
+     * @param page
+     * @param size
+     * @param userId
+     * @param coverProjectId
+     * @return
+     */
+    @POST("maintenance/record/listApp")
+    Flowable<RecordListAppBean> getRecordlistApp(@Query("page") String page, @Query("size") String size, @Query("userId") String userId, @Query("coverProjectId") String coverProjectId);
+
+
+
+
+    @POST("maintenance/record/detail")
+    Flowable<MaintenanceRecordDetailBean> getMaintenanceRecordDetail(@Query("id") String id);
 
 
 }

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:orientation="vertical">
+            
+            <ImageView
+                android:background="@drawable/linked_1"
+                android:layout_width="match_parent"
+                android:layout_height="428px" />
+            <com.zhy.autolayout.AutoFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_marginTop="88px"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/view_line"
+                    android:layout_width="420px"
+                    android:layout_height="16px"
+                    android:background="#B8c2dc" />
+            <TextView
+                android:layout_marginTop="50px"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/tv_01"
+                android:textStyle="bold"
+                android:drawablePadding="30px"
+                android:drawableRight="@drawable/linked_3"
+                android:drawableLeft="@drawable/linked_2"
+                android:textSize="40px"
+                android:textColor="@color/color333333"
+                android:text="维保/检测/消防改造"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            </com.zhy.autolayout.AutoFrameLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="61px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32px"
+                    android:layout_height="32px"
+                    android:src="@drawable/linked_4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6px"
+                    android:text="联系电话"
+                    android:textColor="@color/color333333"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8px"
+                    android:text="0571-56260119"
+                    android:autoLink="phone"
+                    android:textColor="@color/color36519E"
+                    android:textSize="24px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="26px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="32px"
+                    android:layout_height="32px"
+                    android:src="@drawable/linked_5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6px"
+                    android:text="官网地址"
+                    android:textColor="@color/color333333"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8px"
+                    android:text="www.zjcyxf.com"
+                    android:autoLink="web"
+                    android:textColor="@color/color36519E"
+                    android:textSize="24px" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+            <TextView
+                android:textSize="30px"
+                android:layout_marginTop="40px"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/color333333"
+                android:textStyle="bold"
+                android:text="资质证书"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginTop="16px"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/linked_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:background="@drawable/linked_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <ImageView
+                    android:layout_marginLeft="60px"
+                    android:background="@drawable/linked_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_marginBottom="96px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:background="@drawable/linked_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <ImageView
+                    android:layout_marginLeft="60px"
+                    android:background="@drawable/linked_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+</layout>

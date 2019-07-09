@@ -3,6 +3,7 @@ package com.wb.weibao.ui.earlywarning;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import com.lidroid.xutils.util.LogUtils;
@@ -23,16 +24,20 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentFireBinding> {
+public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFireBinding> {
 
-    private FragmentManager mFm;
+    private FragmentManager     mFm;
     private FragmentTransaction mTransaction;
-    private List<Fragment> mFragments = new ArrayList<>();
-    private TBCFragment tbcFragment;
+    private List<Fragment>      mFragments = new ArrayList<>();
+    private TBCFragment         tbcFragment;
 
-   private DCLFragment dclFragment;
-   private YCLFragment yclFragment;
-    private int mIndex = 0;//当前模块下标
+    private DCLFragment dclFragment;
+    private YCLFragment yclFragment;
+    private int         mIndex = 0;//当前模块下标
+    private int         mType  = 1;
+    private int         mNum   = 3;
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_fire;
@@ -43,6 +48,22 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         return null;
     }
 
+    public FireFragment setData(int mType, int num) {
+        this.mType = mType;
+        this.mNum = num;
+        return this;
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+
+        if (mNum == 1) {
+            mBinding.tabTitleGroup.setVisibility(View.GONE);
+        } else if (mNum == 2) {
+            mBinding.rbCenterTitle.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected void initData() {
@@ -60,9 +81,9 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
 
                             mIndex = 0;
                             changeFragment(0);
-                            if (tbcFragment != null) {
+                           /* if (tbcFragment != null) {
                                 tbcFragment.loadData();
-                            }
+                            }*/
                             count();
                         }
                         break;
@@ -72,9 +93,9 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
                             mIndex = 1;
 
                             changeFragment(1);
-                            if (dclFragment != null) {
+                           /* if (dclFragment != null) {
                                 dclFragment.loadData();
-                            }
+                            }*/
                             count();
                         }
                         break;
@@ -83,9 +104,9 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
                         if (currentFragmentPosition != 2) {
                             mIndex = 2;
                             changeFragment(2);
-                            if (yclFragment != null) {
+                           /* if (yclFragment != null) {
                                 yclFragment.loadData();
-                            }
+                            }*/
                             count();
                         }
 
@@ -102,19 +123,26 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
     }
 
     private void initFragment() {
-        tbcFragment= new TBCFragment();
+        mBinding.llyBody.removeAllViews();
+        tbcFragment = new TBCFragment();
         mFragments.add(tbcFragment);
 
-        dclFragment= new DCLFragment();
+        dclFragment = new DCLFragment();
         mFragments.add(dclFragment);
 
-        yclFragment= new YCLFragment();
+        yclFragment = new YCLFragment();
         mFragments.add(yclFragment);
 
         mFm = getChildFragmentManager();
         mTransaction = mFm.beginTransaction();
-        mTransaction.add(R.id.lly_body, tbcFragment);
-        mTransaction.show(mFragments.get(0));
+
+        if (mNum == 1) {
+            currentFragmentPosition = 2;
+        }
+        if (!mFragments.get(currentFragmentPosition).isAdded()) {
+            mTransaction.add(R.id.lly_body, mFragments.get(currentFragmentPosition));
+        }
+        mTransaction.show(mFragments.get(currentFragmentPosition));
         mTransaction.commitAllowingStateLoss();
     }
 
@@ -157,25 +185,69 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         currentFragmentPosition = position;
     }
 
-   public  void count()
-   {
-       Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
-               .compose(callbackOnIOToMainThread())
-               .subscribe(new BaseNetListener<RecordCount>(FireFragment.this, false) {
-                   @Override
-                   public void onSuccess(RecordCount baseBean) {
-                       LogUtils.e("baseBean" + baseBean.toString());
-                        mBinding.rbLeftTitle.setText("待确认("+baseBean.getData().getFireWaitConfirmNum()+")");
-                        mBinding.rbCenterTitle.setText("待处理("+baseBean.getData().getFireWaitProccessNum()+")");
+    public void count() {
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<RecordCount>(FireFragment.this, false) {
+                    @Override
+                    public void onSuccess(RecordCount baseBean) {
+                        LogUtils.e("baseBean" + baseBean.toString());
+                        RecordCount.DataBean data    = baseBean.getData();
+                        int                  num_que = 0;//待确认
+                        int                  num_chu = 0;//待处理
 
-                   }
+                        switch (mType) {
+                            case 0://远程监控火警
+                                num_que = data.getRemoteMonitoringTbcNum();
+                                num_chu = data.getRemoteMonitoringTbpNum();
+                                break;
+                            case 1://九小场所火警
+                                num_que = data.getNineSmallPlacesTbcNum();
+                                num_chu = data.getNineSmallPlacesTbpNum();
+                                break;
+                            case 2://故障111
+                                num_que = data.getAlarmNum();
+                                break;
+                            case 3://用电异常
+                                num_que = data.getElectricityFaultTbcNum();
+                                num_chu = data.getElectricityFaultTbpNum();
+                                break;
+                            case 4://用水异常111
 
-                   @Override
-                   public void onFail(String errMsg) {
+                                break;
+                            case 5://拆除 防拆待处理
+                                num_que = data.getTamperNum();
+                                break;
+                            case 6://其他
 
-                   }
-               });
-   }
+                                break;
+                        }
+
+                        if (num_que == 0) {
+                            mBinding.rbLeftTitle.setText("待确认");
+                        } else if (num_que < 100) {
+                            mBinding.rbLeftTitle.setText("待确认(" + num_que + ")");
+                        } else {
+                            mBinding.rbLeftTitle.setText("待确认(99+)");
+                        }
+
+                        if (num_chu == 0) {
+                            mBinding.rbCenterTitle.setText("待处理");
+                        } else if (num_chu < 100) {
+                            mBinding.rbCenterTitle.setText("待处理(" + num_chu + ")");
+                        } else {
+                            mBinding.rbCenterTitle.setText("待处理(99+)");
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+    }
 
     @Override
     public void onDestroyView() {

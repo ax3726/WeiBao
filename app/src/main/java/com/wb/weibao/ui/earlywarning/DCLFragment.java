@@ -20,6 +20,7 @@ import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.record.RecordDetailActivity;
+import com.wb.weibao.utils.DemoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,11 +43,16 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
         return null;
     }
 
-    private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
+    private List<RecordListModel.DataBean.ListBean>          mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
-    private int mPage = 1;
-    private int mPageSize = 10;
-    private String name="";
+    private int                                              mPage     = 1;
+    private int                                              mPageSize = 10;
+    private String                                           name      = "";
+    private int                                              mType     = 1;
+
+    public void setType(int mType) {
+        this.mType = mType;
+    }
 
     @Override
     protected void initData() {
@@ -60,8 +66,7 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
                 binding.tvProjectname.setText(item.getProjectName());
                 binding.tvTime.setText(item.getWarningTime());
-                switch (item.getEquipmentType())
-                {
+                switch (item.getEquipmentType()) {
                     case "1":
                         binding.tvDianwei.setText("采集器");
                         break;
@@ -84,8 +89,8 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
 //                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
 //                        break;
 //                    case "2":
-                        binding.tvError.setText("火警待处理");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
+                binding.tvError.setText("火警待处理");
+                binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
 //                        break;
 //                    case "3":
 //                        binding.tvError.setText("无灾情");
@@ -102,17 +107,17 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
 //                }
 
 
-
                 RelativeLayout rly_item = holder.getView(R.id.rly);
                 rly_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(aty,RecordDetailActivity.class);
+                        Intent intent = new Intent(aty, RecordDetailActivity.class);
                         intent.putExtra("title", "待处理详情");
                         intent.putExtra("title2", "火警");
+                        intent.putExtra("title3", DemoUtils.typeToString(mType));
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getPrincipal().getUserId());
-                        intent.putExtra("id", ""+item.getId());
+                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
+                        intent.putExtra("id", "" + item.getId());
                         startActivity(intent);
                     }
                 });
@@ -142,26 +147,35 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
 
 
 
+
     public void loadData() {
+        if (isHidden) {
+            return;
+        }
+        mBinding.srlBody.resetNoMoreData();
         mPage = 1;
         getErrorList();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refersh(RecordDetailEvent event) {
+        if (isHidden) {
+            return;
+        }
         mBinding.srlBody.resetNoMoreData();
         mPage = 1;
         getErrorList();
     }
+
     /**
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getPrincipal().getUserId(),MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId(),"1","2","","2",mPage,mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, "2", "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {
-                        if (mBinding.srlBody==null) {
+                        if (mBinding.srlBody == null) {
                             return;
                         }
                         stopRefersh();
@@ -189,14 +203,24 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
                 });
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mBinding.srlBody.resetNoMoreData();
+            mPage = 1;
+            getErrorList();
+        }
+    }
 
     private void stopRefersh() {
-        if (mBinding.srlBody==null) {
+        if (mBinding.srlBody == null) {
             return;
         }
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

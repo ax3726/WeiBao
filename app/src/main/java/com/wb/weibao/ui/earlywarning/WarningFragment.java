@@ -27,9 +27,10 @@ import java.util.List;
  * Created by Administrator on 2018/10/8.
  */
 
-public class WarningFragment extends BaseFragment<BaseFragmentPresenter, FragemntWarningBinding>  {
+public class WarningFragment extends BaseFragment<BaseFragmentPresenter, FragemntWarningBinding> {
 
     private CommonPagerAdapter mMyPagerAdapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragemnt_warning;
@@ -52,12 +53,12 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
         mTitleBarLayout.setTitle("预警日志");
         mTitleBarLayout.setTextSize(20);
     }
-    private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private FireFragment fireFragment;
-    private AlarmFragment alarmFragment;
-    private List<String> title = new ArrayList<>();
-    private List<TextView> title_views = new ArrayList<>();
 
+    private ArrayList<Fragment> mFragments  = new ArrayList<>();
+    private FireFragment        fireFragment;
+    private AlarmFragment       alarmFragment;
+    private List<String>        title       = new ArrayList<>();
+    private List<TextView>      title_views = new ArrayList<>();
 
 
     @Override
@@ -79,16 +80,15 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     }
 
     private void initFragment() {
-      //  fireFragment= new FireFragment();
-       // alarmFragment = new AlarmFragment();
-        mFragments.add(new FireFragment());
-        mFragments.add(new FireFragment());
-        mFragments.add(new FireFragment());
-        mFragments.add(new FireFragment());
-        mFragments.add(new FireFragment());
-        mFragments.add(new FireFragment());
-        mFragments.add(new FireFragment());
-      //  mFragments.add(alarmFragment);
+        //  fireFragment= new FireFragment();
+        // alarmFragment = new AlarmFragment();
+        mFragments.add(new FireFragment().setData(1,3));
+        mFragments.add(new FireFragment().setData(2,3));
+        mFragments.add(new FireFragment().setData(3,2));
+        mFragments.add(new FireFragment().setData(4,3));
+        mFragments.add(new FireFragment().setData(5,1));
+        mFragments.add(new FireFragment().setData(6,2));
+        mFragments.add(new FireFragment().setData(7,1));
         mMyPagerAdapter = new CommonPagerAdapter(getChildFragmentManager(), title, mFragments);
         mBinding.pager.setAdapter(mMyPagerAdapter);
         mBinding.tabLayout.setupWithViewPager(mBinding.pager);
@@ -104,6 +104,11 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
                     TextView tab_layout_text = (TextView) tab.getCustomView().findViewById(R.id.tv_txt);
                     tab_layout_text.setTextColor(getResources().getColor(R.color.colorTheme));
                 }
+                FireFragment fragment = (FireFragment) mFragments.get(tab.getPosition());
+                if (fragment!=null) {
+                    fragment.toLoadData();
+                }
+
             }
 
             @Override
@@ -123,14 +128,15 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
             }
         });
     }
+
     public void setTitle() {
         for (int i = 0; i < title.size(); i++) {
             TabLayout.Tab tab = mBinding.tabLayout.getTabAt(i);
             if (tab != null) {
-                View view=View.inflate(aty,R.layout.tab_layout_item,null);
+                View     view     = View.inflate(aty, R.layout.tab_layout_item, null);
                 TextView textView = (TextView) view.findViewById(R.id.tv_txt);
                 textView.setText(title.get(i));
-                if (i==0) {
+                if (i == 0) {
                     textView.setTextColor(getResources().getColor(R.color.colorTheme));
                 }
                 title_views.add(textView);
@@ -142,12 +148,12 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
 
     public void toLoadData() {
 
-        if (fireFragment != null) {
+       /* if (fireFragment != null) {
             fireFragment.toLoadData();
         }
         if (alarmFragment != null) {
             alarmFragment.toLoadData();
-        }
+        }*/
 
      /*   if (mRecordFragment != null) {
             mRecordFragment.loadData();
@@ -155,49 +161,48 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     }
 
 
-    public  void count()
-    {
-        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
+    public void count() {
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordCount>(WarningFragment.this, false) {
                     @Override
                     public void onSuccess(RecordCount baseBean) {
 
                         RecordCount.DataBean data = baseBean.getData();
-                        if (data==null) {
+                        if (data == null) {
                             return;
                         }
-                        for (int i = 0; i <title.size() ; i++) {
-                            int num=0;
+                        for (int i = 0; i < title.size(); i++) {
+                            int num = 0;
                             switch (i) {
                                 case 0://远程监控火警
-                                    num=data.getRemoteMonitoringCountNum();
+                                    num = data.getRemoteMonitoringCountNum();
                                     break;
                                 case 1://九小场所火警
-                                    num=data.getNineSmallPlacesCountNum();
+                                    num = data.getNineSmallPlacesCountNum();
                                     break;
                                 case 2://故障111
-                                    num=0;
+                                    num = 0;
                                     break;
                                 case 3://用电异常
-                                    num=data.getElectricityFaultCountNum();
+                                    num = data.getElectricityFaultCountNum();
                                     break;
                                 case 4://用水异常111
-                                    num=0;
+                                    num = 0;
                                     break;
                                 case 5://拆除
-                                    num=0;
+                                    num = 0;
                                     break;
                                 case 6://其他
-                                    num=0;
+                                    num = 0;
                                     break;
                             }
-                            if (num==0) {
+                            if (num == 0) {
                                 title_views.get(i).setText(title.get(i));
                             } else if (num < 100) {
-                                title_views.get(i).setText(title.get(i)+"("+num+")");
+                                title_views.get(i).setText(title.get(i) + "(" + num + ")");
                             } else {
-                                title_views.get(i).setText(title.get(i)+"(99+)");
+                                title_views.get(i).setText(title.get(i) + "(99+)");
                             }
                         }
                       /*      title_views.get(0).setText(mt);
@@ -216,8 +221,18 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refersh(RecordDetailEvent event) {
+        if (isHidden) {
+            return;
+        }
         count();
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            count();
+        }
+    }
 }

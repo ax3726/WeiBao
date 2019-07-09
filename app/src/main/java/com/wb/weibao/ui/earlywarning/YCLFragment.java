@@ -20,6 +20,7 @@ import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.record.RecordDetailActivity;
+import com.wb.weibao.utils.DemoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -43,12 +44,16 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
     }
 
 
-    private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
+    private List<RecordListModel.DataBean.ListBean>          mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
-    private int mPage = 1;
-    private int mPageSize = 10;
-    private String name = "";
+    private int                                              mPage     = 1;
+    private int                                              mPageSize = 10;
+    private String                                           name      = "";
+    private int                                              mType     = 1;
 
+    public void setType(int mType) {
+        this.mType = mType;
+    }
     @Override
     protected void initData() {
         super.initData();
@@ -122,6 +127,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
                         Intent intent = new Intent(aty, RecordDetailActivity.class);
                         intent.putExtra("title", "已处理详情");
                         intent.putExtra("title2", "火警");
+                        intent.putExtra("title3", DemoUtils.typeToString(mType));
                         intent.putExtra("item", (Serializable) item);
 
                         intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
@@ -155,12 +161,19 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
 
 
     public void loadData() {
+        if (isHidden) {
+            return;
+        }
+        mBinding.srlBody.resetNoMoreData();
         mPage = 1;
         getErrorList();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refersh(RecordDetailEvent event) {
+        if (isHidden) {
+            return;
+        }
         mBinding.srlBody.resetNoMoreData();
         mPage = 1;
         getErrorList();
@@ -171,11 +184,11 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"", MyApplication.getInstance().getProjectId(), "1", "3,4,5,6,7,8", "","2", mPage, mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, "3,4,5,6,7,8", "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {
-                        if (mBinding.srlBody==null) {
+                        if (mBinding.srlBody == null) {
                             return;
                         }
                         stopRefersh();
@@ -205,12 +218,22 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
 
 
     private void stopRefersh() {
-        if (mBinding.srlBody==null) {
+        if (mBinding.srlBody == null) {
             return;
         }
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();
     }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mBinding.srlBody.resetNoMoreData();
+            mPage = 1;
+            getErrorList();
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

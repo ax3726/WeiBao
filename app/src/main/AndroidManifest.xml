@@ -30,6 +30,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.home.SmartElectricActivity"></activity>
         <activity
             android:name=".ui.main.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -149,7 +150,7 @@
         <activity android:name=".ui.home.LinkedServiceActivity" />
         <activity android:name=".ui.home.WeibaoDetailActivity" />
         <activity android:name=".ui.home.MaxPictureActivity" />
-        <activity android:name=".ui.home.MoreActivity"></activity>
+        <activity android:name=".ui.home.MoreActivity" />
     </application>
 
 </manifest>

@@ -104,6 +104,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
         spfUtils = SpfUtils.getInstance(MainActivity.this);
         updateapp();
+
         mBinding.rgButtom.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -187,6 +188,18 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         mTransaction.add(R.id.lly_body, mHomeFragment);
         mTransaction.show(mFragments.get(0));
         mTransaction.commitAllowingStateLoss();
+    }
+
+    public void toChange(int index)
+    {
+        if (currentFragmentPosition != 1) {
+            mBinding.rgButtom.check(R.id.rb_forewarning);
+            mIndex = 1;
+            mBinding.rlyHead.setVisibility(View.GONE);
+            mBinding.tvAddOrder.setVisibility(View.GONE);
+            toLoadData();
+            changeFragment(1);
+        }
     }
 
     private int currentFragmentPosition = 0;

@@ -72,6 +72,8 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
         mBinding.tv09.setOnClickListener(this);
         mBinding.tv10.setOnClickListener(this);
         mBinding.tvProject.setOnClickListener(this);
+        mBinding.lookDetails.setOnClickListener(this);
+
 
     }
 
@@ -98,6 +100,13 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.look_details://查看详情
+                MainActivity aty = (MainActivity) this.aty;
+                if (aty != null) {
+                    aty.toChange(1);
+                }
+                break;
 
             case R.id.tv_01://视频监控
                 if (mBinding.tvProject.getText().equals("全部项目")) {
@@ -128,10 +137,11 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(StatisticsActivity.class);
                 break;
             case R.id.tv_05://电气
-                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 3));
+//                startActivity(new Intent(this.aty, NoDataActivity.class).putExtra("type", 3));
+                startActivity(SmartElectricActivity.class);
                 break;
             case R.id.tv_06://水位
-                startActivity(new Intent(aty, NoDataActivity.class).putExtra("type", 2));
+                startActivity(new Intent(this.aty, NoDataActivity.class).putExtra("type", 2));
                 break;
             case R.id.tv_07://消防微站
                 if (mBinding.tvProject.getText().equals("全部项目")) {
@@ -141,7 +151,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(FireControlActivity.class);
                 break;
             case R.id.tv_08://关联服务
-startActivity(LinkedServiceActivity.class);
+                startActivity(LinkedServiceActivity.class);
                 break;
             case R.id.tv_09://培训教育
                 startActivity(TrainingEducationActivity.class);
@@ -151,7 +161,7 @@ startActivity(LinkedServiceActivity.class);
                     showToast("请选择项目单位");
                     return;
                 }
-                    startActivity(MoreActivity.class);
+                startActivity(MoreActivity.class);
                 break;
             case R.id.tv_project://选择项目
                 if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
@@ -232,7 +242,7 @@ startActivity(LinkedServiceActivity.class);
      * 获取项目列表
      */
     private void getProjectList() {
-        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
+        Api.getApi().getProject_list(MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "",
                 "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
@@ -241,7 +251,7 @@ startActivity(LinkedServiceActivity.class);
                         if (data != null) {
                             if (data.getList() != null && data.getList().size() > 0) {
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
-                                SpfUtils spfUtils = SpfUtils.getInstance(aty);
+                                SpfUtils                           spfUtils = SpfUtils.getInstance(aty);
                                 spfUtils.setSpfString(SpfKey.INST_ID, String.valueOf(""));
                                 spfUtils.setSpfString(SpfKey.INST_NAME, "全部项目");
 //                                    spfUtils.setSpfString(SpfKey.LatiTude, String.valueOf(listBean.getLatitude()));
@@ -251,7 +261,7 @@ startActivity(LinkedServiceActivity.class);
                                 mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
 //                                getErrorList();
                                 LogUtils.e("ee==开始获取接口");
-                                        EventBus.getDefault().post(new ErrorEvent());
+                                EventBus.getDefault().post(new ErrorEvent());
 
 
                             }
@@ -272,16 +282,16 @@ startActivity(LinkedServiceActivity.class);
      * 获取项目列表
      */
     private void getProjectList2() {
-        Api.getApi().getProject_list3(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),
+        Api.getApi().getProject_list3(MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),
                 MyApplication.getInstance().getUserData().getPrincipal().getProjectId()).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, false) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {
                         ProjectListModel.DataBean data = baseBean.getData();
                         if (data != null) {
-                             if (data.getList() != null && data.getList().size() > 0) {
+                            if (data.getList() != null && data.getList().size() > 0) {
                                 ProjectListModel.DataBean.ListBean listBean = data.getList().get(0);
-                                SpfUtils spfUtils = SpfUtils.getInstance(aty);
+                                SpfUtils                           spfUtils = SpfUtils.getInstance(aty);
 //                                if (!TextUtils.isEmpty(spfUtils.getSpfString(SpfKey.INST_ID))) {
 //                                    MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
 //                                    mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
@@ -296,7 +306,7 @@ startActivity(LinkedServiceActivity.class);
 //                                }
 //                                getErrorList();
                                 LogUtils.e("ee==开始获取接口");
-                                    EventBus.getDefault().post(new ErrorEvent());
+                                EventBus.getDefault().post(new ErrorEvent());
 
                             }
 
@@ -320,14 +330,13 @@ startActivity(LinkedServiceActivity.class);
      */
     public void getErrorList() {
 //
-        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordCount>(this, false) {
                     @Override
                     public void onSuccess(RecordCount baseBean) {
                         LogUtils.e("baseBean" + baseBean.toString());
-                        if(baseBean.getData().getFireWaitConfirmNum()>0)
-                        {
+                        if (baseBean.getData().getFireWaitConfirmNum() > 0) {
                             MyApplication.getInstance().setErrorlist("1");
                             geterrortoast();
                         }
@@ -341,23 +350,21 @@ startActivity(LinkedServiceActivity.class);
                 });
 
 
-
     }
 
 
     //获取统计
-    public void getHomePageStatistics()
-    {
-        Api.getApi().getHomePageStatistics(""+ MyApplication.getInstance().getUserData().getPrincipal().getInstCode(),MyApplication.getInstance().getProjectId())
+    public void getHomePageStatistics() {
+        Api.getApi().getHomePageStatistics("" + MyApplication.getInstance().getUserData().getPrincipal().getInstCode(), MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<HomePageStatisticsBean>(HomeFragment.this, false) {
                     @Override
                     public void onSuccess(HomePageStatisticsBean baseBean) {
                         LogUtils.e("baseBean" + baseBean.getData().toString());
 //                        previewUri=baseBean.getData().toString();
-                        mBinding.todayAlarmsNumber.setText(""+baseBean.getData().getTodayAlarmsNumber());
-                        mBinding.historyToBeConfirmed.setText("历史待确认  "+baseBean.getData().getHistoryToBeConfirmed()+"    ");
-                        mBinding.historyToBeProcessed.setText("    历史待处理  "+baseBean.getData().getHistoryToBeProcessed());
+                        mBinding.todayAlarmsNumber.setText("" + baseBean.getData().getTodayAlarmsNumber());
+                        mBinding.historyToBeConfirmed.setText("历史待确认  " + baseBean.getData().getHistoryToBeConfirmed() + "    ");
+                        mBinding.historyToBeProcessed.setText("    历史待处理  " + baseBean.getData().getHistoryToBeProcessed());
 
                     }
 
@@ -367,8 +374,6 @@ startActivity(LinkedServiceActivity.class);
                     }
                 });
     }
-
-
 
 
     private CountDownTimer countDownTimer;
@@ -388,8 +393,8 @@ startActivity(LinkedServiceActivity.class);
 
     //    Camera camera = Camera.open();
 //    Camera.Parameters p = camera.getParameters();
-    Camera.Parameters p = null;
-    Camera camera = null;
+    Camera.Parameters p      = null;
+    Camera            camera = null;
     private boolean mIsLight = false;
 
     //手电筒闪光开启
@@ -534,8 +539,8 @@ startActivity(LinkedServiceActivity.class);
 
 
     public static boolean isCameraUseable() {
-        boolean canUse = true;
-        Camera mCamera = null;
+        boolean canUse  = true;
+        Camera  mCamera = null;
         try {
             mCamera = Camera.open();
 // setParameters 是针对魅族MX5。MX5通过Camera.open()拿到的Camera对象不为null

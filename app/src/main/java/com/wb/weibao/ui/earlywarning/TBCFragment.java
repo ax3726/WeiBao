@@ -108,25 +108,25 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
 
                 }
                 switch (mType) {
-                    case 0://远程监控火警
+                    case 1://远程监控火警
                         binding.tvError.setText("火警待确认");
                         break;
-                    case 1://九小场所火警
+                    case 2://九小场所火警
                         binding.tvError.setText("火警待确认");
                         break;
-                    case 2://故障111
+                    case 3://故障111
                         binding.tvError.setText("主机低压报警");
                         break;
-                    case 3://用电异常
+                    case 4://用电异常
                         binding.tvError.setText("温度报警");
                         break;
-                    case 4://用水异常111
+                    case 5://用水异常111
                         binding.tvError.setText("用水异常");
                         break;
-                    case 5://拆除
+                    case 6://拆除
                         binding.tvError.setText("主机防拆报警");
                         break;
-                    case 6://其他
+                    case 7://其他
                         binding.tvError.setText("其他");
                         break;
                 }

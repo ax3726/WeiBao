@@ -125,12 +125,15 @@ public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFi
     private void initFragment() {
         mBinding.llyBody.removeAllViews();
         tbcFragment = new TBCFragment();
+        tbcFragment.setType(mType);
         mFragments.add(tbcFragment);
 
         dclFragment = new DCLFragment();
+        dclFragment.setType(mType);
         mFragments.add(dclFragment);
 
         yclFragment = new YCLFragment();
+        yclFragment.setType(mType);
         mFragments.add(yclFragment);
 
         mFm = getChildFragmentManager();
@@ -197,28 +200,28 @@ public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFi
                         int                  num_chu = 0;//待处理
 
                         switch (mType) {
-                            case 0://远程监控火警
+                            case 1://远程监控火警
                                 num_que = data.getRemoteMonitoringTbcNum();
                                 num_chu = data.getRemoteMonitoringTbpNum();
                                 break;
-                            case 1://九小场所火警
+                            case 2://九小场所火警
                                 num_que = data.getNineSmallPlacesTbcNum();
                                 num_chu = data.getNineSmallPlacesTbpNum();
                                 break;
-                            case 2://故障111
+                            case 3://故障111
                                 num_que = data.getAlarmNum();
                                 break;
-                            case 3://用电异常
+                            case 4://用电异常
                                 num_que = data.getElectricityFaultTbcNum();
                                 num_chu = data.getElectricityFaultTbpNum();
                                 break;
-                            case 4://用水异常111
+                            case 5://用水异常111
 
                                 break;
-                            case 5://拆除 防拆待处理
+                            case 6://拆除 防拆待处理
                                 num_que = data.getTamperNum();
                                 break;
-                            case 6://其他
+                            case 7://其他
 
                                 break;
                         }

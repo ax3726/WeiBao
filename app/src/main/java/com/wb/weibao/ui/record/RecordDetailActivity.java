@@ -160,7 +160,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
 //                break;
 //        }
 
-        mBinding.tv3.setText(getIntent().getStringExtra("title2").toString());
+        mBinding.tv3.setText(getIntent().getStringExtra("title3").toString());
 //        switch (list.getWarningType()) {
 //            case "1":
 //                mBinding.tv4.setText("采集器预警");

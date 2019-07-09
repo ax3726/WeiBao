@@ -21,6 +21,7 @@ import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.record.RecordDetailActivity;
+import com.wb.weibao.utils.DemoUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,11 +45,16 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     }
 
 
-    private List<RecordListModel.DataBean.ListBean> mDataList = new ArrayList<>();
+    private List<RecordListModel.DataBean.ListBean>          mDataList = new ArrayList<>();
     private CommonAdapter<RecordListModel.DataBean.ListBean> mAdapter;
-    private int mPage = 1;
-    private int mPageSize = 10;
-    private String name="";
+    private int                                              mPage     = 1;
+    private int                                              mPageSize = 10;
+    private String                                           name      = "";
+    private int                                              mType     = 1;
+
+    public void setType(int mType) {
+        this.mType = mType;
+    }
 
     @Override
     protected void initData() {
@@ -64,7 +70,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                 binding.affirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),"2",MyApplication.getInstance().getUserData().getName(),item.getId()+"")
+                        Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), "2", MyApplication.getInstance().getUserData().getName(), item.getId() + "")
                                 .compose(callbackOnIOToMainThread())
                                 .subscribe(new BaseNetListener<BaseBean>(TBCFragment.this, true) {
                                     @Override
@@ -86,8 +92,7 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getWarningTime(), "yyyy.MM.dd HH.mm.ss"));
                 binding.tvTime.setText(item.getWarningTime());
 
-                switch (item.getEquipmentType())
-                {
+                switch (item.getEquipmentType()) {
                     case "1":
                         binding.tvDianwei.setText("采集器");
                         break;
@@ -102,12 +107,35 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                         break;
 
                 }
+                switch (mType) {
+                    case 0://远程监控火警
+                        binding.tvError.setText("火警待确认");
+                        break;
+                    case 1://九小场所火警
+                        binding.tvError.setText("火警待确认");
+                        break;
+                    case 2://故障111
+                        binding.tvError.setText("主机低压报警");
+                        break;
+                    case 3://用电异常
+                        binding.tvError.setText("温度报警");
+                        break;
+                    case 4://用水异常111
+                        binding.tvError.setText("用水异常");
+                        break;
+                    case 5://拆除
+                        binding.tvError.setText("主机防拆报警");
+                        break;
+                    case 6://其他
+                        binding.tvError.setText("其他");
+                        break;
+                }
 
 //                switch (item.getStatus())
 //                {
 //                    case "1":
-                        binding.tvError.setText("火警待确认");
-                        binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
+
+                binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
 //                        break;
 //                    case "2":
 //                        binding.tvError.setText("待处理详情");
@@ -128,17 +156,17 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
 //                }
 
 
-
                 RelativeLayout rly_item = holder.getView(R.id.rly);
                 rly_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(aty,RecordDetailActivity.class);
+                        Intent intent = new Intent(aty, RecordDetailActivity.class);
                         intent.putExtra("title", "待确认详情");
                         intent.putExtra("title2", "火警");
+                        intent.putExtra("title3", DemoUtils.typeToString(mType));
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getPrincipal().getUserId());
-                        intent.putExtra("id", ""+item.getId());
+                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
+                        intent.putExtra("id", "" + item.getId());
                         startActivity(intent);
                     }
                 });
@@ -169,27 +197,36 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     }
 
 
-
     public void loadData() {
+        if (isHidden) {
+            return;
+        }
+        mBinding.srlBody.resetNoMoreData();
         mPage = 1;
         getErrorList();
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void refersh(RecordDetailEvent event) {
+        if (isHidden) {
+            return;
+        }
         mBinding.srlBody.resetNoMoreData();
         mPage = 1;
         getErrorList();
     }
+
     /**
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList(""+ MyApplication.getInstance().getUserData().getPrincipal().getUserId(),MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId(),"1","1","","2",mPage,mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, "1", "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {
-                        if (mBinding.srlBody==null) {
+                        if (mBinding.srlBody == null) {
                             return;
                         }
                         stopRefersh();
@@ -218,11 +255,24 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                 });
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            mBinding.srlBody.resetNoMoreData();
+            mPage = 1;
+            getErrorList();
+        }
+    }
 
     private void stopRefersh() {
+        if (mBinding.srlBody == null) {
+            return;
+        }
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

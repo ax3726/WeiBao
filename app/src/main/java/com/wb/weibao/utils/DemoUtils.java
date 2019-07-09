@@ -22,6 +22,26 @@ import java.util.TimeZone;
 
 public class DemoUtils {
 
+    public static String typeToString(int type)
+    {
+        switch (type) {
+            case 0://远程监控火警
+                return "远程监控火警";
+            case 1://九小场所火警
+                return "九小场所火警";
+            case 2://故障111
+                return "故障";
+            case 3://用电异常
+                return "用电异常";
+            case 4://用水异常111
+                return "用水异常";
+            case 5://拆除
+                return "拆除";
+            case 6://其他
+                return "其他";
+        }
+        return "--";
+    }
 
     public static String ConvertTimeFormat(long time, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);

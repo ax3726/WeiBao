@@ -98,7 +98,7 @@
         <Button
             android:visibility="gone"
             android:id="@+id/affirm"
-            style="@style/SmsButton"
+            style="@style/SmsButton_small"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_height="30dp"

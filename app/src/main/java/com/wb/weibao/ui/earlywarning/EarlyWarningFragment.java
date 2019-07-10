@@ -377,4 +377,10 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 }

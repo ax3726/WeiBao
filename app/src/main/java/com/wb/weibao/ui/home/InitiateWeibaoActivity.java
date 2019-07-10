@@ -78,6 +78,7 @@ public class InitiateWeibaoActivity extends BaseActivity<BasePresenter, Activity
                     Glide.with(aty).load(R.mipmap.point_add_img_icon).into(img);
                 } else {
                     img_del.setVisibility(View.VISIBLE);
+
                     Glide.with(aty).load(item).into(img);
                 }
                 img.setOnClickListener(new View.OnClickListener() {

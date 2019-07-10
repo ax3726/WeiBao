@@ -68,26 +68,25 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
                 binding.tvProjectname.setText(item.getProjectName());
                 binding.tvTime.setText(item.getWarningTime());
-                switch (item.getEquipmentType()) {
-                    case "1":
-                        binding.tvDianwei.setText("采集器");
-                        break;
-                    case "2":
-                        binding.tvDianwei.setText("无线设备");
-                        break;
-                    case "3":
-                        binding.tvDianwei.setText("点位(" + item.getPloop() + "," + item.getPpoint() + ")");
-                        break;
-                    case "4":
-                        binding.tvDianwei.setText("电力设备");
-                        break;
+//                switch (item.getEquipmentType()) {
+//                    case "1":
+//                        binding.tvDianwei.setText("采集器");
+//                        break;
+//                    case "2":
+//                        binding.tvDianwei.setText("无线设备");
+//                        break;
+//                    case "3":
+//                        binding.tvDianwei.setText("点位(" + item.getPloop() + "," + item.getPpoint() + ")");
+//                        break;
+//                    case "4":
+//                        binding.tvDianwei.setText("电力设备");
+//                        break;
+//
+//                }
+                binding.tvDianwei.setText(item.getEquipmentName());
 
-                }
-                if (mType == 7) {
-                    binding.tvError.setText(TextUtils.isEmpty(item.getEquipmentName())?"其他":item.getEquipmentName());
-                    binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
 
-                } else {
+                if(mType==1||mType==2) {
 
                     switch (item.getStatus()) {
                         case "1":
@@ -123,22 +122,36 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
                             binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
                             break;
                     }
+                }else
+                {
+
+                    binding.tvError.setText(item.getSubWarningTypeName());
+
+                    binding.tvError.setTextColor(getResources().getColor(R.color.color36519E));
+
                 }
 
 
                 RelativeLayout rly_item = holder.getView(R.id.rly);
+
                 rly_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(aty, RecordDetailActivity.class);
-                        intent.putExtra("title", "已处理详情");
-                        intent.putExtra("title2", "火警");
-                        intent.putExtra("title3", DemoUtils.typeToString(mType));
-                        intent.putExtra("item", (Serializable) item);
+                        if(mType!=7) {
+                            Intent intent = new Intent(aty, RecordDetailActivity.class);
+                            intent.putExtra("title", "已处理详情");
+                            if (mType == 1 || mType == 2 || mType == 4) {
+                                intent.putExtra("title2", "火警");
+                            } else {
+                                intent.putExtra("title2", "告警");
+                            }
+                            intent.putExtra("title3", DemoUtils.typeToString(mType));
+                            intent.putExtra("item", (Serializable) item);
 
-                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
-                        intent.putExtra("id", "" + item.getId());
-                        startActivity(intent);
+                            intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
+                            intent.putExtra("id", "" + item.getId());
+                            startActivity(intent);
+                        }
                     }
                 });
             }
@@ -186,12 +199,30 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
 
     }
 
+    String status="";
+    String subwarningtype="";
     /**
      * 获取预警列表
      */
     private void getErrorList() {
 
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, "3,4,5,6,7,8", "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
+      switch (mType)
+      {
+          case 1:
+          case 2:
+          case 4:
+              status="3,4,5,6,7,8";
+              break;
+          case 3:
+          case 6:
+        status="9,10,11";
+              break;
+          case 7:
+              break;
+      }
+
+
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, status, "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

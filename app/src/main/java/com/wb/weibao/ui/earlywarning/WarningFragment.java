@@ -182,16 +182,16 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
                                     num = data.getNineSmallPlacesCountNum();
                                     break;
                                 case 2://故障111
-                                    num = 0;
+                                    num = data.getAlarmNum();
                                     break;
                                 case 3://用电异常
                                     num = data.getElectricityFaultCountNum();
                                     break;
                                 case 4://用水异常111
-                                    num = 0;
+                                    num =0;
                                     break;
                                 case 5://拆除
-                                    num = 0;
+                                    num =  data.getTamperNum();
                                     break;
                                 case 6://其他
                                     num = 0;
@@ -234,5 +234,11 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
         if (!hidden) {
             count();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -38,6 +38,10 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+
+/**
+ * 告警处理
+ */
 public class CLActivity extends BaseActivity<BasePresenter, ActivityClBinding> {
 
     public final int RequestCode = 1001;

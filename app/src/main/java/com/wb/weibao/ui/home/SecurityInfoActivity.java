@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.wb.weibao.R;
 import com.wb.weibao.adapters.abslistview.CommonAdapter;
 import com.wb.weibao.adapters.abslistview.ViewHolder;
@@ -214,8 +216,10 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
                 ImageView img = viewHolder.getView(R.id.img);
                 ImageView img_del = viewHolder.getView(R.id.img_del);
                 img_del.setVisibility(View.GONE);
-
-                Glide.with(aty).load(item).into(img);
+                GlideUrl glideUrl = new GlideUrl(item, new LazyHeaders.Builder()
+                        .addHeader("Cookie", "JSESSIONID=" + MyApplication.getInstance().getJSESSIONID())
+                        .build());
+                Glide.with(aty).load(glideUrl).into(img);
 
             }
         };

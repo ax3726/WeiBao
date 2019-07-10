@@ -172,4 +172,12 @@ public class WeiBaoRecordActivity extends BaseActivity<BasePresenter, ActivityWe
                 mBinding.srlBody.finishRefresh();
                 mBinding.srlBody.finishLoadmore();
             }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
         }

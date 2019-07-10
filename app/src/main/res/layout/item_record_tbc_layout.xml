@@ -64,8 +64,6 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-
                 android:layout_toLeftOf="@+id/img_right"
                 android:text="2018.08.31"
                 android:textColor="@color/color333333"

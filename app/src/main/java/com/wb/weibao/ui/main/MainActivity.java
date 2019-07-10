@@ -357,7 +357,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                     @Override
                     public void onSuccess(RecordCount baseBean) {
                         LogUtils.e("baseBean" + baseBean.toString());
-                        if(baseBean.getData().getFireWaitConfirmNum()>0)
+                        if((baseBean.getData().getRemoteMonitoringCountNum()+baseBean.getData().getNineSmallPlacesCountNum())>0)
                         {
                             MyApplication.getInstance().setErrorlist("1");
                                 geterrortoast();
@@ -397,6 +397,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
             camera.release();
             camera = null;
         }
+        EventBus.getDefault().unregister(this);
+
 
     }
 

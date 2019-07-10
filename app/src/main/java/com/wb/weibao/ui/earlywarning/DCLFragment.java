@@ -33,6 +33,8 @@ import java.util.List;
 public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDclBinding> {
 
 
+    private String subwarningtype="";
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_dcl;
@@ -66,45 +68,36 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
                 binding.tvProjectname.setText(item.getProjectName());
                 binding.tvTime.setText(item.getWarningTime());
-                switch (item.getEquipmentType()) {
-                    case "1":
-                        binding.tvDianwei.setText("采集器");
-                        break;
-                    case "2":
-                        binding.tvDianwei.setText("无线设备");
-                        break;
-                    case "3":
-                        binding.tvDianwei.setText("点位(" + item.getPloop() + "," + item.getPpoint() + ")");
-                        break;
-                    case "4":
-                        binding.tvDianwei.setText("电力设备");
-                        break;
-
-                }
-
-//                switch (item.getStatus())
-//                {
+//                switch (item.getEquipmentType()) {
 //                    case "1":
-//                        binding.tvError.setText("预警中");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
+//                        binding.tvDianwei.setText("采集器");
 //                        break;
 //                    case "2":
-                binding.tvError.setText("火警待处理");
-                binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
+//                        binding.tvDianwei.setText("无线设备");
 //                        break;
 //                    case "3":
-//                        binding.tvError.setText("无灾情");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
+//                        binding.tvDianwei.setText("点位(" + item.getPloop() + "," + item.getPpoint() + ")");
 //                        break;
 //                    case "4":
-//                        binding.tvError.setText("有灾情");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.colorF15453));
+//                        binding.tvDianwei.setText("电力设备");
 //                        break;
-//                    case "5":
-//                        binding.tvError.setText("系统复位");
-//                        binding.tvError.setTextColor(getResources().getColor(R.color.color00A0F1));
-//                        break;
+//
 //                }
+                binding.tvDianwei.setText(item.getEquipmentName());
+
+               switch (mType)
+               {
+                   case 1:
+                   case 2:
+                       binding.tvError.setText("火警待处理");
+                       binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
+                       break;
+                       default:
+                           binding.tvError.setText(item.getSubWarningTypeName());
+                           binding.tvError.setTextColor(getResources().getColor(R.color.colorC8241D));
+                           break;
+               }
+
 
 
                 RelativeLayout rly_item = holder.getView(R.id.rly);
@@ -113,7 +106,11 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
                     public void onClick(View v) {
                         Intent intent = new Intent(aty, RecordDetailActivity.class);
                         intent.putExtra("title", "待处理详情");
-                        intent.putExtra("title2", "火警");
+                        if (mType == 1 || mType == 2 || mType == 4) {
+                            intent.putExtra("title2", "火警");
+                        } else {
+                            intent.putExtra("title2", "告警");
+                        }
                         intent.putExtra("title3", DemoUtils.typeToString(mType));
                         intent.putExtra("item", (Serializable) item);
                         intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
@@ -171,6 +168,27 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
      * 获取预警列表
      */
     private void getErrorList() {
+        switch (mType)
+        {
+            case 1:
+                subwarningtype="37，53，65";
+                break;
+            case 2:
+                subwarningtype="711，712，713，719";
+                break;
+            case 4:
+                subwarningtype="41，42，43，44，45，46，47";
+                break;
+            case 3:
+                subwarningtype="11，12，13，14，22，23，31，39，35，36，701，704，714，715，716，717，718，720，721";
+                break;
+            case 6:
+                subwarningtype="703，722";
+                break;
+            case 7:
+                subwarningtype="21，32，33，34，38，51，52，54，55，56，61，62，63，64，65，66，67，702，705";
+                break;
+        }
         Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, "2", "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override

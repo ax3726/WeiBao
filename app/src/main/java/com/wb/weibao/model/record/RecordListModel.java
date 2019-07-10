@@ -322,6 +322,7 @@ public class RecordListModel implements Serializable {
             private Object confirmTime;
             private String warningTime;
             private String warningType;
+            private String subWarningTypeName;
             private String subWarningType;
             private String changeStatus;
             private Object confirmUserId;
@@ -342,6 +343,14 @@ public class RecordListModel implements Serializable {
             private Object updateUserId;
             private long createTime;
             private Object updateTime;
+
+            public String getSubWarningTypeName() {
+                return subWarningTypeName;
+            }
+
+            public void setSubWarningTypeName(String subWarningTypeName) {
+                this.subWarningTypeName = subWarningTypeName;
+            }
 
             public Object getStartTime() {
                 return startTime;

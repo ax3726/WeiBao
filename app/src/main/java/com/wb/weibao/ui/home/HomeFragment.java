@@ -556,5 +556,10 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
         return canUse;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 
 }

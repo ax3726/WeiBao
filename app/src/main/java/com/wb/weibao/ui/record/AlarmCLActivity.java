@@ -37,6 +37,9 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+/**
+ * 火警处理
+ */
 public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmclBinding> {
 
     public final int RequestCode = 1001;
@@ -217,11 +220,11 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
         String content = mBinding.etContent.getText().toString().trim();
 
 
-        if (TextUtils.isEmpty(content)) {
-            showToast("请输入内容!");
-            mBinding.affirm.setEnabled(true);
-            return;
-        }
+//        if (TextUtils.isEmpty(content)) {
+//            showToast("请输入内容!");
+//            mBinding.affirm.setEnabled(true);
+//            return;
+//        }
 
 
 
@@ -231,7 +234,19 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
             mBinding.affirm.setEnabled(true);
             return;
         }
+
+
+
         String str = DemoUtils.ListToString(mImageUUid, ";");
+        if(name.equals("发生火灾"))
+        {
+            if(str.length()<0)
+            {
+                showToast("请上传图片");
+                mBinding.affirm.setEnabled(true);
+                return;
+            }
+        }
         Api.getApi().getReportadd(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "","1",causename,"",content,str,getIntent().getStringExtra("id").toString())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {

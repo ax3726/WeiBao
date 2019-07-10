@@ -34,6 +34,9 @@ import java.util.List;
 public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbcBinding> {
 
 
+    private String subwarningtype="";
+    private String status="";
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_tbc;
@@ -92,21 +95,22 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getWarningTime(), "yyyy.MM.dd HH.mm.ss"));
                 binding.tvTime.setText(item.getWarningTime());
 
-                switch (item.getEquipmentType()) {
-                    case "1":
-                        binding.tvDianwei.setText("采集器");
-                        break;
-                    case "2":
-                        binding.tvDianwei.setText("无线设备");
-                        break;
-                    case "3":
-                        binding.tvDianwei.setText("点位(" + item.getPloop() + "," + item.getPpoint() + ")");
-                        break;
-                    case "4":
-                        binding.tvDianwei.setText("电力设备");
-                        break;
-
-                }
+//                switch (item.getEquipmentType()) {
+//                    case "1":
+//                        binding.tvDianwei.setText("采集器");
+//                        break;
+//                    case "2":
+//                        binding.tvDianwei.setText("无线设备");
+//                        break;
+//                    case "3":
+//                        binding.tvDianwei.setText("点位(" + item.getPloop() + "," + item.getPpoint() + ")");
+//                        break;
+//                    case "4":
+//                        binding.tvDianwei.setText("电力设备");
+//                        break;
+//
+//                }
+                binding.tvDianwei.setText(item.getEquipmentName());
                 switch (mType) {
                     case 1://远程监控火警
                         binding.tvError.setText("火警待确认");
@@ -114,21 +118,9 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                     case 2://九小场所火警
                         binding.tvError.setText("火警待确认");
                         break;
-                    case 3://故障111
-                        binding.tvError.setText("主机低压报警");
-                        break;
-                    case 4://用电异常
-                        binding.tvError.setText("温度报警");
-                        break;
-                    case 5://用水异常111
-                        binding.tvError.setText("用水异常");
-                        break;
-                    case 6://拆除
-                        binding.tvError.setText("主机防拆报警");
-                        break;
-                    case 7://其他
-                        binding.tvError.setText("其他");
-                        break;
+                   default:
+                       binding.tvError.setText(item.getSubWarningTypeName());
+                       break;
                 }
 
 //                switch (item.getStatus())
@@ -162,7 +154,12 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                     public void onClick(View v) {
                         Intent intent = new Intent(aty, RecordDetailActivity.class);
                         intent.putExtra("title", "待确认详情");
-                        intent.putExtra("title2", "火警");
+                        if(mType==1||mType==2||mType==4) {
+                            intent.putExtra("title2", "火警");
+                        }else
+                        {
+                            intent.putExtra("title2", "告警");
+                        }
                         intent.putExtra("title3", DemoUtils.typeToString(mType));
                         intent.putExtra("item", (Serializable) item);
                         intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
@@ -222,7 +219,33 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, "1", "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
+        switch (mType)
+        {
+            case 1:
+                status="1";
+                subwarningtype="37，53，65";
+                break;
+            case 2:
+                status="1";
+                subwarningtype="711，712，713，719";
+                break;
+            case 4:
+                status="1";
+                subwarningtype="41，42，43，44，45，46，47";
+                break;
+            case 3:
+                status="1,2";
+                subwarningtype="11，12，13，14，22，23，31，39，35，36，701，704，714，715，716，717，718，720，721";
+                break;
+            case 6:
+                status="1,2";
+                subwarningtype="703，722";
+                break;
+            case 7:
+                subwarningtype="21，32，33，34，38，51，52，54，55，56，61，62，63，64，65，66，67，702，705";
+                break;
+        }
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, status, "", ""+String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

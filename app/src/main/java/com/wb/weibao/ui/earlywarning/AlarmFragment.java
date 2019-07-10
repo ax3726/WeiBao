@@ -153,5 +153,11 @@ public class AlarmFragment extends BaseFragment<BaseFragmentPresenter, FragmentA
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
 }
 

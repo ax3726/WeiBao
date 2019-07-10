@@ -377,4 +377,10 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
         });
         chooseTypePopupwindow.showPopupWindow(mBinding.llyType);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 }

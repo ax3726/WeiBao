@@ -136,7 +136,7 @@ public class AlarmFragment extends BaseFragment<BaseFragmentPresenter, FragmentA
                     @Override
                     public void onSuccess(RecordCount baseBean) {
                         LogUtils.e("baseBean" + baseBean.toString());
-                        mBinding.rbLeftTitle.setText("待确认("+baseBean.getData().getAlarmWaitProccessNum()+")");
+//                        mBinding.rbLeftTitle.setText("待确认("+baseBean.getData().getAlarmWaitProccessNum()+")");
 
                     }
 

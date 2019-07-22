@@ -18,11 +18,13 @@ import com.wb.weibao.databinding.ActivityWeiRecordBinding;
 import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
 import com.wb.weibao.databinding.ItemWeibaorecordLayoutBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.PermissionListBean;
 import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.earlywarning.TBCFragment;
 import com.wb.weibao.utils.DemoUtils;
+import com.wb.weibao.utils.picker.util.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,7 +59,11 @@ public class WeiBaoRecordActivity extends BaseActivity<BasePresenter, ActivityWe
         mTitleBarLayout.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(AddDayWeiBaoActivity.class);
+                if (getIntent().getStringExtra("ProjectName").toString().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
+                getPermissionList();
             }
         });
     }
@@ -79,14 +85,14 @@ public class WeiBaoRecordActivity extends BaseActivity<BasePresenter, ActivityWe
             protected void convert(ViewHolder holder, RecordListAppBean.DataBean.ListBean listBean, int position) {
                 ItemWeibaorecordLayoutBinding binding = holder.getBinding(ItemWeibaorecordLayoutBinding.class);
                 binding.tv02.setText(mDataList.get(position).getCoverProjectName());
-                String CreateTime = mDataList.get(position).getCreateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(mDataList.get(position).getCreateTime(), "yyyy.MM.dd HH.mm.ss");
+                String CreateTime = mDataList.get(position).getCreateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(mDataList.get(position).getCreateTime(), "yyyy-MM-dd HH:mm:ss");
                 binding.tv04.setText(CreateTime);
 
                 binding.rlyItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        startActivity(new Intent(aty, WeibaoDetailActivity.class).putExtra("id", listBean.getId() + "").putExtra("type","1").putExtra("projectid",listBean.getProjectId()));
+                        startActivity(new Intent(aty, WeibaoDetailActivity.class).putExtra("id", listBean.getId() + "").putExtra("type", "1").putExtra("projectid", listBean.getProjectId()));
 
                     }
                 });
@@ -94,52 +100,49 @@ public class WeiBaoRecordActivity extends BaseActivity<BasePresenter, ActivityWe
         };
 
 
+        mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
+        mBinding.rcBody.setAdapter(mAdapter);
 
 
-
-                mBinding.rcBody.setLayoutManager(new LinearLayoutManager(aty));
-                mBinding.rcBody.setAdapter(mAdapter);
-
-
-                mBinding.srlBody.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
-                    @Override
-                    public void onLoadmore(RefreshLayout refreshlayout) {
-                        mPage++;
-                        getErrorList();
-                    }
-
-                    @Override
-                    public void onRefresh(RefreshLayout refreshlayout) {
-                        mBinding.srlBody.resetNoMoreData();
-                        mPage = 1;
-                        getErrorList();
-                    }
-                });
-                getErrorList();
-
-            }
-
-
-            public void loadData() {
-                mPage = 1;
+        mBinding.srlBody.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                mPage++;
                 getErrorList();
             }
 
-            @Subscribe(threadMode = ThreadMode.MAIN)
-            public void refersh(RecordDetailEvent event) {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
                 mBinding.srlBody.resetNoMoreData();
                 mPage = 1;
                 getErrorList();
             }
+        });
+        getErrorList();
 
-            /**
-             * 获取维保记录列表
-             */
-            private void getErrorList() {
-                Api.getApi().getRecordlistApp("" + mPage, "" + mPageSize, MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getProjectId()).compose(callbackOnIOToMainThread())
-                        .subscribe(new BaseNetListener<RecordListAppBean>(this, false) {
-                            @Override
-                            public void onSuccess(RecordListAppBean baseBean) {
+    }
+
+
+    public void loadData() {
+        mPage = 1;
+        getErrorList();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(RecordDetailEvent event) {
+        mBinding.srlBody.resetNoMoreData();
+        mPage = 1;
+        getErrorList();
+    }
+
+    /**
+     * 获取维保记录列表
+     */
+    private void getErrorList() {
+        Api.getApi().getRecordlistApp("" + mPage, "" + mPageSize, MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getProjectId()).compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<RecordListAppBean>(this, false) {
+                    @Override
+                    public void onSuccess(RecordListAppBean baseBean) {
 
                         stopRefersh();
                         RecordListAppBean.DataBean data = baseBean.getData();
@@ -158,20 +161,20 @@ public class WeiBaoRecordActivity extends BaseActivity<BasePresenter, ActivityWe
 //
                         }
 
-                            }
+                    }
 
-                            @Override
-                            public void onFail(String errMsg) {
-                                stopRefersh();
-                            }
-                        });
-            }
+                    @Override
+                    public void onFail(String errMsg) {
+                        stopRefersh();
+                    }
+                });
+    }
 
 
-            private void stopRefersh() {
-                mBinding.srlBody.finishRefresh();
-                mBinding.srlBody.finishLoadmore();
-            }
+    private void stopRefersh() {
+        mBinding.srlBody.finishRefresh();
+        mBinding.srlBody.finishLoadmore();
+    }
 
     @Override
     protected void onDestroy() {
@@ -180,4 +183,20 @@ public class WeiBaoRecordActivity extends BaseActivity<BasePresenter, ActivityWe
     }
 
 
+
+    public void getPermissionList()
+    {
+        for (int i = 0; i < MyApplication.getInstance().getUserData().getAuthorities().size(); i++) {
+            com.blankj.utilcode.util.LogUtils.e("getUrl()=="+MyApplication.getInstance().getUserData().getAuthorities().get(i).getAuthority());
+            if(MyApplication.getInstance().getUserData().getAuthorities().get(i).getAuthority().equals("/earlywarn/maintenance/record/add"))
+            {
+                startActivity(AddDayWeiBaoActivity.class);
+                return;
+            }
         }
+        showToast("您没有该权限，请联系管理员");
+    }
+
+
+}
+

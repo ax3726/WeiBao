@@ -3,6 +3,7 @@ package com.wb.weibao.ui.home;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -22,13 +23,14 @@ import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.DeviceTypeModel;
 import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
+import com.wb.weibao.ui.record.RecordDetailActivity;
 import com.wb.weibao.utils.DemoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySecurityInfoBinding> {
-    private List<String> mImgs = new ArrayList<>();
+    private ArrayList<String> mImgs = new ArrayList<>();
     private CommonAdapter<String> mAdapter;
     private int mType = -1;
 
@@ -206,6 +208,18 @@ public class SecurityInfoActivity extends BaseActivity<BasePresenter, ActivitySe
             mAdapter.notifyDataSetChanged();
         }
 
+        mBinding.gvBody.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent in = new Intent();
+                in.setClass(SecurityInfoActivity.this, MaxPictureActivity.class);
+                //Will pass, I click for the current position
+                in.putExtra("pos", position);
+                //Will pass,Photos to show the pictures of the collection address
+                in.putStringArrayListExtra("imageAddress", mImgs);
+                startActivity(in);
+            }
+        });
 
     }
 

@@ -58,11 +58,17 @@ public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFi
     protected void initEvent() {
         super.initEvent();
 
+        if(mType==3||mType==6)
+        {
+            mBinding.rbLeftTitle.setText("待处理");
+        }
+
         if (mNum == 1) {
             mBinding.tabTitleGroup.setVisibility(View.GONE);
         } else if (mNum == 2) {
             mBinding.rbCenterTitle.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -101,15 +107,27 @@ public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFi
                         break;
 
                     case R.id.rb_right_title:
-                        if (currentFragmentPosition != 2) {
-                            mIndex = 2;
-                            changeFragment(2);
+
+                        if (mType == 3 || mType == 6) {
+                            if (currentFragmentPosition != 1) {
+                                mIndex = 1;
+
+                                changeFragment(1);
+                           /* if (dclFragment != null) {
+                                dclFragment.loadData();
+                            }*/
+                                count();
+                            }
+                        }else {
+                            if (currentFragmentPosition != 2) {
+                                mIndex = 2;
+                                changeFragment(2);
                            /* if (yclFragment != null) {
                                 yclFragment.loadData();
                             }*/
-                            count();
+                                count();
+                            }
                         }
-
                         break;
                 }
             }
@@ -124,9 +142,12 @@ public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFi
 
     private void initFragment() {
         mBinding.llyBody.removeAllViews();
-        tbcFragment = new TBCFragment();
-        tbcFragment.setType(mType);
-        mFragments.add(tbcFragment);
+
+        if(mType!=3&&mType!=6) {
+            tbcFragment = new TBCFragment();
+            tbcFragment.setType(mType);
+            mFragments.add(tbcFragment);
+        }
 
         dclFragment = new DCLFragment();
         dclFragment.setType(mType);
@@ -216,7 +237,8 @@ public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFi
                                 num_chu = data.getElectricityFaultTbpNum();
                                 break;
                             case 5://用水异常111
-
+                                num_que = data.getWaterFaultTbcNum();
+                                num_chu = data.getWaterFaultTbpNum();
                                 break;
                             case 6://拆除 防拆待处理
                                 num_que = data.getTamperNum();
@@ -226,14 +248,27 @@ public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFi
                                 break;
                         }
 
-                        if (num_que == 0) {
-                            mBinding.rbLeftTitle.setText("待确认");
-                        } else if (num_que < 100) {
-                            mBinding.rbLeftTitle.setText("待确认(" + num_que + ")");
-                        } else {
-                            mBinding.rbLeftTitle.setText("待确认(99+)");
-                        }
 
+                        if(mType==3||mType==6)
+                        {
+                            if (num_que == 0) {
+
+                                mBinding.rbLeftTitle.setText("待处理");
+                            } else if (num_que < 100) {
+                                mBinding.rbLeftTitle.setText("待处理(" + num_que + ")");
+                            } else {
+                                mBinding.rbLeftTitle.setText("待处理(99+)");
+                            }
+                        }else {
+                            if (num_que == 0) {
+
+                                mBinding.rbLeftTitle.setText("待确认");
+                            } else if (num_que < 100) {
+                                mBinding.rbLeftTitle.setText("待确认(" + num_que + ")");
+                            } else {
+                                mBinding.rbLeftTitle.setText("待确认(99+)");
+                            }
+                        }
                         if (num_chu == 0) {
                             mBinding.rbCenterTitle.setText("待处理");
                         } else if (num_chu < 100) {

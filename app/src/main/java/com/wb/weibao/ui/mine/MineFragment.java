@@ -52,13 +52,15 @@ public class MineFragment extends BaseFragment<BaseFragmentPresenter, FragemntMi
     protected void initData() {
         super.initData();
         spfUtils = SpfUtils.getInstance(aty);
-        mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().getName());
+        mBinding.tvPhone.setText(MyApplication.getInstance().getUserData().getPrincipal().getName());
         if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {
 
-            mBinding.tvWeizhi.setText(MyApplication.getInstance().getUserData().getPrincipal().getUsername().toString());
+            mBinding.tvWeizhi.setText(MyApplication.getInstance().getUserData().getPrincipal().getInstName());
+
         } else {
 
-            mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+//            mBinding.tvWeizhi.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+            mBinding.tvWeizhi.setText(MyApplication.getInstance().getUserData().getPrincipal().getProjectName());
         }
 
         String  str= spfUtils.getSpfString(SpfKey.IS_PUSH_PLAY);

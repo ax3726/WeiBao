@@ -3,14 +3,11 @@ package com.wb.weibao.ui.home;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.RadioGroup;
 
 import com.lidroid.xutils.util.LogUtils;
 import com.wb.weibao.R;
 import com.wb.weibao.base.BaseActivity;
-import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
@@ -19,7 +16,6 @@ import com.wb.weibao.databinding.ActivitySmartElectricBinding;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.ui.earlywarning.DCLFragment;
-import com.wb.weibao.ui.earlywarning.FireFragment;
 import com.wb.weibao.ui.earlywarning.TBCFragment;
 import com.wb.weibao.ui.earlywarning.YCLFragment;
 
@@ -30,7 +26,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SmartElectricActivity extends BaseActivity<BasePresenter, ActivitySmartElectricBinding> {
+public class SmartwtaerActivity extends BaseActivity<BasePresenter, ActivitySmartElectricBinding> {
 
     private FragmentManager     mFm;
     private FragmentTransaction mTransaction;
@@ -40,7 +36,7 @@ public class SmartElectricActivity extends BaseActivity<BasePresenter, ActivityS
     private DCLFragment dclFragment;
     private YCLFragment yclFragment;
     private int         mIndex = 0;//当前模块下标
-    private int         mType  = 4;
+    private int         mType  = 5;
     private int         mNum   = 3;
 
     @Override
@@ -61,7 +57,7 @@ public class SmartElectricActivity extends BaseActivity<BasePresenter, ActivityS
     @Override
     protected void initTitleBar() {
         super.initTitleBar();
-        mTitleBarLayout.setTitle("智慧用电");
+        mTitleBarLayout.setTitle("智慧用水");
     }
 
     @Override

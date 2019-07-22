@@ -240,7 +240,8 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
         String str = DemoUtils.ListToString(mImageUUid, ";");
         if(name.equals("发生火灾"))
         {
-            if(str.length()<0)
+
+            if(mImageUUid.size()<=0)
             {
                 showToast("请上传图片");
                 mBinding.affirm.setEnabled(true);

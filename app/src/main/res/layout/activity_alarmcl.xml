@@ -4,13 +4,14 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:background="@color/colorBackground"
         android:layout_height="match_parent">
 
         <com.zhy.autolayout.AutoLinearLayout
             android:id="@+id/lly_body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F2F4F8"
+            android:background="@color/colorBackground"
             android:orientation="vertical">
 
 
@@ -78,7 +79,7 @@
                     android:id="@+id/tv_picture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="上传图片（选填，最多上传5张）"
+                    android:text="上传图片（最多上传4张）"
                     android:textColor="#333333" />
 
                 <GridView
@@ -105,7 +106,10 @@
                 android:layout_marginBottom="50px"
 
                 android:text="确认" />
-
+            <View
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
         </com.zhy.autolayout.AutoLinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -39,6 +40,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -304,19 +306,26 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
             return;
         }
 
-        new MyAlertDialog(aty).builder()
-                .setMsg("是否要提交该维保记录").setPositiveButton("取消", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        }).setNegativeButton("确认", new View.OnClickListener() {
+
+        Time times = new Time("GMT+8");
+        times.setToNow();
+        int year = times.year;
+        int month = times.month;
+        int day = times.monthDay;
+        int minute = times.minute;
+        int hour = times.hour;
+        int sec = times.second;
+        String date_time=hour+":"+minute+":"+sec;
+
+        new MyAlertDialog(aty).builder()
+                .setMsg("是否要提交该维保记录").setPositiveButton("确认", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mBinding.affirm.setEnabled(false);
                 String str = DemoUtils.ListToString(mImageUUid, ";");
                 Api.getApi().addRecord(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
-                        mDataList.get(mProjectIndex).getId()+"", name, phone,DataUtils.formatDate(time+" 00:00:00","yyyy-MM-dd HH:mm:s") ,DataUtils.formatDate(NextTime+" 00:00:00","yyyy-MM-dd HH:mm:ss") +" 00:00:00", str, content,MyApplication.getInstance().getProjectId(),MyApplication.getInstance().getmProjectName())
+                        mDataList.get(mProjectIndex).getId()+"", name, phone,DataUtils.formatDate(time+" 00:00:00","yyyy-MM-dd HH:mm:s") ,DataUtils.formatDate(NextTime+" 00:00:00","yyyy-MM-dd HH:mm:ss"), str, content,MyApplication.getInstance().getProjectId(),MyApplication.getInstance().getmProjectName())
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(AddDayWeiBaoActivity.this, true) {
                             @Override
@@ -345,7 +354,13 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
                             }
                         });
             }
+        }).setNegativeButton("取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
         }).show();
+
 
     }
 

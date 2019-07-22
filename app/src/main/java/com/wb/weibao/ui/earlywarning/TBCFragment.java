@@ -16,6 +16,7 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragmentTbcBinding;
+import com.wb.weibao.databinding.ItemRecordListLayoutBinding;
 import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.record.RecordDetailEvent;
@@ -53,8 +54,9 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     private int                                              mPage     = 1;
     private int                                              mPageSize = 10;
     private String                                           name      = "";
-    private int                                              mType     = 1;
 
+
+    private int                                              mType     = 1;
     public void setType(int mType) {
         this.mType = mType;
     }
@@ -63,10 +65,10 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
     protected void initData() {
         super.initData();
         EventBus.getDefault().register(this);
-        mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_tbc_layout, mDataList) {
+        mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_list_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, RecordListModel.DataBean.ListBean item, int position) {
-                ItemRecordTbcLayoutBinding binding = holder.getBinding(ItemRecordTbcLayoutBinding.class);
+                ItemRecordListLayoutBinding binding = holder.getBinding(ItemRecordListLayoutBinding.class);
 //                binding.tvError.setText(item.getProjectName());
                 binding.tvProjectname.setText(item.getProjectName());
                 binding.affirm.setVisibility(View.VISIBLE);
@@ -161,9 +163,11 @@ public class TBCFragment extends BaseFragment<BaseFragmentPresenter, FragmentTbc
                             intent.putExtra("title2", "告警");
                         }
                         intent.putExtra("title3", DemoUtils.typeToString(mType));
+                        intent.putExtra("title4", binding.tvError.getText());
                         intent.putExtra("item", (Serializable) item);
                         intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                         intent.putExtra("id", "" + item.getId());
+                        intent.putExtra("mType", "" + mType);
                         startActivity(intent);
                     }
                 });

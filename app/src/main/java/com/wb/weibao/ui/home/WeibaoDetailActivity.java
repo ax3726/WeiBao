@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
@@ -109,13 +110,14 @@ mBinding.gvBody.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             return;
                         }
 
-                        String createTime=baseBean.getData().getCreateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getCreateTime(), "yyyy.MM.dd HH.mm.ss");
+                        String createTime=baseBean.getData().getCreateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getCreateTime(), "yyyy-MM-dd HH:mm:ss");
 
-                        String maintenanceDate=baseBean.getData().getMaintenanceDate() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getMaintenanceDate(), "yyyy.MM.dd HH.mm.ss");
+                        String maintenanceDate=baseBean.getData().getMaintenanceDate() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getMaintenanceDate(), "yyyy-MM-dd");
 
-                        String maintenanceNextDate=baseBean.getData().getMaintenanceNextDate() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getMaintenanceNextDate(), "yyyy.MM.dd HH.mm.ss");
+                        String maintenanceNextDate=baseBean.getData().getMaintenanceNextDate() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getMaintenanceNextDate(), "yyyy-MM-dd");
 
                         mBinding.tv1.setText("上报时间：   "+createTime);
+                        mBinding.tvWeixiu.setText("维修单位：   "+baseBean.getData().getProjectName());
                         mBinding.tv2.setText("被维修单位：   "+baseBean.getData().getCoverProjectName());
                         mBinding.tv3.setText("维保联系人：   "+baseBean.getData().getContractName());
                         mBinding.tv4.setText("联系人电话：   "+baseBean.getData().getContractPhone());

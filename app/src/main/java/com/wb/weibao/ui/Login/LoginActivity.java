@@ -34,6 +34,7 @@ import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.utils.update.AppUpdateProgressDialog;
+import com.wb.weibao.utils.update.AppUpdateProgressDialog2;
 import com.wb.weibao.utils.update.DownloadReceiver;
 import com.wb.weibao.utils.update.DownloadService;
 
@@ -53,7 +54,10 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
     protected BasePresenter createPresenter() {
         return null;
     }
+
     AppUpdateProgressDialog appUpdateProgressDialog;
+    AppUpdateProgressDialog2 appUpdateProgressDialog2;
+
     @Override
     protected void initData() {
         super.initData();
@@ -83,9 +87,6 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                 checkLogin();
             }
         });
-
-
-
 
 
 //
@@ -120,36 +121,41 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
             }
         });
         updateapp();
-        mBinding.banben.setText("当前版本"+BuildConfig.VERSION_NAME);
+        mBinding.banben.setText("当前版本" + BuildConfig.VERSION_NAME);
     }
 
 
-
-    private void updateapp()
-    {
+    private void updateapp() {
         Api.getApi3().getversion()
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<VersionBean>(LoginActivity.this, false) {
                     @Override
                     public void onSuccess(VersionBean versionBean) {
-                        LogUtils.e("baseBean"+versionBean.toString());
-                       if(compareVersion(BuildConfig.VERSION_NAME,versionBean.getData().getAndroidVersion())==-1)
-                       {
-                           appUpdateProgressDialog = new AppUpdateProgressDialog(LoginActivity.this);
-                           appUpdateProgressDialog.show();
-                           Intent intent = new Intent(LoginActivity.this, DownloadService.class);
-                           intent.putExtra("url",versionBean.getData().getAndroidUrl());
-                           intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
-                           startService(intent);
-                       }else
-                           {
-                               if(spfUtils.getSpfString(SpfKey.IS_LOGIN).length()>0) {
-                                   if (spfUtils.getSpfString(SpfKey.LOGIN_NAME).length() > 0 && spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD).length() > 0) {
+                        LogUtils.e("baseBean" + versionBean.toString());
+                        if (compareVersion(BuildConfig.VERSION_NAME, versionBean.getData().getAndroidVersion()) == -1) {
+                            appUpdateProgressDialog2 = new AppUpdateProgressDialog2(LoginActivity.this, "1.首页增加当日报警数据统计；<br>2.报警分类更加清晰；<br>3.优化了很多功能呦");
+                            appUpdateProgressDialog2.setOnItemUpdateClickListener(new AppUpdateProgressDialog2.onItemUpdateListener() {
+                                @Override
+                                public void onUpdateClick(View view) {
+                                    appUpdateProgressDialog2.dismiss();
+                                    appUpdateProgressDialog = new AppUpdateProgressDialog(LoginActivity.this);
+                                    appUpdateProgressDialog.show();
+                                    Intent intent = new Intent(LoginActivity.this, DownloadService.class);
+                                    intent.putExtra("url", versionBean.getData().getAndroidUrl());
+                                    intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
+                                    startService(intent);
+                                }
+                            });
+                            appUpdateProgressDialog2.show();
+//
+                        } else {
+                            if (spfUtils.getSpfString(SpfKey.IS_LOGIN).length() > 0) {
+                                if (spfUtils.getSpfString(SpfKey.LOGIN_NAME).length() > 0 && spfUtils.getSpfString(SpfKey.LOGIN_PASSWORD).length() > 0) {
 
-                                       checkLogin();
-                                   }
-                               }
-                           }
+                                    checkLogin();
+                                }
+                            }
+                        }
 
 
                     }
@@ -169,14 +175,14 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
         }
         String[] version1Array = version1.split("\\.");
         String[] version2Array = version2.split("\\.");
-        Log.d("HomePageActivity", "version1Array=="+version1Array.length);
-        Log.d("HomePageActivity", "version2Array=="+version2Array.length);
+        Log.d("HomePageActivity", "version1Array==" + version1Array.length);
+        Log.d("HomePageActivity", "version2Array==" + version2Array.length);
         int index = 0;
         // 获取最小长度值
         int minLen = Math.min(version1Array.length, version2Array.length);
         int diff = 0;
         // 循环判断每位的大小
-        Log.d("HomePageActivity", "verTag2=2222="+version1Array[index]);
+        Log.d("HomePageActivity", "verTag2=2222=" + version1Array[index]);
         while (index < minLen
                 && (diff = Integer.parseInt(version1Array[index])
                 - Integer.parseInt(version2Array[index])) == 0) {
@@ -200,6 +206,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
             return diff > 0 ? 1 : -1;
         }
     }
+
     private void checkLogin() {
         String phone = mBinding.inputPhone.getText().toString().trim();
         String password = mBinding.inputPassword.getText().toString().trim();
@@ -260,9 +267,9 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
 
                         spfUtils.setSpfString(SpfKey.IS_LOGIN, "true");
 
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
 
 
                     }
@@ -274,10 +281,6 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                 });
         mBinding.affirm.setClickable(false);
     }
-
-
-
-
 
 
     @Override

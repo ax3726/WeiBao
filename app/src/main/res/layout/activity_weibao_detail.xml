@@ -22,6 +22,18 @@
 
 
         <TextView
+            android:text="维修单位："
+            android:id="@+id/tv_weixiu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="24px"
+            android:paddingLeft="30px"
+            android:paddingBottom="24px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+
+        <TextView
             android:text="被维修单位："
             android:id="@+id/tv_2"
             android:layout_width="match_parent"

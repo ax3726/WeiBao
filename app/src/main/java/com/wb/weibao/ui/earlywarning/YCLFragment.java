@@ -17,6 +17,7 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragmentYclBinding;
+import com.wb.weibao.databinding.ItemRecordListLayoutBinding;
 import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
@@ -59,10 +60,10 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
     protected void initData() {
         super.initData();
         EventBus.getDefault().register(this);
-        mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_tbc_layout, mDataList) {
+        mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_list_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, RecordListModel.DataBean.ListBean item, int position) {
-                ItemRecordTbcLayoutBinding binding = holder.getBinding(ItemRecordTbcLayoutBinding.class);
+                ItemRecordListLayoutBinding binding = holder.getBinding(ItemRecordListLayoutBinding.class);
 
 //                binding.tvError.setText(item.getProjectName());
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
@@ -137,7 +138,7 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
                 rly_item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(mType!=7) {
+
                             Intent intent = new Intent(aty, RecordDetailActivity.class);
                             intent.putExtra("title", "已处理详情");
                             if (mType == 1 || mType == 2 || mType == 4) {
@@ -146,12 +147,14 @@ public class YCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentYcl
                                 intent.putExtra("title2", "告警");
                             }
                             intent.putExtra("title3", DemoUtils.typeToString(mType));
+                            intent.putExtra("title4", binding.tvError.getText());
                             intent.putExtra("item", (Serializable) item);
 
                             intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                             intent.putExtra("id", "" + item.getId());
+                            intent.putExtra("mType", "" + mType);
                             startActivity(intent);
-                        }
+
                     }
                 });
             }

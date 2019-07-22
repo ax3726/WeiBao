@@ -16,6 +16,7 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.FragmentDclBinding;
+import com.wb.weibao.databinding.ItemRecordListLayoutBinding;
 import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
@@ -34,6 +35,7 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
 
 
     private String subwarningtype="";
+    private String status="";
 
     @Override
     protected int getLayoutId() {
@@ -60,10 +62,10 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
     protected void initData() {
         super.initData();
         EventBus.getDefault().register(this);
-        mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_tbc_layout, mDataList) {
+        mAdapter = new CommonAdapter<RecordListModel.DataBean.ListBean>(aty, R.layout.item_record_list_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, RecordListModel.DataBean.ListBean item, int position) {
-                ItemRecordTbcLayoutBinding binding = holder.getBinding(ItemRecordTbcLayoutBinding.class);
+                ItemRecordListLayoutBinding binding = holder.getBinding(ItemRecordListLayoutBinding.class);
 //                binding.tvError.setText(item.getProjectName());
 //                binding.tvTime.setText(DemoUtils.ConvertTimeFormat(item.getEarlyTime(), "yyyy.MM.dd HH:mm:ss"));
                 binding.tvProjectname.setText(item.getProjectName());
@@ -112,9 +114,11 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
                             intent.putExtra("title2", "告警");
                         }
                         intent.putExtra("title3", DemoUtils.typeToString(mType));
+                        intent.putExtra("title4", binding.tvError.getText());
                         intent.putExtra("item", (Serializable) item);
                         intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                         intent.putExtra("id", "" + item.getId());
+                        intent.putExtra("mType", "" + mType);
                         startActivity(intent);
                     }
                 });
@@ -171,25 +175,30 @@ public class DCLFragment extends BaseFragment<BaseFragmentPresenter, FragmentDcl
         switch (mType)
         {
             case 1:
+                status="2";
                 subwarningtype="37，53，65";
                 break;
             case 2:
+                status="2";
                 subwarningtype="711，712，713，719";
                 break;
             case 4:
+                status="2";
                 subwarningtype="41，42，43，44，45，46，47";
                 break;
             case 3:
+                status="1,2";
                 subwarningtype="11，12，13，14，22，23，31，39，35，36，701，704，714，715，716，717，718，720，721";
                 break;
             case 6:
+                status="1,2";
                 subwarningtype="703，722";
                 break;
             case 7:
                 subwarningtype="21，32，33，34，38，51，52，54，55，56，61，62，63，64，65，66，67，702，705";
                 break;
         }
-        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, "2", "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getRecordList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId(), null, status, "", String.valueOf(mType), mPage, mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
                     public void onSuccess(RecordListModel baseBean) {

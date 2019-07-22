@@ -36,6 +36,7 @@ import com.wb.weibao.common.PlayNumService;
 import com.wb.weibao.common.TimeService;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.PermissionListBean;
 import com.wb.weibao.model.VersionBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ErrorEvent;
@@ -52,6 +53,7 @@ import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.utils.update.AppUpdateProgressDialog;
+import com.wb.weibao.utils.update.AppUpdateProgressDialog2;
 import com.wb.weibao.utils.update.DownloadReceiver;
 import com.wb.weibao.utils.update.DownloadService;
 import com.wb.weibao.view.PopupWindow.FitPopupUtil;
@@ -114,6 +116,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                             mIndex = 0;
                             mBinding.rlyHead.setVisibility(View.GONE);
                             mBinding.tvAddOrder.setVisibility(View.GONE);
+                            toLoadDatahomepage();
                             changeFragment(0);
                         }
                         break;
@@ -281,6 +284,14 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
         }*/
     }
 
+    private void toLoadDatahomepage()
+    {
+        if(mHomeFragment!=null)
+        {
+            mHomeFragment.getHomePageStatistics();
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -374,6 +385,11 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
 
 
     }
+
+
+
+
+
 
     private CountDownTimer countDownTimer;
     private CountDownTimer countDownTimer2;
@@ -566,8 +582,8 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
     }
 
 
+    AppUpdateProgressDialog2 appUpdateProgressDialog2;
     AppUpdateProgressDialog appUpdateProgressDialog;
-
     private void updateapp()
     {
         Api.getApi().getversion()
@@ -578,12 +594,24 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                         LogUtils.e("baseBean"+versionBean.toString());
                         if(compareVersion(BuildConfig.VERSION_NAME,versionBean.getData().getAndroidVersion())==-1)
                         {
-                            appUpdateProgressDialog = new AppUpdateProgressDialog(MainActivity.this);
-                            appUpdateProgressDialog.show();
-                            Intent intent = new Intent(MainActivity.this, DownloadService.class);
-                            intent.putExtra("url",versionBean.getData().getAndroidUrl());
-                            intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
-                            startService(intent);
+                            appUpdateProgressDialog2 = new AppUpdateProgressDialog2(MainActivity.this,"1.首页增加当日报警数据统计；<br>2.报警分类更加清晰；<br>3.优化了很多功能呦；");
+                            appUpdateProgressDialog2.setOnItemUpdateClickListener(new AppUpdateProgressDialog2.onItemUpdateListener() {
+                                @Override
+                                public void onUpdateClick(View view) {
+                                    appUpdateProgressDialog2.dismiss();
+                                    appUpdateProgressDialog = new AppUpdateProgressDialog(MainActivity.this);
+                                    appUpdateProgressDialog.show();
+                                    Intent intent = new Intent(MainActivity.this, DownloadService.class);
+                                    intent.putExtra("url", versionBean.getData().getAndroidUrl());
+                                    intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
+                                    startService(intent);
+                                }
+                            });
+                            appUpdateProgressDialog2.show();
+//                            Intent intent = new Intent(MainActivity.this, DownloadService.class);
+//                            intent.putExtra("url",versionBean.getData().getAndroidUrl());
+//                            intent.putExtra("receiver", new DownloadReceiver(new Handler(), appUpdateProgressDialog));
+//                            startService(intent);
                         }
                     }
 

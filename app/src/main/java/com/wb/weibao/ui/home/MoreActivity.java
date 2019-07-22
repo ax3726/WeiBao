@@ -6,8 +6,15 @@ import android.view.View;
 
 import com.wb.weibao.R;
 import com.wb.weibao.base.BaseActivity;
+import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityMoreBinding;
+import com.wb.weibao.model.home.MaintenanceListModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MoreActivity extends BaseActivity<BasePresenter,ActivityMoreBinding> {
 
@@ -48,7 +55,9 @@ public class MoreActivity extends BaseActivity<BasePresenter,ActivityMoreBinding
         mBinding.tv02.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(MySecurityActivity.class);
+
+                    startActivity(MySecurityActivity.class);
+
             }
         });
         mBinding.tv03.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +72,39 @@ public class MoreActivity extends BaseActivity<BasePresenter,ActivityMoreBinding
                 startActivity(ChangeShiftsActivity.class);
             }
         });
+        getDataList();
+    }
+
+    /**
+     * 我的维保
+     */
+    public void getDataList() {
+        Api.getApi().getMyWeiBao2(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<MaintenanceListModel>(this, true) {
+                    @Override
+                    public void onSuccess(MaintenanceListModel baseBean) {
+                        if (baseBean.getData() != null) {
+                            List<MaintenanceListModel.DataBean.ListBean> list = baseBean.getData().getList();
+                            if (list != null && list.size() > 0) {
+                               mBinding.imageRed.setVisibility(View.VISIBLE);
+                            }else
+                                {
+                                    mBinding.imageRed.setVisibility(View.GONE);
+                                }
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
 
     }
+
 }

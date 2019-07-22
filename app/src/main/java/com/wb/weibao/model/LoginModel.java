@@ -165,6 +165,26 @@ public class LoginModel implements Serializable {
              * username : admin
              */
 
+            private String projectName;
+
+            public String getProjectName() {
+                return projectName;
+            }
+
+            public void setProjectName(String projectName) {
+                this.projectName = projectName;
+            }
+
+            private String instName;
+
+            public String getInstName() {
+                return instName;
+            }
+
+            public void setInstName(String instName) {
+                this.instName = instName;
+            }
+
             private boolean accountNonExpired;
             private boolean accountNonLocked;
             private boolean credentialsNonExpired;

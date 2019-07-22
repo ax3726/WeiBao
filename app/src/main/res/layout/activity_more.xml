@@ -2,9 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v4.widget.NestedScrollView
+        android:background="@color/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <com.zhy.autolayout.AutoLinearLayout
+        android:background="@color/colorBackground"
         android:layout_marginTop="20px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,32 +20,46 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/shape_white"
-            android:drawablePadding="30px"
+            android:drawablePadding="34px"
             android:drawableTop="@drawable/home_01"
             android:gravity="center"
-            android:paddingBottom="22px"
+            android:paddingBottom="30px"
             android:paddingTop="50px"
             android:text="发起维保"
             android:textColor="@color/color333333"
             android:textSize="26px" />
-
-        <TextView
+        <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/tv_02"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginLeft="16px"
             android:layout_marginRight="16px"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
             android:background="@drawable/shape_white"
-            android:drawablePadding="30px"
-            android:drawableTop="@drawable/home_02"
+            android:drawablePadding="34px"
+            android:drawableTop="@drawable/home_tv_11"
             android:gravity="center"
-            android:paddingBottom="22px"
+            android:paddingBottom="30px"
             android:paddingTop="53px"
             android:text="我的维保"
             android:textColor="@color/color333333"
             android:textSize="26px" />
 
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/image_red"
+                android:layout_marginTop="20px"
+                android:layout_marginRight="20px"
+                android:layout_gravity="right"
+                android:background="@drawable/home_red"
+                android:layout_width="14px"
+                android:layout_height="14px" />
+        </com.zhy.autolayout.AutoFrameLayout>
         <TextView
             android:id="@+id/tv_03"
             android:layout_width="0dp"
@@ -51,10 +67,10 @@
             android:layout_marginRight="16px"
             android:layout_weight="1"
             android:background="@drawable/shape_white"
-            android:drawablePadding="30px"
+            android:drawablePadding="34px"
             android:drawableTop="@drawable/home_13"
             android:gravity="center"
-            android:paddingBottom="22px"
+            android:paddingBottom="30px"
             android:paddingTop="50px"
             android:text="签到"
             android:textColor="@color/color333333"
@@ -66,10 +82,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/shape_white"
-            android:drawablePadding="30px"
+            android:drawablePadding="34px"
             android:drawableTop="@drawable/home_14"
             android:gravity="center"
-            android:paddingBottom="22px"
+            android:paddingBottom="30px"
             android:paddingTop="48px"
             android:text="交接班"
             android:textColor="@color/color333333"

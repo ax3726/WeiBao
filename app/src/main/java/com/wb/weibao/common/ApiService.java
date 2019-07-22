@@ -3,6 +3,7 @@ package com.wb.weibao.common;
 
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
+import com.wb.weibao.model.PermissionListBean;
 import com.wb.weibao.model.VersionBean;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
 import com.wb.weibao.model.earlywarning.OrderListModel;
@@ -24,6 +25,8 @@ import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.record.EventReportListbean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
+
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
@@ -646,5 +649,10 @@ public interface ApiService {
     @POST("maintenance/record/detail")
     Flowable<MaintenanceRecordDetailBean> getMaintenanceRecordDetail(@Query("id") String id);
 
+
+
+
+    @POST("permission/list")
+    Flowable<PermissionListBean> getPermissionList(@Query("groupType") String groupType);
 
 }

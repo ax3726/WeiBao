@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.wb.weibao.R;
 import com.wb.weibao.adapters.CommonPagerAdapter;
 import com.wb.weibao.base.BaseFragment;
@@ -22,6 +23,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.design.widget.TabLayout.*;
 
 /**
  * Created by Administrator on 2018/10/8.
@@ -86,17 +89,17 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
         mFragments.add(new FireFragment().setData(2,3));
         mFragments.add(new FireFragment().setData(3,2));
         mFragments.add(new FireFragment().setData(4,3));
-        mFragments.add(new FireFragment().setData(5,1));
+        mFragments.add(new FireFragment().setData(5,3));
         mFragments.add(new FireFragment().setData(6,2));
         mFragments.add(new FireFragment().setData(7,1));
         mMyPagerAdapter = new CommonPagerAdapter(getChildFragmentManager(), title, mFragments);
         mBinding.pager.setAdapter(mMyPagerAdapter);
         mBinding.tabLayout.setupWithViewPager(mBinding.pager);
         setTitle();
-        mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mBinding.tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
 
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(XTabLayout.Tab tab) {
                 /**
                  * 设置当前选中的Tab为特殊高亮样式。
                  */
@@ -106,13 +109,36 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
                 }
                 FireFragment fragment = (FireFragment) mFragments.get(tab.getPosition());
                 if (fragment!=null) {
+                    switch (tab.getPosition()) {
+                        case 0://远程监控火警
+                           fragment.setData(1,3);
+                            break;
+                        case 1://九小场所火警
+                            fragment.setData(2,3);
+                            break;
+                        case 2://故障111
+                            fragment.setData(3,2);
+                            break;
+                        case 3://用电异常
+                            fragment.setData(4,3);
+                            break;
+                        case 4://用水异常111
+                            fragment.setData(5,3);
+                            break;
+                        case 5://拆除
+                            fragment.setData(6,2);
+                            break;
+                        case 6://其他
+                            fragment.setData(7,1);
+                            break;
+                    }
                     fragment.toLoadData();
                 }
 
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            public void onTabUnselected(XTabLayout.Tab tab) {
                 /**
                  * 重置所有未选中的Tab颜色、字体、背景恢复常态(未选中状态)。
                  */
@@ -123,19 +149,19 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onTabReselected(XTabLayout.Tab tab) {
 
             }
         });
     }
-
     public void setTitle() {
         for (int i = 0; i < title.size(); i++) {
-            TabLayout.Tab tab = mBinding.tabLayout.getTabAt(i);
+            XTabLayout.Tab tab = mBinding.tabLayout.getTabAt(i);
             if (tab != null) {
                 View     view     = View.inflate(aty, R.layout.tab_layout_item, null);
                 TextView textView = (TextView) view.findViewById(R.id.tv_txt);
                 textView.setText(title.get(i));
+
                 if (i == 0) {
                     textView.setTextColor(getResources().getColor(R.color.colorTheme));
                 }
@@ -188,7 +214,7 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
                                     num = data.getElectricityFaultCountNum();
                                     break;
                                 case 4://用水异常111
-                                    num =0;
+                                    num =data.getWaterFaultCountNum();
                                     break;
                                 case 5://拆除
                                     num =  data.getTamperNum();

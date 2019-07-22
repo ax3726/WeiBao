@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="280dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/icon_update_02"
+    android:gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:layout_marginTop="200dp"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/update_tv"
+        android:textSize="11sp"
+        android:gravity="center"
+        android:text="正在更新中请稍后"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <com.wb.weibao.utils.update.NumberProgressBar
+        android:layout_marginBottom="40dp"
+        android:id="@+id/number_progress"
+        android:layout_width="250dp"
+        android:layout_height="30dp" />
+
+
+
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.wb.weibao.ui.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
@@ -26,11 +27,16 @@ import com.wb.weibao.model.event.ErrorEvent;
 import com.wb.weibao.model.event.ProjectChangeEvent;
 import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.record.RecordCount;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.main.MainActivity;
+import com.wb.weibao.utils.DataUtils;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
+import com.wb.weibao.utils.dialog.MyDialogListener;
+import com.wb.weibao.utils.dialog.StytledDialog;
+import com.wb.weibao.view.MyAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -123,11 +129,10 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(SentriesActivity.class);
                 break;
             case R.id.tv_03://日常维保记录
-                if (mBinding.tvProject.getText().equals("全部项目")) {
-                    showToast("请选择项目单位");
-                    return;
-                }
-                startActivity(WeiBaoRecordActivity.class);
+
+                Intent intent=new Intent(getActivity(),WeiBaoRecordActivity.class);
+                intent.putExtra("ProjectName",mBinding.tvProject.getText());
+                startActivity(intent);
                 break;
             case R.id.tv_04://警报统计
                 if (mBinding.tvProject.getText().equals("全部项目")) {
@@ -138,10 +143,18 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 break;
             case R.id.tv_05://电气
 //                startActivity(new Intent(this.aty, NoDataActivity.class).putExtra("type", 3));
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
                 startActivity(SmartElectricActivity.class);
                 break;
             case R.id.tv_06://水位
-                startActivity(new Intent(this.aty, NoDataActivity.class).putExtra("type", 2));
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
+                startActivity(SmartwtaerActivity.class);
                 break;
             case R.id.tv_07://消防微站
                 if (mBinding.tvProject.getText().equals("全部项目")) {
@@ -336,7 +349,8 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                     @Override
                     public void onSuccess(RecordCount baseBean) {
                         LogUtils.e("baseBean" + baseBean.toString());
-                        if (baseBean.getData().getFireWaitConfirmNum() > 0) {
+                        if((baseBean.getData().getRemoteMonitoringCountNum()+baseBean.getData().getNineSmallPlacesCountNum())>0)
+                        {
                             MyApplication.getInstance().setErrorlist("1");
                             geterrortoast();
                         }

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/lly_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+      <com.zhy.autolayout.AutoLinearLayout
+          android:padding="30px"
+          android:layout_margin="30px"
+          android:background="@drawable/shape_white4"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <TextView
+              android:id="@+id/tv_1"
+              android:textColor="@color/color333333"
+              android:textSize="28px"
+              android:layout_marginBottom="16px"
+              android:text="互联网卡编号:"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:id="@+id/tv_2"
+              android:textColor="@color/color333333"
+              android:textSize="28px"
+              android:layout_marginBottom="16px"
+              android:text="采集器编号    :"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:id="@+id/tv_3"
+              android:textColor="@color/color333333"
+              android:textSize="28px"
+              android:layout_marginBottom="16px"
+              android:text="采集器名称    :"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:id="@+id/tv_4"
+              android:textColor="@color/color333333"
+              android:textSize="28px"
+              android:layout_marginBottom="16px"
+              android:text="位            置    :"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:id="@+id/tv_5"
+              android:textColor="@color/color333333"
+              android:textSize="28px"
+              android:layout_marginBottom="16px"
+              android:text="更 新 时  间    :"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+      </com.zhy.autolayout.AutoLinearLayout>
+        <com.zhy.autolayout.AutoLinearLayout
+            android:paddingTop="15px"
+            android:paddingLeft="30px"
+            android:id="@+id/rly_item"
+            android:layout_marginRight="30px"
+            android:layout_marginLeft="30px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:gravity="clip_vertical">
+
+            <TextView
+                android:textStyle="bold"
+                android:text="回路类型"
+                android:textSize="28px"
+                android:textColor="#424242"
+                android:id="@+id/tv_01"
+                android:layout_weight="1.6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textStyle="bold"
+                android:text="探测值"
+                android:textSize="28px"
+                android:textColor="#424242"
+                android:id="@+id/tv_02"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textStyle="bold"
+                android:text="报警阀值"
+                android:textSize="28px"
+                android:textColor="#424242"
+                android:id="@+id/tv_03"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+        </com.zhy.autolayout.AutoLinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginBottom="86px"
+                android:padding="30px"
+                android:layout_marginRight="30px"
+                android:layout_marginLeft="30px"
+                android:id="@+id/rc_body"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

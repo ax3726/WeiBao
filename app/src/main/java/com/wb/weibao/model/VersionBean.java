@@ -56,6 +56,15 @@ public class VersionBean {
         private String androidUrl;
         private String iosVersion;
         private String iosUrl;
+       private String androidInfo;
+
+        public String getAndroidInfo() {
+            return androidInfo;
+        }
+
+        public void setAndroidInfo(String androidInfo) {
+            this.androidInfo = androidInfo;
+        }
 
         public int getId() {
             return id;

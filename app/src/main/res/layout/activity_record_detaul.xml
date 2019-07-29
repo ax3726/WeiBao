@@ -171,6 +171,7 @@
                         android:background="@color/colorLine" />
 
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/tv_hint_6"
                         android:layout_width="190px"
                         android:layout_height="wrap_content"
@@ -180,6 +181,7 @@
                         android:textSize="28px" />
 
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/tv_6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -195,7 +197,7 @@
                         android:id="@+id/view_line6"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:layout_below="@+id/tv_hint_6"
+                        android:layout_below="@+id/tv_hint_5"
                         android:layout_marginBottom="20px"
                         android:layout_marginTop="20px"
                         android:background="@color/colorLine" />
@@ -207,7 +209,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/view_line6"
-                        android:text="设备详情："
+                        android:text="报警位置："
                         android:textColor="@color/color333333"
                         android:textSize="28px" />
 
@@ -270,7 +272,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_white"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
                     android:paddingRight="20px"
@@ -427,7 +429,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape_white"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:paddingBottom="10px"
                     android:paddingLeft="20px"
                     android:paddingRight="20px"
@@ -481,6 +483,33 @@
                         android:textSize="28px" />
                     <!--状态-->
 
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/tv_hint_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:orientation="horizontal"
+                        android:paddingLeft="30px">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorWhite"
+                            android:text="图片:"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px" />
+
+                        <GridView
+                            android:id="@+id/gv_body"
+                            android:layout_width="0dp"
+                            android:numColumns="5"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+                        </GridView>
+
+                    </com.zhy.autolayout.AutoLinearLayout>
+
                 </com.zhy.autolayout.AutoRelativeLayout>
 
             </com.zhy.autolayout.AutoLinearLayout>
@@ -489,17 +518,17 @@
             android:id="@+id/aly"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="90px"
+            android:layout_height="110px"
             android:gravity="center_vertical"
             android:background="#EFEEF3"
             android:orientation="horizontal">
             <Button
                 android:visibility="gone"
-                android:background="#FF9759"
+                android:background="@drawable/shape_common_theme"
                 android:id="@+id/affirm1"
                 android:layout_weight="1"
                 android:textColor="@color/white"
-                android:layout_height="70px"
+                android:layout_height="match_parent"
                 android:text="处理"
                 android:layout_width="0px" />
             <Button
@@ -509,7 +538,7 @@
                 android:layout_weight="1"
                 android:layout_width="0px"
                 android:textColor="@color/white"
-                android:layout_height="70px"
+                android:layout_height="match_parent"
                 android:text="确认收到通知"
                 />
             <Button
@@ -519,7 +548,7 @@
                 android:layout_weight="1"
                 android:layout_width="0px"
                 android:textColor="@color/white"
-                android:layout_height="70px"
+                android:layout_height="match_parent"
                 android:text="一键发起维保"
                 />
         </com.zhy.autolayout.AutoLinearLayout>

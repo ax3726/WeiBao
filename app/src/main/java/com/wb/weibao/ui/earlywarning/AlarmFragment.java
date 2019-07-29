@@ -130,13 +130,13 @@ public class AlarmFragment extends BaseFragment<BaseFragmentPresenter, FragmentA
 
     public  void count()
     {
-        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordCount>(AlarmFragment.this, false) {
                     @Override
                     public void onSuccess(RecordCount baseBean) {
                         LogUtils.e("baseBean" + baseBean.toString());
-                        mBinding.rbLeftTitle.setText("待确认("+baseBean.getData().getAlarmWaitProccessNum()+")");
+//                        mBinding.rbLeftTitle.setText("待确认("+baseBean.getData().getAlarmWaitProccessNum()+")");
 
                     }
 
@@ -151,6 +151,12 @@ public class AlarmFragment extends BaseFragment<BaseFragmentPresenter, FragmentA
     public void refersh(RecordDetailEvent event) {
         count();
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 
 }

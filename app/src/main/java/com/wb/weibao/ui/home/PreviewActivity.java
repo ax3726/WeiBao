@@ -110,7 +110,7 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
     private int mProjectIndex=-1;
     public void getvideourl()
     {
-        Api.getApi().getCameraList(""+MyApplication.getInstance().getUserData().getId())
+        Api.getApi().getCameraList(""+MyApplication.getInstance().getUserData().getPrincipal().getUserId(),MyApplication.getInstance().getProjectId(),"2")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<CameraListBean>(PreviewActivity.this, false) {
                     @Override
@@ -123,10 +123,18 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
 
                                 List<String> lists=new ArrayList<>();
                                 for (CameraListBean.DataBean.ListBean bean:data.getList()) {
-                                    lists.add(bean.getVideoName().toString());
+                                    if(TextUtils.isEmpty(bean.getVideoName())) {
+                                        lists.add(bean.getCameraName());
+                                    }else
+                                        {
+                                            lists.add(bean.getVideoName().toString());
+                                        }
                                 }
                                 projectcameralist(lists.toArray(new String[lists.size()]));
-                            }
+                            }else
+                                {
+                                    UniversalToast.makeText(PreviewActivity.this, "没有获取到视频列表", UniversalToast.LENGTH_SHORT,UniversalToast.EMPHASIZE).setLeftIconRes(R.drawable.ic_view_error).show();
+                                }
 
                         }
 
@@ -526,7 +534,7 @@ mBinding.llyLeft.setOnClickListener(new View.OnClickListener() {
                 mBinding.tvTitle.setText(item);
                 mProjectIndex=index;
                 mBinding.name.setText(item);
-                Api.getApi().getCameraurl(""+MyApplication.getInstance().getUserData().getId(),""+mDataList.get(mProjectIndex).getId())
+                Api.getApi().getCameraurl(""+MyApplication.getInstance().getUserData().getPrincipal().getUserId(),""+mDataList.get(mProjectIndex).getId())
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(PreviewActivity.this, true) {
                             @Override

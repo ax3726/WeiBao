@@ -38,7 +38,7 @@ public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
             ResultResponse resultResponse = gson.fromJson(response, ResultResponse.class);
             if (resultResponse.getCode() == 200) {
                 return gson.fromJson(response, type);
-            } else if (resultResponse.getCode() ==501) {
+            } else if (resultResponse.getCode() ==501 || resultResponse.getCode() ==6037) {
                 throw new ApiException(ResponseCodeEnum.AUTH_FAILURE);
             } else {
                 BaseBean baseBean = gson.fromJson(response, BaseBean.class);

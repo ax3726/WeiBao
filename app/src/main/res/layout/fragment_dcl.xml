@@ -7,10 +7,11 @@
         android:orientation="vertical">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_marginTop="15px"
             android:id="@+id/srl_body"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/colorWhite"
+            android:background="@color/colorf6f6f6"
             android:layout_weight="1">
 
             <android.support.v7.widget.RecyclerView

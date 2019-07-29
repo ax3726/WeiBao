@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,29 +34,28 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 
-
-
 public abstract class BaseFragment<P extends BaseFragmentPresenter, B extends ViewDataBinding> extends RxFragment implements BaseFragmentView, BaseHttpListener {
 
     /**
      * Fragment根视图
      */
-    protected View mFragmentRootView;
-    protected P mPresenter;
-    protected B mBinding;
-    protected Activity aty;
+    protected View           mFragmentRootView;
+    protected P              mPresenter;
+    protected B              mBinding;
+    protected Activity       aty;
+    protected boolean        isHidden        = true;
     /**
      * 加载进度
      */
-    private LoadingDialog mLoadingDialog;
+    private   LoadingDialog  mLoadingDialog;
     protected TitleBarLayout mTitleBarLayout = null;//头部控件
-    protected StateModel mStateModel = new StateModel();//
+    protected StateModel     mStateModel     = new StateModel();//
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         aty = getActivity();
         mFragmentRootView = inflaterView(inflater, container, savedInstanceState);
-
+        Log.e("tag_lm", "onCreateView:");
         if (isPrestener()) {
             mPresenter = createPresenter();
             mPresenter.attachView(this);
@@ -64,7 +64,15 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter, B extends Vi
         initData();
         initView(savedInstanceState);
         initEvent();
+        isHidden = false;
         return mFragmentRootView;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("tag_lm", "onResume:");
     }
 
     /**
@@ -175,12 +183,15 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter, B extends Vi
 
     @Override
     public void showToast(final String s) {
-        aty.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(aty, s, Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (aty != null) {
+            aty.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(aty, s, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
     }
 
     @Override
@@ -279,6 +290,12 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter, B extends Vi
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        isHidden=hidden;
+
+    }
 
     public <T> FlowableTransformer<T, T> callbackOnIOToMainThread() {
         return tObservable -> tObservable.subscribeOn(Schedulers.io())
@@ -291,6 +308,7 @@ public abstract class BaseFragment<P extends BaseFragmentPresenter, B extends Vi
     public void setEmptyState(@EmptyState int emptyState) {
         mStateModel.setEmptyState(emptyState);
     }
+
     @Override
     public void backToLogin() {
         MyApplication.backToLogin(aty, new Intent(aty, LoginActivity.class));

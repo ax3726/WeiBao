@@ -47,7 +47,7 @@ public class FireControlActivity extends BaseActivity<BasePresenter, ActivityFir
     }
 
     public void getDataList() {
-        Api.getApi().getFireControl(MyApplication.getInstance().getUserData().getId() + "", MyApplication.getInstance().getProjectId())
+        Api.getApi().getFireControl(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<FrieControlModel>(this, true) {
                     @Override

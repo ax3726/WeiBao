@@ -82,6 +82,17 @@
             android:textColor="@color/color333333"
             android:textSize="28px" />
         <TextView
+            android:id="@+id/tv_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:lineSpacingExtra="24px"
+            android:paddingLeft="30px"
+            android:paddingTop="5px"
+            android:paddingBottom="10px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+        <TextView
             android:id="@+id/tv_4"
             android:layout_marginTop="20px"
             android:layout_width="match_parent"

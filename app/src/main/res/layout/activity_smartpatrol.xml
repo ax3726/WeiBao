@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/lly_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="72px">
+            <TextView
+                android:textColor="@color/color333333"
+                android:id="@+id/tv_name"
+                android:gravity="center"
+                android:layout_marginLeft="48px"
+                android:drawablePadding="15px"
+                android:drawableRight="@drawable/patrol_name_01"
+                android:text="巡查人"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:textColor="@color/color333333"
+                android:id="@+id/tv_time"
+                android:gravity="center"
+                android:layout_marginLeft="128px"
+                android:drawablePadding="15px"
+                android:drawableRight="@drawable/patrol_name_01"
+                android:text="巡查结束时间"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srl_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/colorWhite"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_body"
+                android:background="@color/colorf6f6f6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>
+

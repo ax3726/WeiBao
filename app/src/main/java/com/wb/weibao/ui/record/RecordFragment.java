@@ -272,7 +272,7 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
                     public void onClick(View v) {
                         Intent intent=new Intent(aty,RecordDetailActivity.class);
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getId());
+                        intent.putExtra("userId", ""+MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                         intent.putExtra("id", ""+item.getId());
                         startActivity(intent);
                     }
@@ -318,8 +318,8 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getRecord_list(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getId(),
+        Api.getApi().getRecord_list(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
+                "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),
                 MyApplication.getInstance().getProjectId(), mPage, mPageSize,name).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<RecordListModel>(this, false) {
                     @Override
@@ -376,5 +376,11 @@ public class RecordFragment extends BaseFragment<BaseFragmentPresenter, Fragemnt
             }
         });
         chooseTypePopupwindow.showPopupWindow(mBinding.llyType);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

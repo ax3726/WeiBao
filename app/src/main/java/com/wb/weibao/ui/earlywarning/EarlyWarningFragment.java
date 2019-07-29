@@ -271,7 +271,7 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
                     public void onClick(View v) {
                         Intent intent = new Intent(aty, EarlyWarningDetailActivity.class);
                         intent.putExtra("item", (Serializable) item);
-                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getId());
+                        intent.putExtra("userId", "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId());
                         intent.putExtra("id", "" + item.getId());
                         startActivity(intent);
                     }
@@ -341,8 +341,8 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
      * 获取预警列表
      */
     private void getErrorList() {
-        Api.getApi().getError_list(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getId(),
+        Api.getApi().getError_list(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
+                "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),
                 MyApplication.getInstance().getProjectId(), 1, mPage, mPageSize, name).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ErrorListModel>(this, false) {
                     @Override
@@ -376,5 +376,11 @@ public class EarlyWarningFragment extends BaseFragment<BaseFragmentPresenter, Fr
     private void stopRefersh() {
         mBinding.srlBody.finishRefresh();
         mBinding.srlBody.finishLoadmore();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -10,6 +10,9 @@ import org.reactivestreams.Subscription;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.security.cert.Certificate;
+
+import javax.net.ssl.SSLHandshakeException;
 
 import retrofit2.HttpException;
 
@@ -53,14 +56,14 @@ public abstract class BaseNetListener<T> implements Subscriber<T> {
         } else if (e instanceof ApiException) {
             ApiException exception = (ApiException) e;
             if (exception.getResponseCode() == ResponseCodeEnum.AUTH_FAILURE) {//token失效 需要重新登录
-                err_msg = "账号验证异常，请重新登陆";
+                err_msg = "账号过期，请重新登陆";
                 if (this.baseHttpListener != null) {
                     this.baseHttpListener.backToLogin();
                 }
             } else {
                 err_msg = "Aip异常";
             }
-
+         //
         } else if (e instanceof SocketTimeoutException) {
             err_msg="连接服务器超时";
         } else if (e instanceof ConnectException) {

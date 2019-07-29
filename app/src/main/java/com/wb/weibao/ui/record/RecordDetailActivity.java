@@ -1,12 +1,21 @@
 package com.wb.weibao.ui.record;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.wb.weibao.adapters.abslistview.CommonAdapter;
+import com.wb.weibao.adapters.abslistview.ViewHolder;
 import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
+import com.wb.weibao.common.Link;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.R;
 import com.wb.weibao.common.Api;
@@ -16,10 +25,15 @@ import com.wb.weibao.model.record.EventReportListbean;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.home.ChangeShiftsActivity;
+import com.wb.weibao.ui.home.MaxPictureActivity;
+import com.wb.weibao.ui.home.WeibaoDetailActivity;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.view.MyAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRecordDetaulBinding> {
 
@@ -61,7 +75,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
         Log.e("qw", list.toString());
         Log.e("qw", list.getPloop());
         mBinding.tv1.setText(list.getWarningTime());
-
+        initAdapter();
 //        mBinding.tv1.setText(DemoUtils.ConvertTimeFormat(list.getEarlyTime(), "yyyy-MM-dd HH:mm:ss"));
 //        showToast("11===="+list.getStatus());
         switch (list.getStatus()) {
@@ -69,29 +83,37 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
                 if (getIntent().getStringExtra("title2").equals("火警")) {
                     mBinding.tv2.setText("待确认");
 //                mBinding.tv2.setTextColor(getResources().getColor(R.color.color00A0F1));
-                    mBinding.aly.setVisibility(View.VISIBLE);
-                    mBinding.affirm3.setVisibility(View.VISIBLE);
+                    if (!getIntent().getStringExtra("mType").equals("7")) {
+                        mBinding.aly.setVisibility(View.VISIBLE);
+                        mBinding.affirm3.setVisibility(View.VISIBLE);
+                    }
                 }else
                     {
                         mBinding.tv2.setText("待处理");
-                        mBinding.aly.setVisibility(View.VISIBLE);
-                        mBinding.affirm1.setVisibility(View.VISIBLE);
-                        mBinding.aly.setVisibility(View.VISIBLE);
-                        mBinding.affirm4.setVisibility(View.VISIBLE);
+                        if (!getIntent().getStringExtra("mType").equals("7")) {
+                            mBinding.aly.setVisibility(View.VISIBLE);
+                            mBinding.affirm1.setVisibility(View.VISIBLE);
+                            mBinding.aly.setVisibility(View.VISIBLE);
+                            mBinding.affirm4.setVisibility(View.GONE);
+                        }
                     }
                 break;
             case "2":
                 mBinding.tv2.setText("待处理");
 //                mBinding.tv2.setTextColor(getResources().getColor(R.color.colorFACF28));
                 if (getIntent().getStringExtra("title2").equals("火警")) {
-                    mBinding.aly.setVisibility(View.VISIBLE);
-                    mBinding.affirm1.setVisibility(View.VISIBLE);
-                    mBinding.affirm1.setBackgroundColor(getResources().getColor(R.color.color36519E));
+                    if (!getIntent().getStringExtra("mType").equals("7")) {
+                        mBinding.aly.setVisibility(View.VISIBLE);
+                        mBinding.affirm1.setVisibility(View.VISIBLE);
+                        mBinding.affirm1.setBackgroundColor(getResources().getColor(R.color.color36519E));
+                    }
                 } else {
-                    mBinding.aly.setVisibility(View.VISIBLE);
-                    mBinding.affirm1.setVisibility(View.VISIBLE);
-                    mBinding.aly.setVisibility(View.VISIBLE);
-                    mBinding.affirm4.setVisibility(View.VISIBLE);
+                    if (!getIntent().getStringExtra("mType").equals("7")) {
+                        mBinding.aly.setVisibility(View.VISIBLE);
+                        mBinding.affirm1.setVisibility(View.VISIBLE);
+                        mBinding.aly.setVisibility(View.VISIBLE);
+                        mBinding.affirm4.setVisibility(View.GONE);
+                    }
                 }
 
 //                mBinding.tv13.setText();
@@ -113,7 +135,9 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
 //                mBinding.affirm1.setVisibility(View.VISIBLE);
 //                mBinding.tv13.setText();
 //                mBinding.tv14.setText();
-                mBinding.relLay3.setVisibility(View.VISIBLE);
+                if (!getIntent().getStringExtra("mType").equals("7")) {
+                    mBinding.relLay3.setVisibility(View.VISIBLE);
+                }
 //                mBinding.tv14.setText((list.getRdescribe() == null) ? "" : ""+list.getRdescribe());
                 break;
 
@@ -151,7 +175,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
 //                break;
 //        }
 
-        mBinding.tv3.setText(getIntent().getStringExtra("title2").toString());
+        mBinding.tv3.setText(getIntent().getStringExtra("title4").toString());
 //        switch (list.getWarningType()) {
 //            case "1":
 //                mBinding.tv4.setText("采集器预警");
@@ -171,23 +195,32 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
 
         switch (list.getEquipmentType()) {
             case "1":
-                mBinding.tv4.setText("采集器");
+//                mBinding.tv4.setText("采集器");
+
+                mBinding.tv7.setText(list.getEquipmentDetails());
                 break;
             case "2":
-                mBinding.tv4.setText("无线设备");
+//                mBinding.tv4.setText("无线设备");
+//                mBinding.tv4.setText(list.getEquipmentName());
+                mBinding.tv7.setText(list.getEquipmentDetails());
                 break;
             case "3":
-                mBinding.tv4.setText("点位");
+//                mBinding.tv4.setText("点位");
+//                mBinding.tv4.setText(list.getEquipmentName());
+                mBinding.tv7.setText(list.getRdescribe());
                 break;
             case "4":
-                mBinding.tv4.setText("电力设备");
+//                mBinding.tv4.setText("电力设备");
+//                mBinding.tv4.setText(list.getEquipmentName());
+                mBinding.tv7.setText(list.getEquipmentDetails());
                 break;
 
         }
+        mBinding.tv4.setText(list.getEquipmentName());
         mBinding.tv5.setText("点位 (" + list.getPloop() + "," + list.getPpoint() + ")");
 
         mBinding.tv6.setText(list.getLevel());
-        mBinding.tv7.setText(list.getEquipmentDetails());
+
 
         mBinding.tv9.setText(list.getInstName());
         mBinding.tv91.setText(list.getProjectName());
@@ -199,7 +232,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
         mBinding.affirm3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().getId(), "2", MyApplication.getInstance().getUserData().getName(), mId)
+                Api.getApi().getearlyRecordUpdate("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), "2", MyApplication.getInstance().getUserData().getName(), mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
                             @Override
@@ -217,7 +250,18 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
             }
         });
 
-
+        mBinding.gvBody.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent in = new Intent();
+                in.setClass(RecordDetailActivity.this, MaxPictureActivity.class);
+                //Will pass, I click for the current position
+                in.putExtra("pos", position);
+                //Will pass,Photos to show the pictures of the collection address
+                in.putStringArrayListExtra("imageAddress", mImgs);
+                startActivity(in);
+            }
+        });
         mBinding.affirm1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,7 +282,7 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
             @Override
             public void onClick(View v) {
 
-                Api.getApi().getQuickAdd("" + MyApplication.getInstance().getUserData().getId(), MyApplication.getInstance().getUserData().getCompanyId(), "1", MyApplication.getInstance().getProjectId(), mId)
+                Api.getApi().getQuickAdd("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"", "1", MyApplication.getInstance().getProjectId(), mId)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(RecordDetailActivity.this, true) {
                             @Override
@@ -264,9 +308,10 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
 
     }
 
-
+    private ArrayList<String> mImgs = new ArrayList<>();
+    private CommonAdapter<String> mAdapter;
     public void getEventReportList() {
-        Api.getApi().getEventReportList("" + MyApplication.getInstance().getUserData().getId(), getIntent().getStringExtra("id").toString())
+        Api.getApi().getEventReportList("" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(), getIntent().getStringExtra("id").toString())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<EventReportListbean>(RecordDetailActivity.this, false) {
                     @Override
@@ -284,6 +329,18 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
                                     }
                                     mBinding.tv14.setText(baseBean.getData().getList().get(0).getDetailReasons());
                                 }
+                                if (!TextUtils.isEmpty(baseBean.getData().getList().get(0).getPicturesOssKeys())) {
+                                    String[] split = baseBean.getData().getList().get(0).getPicturesOssKeys().split(";");
+                                    if (split != null && split.length > 0) {
+                                        for (String str : split) {
+                                            mImgs.add(Link.SEREVE+"oss/download?fileName=" + str);
+                                        }
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                }
+
+
+
                             }
                         }
                     }
@@ -295,5 +352,25 @@ public class RecordDetailActivity extends BaseActivity<BasePresenter, ActivityRe
                 });
 
     }
+
+
+    private void initAdapter() {
+        mAdapter = new CommonAdapter<String>(aty, R.layout.item_add_point_img_layout, mImgs) {
+            @Override
+            protected void convert(ViewHolder viewHolder, String item, int position) {
+                ImageView img = viewHolder.getView(R.id.img);
+                ImageView img_del = viewHolder.getView(R.id.img_del);
+                img_del.setVisibility(View.GONE);
+                GlideUrl glideUrl = new GlideUrl(item, new LazyHeaders.Builder()
+                        .addHeader("Cookie", "JSESSIONID=" + MyApplication.getInstance().getJSESSIONID())
+                        .build());
+                Glide.with(aty).load(glideUrl).into(img);
+
+            }
+        };
+        mBinding.gvBody.setAdapter(mAdapter);
+    }
+
+
 
 }

@@ -227,8 +227,8 @@ public class StatisticsActivity extends BaseActivity<BasePresenter, ActivityStat
      * 设置推送
      */
     private void getErrorData(String flag) {
-        Api.getApi().getErrorData(MyApplication.getInstance().getUserData().getId() + "",
-                MyApplication.getInstance().getProjectId(), MyApplication.getInstance().getUserData().getCompanyId(), flag)
+        Api.getApi().getErrorData(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
+                MyApplication.getInstance().getProjectId(), ""+MyApplication.getInstance().getUserData().getPrincipal().getInstCode(), flag)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<StatisticsModel>(this, true) {
                     @Override
@@ -249,8 +249,8 @@ public class StatisticsActivity extends BaseActivity<BasePresenter, ActivityStat
      * 故障率
      */
     private void getFaultData(String flag) {
-        Api.getApi().getFaultData(MyApplication.getInstance().getUserData().getId() + "",
-                MyApplication.getInstance().getProjectId(), MyApplication.getInstance().getUserData().getCompanyId(), flag)
+        Api.getApi().getFaultData(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
+                MyApplication.getInstance().getProjectId(), MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"", flag)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<StatisticsModel>(this, true) {
                     @Override

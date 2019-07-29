@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,6 +23,8 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityAddDayWeiBaoBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
+import com.wb.weibao.model.event.ErrorEvent;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.utils.DataUtils;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
@@ -30,10 +33,14 @@ import com.wb.weibao.utils.picker.picker.DatePicker;
 import com.wb.weibao.utils.picker.picker.DateTimePicker;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
 import com.wb.weibao.utils.picker.util.LogUtils;
+import com.wb.weibao.view.MyAlertDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -137,6 +144,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
                             mImgs.add("");
                         }
                         mImgs.remove(position);
+                        mImageUUid.remove(position);
                         notifyDataSetChanged();
                     }
                 });
@@ -221,45 +229,50 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
 
     public void submit() {
 
-        mImageUUid.clear();
-        mIndex = 0;
-        if (mImgs.size() > 0) {
-            loadImg(mImgs.get(mIndex));
-        } else {
+//        mImageUUid.clear();
+//        mIndex = 0;
+//        if (mImgs.size() > 0) {
+//            loadImg(mImgs.get(mIndex));
+//        } else {
             addRecord();
-        }
+//        }
+
+
     }
 
     private void loadImg(String str) {
-        if (!TextUtils.isEmpty(str)) {
+//        if (!TextUtils.isEmpty(str)) {
             File file = new File(str);
+            byte[] bytes = DemoUtils.getimageByte(str);
             // MultipartBody.Part  和后端约定好Key，这里的partName是用image
-            MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
+
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), bytes));
+
 
             Api.getApi().upLoad(body)
                     .compose(callbackOnIOToMainThread()).subscribe(new BaseNetListener<BaseBean>(this, true) {
                 @Override
                 public void onSuccess(BaseBean baseBean) {
                     mImageUUid.add(baseBean.getData().toString());
-                    mIndex++;
-                    if (mIndex < mImgs.size()) {
-                        loadImg(mImgs.get(mIndex));
-                    } else {
-                        addRecord();
-                    }
+//                    mIndex++;
+//                    if (mIndex < mImgs.size()) {
+//                        loadImg(mImgs.get(mIndex));
+//                    } else {
+//                        addRecord();
+//                    }
                 }
 
                 @Override
                 public void onFail(String errMsg) {
-                    mBinding.affirm.setEnabled(true);
+//                    mBinding.affirm.setEnabled(true);
                 }
             });
-        } else {
-            addRecord();
-        }
+//        } else {
+//            addRecord();
+//        }
 
     }
+
 
     public void addRecord() {
         String name = mBinding.etName.getText().toString().trim();
@@ -284,7 +297,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
             showToast("请选择维保时间!");
             return;
         }
-        if (TextUtils.isEmpty(time)) {
+        if (TextUtils.isEmpty(NextTime)) {
             showToast("请选择下次维保时间!");
             return;
         }
@@ -292,37 +305,63 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
             showToast("请选择维修单位!");
             return;
         }
-        mBinding.affirm.setEnabled(false);
-        String str = DemoUtils.ListToString(mImageUUid, ";");
 
 
-        Api.getApi().addRecord(MyApplication.getInstance().getUserData().getId() + "",
-                mDataList.get(mProjectIndex).getId()+"", name, phone,DataUtils.formatDate(time+" 00:00:00","yyyy-MM-dd HH:mm:s") ,DataUtils.formatDate(NextTime+" 00:00:00","yyyy-MM-dd HH:mm:ss") +" 00:00:00", str, content)
-                .compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(this, true) {
-                    @Override
-                    public void onSuccess(BaseBean baseBean) {
-                        showToast("提交成功!");
-                        new Thread() {
+
+        Time times = new Time("GMT+8");
+        times.setToNow();
+        int year = times.year;
+        int month = times.month;
+        int day = times.monthDay;
+        int minute = times.minute;
+        int hour = times.hour;
+        int sec = times.second;
+        String date_time=hour+":"+minute+":"+sec;
+
+        new MyAlertDialog(aty).builder()
+                .setMsg("是否要提交该维保记录").setPositiveButton("确认", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBinding.affirm.setEnabled(false);
+                String str = DemoUtils.ListToString(mImageUUid, ";");
+                Api.getApi().addRecord(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
+                        mDataList.get(mProjectIndex).getId()+"", name, phone,DataUtils.formatDate(time+" 00:00:00","yyyy-MM-dd HH:mm:s") ,DataUtils.formatDate(NextTime+" 00:00:00","yyyy-MM-dd HH:mm:ss"), str, content,MyApplication.getInstance().getProjectId(),MyApplication.getInstance().getmProjectName())
+                        .compose(callbackOnIOToMainThread())
+                        .subscribe(new BaseNetListener<BaseBean>(AddDayWeiBaoActivity.this, true) {
                             @Override
-                            public void run() {
-                                super.run();
-                                try {
-                                    sleep(1000);
-                                    finish();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                            public void onSuccess(BaseBean baseBean) {
+                                EventBus.getDefault().post(new RecordDetailEvent());
+                                mImageUUid.clear();
+                                showToast("提交成功!");
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        super.run();
+                                        try {
+                                            sleep(1000);
+                                            finish();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
 
+                                    }
+                                }.start();
                             }
-                        }.start();
-                    }
 
-                    @Override
-                    public void onFail(String errMsg) {
-                        mBinding.affirm.setEnabled(true);
-                    }
-                });
+                            @Override
+                            public void onFail(String errMsg) {
+                                mBinding.affirm.setEnabled(true);
+                            }
+                        });
+            }
+        }).setNegativeButton("取消", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        }).show();
+
+
     }
 
     @Override
@@ -335,6 +374,7 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
                 if (mImgs.size() < 4) {
                     mImgs.add("");
                 }
+                loadImg(result.get(0));
                 mAdapter.notifyDataSetChanged();
 
             }
@@ -349,8 +389,8 @@ public class AddDayWeiBaoActivity extends BaseActivity<BasePresenter, ActivityAd
      * 获取项目列表
      */
     private void getProjectList() {
-        Api.getApi().getProject_list2(MyApplication.getInstance().getUserData().getCompanyId(),
-                "" + MyApplication.getInstance().getUserData().getId(),"1").compose(callbackOnIOToMainThread())
+        Api.getApi().getProject_list2(MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
+                "" + MyApplication.getInstance().getUserData().getPrincipal().getUserId(),"1").compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<ProjectListModel>(this, true) {
                     @Override
                     public void onSuccess(ProjectListModel baseBean) {

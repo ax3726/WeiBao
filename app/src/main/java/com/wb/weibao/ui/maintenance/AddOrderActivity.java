@@ -156,8 +156,8 @@ public class AddOrderActivity extends BaseActivity<BasePresenter, ActivityAddOrd
         mType = mBinding.rbType1.isChecked() ? 1 : 2;
 
         mBinding.tvSubmit.setClickable(false);
-        Api.getApi().addOrder(MyApplication.getInstance().getUserData().getId() + "",
-                MyApplication.getInstance().getUserData().getCompanyId(),
+        Api.getApi().addOrder(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",
+                MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",
                 MyApplication.getInstance().getProjectId(),""+ mType, name, phone, content)
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {

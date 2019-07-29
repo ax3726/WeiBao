@@ -96,7 +96,7 @@ public class MySecurityActivity extends BaseActivity<BasePresenter, ActivityMySe
      * 我的维保
      */
     public void getDataList() {
-        Api.getApi().getMyWeiBao2(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
+        Api.getApi().getMyWeiBao2(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",MyApplication.getInstance().getUserData().getPrincipal().getInstCode()+"",MyApplication.getInstance().getProjectId())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<MaintenanceListModel>(this, true) {
                     @Override

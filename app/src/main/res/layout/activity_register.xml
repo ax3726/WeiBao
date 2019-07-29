@@ -62,5 +62,20 @@
             android:layout_marginTop="63px"
             android:enabled="false"
             android:text="确认保存" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="bottom"
+            android:drawablePadding="8px"
+            android:textColor="#c8c8c8"
+            android:text="联系我们  0571-56260119"
+            android:textSize="12sp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

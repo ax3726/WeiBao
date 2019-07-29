@@ -16,6 +16,7 @@ import com.wb.weibao.databinding.FragmentSecurityBinding;
 import com.wb.weibao.databinding.ItemSecurityBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.MaintenanceListModel;
+import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.utils.DemoUtils;
 
 import java.util.ArrayList;
@@ -97,7 +98,24 @@ public class SecurityFragment extends BaseFragment<BaseFragmentPresenter, Fragme
                 binding.rlyItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(aty, SecurityInfoActivity.class).putExtra("id", listBean.getId() + "").putExtra("type",mType));
+
+                        Api.getApi().getMyWeiBaoInfodetail(listBean.getId()+"", MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
+                                .compose(callbackOnIOToMainThread())
+                                .subscribe(new BaseNetListener<ProjectDetailbean>(SecurityFragment.this, true) {
+                                    @Override
+                                    public void onSuccess(ProjectDetailbean baseBean) {
+                                        startActivity(new Intent(aty, SecurityInfoActivity.class).putExtra("id", listBean.getId() + "").putExtra("type",mType).putExtra("projectid",listBean.getProjectId()));
+
+                                    }
+
+                                    @Override
+                                    public void onFail(String errMsg) {
+
+                                    }
+                                });
+
+
+
                     }
                 });
             }
@@ -122,7 +140,7 @@ public class SecurityFragment extends BaseFragment<BaseFragmentPresenter, Fragme
      */
     private void handleWeiBao(String id, String processingName) {
 //        processingName
-        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getId() + "", "6")
+        Api.getApi().handleWeiBao(id, MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", "6")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override

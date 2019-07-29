@@ -43,6 +43,7 @@ public class MyApplication extends ThisApplication {
     private String token = "";//token
     private LoginModel.DataBean mUserData = null;//用户信息
     private String mProjectId = "";//当前项目id
+    private String mProjectName = "";//当前项目名称
     private String mRegistrationID = "";//RegistrationID
     private String JSESSIONID = "";
 
@@ -176,6 +177,14 @@ public class MyApplication extends ThisApplication {
 
     public void setProjectId(String mProjectId) {
         this.mProjectId = mProjectId;
+    }
+
+    public String getmProjectName() {
+        return mProjectName;
+    }
+
+    public void setmProjectName(String mProjectName) {
+        this.mProjectName = mProjectName;
     }
 
     public LoginModel.DataBean getUserData() {

@@ -114,6 +114,7 @@ public class HandleMaintenanceActivity extends BaseActivity<BasePresenter, Activ
                             mImgs.add("");
                         }
                         mImgs.remove(position);
+                        mImageUUid.remove(position);
                         notifyDataSetChanged();
                     }
                 });
@@ -132,6 +133,7 @@ public class HandleMaintenanceActivity extends BaseActivity<BasePresenter, Activ
                 if (mImgs.size() < 4) {
                     mImgs.add("");
                 }
+                loadImg(result.get(0));
                 mAdapter.notifyDataSetChanged();
 
             }
@@ -144,43 +146,46 @@ public class HandleMaintenanceActivity extends BaseActivity<BasePresenter, Activ
 
     public void submit() {
 
-        mImageUUid.clear();
-        mIndex = 0;
-        if (mImgs.size() > 0) {
-            loadImg(mImgs.get(mIndex));
-        } else {
+//        mImageUUid.clear();
+//        mIndex = 0;
+//        if (mImgs.size() > 0) {
+//            loadImg(mImgs.get(mIndex));
+//        } else {
             addRecord();
-        }
+//        }
     }
 
     private void loadImg(String str) {
-        if (!TextUtils.isEmpty(str)) {
+//        if (!TextUtils.isEmpty(str)) {
             File file = new File(str);
+            byte[] bytes = DemoUtils.getimageByte(str);
             // MultipartBody.Part  和后端约定好Key，这里的partName是用image
+
             MultipartBody.Part body =
-                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), file));
+                    MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/png"), bytes));
 
             Api.getApi().upLoad(body)
                     .compose(callbackOnIOToMainThread()).subscribe(new BaseNetListener<BaseBean>(this, true) {
                 @Override
                 public void onSuccess(BaseBean baseBean) {
                     mImageUUid.add(baseBean.getData().toString());
-                    mIndex++;
-                    if (mIndex < mImgs.size()) {
-                        loadImg(mImgs.get(mIndex));
-                    } else {
-                        addRecord();
-                    }
+//                    mIndex++;
+//                    if (mIndex < mImgs.size()) {
+//                        loadImg(mImgs.get(mIndex));
+//                    } else {
+//                        addRecord();
+//                    }
                 }
 
                 @Override
                 public void onFail(String errMsg) {
-                    mBinding.affirm.setEnabled(true);
+
+//                    mBinding.affirm.setEnabled(true);
                 }
             });
-        } else {
-            addRecord();
-        }
+//        } else {
+//            addRecord();
+//        }
 
     }
 
@@ -195,11 +200,12 @@ public class HandleMaintenanceActivity extends BaseActivity<BasePresenter, Activ
 
         String str = DemoUtils.ListToString(mImageUUid, ";");
 
-        Api.getApi().handleWeiBao2(id, MyApplication.getInstance().getUserData().getId() + "", type, str, content,mBinding.etName.getText().toString())
+        Api.getApi().handleWeiBao2(id, MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", type, str, content,mBinding.etName.getText().toString())
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
+                        mImageUUid.clear();
                         showToast("操作成功!");
                         new Thread() {
                             @Override

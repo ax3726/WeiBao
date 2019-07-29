@@ -169,16 +169,25 @@
             android:layout_height="wrap_content" />
     </com.zhy.autolayout.AutoLinearLayout>
         <TextView
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="8dp"
             android:layout_gravity="bottom"
             android:id="@+id/banben"
             android:drawablePadding="8px"
             android:textColor="#c8c8c8"
-            android:text="当前版本1.0.6"
+            android:text=""
             android:textSize="14sp"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
+        <TextView
+            android:layout_marginBottom="15dp"
+            android:layout_gravity="bottom"
+            android:drawablePadding="8px"
+            android:textColor="#c8c8c8"
+            android:text="联系我们  0571-56260119"
+            android:textSize="12sp"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.zhy.autolayout.AutoLinearLayout>
 </layout>

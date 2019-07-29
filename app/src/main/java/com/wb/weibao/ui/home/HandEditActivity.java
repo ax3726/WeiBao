@@ -55,7 +55,7 @@ public class HandEditActivity extends BaseActivity<BasePresenter, ActivityHandEd
                     showToast("输入内容不能为空!");
                     return;
                 }
-                Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getId() + "",trim)
+                Api.getApi().getQrcodeProccess(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "",trim)
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(HandEditActivity.this, false) {
                             @Override

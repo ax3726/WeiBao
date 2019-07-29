@@ -53,14 +53,14 @@ public class QrcodeActivity extends BaseActivity<BasePresenter,ActivityQrcodeBin
         super.initData();
 
 //
-        Api.getApi().getQrcode(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().getQrcode(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
                         mBinding.code.setText(baseBean.getData().toString());
                         com.lidroid.xutils.util.LogUtils.d("BaseBean=="+baseBean.toString());
-                        String url= Link.SEREVE+"handover/proccess?msg="+baseBean.getData().toString()+"&userId="+MyApplication.getInstance().getUserData().getId();
+                        String url= Link.SEREVE+"handover/proccess?msg="+baseBean.getData().toString()+"&userId="+MyApplication.getInstance().getUserData().getPrincipal().getUserId();
                         mBinding.imageView.setImageBitmap(QrCodeUtil.createQRCode(url,600));
                         getQrcodeResult();
                     }
@@ -80,7 +80,7 @@ public class QrcodeActivity extends BaseActivity<BasePresenter,ActivityQrcodeBin
 
     public void getQrcodeResult()
     {
-        Api.getApi().getQrcodeResult(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().getQrcodeResult(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, false) {
                     @Override

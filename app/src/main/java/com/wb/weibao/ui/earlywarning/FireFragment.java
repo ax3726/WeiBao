@@ -1,36 +1,21 @@
 package com.wb.weibao.ui.earlywarning;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import com.lidroid.xutils.util.LogUtils;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.wb.weibao.R;
-import com.google.android.gms.plus.PlusOneButton;
 import com.wb.weibao.base.BaseFragment;
 import com.wb.weibao.base.BaseFragmentPresenter;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
-import com.wb.weibao.databinding.FragemntEarlyWarningBinding;
 import com.wb.weibao.databinding.FragmentFireBinding;
-import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordDetailEvent;
-import com.wb.weibao.ui.Login.ForgetPwdActivity;
-import com.wb.weibao.ui.home.HomeFragment;
-import com.wb.weibao.ui.mine.MineFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,16 +24,20 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentFireBinding> {
+public class FireFragment extends BaseFragment<BaseFragmentPresenter, FragmentFireBinding> {
 
-    private FragmentManager mFm;
+    private FragmentManager     mFm;
     private FragmentTransaction mTransaction;
-    private List<Fragment> mFragments = new ArrayList<>();
-    private TBCFragment tbcFragment;
+    private List<Fragment>      mFragments = new ArrayList<>();
+    private TBCFragment         tbcFragment;
 
-   private DCLFragment dclFragment;
-   private YCLFragment yclFragment;
-    private int mIndex = 0;//当前模块下标
+    private DCLFragment dclFragment;
+    private YCLFragment yclFragment;
+    private int         mIndex = 0;//当前模块下标
+    private int         mType  = 1;
+    private int         mNum   = 3;
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_fire;
@@ -59,6 +48,28 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         return null;
     }
 
+    public FireFragment setData(int mType, int num) {
+        this.mType = mType;
+        this.mNum = num;
+        return this;
+    }
+
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+
+        if(mType==3||mType==6)
+        {
+            mBinding.rbLeftTitle.setText("待处理");
+        }
+
+        if (mNum == 1) {
+            mBinding.tabTitleGroup.setVisibility(View.GONE);
+        } else if (mNum == 2) {
+            mBinding.rbCenterTitle.setVisibility(View.GONE);
+        }
+
+    }
 
     @Override
     protected void initData() {
@@ -76,9 +87,9 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
 
                             mIndex = 0;
                             changeFragment(0);
-                            if (tbcFragment != null) {
+                           /* if (tbcFragment != null) {
                                 tbcFragment.loadData();
-                            }
+                            }*/
                             count();
                         }
                         break;
@@ -88,23 +99,35 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
                             mIndex = 1;
 
                             changeFragment(1);
-                            if (dclFragment != null) {
+                           /* if (dclFragment != null) {
                                 dclFragment.loadData();
-                            }
+                            }*/
                             count();
                         }
                         break;
 
                     case R.id.rb_right_title:
-                        if (currentFragmentPosition != 2) {
-                            mIndex = 2;
-                            changeFragment(2);
-                            if (yclFragment != null) {
-                                yclFragment.loadData();
-                            }
-                            count();
-                        }
 
+                        if (mType == 3 || mType == 6) {
+                            if (currentFragmentPosition != 1) {
+                                mIndex = 1;
+
+                                changeFragment(1);
+                           /* if (dclFragment != null) {
+                                dclFragment.loadData();
+                            }*/
+                                count();
+                            }
+                        }else {
+                            if (currentFragmentPosition != 2) {
+                                mIndex = 2;
+                                changeFragment(2);
+                           /* if (yclFragment != null) {
+                                yclFragment.loadData();
+                            }*/
+                                count();
+                            }
+                        }
                         break;
                 }
             }
@@ -118,19 +141,32 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
     }
 
     private void initFragment() {
-        tbcFragment= new TBCFragment();
-        mFragments.add(tbcFragment);
+        mBinding.llyBody.removeAllViews();
 
-        dclFragment= new DCLFragment();
+        if(mType!=3&&mType!=6) {
+            tbcFragment = new TBCFragment();
+            tbcFragment.setType(mType);
+            mFragments.add(tbcFragment);
+        }
+
+        dclFragment = new DCLFragment();
+        dclFragment.setType(mType);
         mFragments.add(dclFragment);
 
-        yclFragment= new YCLFragment();
+        yclFragment = new YCLFragment();
+        yclFragment.setType(mType);
         mFragments.add(yclFragment);
 
         mFm = getChildFragmentManager();
         mTransaction = mFm.beginTransaction();
-        mTransaction.add(R.id.lly_body, tbcFragment);
-        mTransaction.show(mFragments.get(0));
+
+        if (mNum == 1) {
+            currentFragmentPosition = 2;
+        }
+        if (!mFragments.get(currentFragmentPosition).isAdded()) {
+            mTransaction.add(R.id.lly_body, mFragments.get(currentFragmentPosition));
+        }
+        mTransaction.show(mFragments.get(currentFragmentPosition));
         mTransaction.commitAllowingStateLoss();
     }
 
@@ -173,24 +209,87 @@ public class FireFragment  extends BaseFragment<BaseFragmentPresenter, FragmentF
         currentFragmentPosition = position;
     }
 
-   public  void count()
-   {
-       Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getId() + "",MyApplication.getInstance().getUserData().getCompanyId(),MyApplication.getInstance().getProjectId())
-               .compose(callbackOnIOToMainThread())
-               .subscribe(new BaseNetListener<RecordCount>(FireFragment.this, false) {
-                   @Override
-                   public void onSuccess(RecordCount baseBean) {
-                       LogUtils.e("baseBean" + baseBean.toString());
-                        mBinding.rbLeftTitle.setText("待确认("+baseBean.getData().getFireWaitConfirmNum()+")");
-                        mBinding.rbCenterTitle.setText("待处理("+baseBean.getData().getFireWaitProccessNum()+")");
+    public void count() {
+        Api.getApi().getRecordcount(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getUserData().getPrincipal().getInstCode() + "", MyApplication.getInstance().getProjectId())
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<RecordCount>(FireFragment.this, false) {
+                    @Override
+                    public void onSuccess(RecordCount baseBean) {
+                        LogUtils.e("baseBean" + baseBean.toString());
+                        RecordCount.DataBean data    = baseBean.getData();
+                        int                  num_que = 0;//待确认
+                        int                  num_chu = 0;//待处理
 
-                   }
+                        switch (mType) {
+                            case 1://远程监控火警
+                                num_que = data.getRemoteMonitoringTbcNum();
+                                num_chu = data.getRemoteMonitoringTbpNum();
+                                break;
+                            case 2://九小场所火警
+                                num_que = data.getNineSmallPlacesTbcNum();
+                                num_chu = data.getNineSmallPlacesTbpNum();
+                                break;
+                            case 3://故障111
+                                num_que = data.getAlarmNum();
+                                break;
+                            case 4://用电异常
+                                num_que = data.getElectricityFaultTbcNum();
+                                num_chu = data.getElectricityFaultTbpNum();
+                                break;
+                            case 5://用水异常111
+                                num_que = data.getWaterFaultTbcNum();
+                                num_chu = data.getWaterFaultTbpNum();
+                                break;
+                            case 6://拆除 防拆待处理
+                                num_que = data.getTamperNum();
+                                break;
+                            case 7://其他
 
-                   @Override
-                   public void onFail(String errMsg) {
+                                break;
+                        }
 
-                   }
-               });
-   }
 
+                        if(mType==3||mType==6)
+                        {
+                            if (num_que == 0) {
+
+                                mBinding.rbLeftTitle.setText("待处理");
+                            } else if (num_que < 100) {
+                                mBinding.rbLeftTitle.setText("待处理(" + num_que + ")");
+                            } else {
+                                mBinding.rbLeftTitle.setText("待处理(99+)");
+                            }
+                        }else {
+                            if (num_que == 0) {
+
+                                mBinding.rbLeftTitle.setText("待确认");
+                            } else if (num_que < 100) {
+                                mBinding.rbLeftTitle.setText("待确认(" + num_que + ")");
+                            } else {
+                                mBinding.rbLeftTitle.setText("待确认(99+)");
+                            }
+                        }
+                        if (num_chu == 0) {
+                            mBinding.rbCenterTitle.setText("待处理");
+                        } else if (num_chu < 100) {
+                            mBinding.rbCenterTitle.setText("待处理(" + num_chu + ")");
+                        } else {
+                            mBinding.rbCenterTitle.setText("待处理(99+)");
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 }

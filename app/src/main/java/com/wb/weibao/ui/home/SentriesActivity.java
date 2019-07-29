@@ -73,7 +73,7 @@ public class SentriesActivity extends BaseActivity<BasePresenter, ActivitySentri
         mBinding.affirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Api.getApi().getCheckadd2(MyApplication.getInstance().getUserData().getId() + "", MyApplication.getInstance().getProjectId())
+                Api.getApi().getCheckadd2(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "", MyApplication.getInstance().getProjectId())
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<BaseBean>(SentriesActivity.this, true) {
                             @Override

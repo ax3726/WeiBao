@@ -184,7 +184,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
      * 检查状态
      */
     private void checkSign() {
-        Api.getApi().checkSign(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().checkSign(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -205,7 +205,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
      * 签到
      */
     private void addSignIn() {
-        Api.getApi().addSignIn(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().addSignIn(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -228,7 +228,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
      * 签退
      */
     private void addSignOut() {
-        Api.getApi().addSignOut(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().addSignOut(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
@@ -251,7 +251,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
      * 签到退   列表
      */
     private void addSignList() {
-        Api.getApi().getSignList(MyApplication.getInstance().getUserData().getId() + "")
+        Api.getApi().getSignList(MyApplication.getInstance().getUserData().getPrincipal().getUserId() + "")
                 .compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<SignListModel>(this, true) {
                     @Override

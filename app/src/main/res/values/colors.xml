@@ -27,7 +27,7 @@
     <color name="color6B7BA8">#6B7BA8</color>
     <color name="light_yellow">#FD542D</color>
     <color name="blue_00b4f0">#00b4f0</color>
-
+    <color name="colorf6f6f6">#F6F6F6</color>
     <!-- Android standard ICS color -->
     <!-- Android standard ICS color -->
     <!-- Android standard ICS color -->
@@ -43,7 +43,7 @@
     <color name="color00A0F1">#00A0F1</color>
     <color name="colorFACF28">#FACF28</color>
     <color name="colorD0D0D0">#D0D0D0</color>
-    <color name="blue">#00AAEE</color>
+    <color name="blue">#3c5cd3</color>
     <color name="transparent40">#66000000</color>
 
     <color name="btn_cancel_color">#999999</color>
@@ -69,4 +69,9 @@
     <color name="actionsheet_blue">#037BFF</color>
     <color name="actionsheet_red">#FD4A2E</color>
     <color name="actionsheet_gray">#8F8F8F</color>
+
+    <color name="color_08B525">#08B525</color>
+    <color name="color_ff6666">#ff6666</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_38539f">#38539f</color>
 </resources>

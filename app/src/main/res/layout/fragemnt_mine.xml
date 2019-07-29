@@ -197,7 +197,7 @@
                 android:drawableLeft="@drawable/kaiguan"
                 android:drawablePadding="8px"
                 android:gravity="center"
-                android:text="预警声音开关"
+                android:text="预警提示开关"
                 android:textColor="@color/color4a4a4a"
                 android:textSize="14sp" />
 
@@ -235,11 +235,12 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/banben"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="当前版本1.0.6" />
+                android:text="" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorWhite">
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30px"
+            android:paddingTop="20px"
+            android:paddingRight="30px"
+            android:paddingBottom="20px">
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="@color/color424242"
+                android:textSize="30px" />
+
+            <TextView
+                android:id="@+id/tv_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="确定"
+                android:textColor="@color/colorTheme"
+                android:textSize="30px" />
+
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorLine" />
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_white"
+            android:paddingLeft="20px"
+            android:paddingTop="30px"
+            android:paddingRight="20px"
+            android:paddingBottom="30px">
+
+            <TextView
+                android:id="@+id/tv_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="上传图片证明（最多上传4张）"
+                android:textColor="#333333" />
+
+            <GridView
+                android:id="@+id/gv_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_below="@+id/tv_picture"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4" />
+
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gv_body"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_white2"
+                android:gravity="left"
+                android:hint="请输入备注信息"
+                android:minHeight="200px"
+                android:paddingLeft="5px"
+                android:paddingTop="10px"
+                android:paddingRight="5px"
+                android:textColor="@color/color333333"
+                android:textSize="26px" />
+        </com.zhy.autolayout.AutoRelativeLayout>
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

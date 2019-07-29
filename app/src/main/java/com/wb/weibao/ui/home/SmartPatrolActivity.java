@@ -29,31 +29,20 @@ import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySmartpatrolBinding;
-import com.wb.weibao.databinding.ActivityWeiRecordBinding;
 import com.wb.weibao.databinding.ItemSmartpatrolLayoutBinding;
-import com.wb.weibao.databinding.ItemWeibaorecordLayoutBinding;
-import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.PatrolUserListBean;
-import com.wb.weibao.model.home.DeviceTypeModel;
-import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.home.SmartPatrolBean;
-import com.wb.weibao.model.record.RecordDetailEvent;
-import com.wb.weibao.ui.Login.LoginActivity;
+
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
-import com.wb.weibao.utils.update.AppUpdateProgressDialog;
-import com.wb.weibao.utils.update.AppUpdateProgressDialog2;
 import com.wb.weibao.utils.update.AppUpdateProgressDialog3;
-import com.wb.weibao.utils.update.DownloadReceiver;
-import com.wb.weibao.utils.update.DownloadService;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+
 
 import java.lang.reflect.Method;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,7 +73,6 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
         super.initTitleBar();
         mTitleBarLayout.setTitle("智慧巡查记录");
         mTitleBarLayout.setRightTxt("开始巡查");
-
     }
 
     private List<SmartPatrolBean.DataBean.ListBean> mDataList = new ArrayList<>();
@@ -131,7 +119,7 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
                            }
                        }else
                        {
-                           showToast("开始巡查");
+                           startActivity(SmartPatrolRecordActivity.class);
                        }
                    }
                });

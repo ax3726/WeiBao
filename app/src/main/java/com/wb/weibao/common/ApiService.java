@@ -3,6 +3,7 @@ package com.wb.weibao.common;
 
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.LoginModel;
+import com.wb.weibao.model.PatrolUserListBean;
 import com.wb.weibao.model.PermissionListBean;
 import com.wb.weibao.model.VersionBean;
 import com.wb.weibao.model.earlywarning.ErrorListModel;
@@ -21,6 +22,8 @@ import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
 import com.wb.weibao.model.home.SmartElectorBean;
+import com.wb.weibao.model.home.SmartElectorDetailBean;
+import com.wb.weibao.model.home.SmartPatrolBean;
 import com.wb.weibao.model.home.StatisticsModel;
 import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.record.EventReportListbean;
@@ -676,8 +679,29 @@ public interface ApiService {
      * @return
      */
     @POST("collector/app/powerDetailApp")
-    Flowable<BaseBean> getPowerDetailApp(@Query("id") String id);
+    Flowable<SmartElectorDetailBean> getPowerDetailApp(@Query("id") String id);
+
+    /**
+     * 巡查记录列表
+     * @param projectId
+     * @param projectName
+     * @param startTime
+     * @param endTime
+     * @param userName
+     * @param page
+     * @param size
+     * @return
+     */
+    @POST("patrol/record/app/list")
+    Flowable<SmartPatrolBean> getPatrolRecordList(@Query("projectId") String projectId, @Query("projectName") String projectName, @Query("startTime") String startTime, @Query("endTime") String endTime, @Query("userName") String userName, @Query("page") String page, @Query("size") String size);
 
 
+    /**
+     * 巡查人列表
+     * @return
+     */
+
+    @POST("patrol/record/app/patrolUserList")
+    Flowable<PatrolUserListBean> getPatrolUserList();
 
 }

@@ -154,8 +154,9 @@
         <activity android:name=".ui.home.MoreActivity" />
         <activity android:name=".ui.home.LinkedServiceWebActivity" />
         <activity android:name=".ui.home.SmartwtaerActivity" />
-        <activity android:name=".ui.home.SmartElectorMonitorActivity" />
         <activity android:name=".ui.home.SmartlectorMonitoringActivity"></activity>
+        <activity android:name=".ui.home.SmartlectorMonitoringDetailActivity"/>
+        <activity android:name=".ui.home.SmartPatrolActivity"/>
     </application>
 
 </manifest>

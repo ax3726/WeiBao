@@ -76,12 +76,31 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
         mAdapter = new CommonAdapter<SmartElectorBean.DataBean.ListBean>(aty, R.layout.item_smartelectormonitor_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, SmartElectorBean.DataBean.ListBean listBean, int position) {
-                showToast("" + mDataList.size());
                 ItemSmartelectormonitorLayoutBinding binding = holder.getBinding(ItemSmartelectormonitorLayoutBinding.class);
                 binding.tv01.setText(mDataList.get(position).getName());
+                switch (mDataList.get(position).getStatusName())
+                {
+                    case "离线":
+                        binding.tv02.setTextColor(getResources().getColor(R.color.color999999));
+                        break;
+                    case "报警":
+                        binding.tv02.setTextColor(getResources().getColor(R.color.colorFF6666));
+                        break;
+                    case "正常":
+                        binding.tv02.setTextColor(getResources().getColor(R.color.color_08B525));
+                        break;
+                }
                 binding.tv02.setText(mDataList.get(position).getStatusName());
                 String CreateTime = mDataList.get(position).getUpdateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(mDataList.get(position).getUpdateTime(), "yyyy-MM-dd HH:mm:ss");
                 binding.tv03.setText(CreateTime);
+                binding.rlyItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        startActivity(new Intent(aty, SmartlectorMonitoringDetailActivity.class).putExtra("id", listBean.getId() + ""));
+
+                    }
+                });
             }
         };
 
@@ -120,11 +139,9 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
      * 获取电路监控列表
      */
     private void getErrorList() {
-        ExecutorService executorService2 = Executors.newSingleThreadExecutor();
-        executorService2.execute(new Runnable() {
-            @Override
-            public void run() {
+
                 Api.getApi().getPowerListApp("" + mPage, "" + mPageSize)
+                        .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<SmartElectorBean>(SmartlectorMonitoringActivity.this, false) {
                             @Override
                             public void onSuccess(SmartElectorBean baseBean) {
@@ -150,10 +167,7 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
                                 stopRefersh();
                             }
                         });
-            }
 
-        });
-        executorService2.shutdown();
 
     }
 

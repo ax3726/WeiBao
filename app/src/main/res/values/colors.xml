@@ -69,4 +69,9 @@
     <color name="actionsheet_blue">#037BFF</color>
     <color name="actionsheet_red">#FD4A2E</color>
     <color name="actionsheet_gray">#8F8F8F</color>
+
+    <color name="color_08B525">#08B525</color>
+    <color name="color_ff6666">#ff6666</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_38539f">#38539f</color>
 </resources>

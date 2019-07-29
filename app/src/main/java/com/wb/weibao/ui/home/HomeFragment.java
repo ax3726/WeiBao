@@ -142,7 +142,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(intent);
                 break;
             case R.id.tv_04://智慧巡查
-             startActivity(SmartlectorMonitoringActivity.class);
+             startActivity(SmartPatrolActivity.class);
                 break;
             case R.id.tv_05://电气
 //                startActivity(new Intent(this.aty, NoDataActivity.class).putExtra("type", 3));

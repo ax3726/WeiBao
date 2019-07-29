@@ -31,6 +31,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.home.SmartPatrolRecordActivity"></activity>
         <activity android:name=".ui.home.SmartElectricActivity" />
         <activity
             android:name=".ui.main.SplashActivity"
@@ -154,9 +155,9 @@
         <activity android:name=".ui.home.MoreActivity" />
         <activity android:name=".ui.home.LinkedServiceWebActivity" />
         <activity android:name=".ui.home.SmartwtaerActivity" />
-        <activity android:name=".ui.home.SmartlectorMonitoringActivity"></activity>
-        <activity android:name=".ui.home.SmartlectorMonitoringDetailActivity"/>
-        <activity android:name=".ui.home.SmartPatrolActivity"/>
+        <activity android:name=".ui.home.SmartlectorMonitoringActivity" />
+        <activity android:name=".ui.home.SmartlectorMonitoringDetailActivity" />
+        <activity android:name=".ui.home.SmartPatrolActivity" />
     </application>
 
 </manifest>

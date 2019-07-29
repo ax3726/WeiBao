@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/searchview"
+            android:layout_width="match_parent"
+            android:layout_height="75px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="20px"
+            android:layout_marginBottom="20px"
+            android:layout_marginRight="30px"
+            android:background="@color/colorWhite"
+            android:gravity="clip_vertical"
+            android:iconifiedByDefault="false"
+            android:queryHint="巡查点/地址查询"
+            android:textSize="14dp"></SearchView>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srl_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rc_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    </com.zhy.autolayout.AutoLinearLayout>
+</layout>

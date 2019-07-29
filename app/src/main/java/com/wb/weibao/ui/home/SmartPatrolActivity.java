@@ -19,23 +19,13 @@ import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySmartpatrolBinding;
-import com.wb.weibao.databinding.ActivityWeiRecordBinding;
 import com.wb.weibao.databinding.ItemSmartpatrolLayoutBinding;
-import com.wb.weibao.databinding.ItemWeibaorecordLayoutBinding;
-import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.PatrolUserListBean;
-import com.wb.weibao.model.home.DeviceTypeModel;
-import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.home.SmartPatrolBean;
-import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +58,7 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
         mTitleBarLayout.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(SmartPatrolRecordActivity.class);
             }
         });
     }

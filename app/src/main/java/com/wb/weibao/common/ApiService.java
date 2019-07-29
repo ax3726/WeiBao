@@ -18,6 +18,7 @@ import com.wb.weibao.model.home.FrieControlModel;
 import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.home.MaintenanceListModel;
 import com.wb.weibao.model.home.MaintenanceRecordDetailBean;
+import com.wb.weibao.model.home.PatrolEndStatusBean;
 import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
@@ -703,5 +704,16 @@ public interface ApiService {
 
     @POST("patrol/record/app/patrolUserList")
     Flowable<PatrolUserListBean> getPatrolUserList();
+
+    /**
+     * 判断巡查是否结束
+     * @return
+     */
+    @POST("patrol/record/app/getPatrolEndStatus")
+    Flowable<PatrolEndStatusBean> gtPatrolEndStatus();
+
+
+    @POST("patrol/record/app/endPatrol")
+    Flowable<BaseBean> getEndPatrol(@Query("id") String id,@Query("trajectoryOssKeys") String trajectoryOssKeys);
 
 }

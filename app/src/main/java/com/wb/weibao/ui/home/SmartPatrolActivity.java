@@ -1,9 +1,19 @@
 package com.wb.weibao.ui.home;
 
 import android.annotation.SuppressLint;
+import android.app.AppOpsManager;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Binder;
+import android.os.Build;
+import android.os.Handler;
+import android.provider.Settings;
+import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -28,15 +38,22 @@ import com.wb.weibao.model.home.DeviceTypeModel;
 import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.home.SmartPatrolBean;
 import com.wb.weibao.model.record.RecordDetailEvent;
+import com.wb.weibao.ui.Login.LoginActivity;
 import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
+import com.wb.weibao.utils.update.AppUpdateProgressDialog;
+import com.wb.weibao.utils.update.AppUpdateProgressDialog2;
+import com.wb.weibao.utils.update.AppUpdateProgressDialog3;
+import com.wb.weibao.utils.update.DownloadReceiver;
+import com.wb.weibao.utils.update.DownloadService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +61,8 @@ import java.util.List;
 
 public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySmartpatrolBinding> {
 
+
+    private AppUpdateProgressDialog3 appUpdateProgressDialog3;
 
     @Override
     protected int getLayoutId() {
@@ -65,12 +84,7 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
         super.initTitleBar();
         mTitleBarLayout.setTitle("智慧巡查记录");
         mTitleBarLayout.setRightTxt("开始巡查");
-        mTitleBarLayout.setRightListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
     }
 
     private List<SmartPatrolBean.DataBean.ListBean> mDataList = new ArrayList<>();
@@ -80,33 +94,74 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
     private String name = "";
     private String starttime = "";
     private String endtime = "";
+
     @Override
     protected void initData() {
         super.initData();
 
-mBinding.tvName.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
 
-        getPatrolUserList();
-    }
-});
-mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        mBinding.tvTime.setTextColor(getResources().getColor(R.color.color_38539f));
-        Drawable drawable=getResources().getDrawable(R.drawable.patrol_name_02);
-        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-        mBinding.tvTime.setCompoundDrawables(null,null,drawable,null);
-        Picker();
-    }
-});
+       mTitleBarLayout.setRightListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               appUpdateProgressDialog3 = new AppUpdateProgressDialog3(SmartPatrolActivity.this);
+               appUpdateProgressDialog3.setOnItemUpdateClickListener(new AppUpdateProgressDialog3.onItemUpdateListener() {
+                   @Override
+                   public void onUpdateClick(View view) {
+                       appUpdateProgressDialog3.dismiss();
+                       int checkResult = checkOp(SmartPatrolActivity.this, 2, AppOpsManager.OPSTR_FINE_LOCATION);//其中2代表AppOpsManager.OP_GPS，如果要判断悬浮框权限，第二个参数需换成24即AppOpsManager。OP_SYSTEM_ALERT_WINDOW及，第三个参数需要换成AppOpsManager.OPSTR_SYSTEM_ALERT_WINDOW
+                       int checkResult2 = checkOp(SmartPatrolActivity.this, 1, AppOpsManager.OPSTR_FINE_LOCATION);
+                       if (AppOpsManagerCompat.MODE_IGNORED == checkResult || AppOpsManagerCompat.MODE_IGNORED == checkResult2)
+                       {
+                           Intent intent = new Intent();
+                           //应用详情页面
+                           intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                           intent.setData(Uri.parse("package:" + getPackageName()));
+
+                           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                           try {
+                               startActivity(intent);
+                           } catch (ActivityNotFoundException ex) {
+                               //如果页面无法打开，进入设置页面
+                               intent.setAction(Settings.ACTION_SETTINGS);
+                               try {
+                                   startActivity(intent);
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                       }else
+                       {
+                           showToast("开始巡查");
+                       }
+                   }
+               });
+               appUpdateProgressDialog3.show();
+           }
+       });
+
+        mBinding.tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                getPatrolUserList();
+            }
+        });
+        mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBinding.tvTime.setTextColor(getResources().getColor(R.color.color_38539f));
+                Drawable drawable = getResources().getDrawable(R.drawable.patrol_name_02);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                mBinding.tvTime.setCompoundDrawables(null, null, drawable, null);
+                Picker();
+            }
+        });
 
         mAdapter = new CommonAdapter<SmartPatrolBean.DataBean.ListBean>(aty, R.layout.item_smartpatrol_layout, mDataList) {
             @Override
             protected void convert(ViewHolder holder, SmartPatrolBean.DataBean.ListBean listBean, int position) {
                 ItemSmartpatrolLayoutBinding binding = holder.getBinding(ItemSmartpatrolLayoutBinding.class);
-                binding.tv02.setText(mDataList.get(position).getUserName()+"/"+mDataList.get(position).getUserPhone());
+                binding.tv02.setText(mDataList.get(position).getUserName() + "/" + mDataList.get(position).getUserPhone());
                 String CreateTime = mDataList.get(position).getPatrolEndTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(mDataList.get(position).getPatrolEndTime(), "yyyy-MM-dd HH:mm:ss");
                 binding.tv04.setText(CreateTime);
 
@@ -151,12 +206,11 @@ mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
     }
 
 
-
     /**
      * 获取维保记录列表
      */
     private void getErrorList() {
-        Api.getApi().getPatrolRecordList(MyApplication.getInstance().getProjectId(),MyApplication.getInstance().getmProjectName(),starttime,endtime,name,"" + mPage, "" + mPageSize).compose(callbackOnIOToMainThread())
+        Api.getApi().getPatrolRecordList(MyApplication.getInstance().getProjectId(), MyApplication.getInstance().getmProjectName(), starttime, endtime, name, "" + mPage, "" + mPageSize).compose(callbackOnIOToMainThread())
                 .subscribe(new BaseNetListener<SmartPatrolBean>(this, false) {
                     @Override
                     public void onSuccess(SmartPatrolBean baseBean) {
@@ -198,8 +252,6 @@ mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
     }
 
 
-
-
     /**
      * 类型列表
      */
@@ -217,9 +269,9 @@ mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
                             }
                             project(lists.toArray(new String[lists.size()]));
                             mBinding.tvName.setTextColor(getResources().getColor(R.color.color_38539f));
-                            Drawable drawable=getResources().getDrawable(R.drawable.patrol_name_02);
-                            drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-                            mBinding.tvName.setCompoundDrawables(null,null,drawable,null);
+                            Drawable drawable = getResources().getDrawable(R.drawable.patrol_name_02);
+                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                            mBinding.tvName.setCompoundDrawables(null, null, drawable, null);
                         }
                     }
 
@@ -233,7 +285,7 @@ mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
 
 
     @SuppressLint("ResourceAsColor")
-    public void project(String[] strs ) {
+    public void project(String[] strs) {
         SinglePicker<String> picker = new SinglePicker<>(this,
                 strs);
         picker.setCanLoop(false);//不禁用循环
@@ -263,11 +315,11 @@ mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onItemPicked(int index, String item) {
                 mBinding.tvName.setTextColor(getResources().getColor(R.color.color333333));
-                Drawable drawable=getResources().getDrawable(R.drawable.patrol_name_01);
-                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-                mBinding.tvName.setCompoundDrawables(null,null,drawable,null);
+                Drawable drawable = getResources().getDrawable(R.drawable.patrol_name_01);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                mBinding.tvName.setCompoundDrawables(null, null, drawable, null);
                 mBinding.tvName.setText(item);
-                name=item;
+                name = item;
                 mBinding.srlBody.resetNoMoreData();
                 mPage = 1;
                 getErrorList();
@@ -283,12 +335,12 @@ mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
                 mBinding.tvTime.setTextColor(getResources().getColor(R.color.color333333));
-                Drawable drawable=getResources().getDrawable(R.drawable.patrol_name_01);
-                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-                mBinding.tvTime.setCompoundDrawables(null,null,drawable,null);
+                Drawable drawable = getResources().getDrawable(R.drawable.patrol_name_01);
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                mBinding.tvTime.setCompoundDrawables(null, null, drawable, null);
                 mBinding.tvTime.setText(getTime(date));
-                starttime=getTime(date)+" 00:00:00";
-                endtime=getTime(date)+" 23:59:59";
+                starttime = getTime(date) + " 00:00:00";
+                endtime = getTime(date) + " 23:59:59";
                 mBinding.srlBody.resetNoMoreData();
                 mPage = 1;
                 getErrorList();
@@ -318,10 +370,58 @@ mBinding.tvTime.setOnClickListener(new View.OnClickListener() {
 
 
     }
+
     private String getTime(Date date) {//可根据需要自行截取数据显示
         //"YYYY-MM-DD HH:MM:SS"        "yyyy-MM-dd"
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
+    }
+
+
+    /**
+     * 手机是否开启位置服务，如果没有开启那么所有app将不能使用定位功能
+     */
+    public static boolean isLocServiceEnable(Context context) {
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean network = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if (gps || network) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 检查权限列表
+     *
+     * @param context
+     * @param op       这个值被hide了，去AppOpsManager类源码找，如位置权限 AppOpsManager.OP_GPS==2
+     * @param opString 如判断定位权限 AppOpsManager.OPSTR_FINE_LOCATION
+     * @return @see 如果返回值 AppOpsManagerCompat.MODE_IGNORED 表示被禁用了
+     */
+    public static int checkOp(Context context, int op, String opString) {
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 19) {
+            Object object = context.getSystemService(Context.APP_OPS_SERVICE);
+//      Object object = context.getSystemService("appops");
+            Class c = object.getClass();
+            try {
+                Class[] cArg = new Class[3];
+                cArg[0] = int.class;
+                cArg[1] = int.class;
+                cArg[2] = String.class;
+                Method lMethod = c.getDeclaredMethod("checkOp", cArg);
+                return (Integer) lMethod.invoke(object, op, Binder.getCallingUid(), context.getPackageName());
+            } catch (Exception e) {
+                e.printStackTrace();
+                if (Build.VERSION.SDK_INT >= 23) {
+                    return AppOpsManagerCompat.noteOp(context, opString, context.getApplicationInfo().uid,
+                            context.getPackageName());
+                }
+
+            }
+        }
+        return -1;
     }
 
 

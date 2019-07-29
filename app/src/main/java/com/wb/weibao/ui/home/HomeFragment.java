@@ -2,6 +2,7 @@ package com.wb.weibao.ui.home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -22,10 +23,12 @@ import com.wb.weibao.common.PlayNumService;
 import com.wb.weibao.common.TimeTaskService;
 import com.wb.weibao.databinding.FragmentHomeLayoutBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.PatrolUserListBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ErrorEvent;
 import com.wb.weibao.model.event.ProjectChangeEvent;
 import com.wb.weibao.model.home.HomePageStatisticsBean;
+import com.wb.weibao.model.home.PatrolEndStatusBean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.model.record.RecordListModel;
@@ -43,6 +46,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +109,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
             getProjectList2();
         }
 
-
+        getPatrolEndStatus();
 
 
     }
@@ -404,6 +408,61 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                     }
                 });
     }
+
+    /**
+     * 查询是否结束
+     */
+    private void getPatrolEndStatus() {
+        Api.getApi().gtPatrolEndStatus()
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<PatrolEndStatusBean>(this, false) {
+                    @Override
+                    public void onSuccess(PatrolEndStatusBean baseBean) {
+                       if(baseBean.getData().isIsEnd()==false)
+                       {
+                           new MyAlertDialog(aty).builder().setTitle("提示")
+                                   .setMsg("您还未结束巡查，是否继续巡查？").setNegativeButton("结束巡查", new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
+                                   getEndPatrol(baseBean.getData().getPatrolRecordId());
+                               }
+                           }).setPositiveButton("继续巡查", new View.OnClickListener() {
+                               @Override
+                               public void onClick(View v) {
+                                  showToast("进入巡查");
+                               }
+                           }).show();
+                       }
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
+    }
+
+    private void getEndPatrol(String id) {
+        Api.getApi().getEndPatrol(id,"")
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(this, false) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
+
+                    }
+
+                    @Override
+                    public void onFail(String errMsg) {
+
+                    }
+                });
+
+    }
+
+
+
 
 
     private CountDownTimer countDownTimer;

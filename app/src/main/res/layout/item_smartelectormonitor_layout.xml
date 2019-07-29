@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rly_item"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:gravity="clip_vertical">
+        <TextView
+            android:layout_marginTop="20px"
+            android:id="@+id/tv_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="碎冰机用电电源回路"
+            android:layout_marginLeft="48px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="28px"
+            android:layout_gravity="right"
+            android:id="@+id/tv_02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="25px"
+            android:drawableRight="@drawable/mine_right_icon"
+            android:text="正常"
+            android:layout_marginLeft="48px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+        <TextView
+            android:layout_below="@id/tv_01"
+            android:layout_marginTop="15px"
+            android:id="@+id/tv_03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019.09.08 12:30:33"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="48px"
+            android:textColor="@color/color333333"
+            android:textSize="28px" />
+
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+</layout>

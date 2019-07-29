@@ -173,7 +173,9 @@ public class WarningFragment extends BaseFragment<BaseFragmentPresenter, Fragemn
     }
 
     public void toLoadData() {
-
+        if(mFragments.size()>6) {
+            EventBus.getDefault().post(new RecordDetailEvent());
+        }
        /* if (fireFragment != null) {
             fireFragment.toLoadData();
         }

@@ -368,10 +368,10 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                     @Override
                     public void onSuccess(RecordCount baseBean) {
                         LogUtils.e("baseBean" + baseBean.toString());
-                        if((baseBean.getData().getRemoteMonitoringCountNum()+baseBean.getData().getNineSmallPlacesCountNum())>0)
+                        if((baseBean.getData().getRemoteMonitoringTbcNum()+baseBean.getData().getNineSmallPlacesTbcNum()+baseBean.getData().getElectricityFaultTbcNum()+baseBean.getData().getWaterFaultTbcNum())>0)
                         {
                             MyApplication.getInstance().setErrorlist("1");
-                                geterrortoast();
+                            geterrortoast();
                         }
 
                     }
@@ -594,7 +594,7 @@ public class MainActivity extends BaseActivity<BasePresenter, ActivityMainBindin
                         LogUtils.e("baseBean"+versionBean.toString());
                         if(compareVersion(BuildConfig.VERSION_NAME,versionBean.getData().getAndroidVersion())==-1)
                         {
-                            appUpdateProgressDialog2 = new AppUpdateProgressDialog2(MainActivity.this,"1.首页增加当日报警数据统计；<br>2.报警分类更加清晰；<br>3.优化了很多功能呦；");
+                            appUpdateProgressDialog2 = new AppUpdateProgressDialog2(MainActivity.this,versionBean.getData().getAndroidInfo(),versionBean.getData().getAndroidVersion());
                             appUpdateProgressDialog2.setOnItemUpdateClickListener(new AppUpdateProgressDialog2.onItemUpdateListener() {
                                 @Override
                                 public void onUpdateClick(View view) {

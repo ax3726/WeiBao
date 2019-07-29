@@ -183,11 +183,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
                     android:drawablePadding="30px"
-                    android:drawableTop="@drawable/home_tv_04"
+                    android:drawableTop="@drawable/home_xunfang"
                     android:gravity="center"
                     android:paddingBottom="22px"
                     android:paddingTop="48px"
-                    android:text="预警统计"
+                    android:text="智慧巡查"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
 
@@ -291,11 +291,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
                     android:drawablePadding="30px"
-                    android:drawableTop="@drawable/home_tv_08"
+                    android:drawableTop="@drawable/home_tv_04"
                     android:gravity="center"
                     android:paddingBottom="22px"
                     android:paddingTop="54px"
-                    android:text="关联服务"
+                    android:text="预警统计"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
 
@@ -318,11 +318,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
                     android:drawablePadding="30px"
-                    android:drawableTop="@drawable/home_tv_09"
+                    android:drawableTop="@drawable/home_tv_08"
                     android:gravity="center"
                     android:paddingBottom="22px"
                     android:paddingTop="50px"
-                    android:text="培训教育"
+                    android:text="关联服务"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
 
@@ -335,29 +335,30 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
                     android:drawablePadding="30px"
-                    android:drawableTop="@drawable/home_tv_10"
+                    android:drawableTop="@drawable/home_tv_09"
                     android:gravity="center"
                     android:paddingBottom="22px"
                     android:paddingTop="50px"
-                    android:text="更多功能"
+                    android:text="培训教育"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
 
                 <TextView
+                    android:id="@+id/tv_11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16px"
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
                     android:drawablePadding="30px"
-                    android:drawableTop="@mipmap/home_peixun_icon"
+                    android:drawableTop="@drawable/home_tv_10"
                     android:gravity="center"
                     android:paddingBottom="22px"
-                    android:paddingTop="44px"
-                    android:text="培训教育"
+                    android:paddingTop="50px"
+                    android:text="更多功能"
                     android:textColor="@color/color333333"
                     android:textSize="26px"
-                    android:visibility="invisible" />
+                    />
 
                 <TextView
                     android:layout_width="0dp"

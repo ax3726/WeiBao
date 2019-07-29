@@ -15,16 +15,11 @@ import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivityWeiRecordBinding;
-import com.wb.weibao.databinding.ItemRecordTbcLayoutBinding;
+
 import com.wb.weibao.databinding.ItemWeibaorecordLayoutBinding;
-import com.wb.weibao.model.BaseBean;
-import com.wb.weibao.model.PermissionListBean;
 import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.record.RecordDetailEvent;
-import com.wb.weibao.model.record.RecordListModel;
-import com.wb.weibao.ui.earlywarning.TBCFragment;
 import com.wb.weibao.utils.DemoUtils;
-import com.wb.weibao.utils.picker.util.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

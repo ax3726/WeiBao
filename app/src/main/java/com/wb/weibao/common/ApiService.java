@@ -20,6 +20,7 @@ import com.wb.weibao.model.home.MaintenanceRecordDetailBean;
 import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
+import com.wb.weibao.model.home.SmartElectorBean;
 import com.wb.weibao.model.home.StatisticsModel;
 import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.record.EventReportListbean;
@@ -654,5 +655,29 @@ public interface ApiService {
 
     @POST("permission/list")
     Flowable<PermissionListBean> getPermissionList(@Query("groupType") String groupType);
+
+
+
+    //1.1.3需求
+
+
+    /**
+     * 电路监控列表
+     * @param page
+     * @param size
+     * @return
+     */
+    @POST("collector/app/powerListApp")
+    Flowable<SmartElectorBean> getPowerListApp(@Query("page") String page, @Query("size") String size);
+
+    /**
+     * 电路监控详情
+     * @param id
+     * @return
+     */
+    @POST("collector/app/powerDetailApp")
+    Flowable<BaseBean> getPowerDetailApp(@Query("id") String id);
+
+
 
 }

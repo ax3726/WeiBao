@@ -25,23 +25,23 @@ public  class AppUpdateProgressDialog2 extends Dialog {
     private TextView text_update;
 
 
-    public AppUpdateProgressDialog2(Context context,String str) {
+    public AppUpdateProgressDialog2(Context context,String str,String version) {
         super(context, R.style.Custom_Progress);
-        initLayout(str);
+        initLayout(str,version);
     }
 
-    public AppUpdateProgressDialog2(Context context, int theme,String str) {
+    public AppUpdateProgressDialog2(Context context, int theme,String str,String version) {
         super(context, R.style.Custom_Progress);
-        initLayout(str);
+        initLayout(str,version);
     }
 
-    private void initLayout(String str) {
+    private void initLayout(String str ,String versions) {
         this.setContentView(R.layout.update_progress2);
         getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         context= (TextView) findViewById(R.id.text);
         text_update= (TextView) findViewById(R.id.update_tv);
         version= (TextView) findViewById(R.id.version);
-        version.setText("V"+ BuildConfig.VERSION_NAME);
+        version.setText("V"+ versions);
         Spanned spanned=Html.fromHtml(str);
         context.setText(spanned);
         text_update.setOnClickListener(new View.OnClickListener() {

@@ -42,8 +42,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -77,6 +81,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
         mBinding.tv08.setOnClickListener(this);
         mBinding.tv09.setOnClickListener(this);
         mBinding.tv10.setOnClickListener(this);
+        mBinding.tv11.setOnClickListener(this);
         mBinding.tvProject.setOnClickListener(this);
         mBinding.lookDetails.setOnClickListener(this);
 
@@ -99,7 +104,9 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 //                getProjectList();
             getProjectList2();
         }
-        getHomePageStatistics();
+
+
+
 
     }
 
@@ -134,12 +141,8 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 intent.putExtra("ProjectName",mBinding.tvProject.getText());
                 startActivity(intent);
                 break;
-            case R.id.tv_04://警报统计
-                if (mBinding.tvProject.getText().equals("全部项目")) {
-                    showToast("请选择项目单位");
-                    return;
-                }
-                startActivity(StatisticsActivity.class);
+            case R.id.tv_04://智慧巡查
+             startActivity(SmartlectorMonitoringActivity.class);
                 break;
             case R.id.tv_05://电气
 //                startActivity(new Intent(this.aty, NoDataActivity.class).putExtra("type", 3));
@@ -163,13 +166,20 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 }
                 startActivity(FireControlActivity.class);
                 break;
-            case R.id.tv_08://关联服务
+            case R.id.tv_08://预警统计
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
+                startActivity(StatisticsActivity.class);
+                break;
+            case R.id.tv_09://关联服务
                 startActivity(LinkedServiceActivity.class);
                 break;
-            case R.id.tv_09://培训教育
+            case R.id.tv_10://培训教育
                 startActivity(TrainingEducationActivity.class);
                 break;
-            case R.id.tv_10://更多功能
+            case R.id.tv_11://更多功能
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
@@ -231,6 +241,12 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 //
 
         }
+
+
+
+
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -275,7 +291,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 //                                getErrorList();
                                 LogUtils.e("ee==开始获取接口");
                                 EventBus.getDefault().post(new ErrorEvent());
-
+                                getHomePageStatistics();
 
                             }
 
@@ -320,7 +336,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 //                                getErrorList();
                                 LogUtils.e("ee==开始获取接口");
                                 EventBus.getDefault().post(new ErrorEvent());
-
+                                getHomePageStatistics();
                             }
 
                         }

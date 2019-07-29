@@ -133,7 +133,7 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                     public void onSuccess(VersionBean versionBean) {
                         LogUtils.e("baseBean" + versionBean.toString());
                         if (compareVersion(BuildConfig.VERSION_NAME, versionBean.getData().getAndroidVersion()) == -1) {
-                            appUpdateProgressDialog2 = new AppUpdateProgressDialog2(LoginActivity.this, "1.首页增加当日报警数据统计；<br>2.报警分类更加清晰；<br>3.优化了很多功能呦");
+                            appUpdateProgressDialog2 = new AppUpdateProgressDialog2(LoginActivity.this, versionBean.getData().getAndroidInfo(),versionBean.getData().getAndroidVersion());
                             appUpdateProgressDialog2.setOnItemUpdateClickListener(new AppUpdateProgressDialog2.onItemUpdateListener() {
                                 @Override
                                 public void onUpdateClick(View view) {

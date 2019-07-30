@@ -35,10 +35,11 @@ public class ConfirmPopupwindow extends PopupWindow {
     public static final int                        RequestCode = 1001;
     private             List<String>               mImgs       = new ArrayList<>();
     private             CommonAdapter<String>      mAdapter;
-    private String type;
-    public ConfirmPopupwindow(Activity activity,String types) {
+    private             String                     type;
+
+    public ConfirmPopupwindow(Activity activity, String types) {
         aty = activity;
-        type=types;
+        type = types;
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.popuwindows_ok_layout, null, false);
 
         // 设置SelectPicPopupWindow的View
@@ -46,12 +47,11 @@ public class ConfirmPopupwindow extends PopupWindow {
         // 设置Popupwindow弹出窗体的宽
         this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         //设置Popupwindow弹出窗体的高
-        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
 
         this.setFocusable(true);
-        this.setOutsideTouchable(false);
+        this.setOutsideTouchable(true);
         //点击空白处时，隐藏掉pop窗口
-
         this.setBackgroundDrawable(new BitmapDrawable());
         backgroundAlpha(0.7f);
         //添加pop窗口关闭事件

@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.AppOpsManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -123,10 +124,11 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
                        {
                            Api.getApi().getPatrolAppStartPatrol()
                                    .compose(callbackOnIOToMainThread())
-                                   .subscribe(new BaseNetListener<BaseBean>(SmartPatrolActivity.this, false) {
+                                   .subscribe(new BaseNetListener<BaseBean<Integer>>(SmartPatrolActivity.this, false) {
                                        @Override
-                                       public void onSuccess(BaseBean baseBean) {
+                                       public void onSuccess(BaseBean<Integer> baseBean) {
                                             String patrolRecordId=baseBean.getData().toString();
+
                                            startActivity(new Intent(aty, SmartPatrolRecordActivity.class).putExtra("patrolRecordId", patrolRecordId));
 
                                        }

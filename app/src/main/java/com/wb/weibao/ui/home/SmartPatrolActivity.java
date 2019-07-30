@@ -30,7 +30,9 @@ import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySmartpatrolBinding;
 import com.wb.weibao.databinding.ItemSmartpatrolLayoutBinding;
+import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.PatrolUserListBean;
+import com.wb.weibao.model.home.PatrolEndStatusBean;
 import com.wb.weibao.model.home.SmartPatrolBean;
 
 import com.wb.weibao.utils.DemoUtils;
@@ -38,7 +40,7 @@ import com.wb.weibao.utils.picker.common.LineConfig;
 import com.wb.weibao.utils.picker.listeners.OnItemPickListener;
 import com.wb.weibao.utils.picker.picker.SinglePicker;
 import com.wb.weibao.utils.update.AppUpdateProgressDialog3;
-
+import com.wb.weibao.view.MyAlertDialog;
 
 
 import java.lang.reflect.Method;
@@ -119,7 +121,23 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
                            }
                        }else
                        {
-                           startActivity(SmartPatrolRecordActivity.class);
+                           Api.getApi().getPatrolAppStartPatrol()
+                                   .compose(callbackOnIOToMainThread())
+                                   .subscribe(new BaseNetListener<BaseBean>(SmartPatrolActivity.this, false) {
+                                       @Override
+                                       public void onSuccess(BaseBean baseBean) {
+                                            String patrolRecordId=baseBean.getData().toString();
+                                           startActivity(new Intent(aty, SmartPatrolRecordActivity.class).putExtra("patrolRecordId", patrolRecordId));
+
+                                       }
+
+                                       @Override
+                                       public void onFail(String errMsg) {
+
+                                       }
+                                   });
+
+
                        }
                    }
                });

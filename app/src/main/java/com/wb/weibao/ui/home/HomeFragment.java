@@ -429,7 +429,9 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                            }).setPositiveButton("继续巡查", new View.OnClickListener() {
                                @Override
                                public void onClick(View v) {
-                                  showToast("进入巡查");
+
+                                   startActivity(new Intent(aty, SmartPatrolRecordActivity.class).putExtra("patrolRecordId", baseBean.getData().getPatrolRecordId()));
+
                                }
                            }).show();
                        }

@@ -181,7 +181,6 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
 
 
     private void loadImg(String str) {
-//        if (!TextUtils.isEmpty(str)) {
             File file = new File(str);
             byte[] bytes = DemoUtils.getimageByte(str);
             // MultipartBody.Part  和后端约定好Key，这里的partName是用image
@@ -195,23 +194,12 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
                 @Override
                 public void onSuccess(BaseBean baseBean) {
                     mImageUUid.add(baseBean.getData().toString());
-//                    mIndex++;
-//                    if (mIndex < mImgs.size()) {
-//                        loadImg(mImgs.get(mIndex));
-//                    } else {
-//                        addRecord();
-//                    }
                 }
 
                 @Override
                 public void onFail(String errMsg) {
-
-//                    mBinding.affirm.setEnabled(true);
                 }
             });
-//        } else {
-//            addRecord();
-//        }
 
     }
    String causename="";

@@ -18,7 +18,6 @@ import com.lling.photopicker.PhotoPickerActivity;
 import com.wb.weibao.R;
 import com.wb.weibao.adapters.abslistview.CommonAdapter;
 import com.wb.weibao.databinding.PopuwindowsOkLayoutBinding;
-import com.wb.weibao.model.main.ChooseTypeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +28,17 @@ import java.util.List;
  */
 
 public class ConfirmPopupwindow extends PopupWindow {
-    private Activity aty;
-    private PopuwindowsOkLayoutBinding mBinding;
-    private ArrayList<String> mImageUUid = new ArrayList<>();
-    private ChooseTypeListener mChooseTypeListener;
-    public final int RequestCode = 1001;
-    private List<String> mImgs = new ArrayList<>();
-    private CommonAdapter<String> mAdapter;
-
-    public ConfirmPopupwindow(Activity activity) {
+    private             Activity                   aty;
+    private             PopuwindowsOkLayoutBinding mBinding;
+    private             ArrayList<String>          mImageUUid  = new ArrayList<>();
+    private             ConfirmListener            mConfirmListener;
+    public static final int                        RequestCode = 1001;
+    private             List<String>               mImgs       = new ArrayList<>();
+    private             CommonAdapter<String>      mAdapter;
+    private String type;
+    public ConfirmPopupwindow(Activity activity,String types) {
         aty = activity;
-
+        type=types;
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.popuwindows_ok_layout, null, false);
 
         // 设置SelectPicPopupWindow的View
@@ -81,15 +80,71 @@ public class ConfirmPopupwindow extends PopupWindow {
     }
 
     private void initView() {
+        mBinding.tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        mBinding.tvOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String content = mBinding.etContent.getText().toString().trim();
+                if(type.equals("1")) {
+
+                    if (content.length() > 0) {
+                        if (mConfirmListener != null) {
+
+                            mConfirmListener.onOk(mImageUUid, content);
+
+                        }
+                        dismiss();
+                    } else {
+                        if (toastListener != null) {
+                            toastListener.Toast("请输入备注信息");
+                        }
+                    }
+                }else
+                    {
+                        if (mConfirmListener != null) {
+
+                            mConfirmListener.onOk(mImageUUid, content);
+
+                        }
+                        dismiss();
+
+                    }
+
+            }
+        });
         initAdapter();
         this.update();
+
     }
+
+    public void addData(String str) {
+        mImageUUid.add(str);
+    }
+
+    public void setData(String img) {
+
+        mImgs.set(mImgs.size() - 1, img);
+        if (mImgs.size() < 4) {
+            mImgs.add("");
+        }
+
+        mAdapter.notifyDataSetChanged();
+
+
+    }
+
     private void initAdapter() {
         mImgs.add("");
         mAdapter = new com.wb.weibao.adapters.abslistview.CommonAdapter<String>(aty, R.layout.item_add_point_img_layout, mImgs) {
             @Override
             protected void convert(com.wb.weibao.adapters.abslistview.ViewHolder viewHolder, String item, int position) {
-                ImageView img = viewHolder.getView(R.id.img);
+                ImageView img     = viewHolder.getView(R.id.img);
                 ImageView img_del = viewHolder.getView(R.id.img_del);
 
                 if (TextUtils.isEmpty(item)) {
@@ -118,7 +173,7 @@ public class ConfirmPopupwindow extends PopupWindow {
                             mImgs.add("");
                         }
                         mImgs.remove(position);
-                      //  mImageUUid.remove(position);
+                        mImageUUid.remove(position);
                         notifyDataSetChanged();
                     }
                 });
@@ -133,7 +188,7 @@ public class ConfirmPopupwindow extends PopupWindow {
     public void showPopupWindow() {
         if (!this.isShowing()) {
             // 以下拉方式显示popupwindow
-            this.showAtLocation(getRootView(), Gravity.BOTTOM,0, 0);
+            this.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
         } else {
             this.dismiss();
         }
@@ -165,12 +220,22 @@ public class ConfirmPopupwindow extends PopupWindow {
         return ((ViewGroup) aty.findViewById(android.R.id.content)).getChildAt(0);
     }
 
-    public void setChooseTypeListener(ChooseTypeListener mChooseTypeListener) {
-        this.mChooseTypeListener = mChooseTypeListener;
+    public void setConfirmListener(ConfirmListener mConfirmListener) {
+        this.mConfirmListener = mConfirmListener;
     }
 
-    public interface ChooseTypeListener {
-        void onItem(ChooseTypeModel item);//选中内容
+    public interface ConfirmListener {
+        void onOk(ArrayList<String> imageUUid, String txt);//
+    }
+
+
+    private  ToastListener  toastListener;
+    public void setToastListener(ToastListener mtoastListener) {
+        this.toastListener = mtoastListener;
+    }
+
+    public interface ToastListener {
+        void Toast(String txt);//
     }
 
 }

@@ -723,9 +723,38 @@ public interface ApiService {
     Flowable<BaseBean> getEndPatrol(@Query("id") String id,@Query("trajectoryOssKeys") String trajectoryOssKeys);
 
 
-
+    /**
+     * 巡查点位列表
+     * @param name
+     * @param projectId
+     * @param page
+     * @param size
+     * @return
+     */
     @POST("patrol/record/app/patrolPointList")
     Flowable<PatrolPointListBean> getPatrolPointList(@Query("name") String name, @Query("projectId") String projectId, @Query("page") String page, @Query("size") String size);
+
+    /**
+     * 完成巡查点位
+     * @param patrolRecordId
+     * @param patrolPointId
+     * @param latitude
+     * @param longitude
+     * @param remark
+     * @param picturesOssKeys
+     * @param completeType
+     * @return
+     */
+    @POST("patrol/record/app/add")
+    Flowable<BaseBean> getPatrolRecordAppAdd(@Query("patrolRecordId") String patrolRecordId, @Query("patrolPointId") String patrolPointId, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("remark") String remark,@Query("picturesOssKeys") String picturesOssKeys,@Query("completeType") String completeType);
+
+
+    /**
+     * 开始巡查
+     * @return
+     */
+    @POST("patrol/record/app/startPatrol")
+    Flowable<BaseBean> getPatrolAppStartPatrol();
 
 
 }

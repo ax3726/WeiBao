@@ -94,15 +94,16 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
        mTitleBarLayout.setRightListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               appUpdateProgressDialog3 = new AppUpdateProgressDialog3(SmartPatrolActivity.this);
-               appUpdateProgressDialog3.setOnItemUpdateClickListener(new AppUpdateProgressDialog3.onItemUpdateListener() {
-                   @Override
-                   public void onUpdateClick(View view) {
-                       appUpdateProgressDialog3.dismiss();
-                       int checkResult = checkOp(SmartPatrolActivity.this, 2, AppOpsManager.OPSTR_FINE_LOCATION);//其中2代表AppOpsManager.OP_GPS，如果要判断悬浮框权限，第二个参数需换成24即AppOpsManager。OP_SYSTEM_ALERT_WINDOW及，第三个参数需要换成AppOpsManager.OPSTR_SYSTEM_ALERT_WINDOW
-                       int checkResult2 = checkOp(SmartPatrolActivity.this, 1, AppOpsManager.OPSTR_FINE_LOCATION);
-                       if (AppOpsManagerCompat.MODE_IGNORED == checkResult || AppOpsManagerCompat.MODE_IGNORED == checkResult2)
-                       {
+
+               int checkResult = checkOp(SmartPatrolActivity.this, 2, AppOpsManager.OPSTR_FINE_LOCATION);//其中2代表AppOpsManager.OP_GPS，如果要判断悬浮框权限，第二个参数需换成24即AppOpsManager。OP_SYSTEM_ALERT_WINDOW及，第三个参数需要换成AppOpsManager.OPSTR_SYSTEM_ALERT_WINDOW
+               int checkResult2 = checkOp(SmartPatrolActivity.this, 1, AppOpsManager.OPSTR_FINE_LOCATION);
+               if (AppOpsManagerCompat.MODE_IGNORED == checkResult || AppOpsManagerCompat.MODE_IGNORED == checkResult2)
+               {
+                   appUpdateProgressDialog3 = new AppUpdateProgressDialog3(SmartPatrolActivity.this);
+                   appUpdateProgressDialog3.setOnItemUpdateClickListener(new AppUpdateProgressDialog3.onItemUpdateListener() {
+                       @Override
+                       public void onUpdateClick(View view) {
+                           appUpdateProgressDialog3.dismiss();
                            Intent intent = new Intent();
                            //应用详情页面
                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
@@ -120,30 +121,33 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
                                    e.printStackTrace();
                                }
                            }
-                       }else
-                       {
-                           Api.getApi().getPatrolAppStartPatrol()
-                                   .compose(callbackOnIOToMainThread())
-                                   .subscribe(new BaseNetListener<BaseBean<Integer>>(SmartPatrolActivity.this, false) {
-                                       @Override
-                                       public void onSuccess(BaseBean<Integer> baseBean) {
-                                            String patrolRecordId=baseBean.getData().toString();
-
-                                           startActivity(new Intent(aty, SmartPatrolRecordActivity.class).putExtra("patrolRecordId", patrolRecordId));
-
-                                       }
-
-                                       @Override
-                                       public void onFail(String errMsg) {
-
-                                       }
-                                   });
-
-
                        }
-                   }
-               });
-               appUpdateProgressDialog3.show();
+                   });
+                   appUpdateProgressDialog3.show();
+
+               }else
+               {
+                   Api.getApi().getPatrolAppStartPatrol()
+                           .compose(callbackOnIOToMainThread())
+                           .subscribe(new BaseNetListener<BaseBean<Integer>>(SmartPatrolActivity.this, false) {
+                               @Override
+                               public void onSuccess(BaseBean<Integer> baseBean) {
+                                   String patrolRecordId=baseBean.getData().toString();
+
+                                   startActivity(new Intent(aty, SmartPatrolRecordActivity.class).putExtra("patrolRecordId", patrolRecordId));
+
+                               }
+
+                               @Override
+                               public void onFail(String errMsg) {
+
+                               }
+                           });
+
+
+               }
+
+
            }
        });
 

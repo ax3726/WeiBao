@@ -27,16 +27,16 @@
             android:layout_below="@+id/tv_name"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="16px"
-            android:layout_toLeftOf="@+id/tv_ok"
             android:text="小区大门口"
             android:textColor="#424242"
             android:textSize="28px" />
 
         <TextView
+            android:layout_marginTop="20px"
             android:id="@+id/tv_fast_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_content"
+            android:layout_below="@+id/tv_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/shape_btn_kuang"
             android:paddingLeft="24px"
@@ -48,16 +48,16 @@
             android:textSize="22px" />
 
         <TextView
+            android:layout_marginTop="20px"
             android:id="@+id/tv_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_content"
+           android:layout_below="@+id/tv_content"
             android:layout_marginRight="30px"
             android:layout_toLeftOf="@+id/tv_fast_ok"
             android:background="@drawable/shape_btn_kuang"
             android:paddingLeft="24px"
             android:paddingTop="8px"
-
             android:paddingRight="24px"
             android:paddingBottom="8px"
             android:text="备注并完成"

@@ -49,8 +49,8 @@ public class ConfirmPopupwindow extends PopupWindow {
         //设置Popupwindow弹出窗体的高
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        this.setFocusable(true);
-        this.setOutsideTouchable(true);
+        this.setFocusable(false);
+        this.setOutsideTouchable(false);
         //点击空白处时，隐藏掉pop窗口
 
         this.setBackgroundDrawable(new BitmapDrawable());
@@ -64,7 +64,19 @@ public class ConfirmPopupwindow extends PopupWindow {
             }
         });
 
+       mBinding.tvCancel.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               dismiss();
+           }
+       });
 
+       mBinding.tvOk.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               dismiss();
+           }
+       });
         initView();
     }
 
@@ -123,7 +135,17 @@ public class ConfirmPopupwindow extends PopupWindow {
             // 以下拉方式显示popupwindow
             this.showAtLocation(getRootView(), Gravity.BOTTOM,0, 0);
         } else {
-            // this.dismiss();
+            this.dismiss();
+        }
+    }
+
+    /**
+     * 关闭popupWindow
+     */
+    public void dismissPopupWindow() {
+        if (this.isShowing()) {
+            // 以下拉方式显示popupwindow
+            this.dismiss();
         }
     }
 

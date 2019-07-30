@@ -19,6 +19,7 @@ import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.home.MaintenanceListModel;
 import com.wb.weibao.model.home.MaintenanceRecordDetailBean;
 import com.wb.weibao.model.home.PatrolEndStatusBean;
+import com.wb.weibao.model.home.PatrolPointListBean;
 import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
@@ -712,8 +713,19 @@ public interface ApiService {
     @POST("patrol/record/app/getPatrolEndStatus")
     Flowable<PatrolEndStatusBean> gtPatrolEndStatus();
 
-
+    /**
+     * 结束巡查
+     * @param id
+     * @param trajectoryOssKeys
+     * @return
+     */
     @POST("patrol/record/app/endPatrol")
     Flowable<BaseBean> getEndPatrol(@Query("id") String id,@Query("trajectoryOssKeys") String trajectoryOssKeys);
+
+
+
+    @POST("patrol/record/app/patrolPointList")
+    Flowable<PatrolPointListBean> getPatrolPointList(@Query("name") String name, @Query("projectId") String projectId, @Query("page") String page, @Query("size") String size);
+
 
 }

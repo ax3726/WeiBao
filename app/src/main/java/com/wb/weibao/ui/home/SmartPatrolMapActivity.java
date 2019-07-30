@@ -138,7 +138,7 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
      */
     private void moveCamera(LatLng latLng) {
         //设置缩放级别
-        aMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(16));
         //将地图移动到定位点
         aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
 

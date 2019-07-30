@@ -48,7 +48,7 @@ public class ConfirmPopupwindow extends PopupWindow {
         //设置Popupwindow弹出窗体的高
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        this.setFocusable(false);
+        this.setFocusable(true);
         this.setOutsideTouchable(false);
         //点击空白处时，隐藏掉pop窗口
 

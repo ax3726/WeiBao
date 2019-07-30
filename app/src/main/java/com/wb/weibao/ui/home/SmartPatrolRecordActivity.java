@@ -64,7 +64,6 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
     protected void initTitleBar() {
         super.initTitleBar();
         mTitleBarLayout.setTitle("智慧巡查记录");
-        mTitleBarLayout.setRightShow(true);
         mTitleBarLayout.setRightTxt("结束巡查");
 
     }
@@ -331,7 +330,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
     private void getEndPatrol(String id) {
         Api.getApi().getEndPatrol(id,"")
                 .compose(callbackOnIOToMainThread())
-                .subscribe(new BaseNetListener<BaseBean>(this, false) {
+                .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
 

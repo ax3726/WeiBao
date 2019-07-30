@@ -233,6 +233,16 @@ public class PatrolMapInfoModel {
             private long updateTime;
             private String updateUserId;
 
+            private String patrolTypeName;
+
+            public String getPatrolTypeName() {
+                return patrolTypeName;
+            }
+
+            public void setPatrolTypeName(String patrolTypeName) {
+                this.patrolTypeName = patrolTypeName;
+            }
+
             public String getCreateTime() {
                 return createTime;
             }

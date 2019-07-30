@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -33,6 +34,7 @@ import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.Link;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySmartPatrolMapBinding;
 import com.wb.weibao.databinding.ItemSmartPatrolMapLayoutBinding;
@@ -50,7 +52,8 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
     private List<PatrolMapInfoModel.DataBean.PatrolRecordPointsBean>          mDataList = new ArrayList<>();
     private AMap                                                              aMap;
     private BottomSheetBehavior                                               bottomSheetBehavior;
-
+    private com.wb.weibao.adapters.abslistview.CommonAdapter<String> mAdapters;
+    private ArrayList<String> mImgs = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_smart_patrol_map;
@@ -146,35 +149,57 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
         super.initData();
 
         mAdapter = new CommonAdapter<PatrolMapInfoModel.DataBean.PatrolRecordPointsBean>(aty, R.layout.item_smart_patrol_map_layout, mDataList) {
+
+
             @Override
             protected void convert(ViewHolder holder, PatrolMapInfoModel.DataBean.PatrolRecordPointsBean item, int position) {
                 ItemSmartPatrolMapLayoutBinding binding = holder.getBinding(ItemSmartPatrolMapLayoutBinding.class);
                 binding.tvName.setText(item.getPatrolName());
-                binding.tvType.setText(item.getPatrolType());
+                binding.tvType.setText(item.getPatrolTypeName());
                 binding.tvAddress.setText(item.getPatrolAddress());
                 binding.tvJinWei.setText(item.getLongitude() + "," + item.getLatitude());
                 binding.tvDemo.setText(item.getRemark());
                 binding.tvOverTime.setText(DemoUtils.ConvertTimeFormat(item.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
-                binding.llyImg.removeAllViews();
-                if (!TextUtils.isEmpty(item.getPicturesOssKeys())) {
-                    String[] imgs = item.getPicturesOssKeys().split(";");
-                    for (String img : imgs) {
-                        ImageView imageView = new ImageView(aty);
-                        GlideUrl glideUrl = new GlideUrl(img, new LazyHeaders.Builder()
+                mAdapters = new com.wb.weibao.adapters.abslistview.CommonAdapter<String>(aty, R.layout.item_add_point_img_layout, mImgs) {
+                    @Override
+                    protected void convert(com.wb.weibao.adapters.abslistview.ViewHolder viewHolder, String item, int position) {
+                        ImageView img = viewHolder.getView(R.id.img);
+                        ImageView img_del = viewHolder.getView(R.id.img_del);
+                        img_del.setVisibility(View.GONE);
+                        GlideUrl glideUrl = new GlideUrl(item, new LazyHeaders.Builder()
                                 .addHeader("Cookie", "JSESSIONID=" + MyApplication.getInstance().getJSESSIONID())
                                 .build());
-                        Glide.with(aty).load(glideUrl).into(imageView);
-                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int) Utils.dip2px(aty, 24)
-                                , (int) Utils.dip2px(aty, 24));
-                        layoutParams.setMargins(0, 0, (int) Utils.dip2px(aty, 10), 0);
-                        imageView.setLayoutParams(layoutParams);
-                        binding.llyImg.addView(imageView);
-                    }
-                }
+                        Glide.with(aty).load(glideUrl).into(img);
 
+                    }
+                };
+                binding.gvBody.setAdapter(mAdapters);
+                if (!TextUtils.isEmpty(item.getPicturesOssKeys())) {
+                    String[] split = item.getPicturesOssKeys().split(";");
+                    if (split != null && split.length > 0) {
+                        for (String str : split) {
+                            mImgs.add(Link.SEREVE+"oss/download?fileName=" + str);
+                        }
+                    }
+                    mAdapters.notifyDataSetChanged();
+                }
+                binding.gvBody.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent in = new Intent();
+                        in.setClass(SmartPatrolMapActivity.this, MaxPictureActivity.class);
+                        //Will pass, I click for the current position
+                        in.putExtra("pos", position);
+                        //Will pass,Photos to show the pictures of the collection address
+                        in.putStringArrayListExtra("imageAddress", mImgs);
+                        startActivity(in);
+                    }
+                });
 
             }
         };
+
+
         mBinding.rcBody.setLayoutManager(new LinearLayoutManager(this));
         mBinding.rcBody.setAdapter(mAdapter);
         mBinding.rcBody.setNestedScrollingEnabled(false);

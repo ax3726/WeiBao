@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <com.zhy.autolayout.AutoFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="48dp"
+            android:src="@mipmap/map_back_icon" />
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="90dp">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/lly_bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_white3"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:scrollbars="none"
+                app:behavior_hideable="false"
+                app:behavior_peekHeight="182dp"
+                app:layout_behavior="@string/bottom_sheet_behavior">
+
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_state"
+                        android:layout_width="36px"
+                        android:layout_height="14px"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="16px"
+                        android:layout_marginBottom="20px"
+                        android:src="@drawable/selector_map_up_down" />
+
+                    <com.zhy.autolayout.AutoRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="20px"
+                        android:background="#1036519E"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="12dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="12dp">
+
+
+                        <TextView
+                            android:id="@+id/tv_hint1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="编号"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px" />
+
+                        <TextView
+                            android:id="@+id/tv_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tv_hint1"
+                            android:layout_marginLeft="160px"
+                            android:layout_toRightOf="@+id/tv_hint1"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px"
+                            tool:text="3887482" />
+
+                        <TextView
+                            android:id="@+id/tv_hint2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_hint1"
+                            android:layout_marginTop="16px"
+                            android:text="巡查人/电话"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px" />
+
+                        <TextView
+                            android:id="@+id/tv_name_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tv_hint2"
+                            android:layout_alignLeft="@+id/tv_no"
+                            android:layout_toRightOf="@+id/tv_hint2"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px"
+                            tool:text="张三/13499873664" />
+
+                        <TextView
+                            android:id="@+id/tv_hint3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_hint2"
+                            android:layout_marginTop="16px"
+                            android:text="开始时间"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px" />
+
+                        <TextView
+                            android:id="@+id/tv_start_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tv_hint3"
+                            android:layout_alignLeft="@+id/tv_no"
+                            android:layout_toRightOf="@+id/tv_hint3"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px"
+                            tool:text="2019-07-23 16:25:23" />
+
+                        <TextView
+                            android:id="@+id/tv_hint4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_hint3"
+                            android:layout_marginTop="16px"
+                            android:text="结束时间"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px" />
+
+                        <TextView
+                            android:id="@+id/tv_end_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tv_hint4"
+                            android:layout_alignLeft="@+id/tv_no"
+                            android:layout_toRightOf="@+id/tv_hint4"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px"
+                            tool:text="2019-07-23 16:25:23" />
+
+                        <TextView
+                            android:id="@+id/tv_hint5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_hint4"
+                            android:layout_marginTop="16px"
+                            android:text="所属项目"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px" />
+
+                        <TextView
+                            android:id="@+id/tv_project_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tv_hint5"
+                            android:layout_alignLeft="@+id/tv_no"
+                            android:layout_toRightOf="@+id/tv_hint5"
+                            android:textColor="@color/color333333"
+                            android:textSize="28px"
+                            tool:text="浙江大学附属第一医院" />
+
+
+                    </com.zhy.autolayout.AutoRelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:background="#F2F4F8" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rc_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#1036519E" />
+                </com.zhy.autolayout.AutoLinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+        </android.support.design.widget.CoordinatorLayout>
+    </com.zhy.autolayout.AutoFrameLayout>
+</layout>

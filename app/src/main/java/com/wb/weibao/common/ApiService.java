@@ -19,6 +19,7 @@ import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.home.MaintenanceListModel;
 import com.wb.weibao.model.home.MaintenanceRecordDetailBean;
 import com.wb.weibao.model.home.PatrolEndStatusBean;
+import com.wb.weibao.model.home.PatrolMapInfoModel;
 import com.wb.weibao.model.home.PatrolPointListBean;
 import com.wb.weibao.model.home.ProjectDetailbean;
 import com.wb.weibao.model.home.SecurityInfoModel;
@@ -69,22 +70,20 @@ public interface ApiService {
     Flowable<ProjectListModel> getProject_list(@Query("instCode") String instCode, @Query("userId") String userId);
 
     @POST("project/list")
-    Flowable<ProjectListModel> getProject_listserach(@Query("instCode") String instCode, @Query("userId") String userId,@Query("name") String name);
+    Flowable<ProjectListModel> getProject_listserach(@Query("instCode") String instCode, @Query("userId") String userId, @Query("name") String name);
 
     /**
-     *
      * @param instCode
      * @param userId
      * @param projectId
      * @return
      */
     @POST("project/list")
-    Flowable<ProjectListModel> getProject_list3(@Query("instCode") String instCode,@Query("userId") String userId, @Query("projectId") String projectId);
-
+    Flowable<ProjectListModel> getProject_list3(@Query("instCode") String instCode, @Query("userId") String userId, @Query("projectId") String projectId);
 
 
     @POST("project/list")
-    Flowable<ProjectListModel> getProject_list2(@Query("instCode") String instCode, @Query("userId") String userId,@Query("isMaintenance") String isMaintenance);
+    Flowable<ProjectListModel> getProject_list2(@Query("instCode") String instCode, @Query("userId") String userId, @Query("isMaintenance") String isMaintenance);
 
     /**
      * 预警列表接口
@@ -259,6 +258,7 @@ public interface ApiService {
 
     /**
      * 预警模块
+     *
      * @param userId
      * @param instCode
      * @param projectId
@@ -323,14 +323,13 @@ public interface ApiService {
     Flowable<MaintenanceListModel> getMyWeiBao(@Query("userId") String userId);
 
 
-
     /**
      * 我的维保
      *
      * @return
      */
     @POST("order/list")
-    Flowable<MaintenanceListModel> getMyWeiBao2(@Query("userId") String userId,@Query("instCode") String instCode,@Query("projectId") String projectId );
+    Flowable<MaintenanceListModel> getMyWeiBao2(@Query("userId") String userId, @Query("instCode") String instCode, @Query("projectId") String projectId);
 
 
     /**
@@ -377,7 +376,6 @@ public interface ApiService {
                                      @Query("processingOssKeys") String processingOssKeys, @Query("processingRet") String processingRet);
 
 
-
     /**
      * 维保上报
      *
@@ -410,12 +408,12 @@ public interface ApiService {
      * @return
      */
     @POST("code/library/getName")
-    Flowable<BaseBean> getTypeListname(@Query("userId") String userId,@Query("codeValue") String codeValue, @Query("code") String code);
-
+    Flowable<BaseBean> getTypeListname(@Query("userId") String userId, @Query("codeValue") String codeValue, @Query("code") String code);
 
 
     /**
      * 新增维保记录
+     *
      * @param userId
      * @param projectId
      * @param contractName
@@ -429,7 +427,7 @@ public interface ApiService {
     @POST("/earlywarn/maintenance/record/add")
     Flowable<BaseBean> addRecord(@Query("userId") String userId, @Query("projectId") String projectId, @Query("contractName") String contractName
             , @Query("contractPhone") String contractPhone, @Query("maintenanceDate") String maintenanceDate, @Query("maintenanceNextDate") String maintenanceNextDate
-            , @Query("picturesOssKeys") String picturesOssKeys, @Query("maintenanceContent") String maintenanceContent,@Query("coverProjectId") String coverProjectId,@Query("coverProjectName") String coverProjectName);
+            , @Query("picturesOssKeys") String picturesOssKeys, @Query("maintenanceContent") String maintenanceContent, @Query("coverProjectId") String coverProjectId, @Query("coverProjectName") String coverProjectName);
 
     // 上传图片
     @Multipart
@@ -464,12 +462,8 @@ public interface ApiService {
     Flowable<BaseBean> getReportadd(@Query("userId") String userId, @Query("eventType") String eventType, @Query("cause") String cause, @Query("isFault") String isFault, @Query("detailReasons") String detailReasons, @Query("picturesOssKeys") String picturesOssKeys, @Query("earlyRecordId") String earlyRecordId);
 
 
-
-
     @POST("/earlywarn/early/event/report/add")
-    Flowable<BaseBean> getReportadd2(@Query("createUserId") String createUserId, @Query("eventType") String eventType, @Query("cause") String cause,@Query("causeName") String causeName, @Query("isFault") String isFault, @Query("detailReasons") String detailReasons, @Query("picturesOssKeys") String picturesOssKeys, @Query("earlyRecordId") String earlyRecordId);
-
-
+    Flowable<BaseBean> getReportadd2(@Query("createUserId") String createUserId, @Query("eventType") String eventType, @Query("cause") String cause, @Query("causeName") String causeName, @Query("isFault") String isFault, @Query("detailReasons") String detailReasons, @Query("picturesOssKeys") String picturesOssKeys, @Query("earlyRecordId") String earlyRecordId);
 
 
     /**
@@ -495,6 +489,7 @@ public interface ApiService {
 
     /**
      * 一键发起维保
+     *
      * @param userId
      * @param instCode
      * @param type
@@ -519,7 +514,7 @@ public interface ApiService {
      * @return
      */
     @POST("early/record/statisticsByWeek")
-    Flowable<StatisticsModel> getErrorData(@Query("userId") String userId, @Query("projectId") String projecId,@Query("instCode") String instCode, @Query("flag") String flag);
+    Flowable<StatisticsModel> getErrorData(@Query("userId") String userId, @Query("projectId") String projecId, @Query("instCode") String instCode, @Query("flag") String flag);
 
     /**
      * 故障率
@@ -532,6 +527,7 @@ public interface ApiService {
 
     /**
      * 查岗记录
+     *
      * @param page
      * @param size
      * @param projectId
@@ -542,6 +538,7 @@ public interface ApiService {
 
     /**
      * 一键查岗
+     *
      * @param userId
      * @param projectId
      * @return
@@ -552,6 +549,7 @@ public interface ApiService {
 
     /**
      * 接班二维码获取
+     *
      * @param userId
      * @return
      */
@@ -560,6 +558,7 @@ public interface ApiService {
 
     /**
      * 接班结果查询
+     *
      * @param userId
      * @return
      */
@@ -569,17 +568,18 @@ public interface ApiService {
 
     /**
      * 扫码交班
+     *
      * @param userId
      * @param msg
      * @return
      */
     @POST("/earlywarn/handover/proccess")
-    Flowable<BaseBean> getQrcodeProccess(@Query("userId") String userId,@Query("msg") String msg);
-
+    Flowable<BaseBean> getQrcodeProccess(@Query("userId") String userId, @Query("msg") String msg);
 
 
     /**
      * 扫码交班
+     *
      * @param userId
      * @param
      * @return
@@ -589,16 +589,16 @@ public interface ApiService {
 
     /**
      * 提建议
+     *
      * @param userId
      * @param text
      * @return
      */
     @POST("advice/add")
-    Flowable<BaseBean> getAdviceadd(@Query("userId") String userId,@Query("text") String text);
+    Flowable<BaseBean> getAdviceadd(@Query("userId") String userId, @Query("text") String text);
 
 
     /**
-     *
      * @param userId
      * @param earlyRecordId
      * @return
@@ -608,6 +608,7 @@ public interface ApiService {
 
     /**
      * 获取摄像头ID
+     *
      * @param userId
      * @return
      */
@@ -619,17 +620,17 @@ public interface ApiService {
 
 
     /**
-     *
      * @param userId
      * @param id
      * @return
      */
     @POST("camera/preview_urls")
-    Flowable<BaseBean> getCameraurl(@Query("userId") String userId,@Query("id") String id);
+    Flowable<BaseBean> getCameraurl(@Query("userId") String userId, @Query("id") String id);
 
 
     /**
      * 首页统计接口
+     *
      * @param instCode
      * @param projectId
      * @return
@@ -640,6 +641,7 @@ public interface ApiService {
 
     /**
      * 日常维保记录
+     *
      * @param page
      * @param size
      * @param userId
@@ -650,17 +652,12 @@ public interface ApiService {
     Flowable<RecordListAppBean> getRecordlistApp(@Query("page") String page, @Query("size") String size, @Query("userId") String userId, @Query("coverProjectId") String coverProjectId);
 
 
-
-
     @POST("maintenance/record/detail")
     Flowable<MaintenanceRecordDetailBean> getMaintenanceRecordDetail(@Query("id") String id);
 
 
-
-
     @POST("permission/list")
     Flowable<PermissionListBean> getPermissionList(@Query("groupType") String groupType);
-
 
 
     //1.1.3需求
@@ -668,6 +665,7 @@ public interface ApiService {
 
     /**
      * 电路监控列表
+     *
      * @param page
      * @param size
      * @return
@@ -677,6 +675,7 @@ public interface ApiService {
 
     /**
      * 电路监控详情
+     *
      * @param id
      * @return
      */
@@ -685,6 +684,7 @@ public interface ApiService {
 
     /**
      * 巡查记录列表
+     *
      * @param projectId
      * @param projectName
      * @param startTime
@@ -700,6 +700,7 @@ public interface ApiService {
 
     /**
      * 巡查人列表
+     *
      * @return
      */
 
@@ -708,6 +709,7 @@ public interface ApiService {
 
     /**
      * 判断巡查是否结束
+     *
      * @return
      */
     @POST("patrol/record/app/getPatrolEndStatus")
@@ -715,16 +717,18 @@ public interface ApiService {
 
     /**
      * 结束巡查
+     *
      * @param id
      * @param trajectoryOssKeys
      * @return
      */
     @POST("patrol/record/app/endPatrol")
-    Flowable<BaseBean> getEndPatrol(@Query("id") String id,@Query("trajectoryOssKeys") String trajectoryOssKeys);
+    Flowable<BaseBean> getEndPatrol(@Query("id") String id, @Query("trajectoryOssKeys") String trajectoryOssKeys);
 
 
     /**
      * 巡查点位列表
+     *
      * @param name
      * @param projectId
      * @param page
@@ -736,6 +740,7 @@ public interface ApiService {
 
     /**
      * 完成巡查点位
+     *
      * @param patrolRecordId
      * @param patrolPointId
      * @param latitude
@@ -746,15 +751,24 @@ public interface ApiService {
      * @return
      */
     @POST("patrol/record/app/add")
-    Flowable<BaseBean> getPatrolRecordAppAdd(@Query("patrolRecordId") String patrolRecordId, @Query("patrolPointId") String patrolPointId, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("remark") String remark,@Query("picturesOssKeys") String picturesOssKeys,@Query("completeType") String completeType);
+    Flowable<BaseBean> getPatrolRecordAppAdd(@Query("patrolRecordId") String patrolRecordId, @Query("patrolPointId") String patrolPointId, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("remark") String remark, @Query("picturesOssKeys") String picturesOssKeys, @Query("completeType") String completeType);
 
 
     /**
      * 开始巡查
+     *
      * @return
      */
     @POST("patrol/record/app/startPatrol")
-    Flowable<BaseBean> getPatrolAppStartPatrol();
+    Flowable<BaseBean<Integer>> getPatrolAppStartPatrol();
+
+    /**
+     * 巡查记录详情
+     *
+     * @return
+     */
+    @POST("patrol/record/app/detail")
+    Flowable<PatrolMapInfoModel> getPatrolMapInfo(@Query("id") String id);
 
     /**
      * 设备复位

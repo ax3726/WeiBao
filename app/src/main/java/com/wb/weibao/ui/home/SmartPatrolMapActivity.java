@@ -8,9 +8,12 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -19,6 +22,10 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.PolylineOptions;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.lm.lib_common.utils.Utils;
 import com.wb.weibao.R;
 import com.wb.weibao.adapters.recyclerview.CommonAdapter;
 import com.wb.weibao.adapters.recyclerview.base.ViewHolder;
@@ -26,10 +33,12 @@ import com.wb.weibao.base.BaseActivity;
 import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.base.BasePresenter;
 import com.wb.weibao.common.Api;
+import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySmartPatrolMapBinding;
 import com.wb.weibao.databinding.ItemSmartPatrolMapLayoutBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.home.PatrolMapInfoModel;
+import com.wb.weibao.utils.DemoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +100,9 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                                 for (PatrolMapInfoModel.DataBean.PatrolRecordPointsBean bean : data.getPatrolRecordPoints()) {
                                     latLngs.add(new LatLng(Double.valueOf(bean.getLatitude()), Double.valueOf(bean.getLongitude())));
                                 }
-
+                               /* latLngs.add(new LatLng(30.202910899093403,120.28805598999026));
+                                latLngs.add(new LatLng(30.191189902363895,120.1996503808594));
+                                latLngs.add(new LatLng(30.217597266530422,120.24874553466799));*/
                                 aMap.addPolyline(new PolylineOptions().
                                         addAll(latLngs).width(10).color(Color.parseColor("#047AFF")));
                                 moveCamera(latLng_start);
@@ -100,8 +111,8 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                             mAdapter.notifyDataSetChanged();
                             mBinding.tvNo.setText(data.getUserId());
                             mBinding.tvNamePhone.setText(data.getUserName() + "/" + data.getUserPhone());
-                            mBinding.tvStartTime.setText(data.getPatrolStartTime());
-                            mBinding.tvEndTime.setText(data.getPatrolEndTime());
+                            mBinding.tvStartTime.setText(DemoUtils.ConvertTimeFormat(data.getPatrolStartTime(),"yyyy-MM-dd HH:mm:ss"));
+                            mBinding.tvEndTime.setText(DemoUtils.ConvertTimeFormat(data.getPatrolEndTime(),"yyyy-MM-dd HH:mm:ss"));
                             mBinding.tvProjectName.setText(data.getProjectName());
 
 
@@ -116,6 +127,7 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                 });
 
     }
+
     /**
      * //将地图移动到定位点
      *
@@ -128,6 +140,7 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
         aMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
 
     }
+
     @Override
     protected void initData() {
         super.initData();
@@ -141,7 +154,24 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                 binding.tvAddress.setText(item.getPatrolAddress());
                 binding.tvJinWei.setText(item.getLongitude() + "," + item.getLatitude());
                 binding.tvDemo.setText(item.getRemark());
-                binding.tvOverTime.setText(item.getUpdateTime());
+                binding.tvOverTime.setText(DemoUtils.ConvertTimeFormat(item.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
+                binding.llyImg.removeAllViews();
+                if (!TextUtils.isEmpty(item.getPicturesOssKeys())) {
+                    String[] imgs = item.getPicturesOssKeys().split(";");
+                    for (String img : imgs) {
+                        ImageView imageView = new ImageView(aty);
+                        GlideUrl glideUrl = new GlideUrl(img, new LazyHeaders.Builder()
+                                .addHeader("Cookie", "JSESSIONID=" + MyApplication.getInstance().getJSESSIONID())
+                                .build());
+                        Glide.with(aty).load(glideUrl).into(imageView);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int) Utils.dip2px(aty, 24)
+                                , (int) Utils.dip2px(aty, 24));
+                        layoutParams.setMargins(0, 0, (int) Utils.dip2px(aty, 10), 0);
+                        imageView.setLayoutParams(layoutParams);
+                        binding.llyImg.addView(imageView);
+                    }
+                }
+
 
             }
         };

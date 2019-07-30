@@ -44,6 +44,9 @@ public class DemoUtils {
     }
 
     public static String ConvertTimeFormat(long time, String format) {
+        if (time==0) {
+            return "--";
+        }
         SimpleDateFormat sdf = new SimpleDateFormat(format);
 
         return sdf.format(new Date(time));

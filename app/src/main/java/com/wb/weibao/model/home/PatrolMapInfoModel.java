@@ -66,8 +66,8 @@ public class PatrolMapInfoModel {
         private String                       createUserId;
         private int                          id;
         private boolean                      isPatrolEnd;
-        private String                       patrolEndTime;
-        private String                       patrolStartTime;
+        private long                       patrolEndTime;
+        private long                       patrolStartTime;
         private String                       projectId;
         private String                       projectName;
         private String                       trajectoryOssKeys;
@@ -110,19 +110,19 @@ public class PatrolMapInfoModel {
             this.isPatrolEnd = isPatrolEnd;
         }
 
-        public String getPatrolEndTime() {
+        public long getPatrolEndTime() {
             return patrolEndTime;
         }
 
-        public void setPatrolEndTime(String patrolEndTime) {
+        public void setPatrolEndTime(long patrolEndTime) {
             this.patrolEndTime = patrolEndTime;
         }
 
-        public String getPatrolStartTime() {
+        public long getPatrolStartTime() {
             return patrolStartTime;
         }
 
-        public void setPatrolStartTime(String patrolStartTime) {
+        public void setPatrolStartTime(long patrolStartTime) {
             this.patrolStartTime = patrolStartTime;
         }
 
@@ -230,7 +230,7 @@ public class PatrolMapInfoModel {
             private String projectId;
             private String projectName;
             private String remark;
-            private String updateTime;
+            private long updateTime;
             private String updateUserId;
 
             public String getCreateTime() {
@@ -337,11 +337,11 @@ public class PatrolMapInfoModel {
                 this.remark = remark;
             }
 
-            public String getUpdateTime() {
+            public long getUpdateTime() {
                 return updateTime;
             }
 
-            public void setUpdateTime(String updateTime) {
+            public void setUpdateTime(long updateTime) {
                 this.updateTime = updateTime;
             }
 

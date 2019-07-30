@@ -105,7 +105,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
         mTitleBarLayout.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getEndPatrol(getIntent().getStringExtra("patrolRecordId"));
+                getEndPatrol(getIntent().getStringExtra("patrolRecordId").toString());
             }
         });
         mAdapter = new CommonAdapter<PatrolPointListBean.DataBean.ListBean>(aty, R.layout.item_smart_patrol_record, mDataList) {

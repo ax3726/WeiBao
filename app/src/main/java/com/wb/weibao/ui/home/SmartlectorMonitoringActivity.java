@@ -19,6 +19,7 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySmartlectorMonitoringBinding;
 import com.wb.weibao.databinding.ItemSmartelectormonitorLayoutBinding;
 import com.wb.weibao.databinding.ItemWeibaorecordLayoutBinding;
+import com.wb.weibao.model.event.SmartlectorMonitoringEvent;
 import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.home.SmartElectorBean;
 import com.wb.weibao.model.record.RecordDetailEvent;
@@ -71,7 +72,7 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
     protected void initData() {
         super.initData();
 
-
+        EventBus.getDefault().register(this);
 
         mAdapter = new CommonAdapter<SmartElectorBean.DataBean.ListBean>(aty, R.layout.item_smartelectormonitor_layout, mDataList) {
             @Override
@@ -128,6 +129,12 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(SmartlectorMonitoringEvent event) {
+
+        loadData();
+    }
+
 
     public void loadData() {
         mPage = 1;
@@ -180,6 +187,6 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        EventBus.getDefault().unregister(this);
     }
 }

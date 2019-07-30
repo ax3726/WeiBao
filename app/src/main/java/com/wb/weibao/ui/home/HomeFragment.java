@@ -146,6 +146,10 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 startActivity(intent);
                 break;
             case R.id.tv_04://智慧巡查
+                if (mBinding.tvProject.getText().equals("全部项目")) {
+                    showToast("请选择项目单位");
+                    return;
+                }
              startActivity(SmartPatrolActivity.class);
                 break;
             case R.id.tv_05://电气
@@ -154,7 +158,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                     showToast("请选择项目单位");
                     return;
                 }
-                startActivity(SmartElectricActivity.class);
+                startActivity(SmartlectorMonitoringActivity.class);
                 break;
             case R.id.tv_06://水位
                 if (mBinding.tvProject.getText().equals("全部项目")) {

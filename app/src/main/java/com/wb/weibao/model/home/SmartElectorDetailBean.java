@@ -158,7 +158,7 @@ public class SmartElectorDetailBean {
              * type : string
              * updateTime : 2019-07-29T07:27:20.875Z
              */
-
+            private boolean isRead;
             private String alarmThreshold;
             private String alarmThresholdDate;
             private String collectorId;
@@ -187,6 +187,14 @@ public class SmartElectorDetailBean {
             private String status;
             private String type;
             private String updateTime;
+
+            public boolean getIsRead() {
+                return isRead;
+            }
+
+            public void setIsRead(boolean isRead) {
+                this.isRead = isRead;
+            }
 
             public String getAlarmThreshold() {
                 return alarmThreshold;

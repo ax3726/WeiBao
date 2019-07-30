@@ -18,9 +18,14 @@ import com.wb.weibao.databinding.ActivitySmartlectorMonitoringDetailBinding;
 import com.wb.weibao.databinding.ItemSmartelectormonitorLayoutBinding;
 import com.wb.weibao.databinding.ItemSmartelectormonitordetailLayoutBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.event.SmartlectorMonitoringEvent;
 import com.wb.weibao.model.home.SmartElectorBean;
 import com.wb.weibao.model.home.SmartElectorDetailBean;
+import com.wb.weibao.model.record.RecordDetailEvent;
 import com.wb.weibao.utils.DemoUtils;
+import com.wb.weibao.view.MyAlertDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +53,25 @@ public class SmartlectorMonitoringDetailActivity extends BaseActivity<BasePresen
     protected void initTitleBar() {
         super.initTitleBar();
         mTitleBarLayout.setTitle("智慧用电电路监控");
+       mTitleBarLayout.setRightTxt("复位");
+       mTitleBarLayout.setRightListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               new MyAlertDialog(aty).builder().setTitle("设备复位")
+                       .setMsg("设备复位后，会更新当前数据为最新数据（约1min后跟新），确定要复位？").setNegativeButton("取消", new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
 
+                   }
+               }).setPositiveButton("确定复位", new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+
+                       getResetDevice();
+                   }
+               }).show();
+           }
+       });
 
     }
 
@@ -66,6 +89,13 @@ public class SmartlectorMonitoringDetailActivity extends BaseActivity<BasePresen
             protected void convert(ViewHolder holder, SmartElectorDetailBean.DataBean.CollectorPointsBean listBean, int position) {
                 ItemSmartelectormonitordetailLayoutBinding binding = holder.getBinding(ItemSmartelectormonitordetailLayoutBinding.class);
                 binding.tv01.setText(mDataList.get(position).getEquipmentName());
+                if(mDataList.get(position).getIsRead()==true) {
+                    binding.tv02.setTextColor(getResources().getColor(R.color.colorFF6666));
+                }else
+                    {
+                        binding.tv02.setTextColor(getResources().getColor(R.color.color333333));
+                    }
+
                 binding.tv02.setText(mDataList.get(position).getMeasuredData());
                 binding.tv03.setText(mDataList.get(position).getAlarmThreshold());
             }
@@ -87,14 +117,17 @@ public class SmartlectorMonitoringDetailActivity extends BaseActivity<BasePresen
                 .subscribe(new BaseNetListener<SmartElectorDetailBean>(this, false) {
                     @Override
                     public void onSuccess(SmartElectorDetailBean baseBean) {
-                        mBinding.tv1.setText(mBinding.tv1.getText()+"     "+baseBean.getData().getId());
-                        mBinding.tv2.setText(mBinding.tv2.getText()+"     "+baseBean.getData().getCode());
-                        mBinding.tv3.setText(mBinding.tv3.getText()+"     "+baseBean.getData().getPosition());
-                        mBinding.tv4.setText(mBinding.tv4.getText()+"     "+baseBean.getData().getLotCard());
+                        mBinding.tv1.setText(mBinding.tv1.getText().toString().substring(0,mBinding.tv1.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getId());
+                        mBinding.tv2.setText(mBinding.tv2.getText().toString().substring(0,mBinding.tv2.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getCode());
+                        mBinding.tv3.setText(mBinding.tv3.getText().toString().substring(0,mBinding.tv3.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getPosition());
+                        mBinding.tv4.setText(mBinding.tv4.getText().toString().substring(0,mBinding.tv4.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getLotCard());
                         String CreateTime =baseBean.getData().getUpdateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getUpdateTime(), "yyyy-MM-dd HH:mm:ss");
-                        mBinding.tv5.setText(mBinding.tv5.getText()+"     "+CreateTime);
+                        mBinding.tv5.setText(mBinding.tv5.getText().toString().substring(0,mBinding.tv5.getText().toString().indexOf(":")+1)+"     "+CreateTime);
                         SmartElectorDetailBean.DataBean data = baseBean.getData();
                         if (data != null) {
+                            if (mDataList!=null) {
+                                mDataList.clear();
+                            }
                             List<SmartElectorDetailBean.DataBean.CollectorPointsBean> list = data.getCollectorPoints();
                             if (list != null && list.size() > 0) {
                                 mDataList.addAll(list);
@@ -112,6 +145,29 @@ public class SmartlectorMonitoringDetailActivity extends BaseActivity<BasePresen
 
     }
 
+
+    /**
+     * 复位
+     */
+
+    private void getResetDevice() {
+        Api.getApi().getResetDevice(getIntent().getStringExtra("id"))
+                .compose(callbackOnIOToMainThread())
+                .subscribe(new BaseNetListener<BaseBean>(this, false) {
+                    @Override
+                    public void onSuccess(BaseBean baseBean) {
+                        getPowerDetailApp();
+                        EventBus.getDefault().post(new SmartlectorMonitoringEvent());
+                    }
+                    @Override
+                    public void onFail(String errMsg) {
+
+
+                    }
+                });
+
+
+    }
 
 
 }

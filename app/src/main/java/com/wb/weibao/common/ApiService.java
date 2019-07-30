@@ -756,5 +756,11 @@ public interface ApiService {
     @POST("patrol/record/app/startPatrol")
     Flowable<BaseBean> getPatrolAppStartPatrol();
 
+    /**
+     * 设备复位
+     * @return
+     */
+    @POST("collector/app/resetDevice")
+    Flowable<BaseBean> getResetDevice(@Query("id") String id);
 
 }

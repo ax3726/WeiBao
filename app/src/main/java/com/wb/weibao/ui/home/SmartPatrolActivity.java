@@ -33,6 +33,8 @@ import com.wb.weibao.databinding.ActivitySmartpatrolBinding;
 import com.wb.weibao.databinding.ItemSmartpatrolLayoutBinding;
 import com.wb.weibao.model.BaseBean;
 import com.wb.weibao.model.PatrolUserListBean;
+import com.wb.weibao.model.event.SmartPatrolEvent;
+import com.wb.weibao.model.event.SmartlectorMonitoringEvent;
 import com.wb.weibao.model.home.PatrolEndStatusBean;
 import com.wb.weibao.model.home.SmartPatrolBean;
 
@@ -43,6 +45,10 @@ import com.wb.weibao.utils.picker.picker.SinglePicker;
 import com.wb.weibao.utils.update.AppUpdateProgressDialog3;
 import com.wb.weibao.view.MyAlertDialog;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Method;
 
@@ -74,7 +80,7 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
     @Override
     protected void initTitleBar() {
         super.initTitleBar();
-        mTitleBarLayout.setTitle("智慧巡查记录");
+        mTitleBarLayout.setTitle("智慧巡查");
         mTitleBarLayout.setRightTxt("开始巡查");
     }
 
@@ -90,7 +96,7 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
     protected void initData() {
         super.initData();
 
-
+        EventBus.getDefault().register(this);
        mTitleBarLayout.setRightListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -210,7 +216,11 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
         getErrorList();
 
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refersh(SmartPatrolEvent event) {
 
+        loadData();
+    }
 
     public void loadData() {
         mPage = 1;
@@ -261,6 +271,7 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -435,6 +446,7 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
         }
         return -1;
     }
+
 
 
 }

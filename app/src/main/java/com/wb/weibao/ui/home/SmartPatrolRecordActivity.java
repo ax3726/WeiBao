@@ -29,6 +29,8 @@ import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.databinding.ActivitySmartPatrolRecordBinding;
 import com.wb.weibao.databinding.ItemSmartPatrolRecordBinding;
 import com.wb.weibao.model.BaseBean;
+import com.wb.weibao.model.event.SmartPatrolEvent;
+import com.wb.weibao.model.event.SmartlectorMonitoringEvent;
 import com.wb.weibao.model.home.PatrolPointListBean;
 
 import com.wb.weibao.model.record.RecordDetailEvent;
@@ -65,7 +67,8 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
     @Override
     protected void initTitleBar() {
         super.initTitleBar();
-        mTitleBarLayout.setTitle("智慧巡查记录");
+        mTitleBarLayout.setLeftShow(false);
+        mTitleBarLayout.setTitle("智慧巡查");
         mTitleBarLayout.setRightTxt("结束巡查");
         mTitleBarLayout.setRightListener(new View.OnClickListener() {
             @Override
@@ -184,6 +187,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
                                         .subscribe(new BaseNetListener<BaseBean>(SmartPatrolRecordActivity.this, true) {
                                             @Override
                                             public void onSuccess(BaseBean baseBean) {
+                                                showToast("急速巡查成功");
                                                 getDataList();
 
                                             }
@@ -348,8 +352,8 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
+                        EventBus.getDefault().post(new SmartPatrolEvent());
                         startActivity(new Intent(aty, SmartPatrolMapActivity.class).putExtra("patrolRecordId", getIntent().getStringExtra("patrolRecordId")));
-                        finish();
                     }
 
                     @Override

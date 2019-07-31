@@ -266,7 +266,6 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
                         refreshData();
 
                         spfUtils.setSpfString(SpfKey.IS_LOGIN, "true");
-
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

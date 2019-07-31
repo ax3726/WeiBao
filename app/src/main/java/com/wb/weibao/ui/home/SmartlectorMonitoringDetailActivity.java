@@ -53,7 +53,7 @@ public class SmartlectorMonitoringDetailActivity extends BaseActivity<BasePresen
     protected void initTitleBar() {
         super.initTitleBar();
         mTitleBarLayout.setTitle("智慧用电电路监控");
-       mTitleBarLayout.setRightTxt("复位");
+       mTitleBarLayout.setRightTxt("设备复位");
        mTitleBarLayout.setRightListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

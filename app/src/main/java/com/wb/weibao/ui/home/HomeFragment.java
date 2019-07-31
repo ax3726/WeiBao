@@ -296,6 +296,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 //                                    spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(listBean.getInstCode()));
                                 MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                 mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+                                MyApplication.getInstance().setmProjectName(spfUtils.getSpfString(SpfKey.INST_NAME));
 //                                getErrorList();
                                 LogUtils.e("ee==开始获取接口");
                                 EventBus.getDefault().post(new ErrorEvent());
@@ -340,6 +341,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                                 spfUtils.setSpfString(SpfKey.InstCode, String.valueOf(listBean.getInstCode()));
                                 MyApplication.getInstance().setProjectId(spfUtils.getSpfString(SpfKey.INST_ID));
                                 mBinding.tvProject.setText(spfUtils.getSpfString(SpfKey.INST_NAME));
+                                MyApplication.getInstance().setmProjectName(spfUtils.getSpfString(SpfKey.INST_NAME));
 //                                }
 //                                getErrorList();
                                 LogUtils.e("ee==开始获取接口");

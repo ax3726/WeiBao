@@ -11,6 +11,7 @@
         <com.amap.api.maps.MapView
             android:id="@+id/map"
             android:layout_width="match_parent"
+            android:layout_marginBottom="182dp"
             android:layout_height="match_parent" />
 
         <ImageView

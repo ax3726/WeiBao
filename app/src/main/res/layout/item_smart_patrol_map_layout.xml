@@ -135,7 +135,7 @@
                 android:background="@color/colorWhite"
                 android:text="图片"
                 android:textColor="@color/color333333"
-                android:textSize="28px" />
+                android:textSize="14dp" />
             <GridView
                 android:layout_marginLeft="160px"
                 android:id="@+id/gv_body"

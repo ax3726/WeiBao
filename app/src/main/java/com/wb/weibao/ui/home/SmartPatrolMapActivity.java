@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.lm.lib_common.utils.Utils;
+import com.lm.lib_common.utils.glide.GlideRoundTransform;
 import com.wb.weibao.R;
 import com.wb.weibao.adapters.recyclerview.CommonAdapter;
 import com.wb.weibao.adapters.recyclerview.base.ViewHolder;
@@ -160,16 +161,18 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                 binding.tvJinWei.setText(item.getLongitude() + "," + item.getLatitude());
                 binding.tvDemo.setText(item.getRemark());
                 binding.tvOverTime.setText(DemoUtils.ConvertTimeFormat(item.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
-                mAdapters = new com.wb.weibao.adapters.abslistview.CommonAdapter<String>(aty, R.layout.item_add_point_img_layout, mImgs) {
+                mAdapters = new com.wb.weibao.adapters.abslistview.CommonAdapter<String>(aty, R.layout.item_map_img, mImgs) {
                     @Override
                     protected void convert(com.wb.weibao.adapters.abslistview.ViewHolder viewHolder, String item, int position) {
                         ImageView img = viewHolder.getView(R.id.img);
-                        ImageView img_del = viewHolder.getView(R.id.img_del);
-                        img_del.setVisibility(View.GONE);
+
                         GlideUrl glideUrl = new GlideUrl(item, new LazyHeaders.Builder()
                                 .addHeader("Cookie", "JSESSIONID=" + MyApplication.getInstance().getJSESSIONID())
                                 .build());
-                        Glide.with(aty).load(glideUrl).into(img);
+                        Glide.with(aty)
+                                .load(glideUrl)
+                                .bitmapTransform(new GlideRoundTransform(aty,3))
+                                .into(img);
 
                     }
                 };

@@ -32,7 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.home.SmartPatrolMapActivity"></activity>
-        <activity android:name=".ui.home.SmartPatrolRecordActivity" />
+        <activity android:name=".ui.home.SmartPatrolRecordActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden" />
         <activity android:name=".ui.home.SmartElectricActivity" />
         <activity
             android:name=".ui.main.SplashActivity"

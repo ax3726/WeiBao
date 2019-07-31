@@ -8,20 +8,27 @@
         android:background="@color/colorBackground"
         android:orientation="vertical">
 
-        <android.support.v7.widget.SearchView
-            android:id="@+id/searchview"
+
+        <EditText
+            android:id="@+id/et_search"
             android:layout_width="match_parent"
             android:layout_height="75px"
             android:layout_marginLeft="30px"
             android:layout_marginTop="20px"
-            android:layout_marginBottom="20px"
             android:layout_marginRight="30px"
+            android:layout_marginBottom="20px"
             android:background="@color/colorWhite"
-            android:gravity="clip_vertical"
-            android:iconifiedByDefault="false"
+            android:drawableLeft="@drawable/search_icon"
+            android:drawablePadding="30px"
+            android:hint="巡查点/地址查"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:paddingLeft="30px"
+            android:textColor="@color/color333333"
+            android:textColorHint="@color/color999999"
+            android:textSize="14dp" />
 
-            app:queryHint="巡查点/地址查"
-            android:textSize="14dp"></android.support.v7.widget.SearchView>
+
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/srl_body"

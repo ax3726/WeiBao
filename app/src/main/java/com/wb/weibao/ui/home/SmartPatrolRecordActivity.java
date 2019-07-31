@@ -1,17 +1,21 @@
 package com.wb.weibao.ui.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
 import com.lidroid.xutils.util.LogUtils;
 
 import android.util.TypedValue;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.lling.photopicker.PhotoPickerActivity;
@@ -90,6 +94,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
         });
     }
 
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_smart_patrol_record;
@@ -103,17 +108,26 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        TextView txt_search = (TextView) mBinding.searchview.findViewById(R.id.search_src_text);
-        //设置字体大小为14sp
-        txt_search.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//14sp
-        //设置字体颜色
-        txt_search.setTextColor(getResources().getColor(R.color.color333333));
-        //设置提示文字颜色
-        txt_search.setHintTextColor(getResources().getColor(R.color.color999999));
-        //去掉searchview下划线
-        View view = mBinding.searchview.findViewById(R.id.search_plate);
-        view.setBackgroundColor(Color.TRANSPARENT);
+        mBinding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    //如果actionId是搜索的id，则进行下一步的操作
+                    String newText = mBinding.etSearch.getText().toString().trim();
+                    if (!TextUtils.isEmpty(newText)) {
+                        LogUtils.e("11===" + newText);
+                        name = newText;
+                        getDataList();
+                    } else {
 
+                        name = "";
+                        getDataList();
+                    }
+
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -221,26 +235,6 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
             }
         });
         getDataList();
-        mBinding.searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (!TextUtils.isEmpty(newText)) {
-                    LogUtils.e("11===" + newText);
-                    name = newText;
-                    getDataList();
-                } else {
-
-                    name = "";
-                    getDataList();
-                }
-                return false;
-            }
-        });
 
 
         LocationHelper.getInstance().setILocationListener(new LocationHelper.ILocationListener() {

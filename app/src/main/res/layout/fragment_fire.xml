@@ -45,5 +45,15 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/colorBackground" />
+
+        <TextView
+            android:paddingBottom="10px"
+            android:textSize="20px"
+            android:background="@color/colorBackground"
+            android:gravity="center"
+            android:text="仅展示近31天数据，查看更多请前去PC端"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.zhy.autolayout.AutoLinearLayout>
+
 </layout>

@@ -246,6 +246,8 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
             @Override
             public void onLocationChanged(BDLocation location) {
                 if (location != null) {
+                    LogUtils.e("mLatitude=="+mLatitude);
+                    LogUtils.e("mLongitude=="+mLongitude);
                     mLatitude = location.getLatitude();
                     mLongitude = location.getLongitude();
 

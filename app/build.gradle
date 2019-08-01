@@ -120,4 +120,5 @@ dependencies {
     implementation project(':toast')
     implementation 'com.tencent.bugly:crashreport:2.6.6'
     implementation 'com.androidkun:XTabLayout:1.1.4'
+    implementation files('libs/BaiduLBS_Android.jar')
 }

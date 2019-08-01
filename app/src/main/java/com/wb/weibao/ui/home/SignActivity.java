@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
+import com.baidu.location.BDLocation;
 import com.lidroid.xutils.util.LogUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -139,7 +140,7 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
         checkSign();
         LocationHelper.getInstance().setILocationListener(new LocationHelper.ILocationListener() {
             @Override
-            public void onLocationChanged(AMapLocation location) {
+            public void onLocationChanged(BDLocation location) {
                 if (location != null) {
                     mLatitude = location.getLatitude();
                     mLongitude = location.getLongitude();

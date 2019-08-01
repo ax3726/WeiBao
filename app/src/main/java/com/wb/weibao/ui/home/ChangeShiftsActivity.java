@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
+import com.baidu.location.BDLocation;
 import com.wb.weibao.R;
 import com.wb.weibao.adapters.recyclerview.CommonAdapter;
 import com.wb.weibao.adapters.recyclerview.base.ViewHolder;
@@ -195,7 +196,7 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
 
         LocationHelper.getInstance().setILocationListener(new LocationHelper.ILocationListener() {
             @Override
-            public void onLocationChanged(AMapLocation location) {
+            public void onLocationChanged(BDLocation location) {
                 if (location != null) {
                     mLatitude = location.getLatitude();
                     mLongitude = location.getLongitude();

@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
+import com.baidu.location.BDLocation;
 import com.lidroid.xutils.util.LogUtils;
 
 import android.util.TypedValue;
@@ -243,7 +244,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
 
         LocationHelper.getInstance().setILocationListener(new LocationHelper.ILocationListener() {
             @Override
-            public void onLocationChanged(AMapLocation location) {
+            public void onLocationChanged(BDLocation location) {
                 if (location != null) {
                     mLatitude = location.getLatitude();
                     mLongitude = location.getLongitude();

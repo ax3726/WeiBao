@@ -5,15 +5,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.model.LatLng;
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.wb.weibao.common.MyApplication;
 
 
@@ -41,7 +46,7 @@ public class LocationHelper {
         initLocation();
     }
 
-    //声明定位回调监听器
+  /*  //声明定位回调监听器
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
@@ -73,11 +78,11 @@ public class LocationHelper {
             }
 
         }
-    };
-    //声明AMapLocationClientOption对象
-    public AMapLocationClientOption mLocationOption = null;
-    //声明AMapLocationClient类对象
-    public AMapLocationClient mLocationClient = null;
+    };*/
+    // 定位相关
+    LocationClient mLocClient;
+    public MyLocationListenner myListener = new MyLocationListenner();
+
     private ILocationListener mILocationListener;
 
     public void setILocationListener(ILocationListener mILocationListener) {
@@ -130,65 +135,68 @@ public class LocationHelper {
      */
     private void initLocation() {
 
-        //初始化定位
-        mLocationClient = new AMapLocationClient(MyApplication.getInstance());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(mLocationListener);
-        //初始化AMapLocationClientOption对象
-        mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setLocationCacheEnable(true);
-        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        //设置定位模式为AMapLocationMode.Battery_Saving，低功耗模式。
-        // mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-
-        //设置定位模式为AMapLocationMode.Device_Sensors，仅设备模式。
-        //  mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);
-
-        //获取一次定位结果：
-        //该方法默认为false。
-        mLocationOption.setOnceLocation(true);
-
-        //获取最近3s内精度最高的一次定位结果：
-        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
-        mLocationOption.setOnceLocationLatest(true);
-
-
-        //设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setNeedAddress(true);
-
-        //设置是否强制刷新WIFI，默认为true，强制刷新。
-        //  mLocationOption.setWifiActiveScan(false);
-
-        //设置是否允许模拟位置,默认为false，不允许模拟位置
-        mLocationOption.setMockEnable(false);
-
-        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
-        //mLocationOption.setHttpTimeOut(20000);
-        //关闭缓存机制
-        mLocationOption.setLocationCacheEnable(true);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
+        // 定位初始化
+        mLocClient = new LocationClient(MyApplication.getInstance());
+        mLocClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//高精度模式
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(3000);
+        //mLocClient.startIndoorMode();
+        mLocClient.setLocOption(option);
 
 
     }
 
 
     public void closeLocation() {
-        mLocationClient.onDestroy();
+        // 退出时销毁定位
+        mLocClient.stop();
         mLocationHelper = null;
     }
+
+
+    /**
+     * 定位SDK监听函数
+     */
+    public class MyLocationListenner extends BDAbstractLocationListener {
+
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // map view 销毁后不在处理新接收的位置
+            if (location == null) {
+                return;
+            }
+
+            if (location.getLocType() == 61 || location.getLocType() == 161) {
+                mILocationListener.onLocationChanged(location);
+            } else {
+                Toast.makeText(MyApplication.getInstance(), "定位失败:" + location.getLocTypeDescription(), Toast.LENGTH_SHORT);
+            }
+
+
+
+        }
+
+
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+        }
+    }
+
 
     public void startLocation(final Activity activity) {
         mAty = activity;
         //启动定位
-        mLocationClient.startLocation();
+        mLocClient.start();
 
     }
 
 
     public interface ILocationListener {
-        void onLocationChanged(AMapLocation location);
+        void onLocationChanged(BDLocation location);
     }
 
 }

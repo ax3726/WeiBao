@@ -117,10 +117,10 @@ public class SmartlectorMonitoringDetailActivity extends BaseActivity<BasePresen
                 .subscribe(new BaseNetListener<SmartElectorDetailBean>(this, false) {
                     @Override
                     public void onSuccess(SmartElectorDetailBean baseBean) {
-                        mBinding.tv1.setText(mBinding.tv1.getText().toString().substring(0,mBinding.tv1.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getId());
+                        mBinding.tv1.setText(mBinding.tv1.getText().toString().substring(0,mBinding.tv1.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getLotCard());
                         mBinding.tv2.setText(mBinding.tv2.getText().toString().substring(0,mBinding.tv2.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getCode());
-                        mBinding.tv3.setText(mBinding.tv3.getText().toString().substring(0,mBinding.tv3.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getPosition());
-                        mBinding.tv4.setText(mBinding.tv4.getText().toString().substring(0,mBinding.tv4.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getLotCard());
+                        mBinding.tv3.setText(mBinding.tv3.getText().toString().substring(0,mBinding.tv3.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getName());
+                        mBinding.tv4.setText(mBinding.tv4.getText().toString().substring(0,mBinding.tv4.getText().toString().indexOf(":")+1)+"     "+baseBean.getData().getPosition());
                         String CreateTime =baseBean.getData().getUpdateTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(baseBean.getData().getUpdateTime(), "yyyy-MM-dd HH:mm:ss");
                         mBinding.tv5.setText(mBinding.tv5.getText().toString().substring(0,mBinding.tv5.getText().toString().indexOf(":")+1)+"     "+CreateTime);
                         SmartElectorDetailBean.DataBean data = baseBean.getData();

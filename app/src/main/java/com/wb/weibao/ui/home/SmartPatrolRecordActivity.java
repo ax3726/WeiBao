@@ -347,7 +347,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
                     @Override
                     public void onSuccess(BaseBean baseBean) {
                         EventBus.getDefault().post(new SmartPatrolEvent());
-                        startActivity(new Intent(aty, SmartPatrolMapActivity.class).putExtra("patrolRecordId", getIntent().getStringExtra("patrolRecordId")));
+                        finish();
                     }
 
                     @Override
@@ -355,6 +355,32 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
 
                     }
                 });
+
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            new MyAlertDialog(aty).builder().setTitle("提示")
+                    .setMsg("确定要结束并提交巡查记录吗？").setNegativeButton("再等等", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            }).setPositiveButton("确定结束", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    getEndPatrol(getIntent().getStringExtra("patrolRecordId"));
+                }
+            }).show();
+
+
+            return true;
+        }
+        return super.onKeyDown(keyCode,event);
 
     }
 }

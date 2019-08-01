@@ -183,14 +183,14 @@ public class SmartPatrolActivity extends BaseActivity<BasePresenter, ActivitySma
                 String CreateTime = mDataList.get(position).getPatrolEndTime() == 0 ? "" : DemoUtils.ConvertTimeFormat(mDataList.get(position).getPatrolEndTime(), "yyyy-MM-dd HH:mm:ss");
                 binding.tv04.setText(CreateTime);
 
-//                binding.rlyItem.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        startActivity(new Intent(aty, WeibaoDetailActivity.class).putExtra("id", listBean.getId() + "").putExtra("type", "1").putExtra("projectid", listBean.getProjectId()));
-//
-//                    }
-//                });
+                binding.rlyItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(aty, SmartPatrolMapActivity.class).putExtra("patrolRecordId", ""+listBean.getId()));
+
+
+                    }
+                });
             }
         };
 

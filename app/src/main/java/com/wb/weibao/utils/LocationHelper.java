@@ -138,12 +138,14 @@ public class LocationHelper {
         // 定位初始化
         mLocClient = new LocationClient(MyApplication.getInstance());
         mLocClient.registerLocationListener(myListener);
+        //启动定位
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//高精度模式
         option.setOpenGps(true); // 打开gps
-        option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(3000);
+        option.setCoorType("GCJ02"); // 设置坐标类型
+
         //mLocClient.startIndoorMode();
+        option.setScanSpan(3000);
         mLocClient.setLocOption(option);
 
 
@@ -189,7 +191,7 @@ public class LocationHelper {
 
     public void startLocation(final Activity activity) {
         mAty = activity;
-        //启动定位
+
         mLocClient.start();
 
     }

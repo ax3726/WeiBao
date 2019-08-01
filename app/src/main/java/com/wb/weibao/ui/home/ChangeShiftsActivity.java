@@ -347,5 +347,6 @@ public class ChangeShiftsActivity extends BaseActivity<BasePresenter, ActivityCh
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        LocationHelper.getInstance().closeLocation();
     }
 }

@@ -147,8 +147,6 @@ public class LocationHelper {
         //mLocClient.startIndoorMode();
         option.setScanSpan(3000);
         mLocClient.setLocOption(option);
-
-
     }
 
 

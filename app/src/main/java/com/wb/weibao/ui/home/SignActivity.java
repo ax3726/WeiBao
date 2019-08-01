@@ -283,4 +283,9 @@ public class SignActivity extends BaseActivity<BasePresenter, ActivitySignBindin
         mBinding.srlBody.finishLoadmore();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocationHelper.getInstance().closeLocation();
+    }
 }

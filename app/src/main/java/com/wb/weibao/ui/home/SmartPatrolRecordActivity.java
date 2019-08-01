@@ -153,8 +153,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
                 binding.tvOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-
+                        LocationHelper.getInstance().startLocation(aty);
                         mConfirmPopupwindow = new ConfirmPopupwindow(aty, "1");
                         mConfirmPopupwindow.setToastListener(new ConfirmPopupwindow.ToastListener() {
                             @Override
@@ -167,7 +166,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
                             @Override
                             public void onOk(ArrayList<String> imageUUid, String txt) {//返回结果
                                 String str = DemoUtils.ListToString(imageUUid, ";");
-                                LocationHelper.getInstance().startLocation(aty);
+
                                 Api.getApi().getPatrolRecordAppAdd(getIntent().getStringExtra("patrolRecordId"), "" + item.getId(), "" + mLatitude, "" + mLongitude, txt, str, "1")
                                         .compose(callbackOnIOToMainThread())
                                         .subscribe(new BaseNetListener<BaseBean>(SmartPatrolRecordActivity.this, true) {
@@ -191,12 +190,13 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
                 binding.tvFastOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        LocationHelper.getInstance().startLocation(aty);
                         mConfirmPopupwindow = new ConfirmPopupwindow(aty, "2");
                         mConfirmPopupwindow.setConfirmListener(new ConfirmPopupwindow.ConfirmListener() {
                             @Override
                             public void onOk(ArrayList<String> imageUUid, String txt) {//返回结果
                                 String str = DemoUtils.ListToString(imageUUid, ";");
-                                LocationHelper.getInstance().startLocation(aty);
+
                                 Api.getApi().getPatrolRecordAppAdd(getIntent().getStringExtra("patrolRecordId"), "" + item.getId(), "" + mLatitude, "" + mLongitude, txt, str, "2")
                                         .compose(callbackOnIOToMainThread())
                                         .subscribe(new BaseNetListener<BaseBean>(SmartPatrolRecordActivity.this, true) {
@@ -349,6 +349,7 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
                 .subscribe(new BaseNetListener<BaseBean>(this, true) {
                     @Override
                     public void onSuccess(BaseBean baseBean) {
+                        LocationHelper.getInstance().closeLocation();
                         EventBus.getDefault().post(new SmartPatrolEvent());
                         finish();
                     }
@@ -385,5 +386,11 @@ public class SmartPatrolRecordActivity extends BaseActivity<BasePresenter, Activ
         }
         return super.onKeyDown(keyCode,event);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocationHelper.getInstance().closeLocation();
     }
 }

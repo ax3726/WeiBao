@@ -62,6 +62,8 @@ public class LoginActivity extends BaseActivity<BasePresenter, ActivityLoginBind
     protected void initData() {
         super.initData();
 
+
+
         WorksSizeCheckUtil.textChangeListener listener = new WorksSizeCheckUtil.textChangeListener(mBinding.affirm);
         listener.addAllEditText(mBinding.inputPhone, mBinding.inputPassword);
         mBinding.pwdeye.setOnClickListener(new View.OnClickListener() {

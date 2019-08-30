@@ -671,7 +671,7 @@ public interface ApiService {
      * @return
      */
     @POST("collector/app/powerListApp")
-    Flowable<SmartElectorBean> getPowerListApp(@Query("page") String page, @Query("size") String size);
+    Flowable<SmartElectorBean> getPowerListApp(@Query("page") String page, @Query("size") String size,@Query("projectId") String projectId);
 
     /**
      * 电路监控详情
@@ -742,7 +742,7 @@ public interface ApiService {
      * 完成巡查点位
      *
      * @param patrolRecordId
-     * @param patrolPointId
+     * @param patrolPointCode
      * @param latitude
      * @param longitude
      * @param remark
@@ -751,7 +751,7 @@ public interface ApiService {
      * @return
      */
     @POST("patrol/record/app/add")
-    Flowable<BaseBean> getPatrolRecordAppAdd(@Query("patrolRecordId") String patrolRecordId, @Query("patrolPointId") String patrolPointId, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("remark") String remark, @Query("picturesOssKeys") String picturesOssKeys, @Query("completeType") String completeType);
+    Flowable<BaseBean> getPatrolRecordAppAdd(@Query("patrolRecordId") String patrolRecordId, @Query("patrolPointCode") String patrolPointCode, @Query("latitude") String latitude, @Query("longitude") String longitude, @Query("remark") String remark, @Query("picturesOssKeys") String picturesOssKeys, @Query("completeType") String completeType);
 
 
     /**
@@ -777,4 +777,11 @@ public interface ApiService {
     @POST("collector/app/resetDevice")
     Flowable<BaseBean> getResetDevice(@Query("id") String id);
 
+    /**
+     * 判断是否重复巡查
+     * @param patrolPointCode
+     * @return
+     */
+    @POST("patrol/record/app/isRepeatPatrol")
+    Flowable<BaseBean> getIsRepeatPatrol(@Query("patrolPointCode") String patrolPointCode);
 }

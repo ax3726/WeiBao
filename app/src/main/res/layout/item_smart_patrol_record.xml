@@ -6,21 +6,30 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16px"
         android:background="@color/colorWhite"
-        android:paddingLeft="30px"
-        android:paddingTop="24px"
-        android:paddingRight="30px"
-        android:paddingBottom="24px">
+        android:paddingBottom="24px"
+       >
 
 
         <TextView
+            android:layout_marginRight="30px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="24px"
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="名字"
             android:textColor="@color/color333333"
             android:textSize="28px" />
+        <ImageView
+            android:id="@+id/image_patrol"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/icon_nopatrol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <View
-android:layout_marginTop="10px"
+            android:layout_marginRight="30px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="10px"
             android:id="@+id/line"
             android:layout_below="@+id/tv_name"
             android:layerType="software"
@@ -29,6 +38,7 @@ android:layout_marginTop="10px"
             android:layout_height="2dp" />
 
         <TextView
+            android:layout_marginLeft="30px"
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +51,7 @@ android:layout_marginTop="10px"
 
         <TextView
             android:layout_marginTop="20px"
-            android:id="@+id/tv_fast_ok"
+            android:id="@+id/tv_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_content"
@@ -51,25 +61,26 @@ android:layout_marginTop="10px"
             android:paddingTop="8px"
             android:paddingRight="24px"
             android:paddingBottom="8px"
-            android:text="极速完成"
+            android:text="完成巡查"
             android:textColor="#36519E"
+            android:layout_marginRight="30px"
             android:textSize="22px" />
 
-        <TextView
-            android:layout_marginTop="20px"
-            android:id="@+id/tv_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           android:layout_below="@+id/tv_content"
-            android:layout_marginRight="30px"
-            android:layout_toLeftOf="@+id/tv_fast_ok"
-            android:background="@drawable/shape_btn_kuang"
-            android:paddingLeft="24px"
-            android:paddingTop="8px"
-            android:paddingRight="24px"
-            android:paddingBottom="8px"
-            android:text="备注并完成"
-            android:textColor="#36519E"
-            android:textSize="22px" />
+        <!--<TextView-->
+            <!--android:layout_marginTop="20px"-->
+            <!--android:id="@+id/tv_ok"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+           <!--android:layout_below="@+id/tv_content"-->
+            <!--android:layout_marginRight="30px"-->
+            <!--android:layout_toLeftOf="@+id/tv_fast_ok"-->
+            <!--android:background="@drawable/shape_btn_kuang"-->
+            <!--android:paddingLeft="24px"-->
+            <!--android:paddingTop="8px"-->
+            <!--android:paddingRight="24px"-->
+            <!--android:paddingBottom="8px"-->
+            <!--android:text="异常备注"-->
+            <!--android:textColor="#36519E"-->
+            <!--android:textSize="22px" />-->
     </com.zhy.autolayout.AutoRelativeLayout>
 </layout>

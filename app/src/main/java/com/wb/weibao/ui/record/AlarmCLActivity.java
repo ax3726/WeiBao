@@ -72,9 +72,6 @@ public class AlarmCLActivity extends BaseActivity<BasePresenter, ActivityAlarmcl
     protected void initData() {
         super.initData();
 
-
-
-
         mBinding.affirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

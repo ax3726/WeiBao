@@ -53,8 +53,8 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
     private List<PatrolMapInfoModel.DataBean.PatrolRecordPointsBean>          mDataList = new ArrayList<>();
     private AMap                                                              aMap;
     private BottomSheetBehavior                                               bottomSheetBehavior;
-    private com.wb.weibao.adapters.abslistview.CommonAdapter<String> mAdapters;
-    private ArrayList<String> mImgs = new ArrayList<>();
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_smart_patrol_map;
@@ -88,8 +88,7 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                             if (data.getPatrolRecordPoints() != null && data.getPatrolRecordPoints().size() > 0) {
                                 mDataList.addAll(data.getPatrolRecordPoints());
 
-                                LatLng latLng_start = new LatLng(Double.valueOf(data.getPatrolRecordPoints().get(0).getLatitude()),
-                                        Double.valueOf(data.getPatrolRecordPoints().get(0).getLongitude()));
+                                LatLng latLng_start = new LatLng(Double.valueOf(data.getPatrolRecordPoints().get(0).getLatitude()), Double.valueOf(data.getPatrolRecordPoints().get(0).getLongitude()));
                                 Marker start_marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.location_start_icon)));
                                 start_marker.setPosition(latLng_start);
                                 start_marker.setToTop();
@@ -113,7 +112,7 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
 
                             }
                             mAdapter.notifyDataSetChanged();
-                            mBinding.tvNo.setText(data.getUserId());
+                            mBinding.tvNo.setText(data.getId()+"");
                             mBinding.tvNamePhone.setText(data.getUserName() + "/" + data.getUserPhone());
                             mBinding.tvStartTime.setText(DemoUtils.ConvertTimeFormat(data.getPatrolStartTime(),"yyyy-MM-dd HH:mm:ss"));
                             mBinding.tvEndTime.setText(DemoUtils.ConvertTimeFormat(data.getPatrolEndTime(),"yyyy-MM-dd HH:mm:ss"));
@@ -155,13 +154,31 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
             @Override
             protected void convert(ViewHolder holder, PatrolMapInfoModel.DataBean.PatrolRecordPointsBean item, int position) {
                 ItemSmartPatrolMapLayoutBinding binding = holder.getBinding(ItemSmartPatrolMapLayoutBinding.class);
+
+                if (mDataList.get(position).getCompleteType().equals("1")) {
+                    binding.imagePatrol.setImageResource(R.drawable.icon_yichang);
+
+                } else {
+                    binding.imagePatrol.setImageResource(R.drawable.icon_normal);
+
+                }
+
                 binding.tvName.setText(item.getPatrolName());
                 binding.tvType.setText(item.getPatrolTypeName());
                 binding.tvAddress.setText(item.getPatrolAddress());
                 binding.tvJinWei.setText(item.getLongitude() + "," + item.getLatitude());
-                binding.tvDemo.setText(item.getRemark());
+                if(!TextUtils.isEmpty(item.getRemark())) {
+                    binding.tvHint5.setVisibility(View.VISIBLE);
+                    binding.tvDemo.setVisibility(View.VISIBLE);
+                    binding.tvDemo.setText(item.getRemark());
+                }else
+                    {
+                        binding.tvDemo.setVisibility(View.GONE);
+                        binding.tvHint5.setVisibility(View.GONE);
+                    }
                 binding.tvOverTime.setText(DemoUtils.ConvertTimeFormat(item.getUpdateTime(),"yyyy-MM-dd HH:mm:ss"));
-                mAdapters = new com.wb.weibao.adapters.abslistview.CommonAdapter<String>(aty, R.layout.item_map_img, mImgs) {
+                 ArrayList<String> mImgs = new ArrayList<>();
+                 com.wb.weibao.adapters.abslistview.CommonAdapter<String> mAdapters;   mAdapters = new com.wb.weibao.adapters.abslistview.CommonAdapter<String>(aty, R.layout.item_map_img, mImgs) {
                     @Override
                     protected void convert(com.wb.weibao.adapters.abslistview.ViewHolder viewHolder, String item, int position) {
                         ImageView img = viewHolder.getView(R.id.img);
@@ -178,6 +195,10 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                 };
                 binding.gvBody.setAdapter(mAdapters);
                 if (!TextUtils.isEmpty(item.getPicturesOssKeys())) {
+
+                    binding.gvBody.setVisibility(View.VISIBLE);
+
+                    binding.llyImg.setVisibility(View.VISIBLE);
                     String[] split = item.getPicturesOssKeys().split(";");
                     if (split != null && split.length > 0) {
                         for (String str : split) {
@@ -185,7 +206,14 @@ public class SmartPatrolMapActivity extends BaseActivity<BasePresenter, Activity
                         }
                     }
                     mAdapters.notifyDataSetChanged();
-                }
+                }else
+                    {
+
+                        binding.gvBody.setVisibility(View.GONE);
+
+                        binding.llyImg.setVisibility(View.GONE);
+                    }
+
                 binding.gvBody.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="25px"
-            android:drawableRight="@drawable/mine_right_icon"
+            android:drawableRight="@drawable/ic_right"
             android:text="正常"
             android:layout_marginLeft="48px"
             android:textColor="@color/color333333"

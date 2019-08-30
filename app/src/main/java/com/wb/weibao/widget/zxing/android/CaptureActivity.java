@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -101,12 +102,45 @@ public final class CaptureActivity extends BaseActivity<BasePresenter, CaptureBi
                 startActivity(HandEditActivity.class);
             }
         });
+
+
     }
 
     /**
      * OnCreate中初始化一些辅助类，如InactivityTimer（休眠）、Beep（声音）以及AmbientLight（闪光灯）
      */
 
+
+    //初始化view,并且设置点击事件开启和关闭闪光灯
+    private void initFindView() {
+        mBinding.tvOpenLight.setOnClickListener(openListener);
+    }
+
+
+    private Camera camera;
+    private Camera.Parameters parameter;
+    /**
+     * 开灯
+     */
+  private boolean isOpen=true;
+    private View.OnClickListener openListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //获取到ZXing相机管理器创建的camera
+            camera = cameraManager.getCamera();
+            parameter = camera.getParameters();
+            // TODO 开灯
+            if (isOpen) {
+                parameter.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                camera.setParameters(parameter);
+                isOpen = false;
+            } else {  // 关灯
+                parameter.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                camera.setParameters(parameter);
+                isOpen = true;
+            }
+        }
+    };
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -131,7 +165,7 @@ public final class CaptureActivity extends BaseActivity<BasePresenter, CaptureBi
                 window.setStatusBarColor(Color.TRANSPARENT);
             }
         }
-
+        initFindView();
 
 
     }
@@ -194,14 +228,24 @@ public final class CaptureActivity extends BaseActivity<BasePresenter, CaptureBi
             SurfaceHolder surfaceHolder = surfaceView.getHolder();
             surfaceHolder.removeCallback(this);
         }
+
         super.onPause();
+
+
     }
+
+
 
     @Override
     protected void onDestroy() {
         inactivityTimer.shutdown();
         super.onDestroy();
     }
+
+
+
+
+
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -297,7 +341,7 @@ public final class CaptureActivity extends BaseActivity<BasePresenter, CaptureBi
     private void setResult(Result rawResult, Bitmap barcode) {
         Intent intent = getIntent();
         intent.putExtra("codedContent", rawResult.getText());
-        intent.putExtra("codedBitmap", barcode);
+//        intent.putExtra("codedBitmap", barcode);
         setResult(RESULT_OK, intent);
         finish();
     }

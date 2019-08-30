@@ -16,11 +16,11 @@
     android:textSize="28px"
     android:textColor="#424242"
     android:id="@+id/tv_01"
-    android:layout_weight="1.6"
+    android:layout_weight="1"
     android:layout_width="0dp"
     android:layout_height="wrap_content" />
         <TextView
-            android:paddingLeft="10px"
+
             android:textSize="28px"
             android:textColor="#424242"
             android:id="@+id/tv_02"
@@ -28,11 +28,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
         <TextView
-            android:paddingLeft="10px"
+
             android:textSize="28px"
             android:textColor="#424242"
             android:id="@+id/tv_03"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
         </com.zhy.autolayout.AutoLinearLayout>

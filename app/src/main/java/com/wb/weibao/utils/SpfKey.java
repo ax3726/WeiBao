@@ -18,4 +18,5 @@ public interface SpfKey {
     String InstCode = "InstCode";
     String IS_LOGIN = "IsLogin";
     String IS_PUSH_PLAY = "IS_PUSH_PLAY";
+    String ISTRUEONE="istrue";
 }

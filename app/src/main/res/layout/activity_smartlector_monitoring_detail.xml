@@ -74,7 +74,7 @@
                 android:textSize="28px"
                 android:textColor="#424242"
                 android:id="@+id/tv_01"
-                android:layout_weight="1.6"
+                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <TextView
@@ -92,13 +92,15 @@
                 android:textSize="28px"
                 android:textColor="#424242"
                 android:id="@+id/tv_03"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
         </com.zhy.autolayout.AutoLinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:layout_marginBottom="86px"
-                android:padding="30px"
+                android:paddingTop="30px"
+                android:paddingBottom="30px"
+                android:paddingLeft="30px"
                 android:layout_marginRight="30px"
                 android:layout_marginLeft="30px"
                 android:id="@+id/rc_body"

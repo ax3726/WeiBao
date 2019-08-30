@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         android:orientation="vertical">
-
-
         <EditText
             android:id="@+id/et_search"
             android:layout_width="match_parent"
@@ -20,7 +17,7 @@
             android:background="@color/colorWhite"
             android:drawableLeft="@drawable/search_icon"
             android:drawablePadding="30px"
-            android:hint="巡查点/地址查"
+            android:hint="巡查点/地址查询"
             android:imeOptions="actionSearch"
             android:singleLine="true"
             android:paddingLeft="30px"
@@ -35,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rc_body"
                 android:layout_width="match_parent"
@@ -43,10 +39,17 @@
 
 
             </android.support.v7.widget.RecyclerView>
-
-
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+        <Button
+            android:layout_gravity="bottom"
+            android:id="@+id/affirm"
+            android:textSize="18sp"
+            android:textColor="@color/btn_textcolor"
+            android:background="#36519E"
+            android:layout_width="match_parent"
+           android:layout_height="45dp"
+            android:text="扫一扫巡查" />
 
     </com.zhy.autolayout.AutoLinearLayout>
+
 </layout>

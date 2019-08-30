@@ -223,14 +223,12 @@
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <Button
-
                 android:id="@+id/affirm"
                 style="@style/SmsButton"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="63px"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="50px"
-
                 android:text="确认添加" />
 
         </com.zhy.autolayout.AutoLinearLayout>

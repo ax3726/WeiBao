@@ -270,7 +270,7 @@ public class PatrolPointListBean {
              * updateTime : 2019-07-30T01:47:11.260Z
              * updateUserId : string
              */
-
+            private String code;
             private String address;
             private String createTime;
             private String createUserId;
@@ -281,6 +281,23 @@ public class PatrolPointListBean {
             private String type;
             private String updateTime;
             private String updateUserId;
+            private int  patrolCompleteStatus;
+
+            public String getCode() {
+                return code;
+            }
+
+            public void setCode(String code) {
+                this.code = code;
+            }
+
+            public int getPatrolCompleteStatus() {
+                return patrolCompleteStatus;
+            }
+
+            public void setPatrolCompleteStatus(int patrolCompleteStatus) {
+                this.patrolCompleteStatus = patrolCompleteStatus;
+            }
 
             public String getAddress() {
                 return address;

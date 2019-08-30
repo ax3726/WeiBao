@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@mipmap/start_logo">
+        android:background="@color/white">
 <ImageView
     android:background="@mipmap/start_logo1"
     android:layout_width="wrap_content"

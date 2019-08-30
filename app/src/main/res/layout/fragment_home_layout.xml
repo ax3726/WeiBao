@@ -186,7 +186,7 @@
                     android:drawableTop="@drawable/home_xunfang"
                     android:gravity="center"
                     android:paddingBottom="22px"
-                    android:paddingTop="48px"
+                    android:paddingTop="42px"
                     android:text="智慧巡查"
                     android:textColor="@color/color333333"
                     android:textSize="26px" />
@@ -311,27 +311,27 @@
                 android:paddingLeft="30px"
                 android:paddingRight="30px">
 
-                <TextView
-                    android:id="@+id/tv_09"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_white"
-                    android:drawablePadding="30px"
-                    android:drawableTop="@drawable/home_tv_08"
-                    android:gravity="center"
-                    android:paddingBottom="22px"
-                    android:paddingTop="50px"
-                    android:text="关联服务"
-                    android:textColor="@color/color333333"
-                    android:textSize="26px" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_09"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@drawable/shape_white"-->
+                    <!--android:drawablePadding="30px"-->
+                    <!--android:drawableTop="@drawable/home_tv_08"-->
+                    <!--android:gravity="center"-->
+                    <!--android:paddingBottom="22px"-->
+                    <!--android:paddingTop="50px"-->
+                    <!--android:text="关联服务"-->
+                    <!--android:textColor="@color/color333333"-->
+                    <!--android:textSize="26px" />-->
 
                 <TextView
                     android:id="@+id/tv_10"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16px"
-                    android:layout_marginRight="16px"
+
+
                     android:layout_weight="1"
                     android:background="@drawable/shape_white"
                     android:drawablePadding="30px"
@@ -344,6 +344,7 @@
                     android:textSize="26px" />
 
                 <TextView
+                    android:layout_marginLeft="16px"
                     android:id="@+id/tv_11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -359,6 +360,22 @@
                     android:textColor="@color/color333333"
                     android:textSize="26px"
                     />
+
+                <TextView
+                    android:layout_marginRight="16px"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_white"
+                    android:drawablePadding="30px"
+                    android:drawableTop="@mipmap/home_shuiya_icon"
+                    android:gravity="center"
+                    android:paddingBottom="22px"
+                    android:paddingTop="44px"
+                    android:text="水压监控"
+                    android:textColor="@color/color333333"
+                    android:textSize="26px"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="0dp"

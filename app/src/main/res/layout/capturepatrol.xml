@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.zhy.autolayout.AutoFrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <!-- 整体透明画布 -->
+        <SurfaceView
+            android:id="@+id/preview_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+        <!-- 扫描取景框 -->
+        <com.wb.weibao.widget.zxing.view.ViewfinderView
+            android:id="@+id/viewfinder_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View
+                android:id="@+id/view_head"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/head_top" />
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="88px"
+                >
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rly_left"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/image_back_icon" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="扫码巡查"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="33px" />
+
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <TextView
+               android:layout_marginTop="930px"
+                android:id="@+id/tv_open_light"
+                android:layout_gravity="center_horizontal"
+                android:drawableTop="@drawable/icon_torch"
+                android:textColor="@color/white"
+                android:text="点击打开或关闭手电筒照明"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+            <TextView
+                android:layout_gravity="bottom"
+                android:paddingBottom="30px"
+                android:textColor="@color/white"
+                android:textSize="24px"
+                android:text="提示：若二维码缺失，可返回列表页手动点击完成"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
+
+
+    </com.zhy.autolayout.AutoFrameLayout>
+</layout>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+<com.zhy.autolayout.AutoFrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:paddingLeft="35dp"
         android:background="@color/colorWhite"
         android:paddingTop="12dp"
         android:layout_marginBottom="8dp"
-        android:paddingRight="35dp"
         android:paddingBottom="12dp">
-
-
         <TextView
             android:id="@+id/tv_hint1"
             android:layout_width="wrap_content"
@@ -65,8 +65,9 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_type" />
 
         <TextView
+
             android:id="@+id/tv_address"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="杭州市上城区庆春路79…"
             android:textColor="@color/color333333"
@@ -98,6 +99,7 @@
             app:layout_constraintLeft_toRightOf="@+id/tv_hint4" />
 
         <TextView
+
             android:id="@+id/tv_hint5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,6 +111,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_jin_wei" />
 
         <TextView
+
             android:id="@+id/tv_demo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -137,7 +140,7 @@
                 android:textColor="@color/color333333"
                 android:textSize="14dp" />
             <GridView
-                android:layout_marginLeft="160px"
+                android:layout_marginLeft="140px"
                 android:id="@+id/gv_body"
                 android:layout_width="0dp"
                 android:numColumns="5"
@@ -168,4 +171,12 @@
             app:layout_constraintLeft_toRightOf="@+id/tv_hint7" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/image_patrol"
+       android:layout_gravity="right"
+        android:background="@drawable/icon_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</com.zhy.autolayout.AutoFrameLayout>
 </layout>

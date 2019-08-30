@@ -4,16 +4,10 @@
     android:layout_marginLeft="53px"
     android:layout_marginRight="52px"
     android:layout_width="wrap_content"
-    android:layout_height="534px"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:background="#F1f1f1"
+    android:background="@drawable/ic_dialog"
     >
-<ImageView
-    android:layout_marginTop="-30px"
-    android:layout_gravity="center_horizontal"
-    android:background="@drawable/icon_location"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_gravity="bottom"
         android:orientation="vertical"
@@ -40,7 +34,7 @@
         android:layout_height="wrap_content" />
   <View
      android:layout_weight="1"
-    android:background="@color/colorWhite"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
     android:layout_height="0dp"/>
     <TextView

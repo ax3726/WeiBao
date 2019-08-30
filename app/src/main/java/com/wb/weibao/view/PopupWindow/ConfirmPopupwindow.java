@@ -30,18 +30,19 @@ import java.util.List;
 public class ConfirmPopupwindow extends PopupWindow {
     private             Activity                   aty;
     private             PopuwindowsOkLayoutBinding mBinding;
-    private             ArrayList<String>          mImageUUid  = new ArrayList<>();
+    private             ArrayList<String>          mImageUUid ;
     private             ConfirmListener            mConfirmListener;
     public static final int                        RequestCode = 1001;
-    private             List<String>               mImgs       = new ArrayList<>();
+    private             List<String>               mImgs   ;
     private             CommonAdapter<String>      mAdapter;
     private             String                     type;
 
     public ConfirmPopupwindow(Activity activity, String types) {
+        mImageUUid  = new ArrayList<>();
+        mImgs       = new ArrayList<>();
         aty = activity;
         type = types;
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.popuwindows_ok_layout, null, false);
-
         // 设置SelectPicPopupWindow的View
         this.setContentView(mBinding.getRoot());
         // 设置Popupwindow弹出窗体的宽
@@ -70,12 +71,12 @@ public class ConfirmPopupwindow extends PopupWindow {
            }
        });
 
-       mBinding.tvOk.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               dismiss();
-           }
-       });
+//       mBinding.tvOk.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View v) {
+//               dismiss();
+//           }
+//       });
         initView();
     }
 
@@ -95,11 +96,16 @@ public class ConfirmPopupwindow extends PopupWindow {
 
                     if (content.length() > 0) {
                         if (mConfirmListener != null) {
-
-                            mConfirmListener.onOk(mImageUUid, content);
+                            if(mImageUUid.size()>0) {
+                                mConfirmListener.onOk(mImageUUid, content);
+                                dismiss();
+                            }else
+                                {
+                                    toastListener.Toast("图片不能为空");
+                                }
 
                         }
-                        dismiss();
+
                     } else {
                         if (toastListener != null) {
                             toastListener.Toast("请输入备注信息");
@@ -108,11 +114,15 @@ public class ConfirmPopupwindow extends PopupWindow {
                 }else
                     {
                         if (mConfirmListener != null) {
-
-                            mConfirmListener.onOk(mImageUUid, content);
-
+                            if(mImageUUid.size()>0) {
+                                mConfirmListener.onOk(mImageUUid, content);
+                                dismiss();
+                            }else
+                            {
+                                toastListener.Toast("图片不能为空");
+                            }
                         }
-                        dismiss();
+
 
                     }
 

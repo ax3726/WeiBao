@@ -1,25 +1,19 @@
 package com.wb.weibao.ui.main;
 
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
-import android.hardware.camera2.CameraManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -36,20 +30,14 @@ import com.wb.weibao.common.PlayNumService;
 import com.wb.weibao.common.TimeService;
 import com.wb.weibao.databinding.ActivityMainBinding;
 import com.wb.weibao.model.BaseBean;
-import com.wb.weibao.model.PermissionListBean;
 import com.wb.weibao.model.VersionBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ErrorEvent;
 import com.wb.weibao.model.record.RecordCount;
-import com.wb.weibao.model.record.RecordDetailEvent;
-import com.wb.weibao.model.record.RecordListModel;
-import com.wb.weibao.ui.Login.LoginActivity;
-import com.wb.weibao.ui.earlywarning.FireFragment;
 import com.wb.weibao.ui.earlywarning.WarningFragment;
 import com.wb.weibao.ui.home.HomeFragment;
 import com.wb.weibao.ui.maintenance.AddOrderActivity;
 import com.wb.weibao.ui.mine.MineFragment;
-import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
 import com.wb.weibao.utils.update.AppUpdateProgressDialog;

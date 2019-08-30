@@ -79,13 +79,13 @@ public final class ViewfinderView extends View {
         maskColor = resources.getColor(R.color.viewfinder_mask);
         resultColor = resources.getColor(R.color.result_view);
         laserColor = resources.getColor(R.color.viewfinder_laser);
-        resultPointColor = resources.getColor(R.color.possible_result_points);
+        resultPointColor = resources.getColor(R.color.blue);//possible_result_points
         statusColor = resources.getColor(R.color.status_text);
         scannerAlpha = 0;
         possibleResultPoints = new ArrayList<ResultPoint>(5);
         lastPossibleResultPoints = null;
         scanLight = BitmapFactory.decodeResource(resources,
-                R.drawable.scan_light);
+                R.drawable.icon_scanlight);
     }
 
     public void setCameraManager(CameraManager cameraManager) {
@@ -190,6 +190,7 @@ public final class ViewfinderView extends View {
      * @param canvas
      * @param frame
      */
+    @SuppressLint("NewApi")
     private void drawFrameBounds(Canvas canvas, Rect frame) {
 
         paint.setColor(Color.WHITE);
@@ -198,32 +199,53 @@ public final class ViewfinderView extends View {
 
         canvas.drawRect(frame, paint);
 
-        paint.setColor(Color.parseColor("#BEA46E"));
+        paint.setColor(Color.parseColor("#3c5cd3"));
         paint.setStyle(Paint.Style.FILL);
-
-        int corWidth = 15;
+        int corWidth = 6;
         int corLength = 45;
 
         // 左上角
-        canvas.drawRect(frame.left - corWidth, frame.top, frame.left, frame.top
+//        canvas.drawRect(frame.left - corWidth, frame.top, frame.left, frame.top
+//                + corLength, paint);
+//        canvas.drawRect(frame.left - corWidth, frame.top - corWidth, frame.left
+//                + corLength, frame.top, paint);
+
+
+        canvas.drawRect(frame.left, frame.top, frame.left+corWidth, frame.top
                 + corLength, paint);
-        canvas.drawRect(frame.left - corWidth, frame.top - corWidth, frame.left
-                + corLength, frame.top, paint);
+        canvas.drawRect(frame.left, frame.top, frame.left+corLength, frame.top
+                + corWidth, paint);
+
+
         // 右上角
-        canvas.drawRect(frame.right, frame.top, frame.right + corWidth,
+//        canvas.drawRect(frame.right, frame.top, frame.right + corWidth,
+//                frame.top + corLength, paint);
+//        canvas.drawRect(frame.right - corLength, frame.top - corWidth,
+//                frame.right + corWidth, frame.top, paint);
+
+        canvas.drawRect(frame.right-corWidth, frame.top, frame.right ,
                 frame.top + corLength, paint);
-        canvas.drawRect(frame.right - corLength, frame.top - corWidth,
-                frame.right + corWidth, frame.top, paint);
+        canvas.drawRect(frame.right - corLength, frame.top ,
+                frame.right , frame.top+ corWidth, paint);
         // 左下角
-        canvas.drawRect(frame.left - corWidth, frame.bottom - corLength,
-                frame.left, frame.bottom, paint);
-        canvas.drawRect(frame.left - corWidth, frame.bottom, frame.left
-                + corLength, frame.bottom + corWidth, paint);
+//        canvas.drawRect(frame.left - corWidth, frame.bottom - corLength,
+//                frame.left, frame.bottom, paint);
+//        canvas.drawRect(frame.left - corWidth, frame.bottom, frame.left
+//                + corLength, frame.bottom + corWidth, paint);
+
+        canvas.drawRect(frame.left , frame.bottom - corWidth,
+                frame.left+ corLength, frame.bottom, paint);
+        canvas.drawRect(frame.left, frame.bottom-corLength, frame.left
+                + corWidth, frame.bottom , paint);
         // 右下角
-        canvas.drawRect(frame.right, frame.bottom - corLength, frame.right
-                + corWidth, frame.bottom, paint);
-        canvas.drawRect(frame.right - corLength, frame.bottom, frame.right
-                + corWidth, frame.bottom + corWidth, paint);
+//        canvas.drawRect(frame.right, frame.bottom - corLength, frame.right
+//                + corWidth, frame.bottom, paint);
+//        canvas.drawRect(frame.right - corLength, frame.bottom, frame.right
+//                + corWidth, frame.bottom + corWidth, paint);
+        canvas.drawRect(frame.right-corWidth, frame.bottom - corLength, frame.right
+                , frame.bottom, paint);
+        canvas.drawRect(frame.right - corLength, frame.bottom-corWidth, frame.right
+                , frame.bottom , paint);
     }
 
     /**

@@ -56,7 +56,7 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
     @Override
     protected void initTitleBar() {
         super.initTitleBar();
-        mTitleBarLayout.setTitle("智慧用电路监控");
+        mTitleBarLayout.setTitle("智慧用电监控");
 
     }
 
@@ -147,7 +147,7 @@ public class SmartlectorMonitoringActivity extends BaseActivity<BasePresenter,Ac
      */
     private void getErrorList() {
 
-                Api.getApi().getPowerListApp("" + mPage, "" + mPageSize)
+                Api.getApi().getPowerListApp("" + mPage, "" + mPageSize,MyApplication.getInstance().getProjectId())
                         .compose(callbackOnIOToMainThread())
                         .subscribe(new BaseNetListener<SmartElectorBean>(SmartlectorMonitoringActivity.this, false) {
                             @Override

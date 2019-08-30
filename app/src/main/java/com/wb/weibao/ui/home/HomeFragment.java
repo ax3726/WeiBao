@@ -1,14 +1,10 @@
 package com.wb.weibao.ui.home;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -20,38 +16,22 @@ import com.wb.weibao.base.BaseNetListener;
 import com.wb.weibao.common.Api;
 import com.wb.weibao.common.MyApplication;
 import com.wb.weibao.common.PlayNumService;
-import com.wb.weibao.common.TimeTaskService;
 import com.wb.weibao.databinding.FragmentHomeLayoutBinding;
 import com.wb.weibao.model.BaseBean;
-import com.wb.weibao.model.PatrolUserListBean;
 import com.wb.weibao.model.earlywarning.ProjectListModel;
 import com.wb.weibao.model.event.ErrorEvent;
 import com.wb.weibao.model.event.ProjectChangeEvent;
 import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.home.PatrolEndStatusBean;
 import com.wb.weibao.model.record.RecordCount;
-import com.wb.weibao.model.record.RecordDetailEvent;
-import com.wb.weibao.model.record.RecordListModel;
 import com.wb.weibao.ui.main.MainActivity;
-import com.wb.weibao.utils.DataUtils;
-import com.wb.weibao.utils.DemoUtils;
 import com.wb.weibao.utils.SpfKey;
 import com.wb.weibao.utils.SpfUtils;
-import com.wb.weibao.utils.dialog.MyDialogListener;
-import com.wb.weibao.utils.dialog.StytledDialog;
 import com.wb.weibao.view.MyAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -83,7 +63,7 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
         mBinding.tv06.setOnClickListener(this);
         mBinding.tv07.setOnClickListener(this);
         mBinding.tv08.setOnClickListener(this);
-        mBinding.tv09.setOnClickListener(this);
+//        mBinding.tv09.setOnClickListener(this);
         mBinding.tv10.setOnClickListener(this);
         mBinding.tv11.setOnClickListener(this);
         mBinding.tvProject.setOnClickListener(this);
@@ -111,6 +91,12 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
 
         getPatrolEndStatus();
 
+        String istrue=spfUtils.getSpfString(SpfKey.ISTRUEONE);
+        if(TextUtils.isEmpty(istrue))
+        {
+            istrue="true";
+            spfUtils.setSpfString(SpfKey.ISTRUEONE,istrue);
+        }
 
     }
 
@@ -181,9 +167,9 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                 }
                 startActivity(StatisticsActivity.class);
                 break;
-            case R.id.tv_09://关联服务
-                startActivity(LinkedServiceActivity.class);
-                break;
+//            case R.id.tv_09://关联服务
+//                startActivity(LinkedServiceActivity.class);
+//                break;
             case R.id.tv_10://培训教育
                 startActivity(TrainingEducationActivity.class);
                 break;

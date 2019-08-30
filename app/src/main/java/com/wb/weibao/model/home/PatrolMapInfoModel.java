@@ -216,6 +216,15 @@ public class PatrolMapInfoModel {
              * updateTime : 2019-07-30T07:10:29.600Z
              * updateUserId : string
              */
+            private String completeType;
+
+            public String getCompleteType() {
+                return completeType;
+            }
+
+            public void setCompleteType(String completeType) {
+                this.completeType = completeType;
+            }
 
             private String createTime;
             private String createUserId;

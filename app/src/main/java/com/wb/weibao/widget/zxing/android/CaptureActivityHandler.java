@@ -53,6 +53,7 @@ public final class CaptureActivityHandler extends Handler {
 			.getSimpleName();
 
 	private final CaptureActivity activity;
+
 	private final DecodeThread decodeThread;
 	private State state;
 	private final CameraManager cameraManager;
@@ -78,6 +79,8 @@ public final class CaptureActivityHandler extends Handler {
 		cameraManager.startPreview();
 		restartPreviewAndDecode();
 	}
+
+
 
 	@Override
 	public void handleMessage(Message message) {

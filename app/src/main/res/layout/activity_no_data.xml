@@ -4,10 +4,11 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:background="@color/colorBackground"
         >
 
         <com.zhy.autolayout.AutoLinearLayout
+           android:background="@android:color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -15,11 +16,14 @@
             android:gravity="center_horizontal">
 
             <ImageView
+                android:background="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/no_data_icon" />
 
             <TextView
+                android:background="@android:color/transparent"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="没有该实时监控数据"

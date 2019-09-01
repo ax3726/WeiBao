@@ -165,20 +165,23 @@ public class HomeFragment extends BaseFragment<BaseFragmentPresenter, FragmentHo
                     showToast("请选择项目单位");
                     return;
                 }
-                startActivity(StatisticsActivity.class);
+                //startActivity(StatisticsActivity.class);
+                startActivity(WaterFireCheckActivity.class);
                 break;
 //            case R.id.tv_09://关联服务
 //                startActivity(LinkedServiceActivity.class);
 //                break;
             case R.id.tv_10://培训教育
-                startActivity(TrainingEducationActivity.class);
+//                startActivity(TrainingEducationActivity.class);
+                startActivity(WaterGageCheckActivity.class);
                 break;
             case R.id.tv_11://更多功能
                 if (mBinding.tvProject.getText().equals("全部项目")) {
                     showToast("请选择项目单位");
                     return;
                 }
-                startActivity(MoreActivity.class);
+//                startActivity(MoreActivity.class);
+                startActivity(WaterCheckActivity.class);
                 break;
             case R.id.tv_project://选择项目
                 if (MyApplication.getInstance().getUserData().getPrincipal().getType().equals("1")) {

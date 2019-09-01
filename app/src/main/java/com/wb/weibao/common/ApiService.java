@@ -13,8 +13,8 @@ import com.wb.weibao.model.event.DetailBean;
 import com.wb.weibao.model.home.CameraListBean;
 import com.wb.weibao.model.home.CheckListbean;
 import com.wb.weibao.model.home.DeviceTypeModel;
-import com.wb.weibao.model.home.Handoverbean;
 import com.wb.weibao.model.home.FrieControlModel;
+import com.wb.weibao.model.home.Handoverbean;
 import com.wb.weibao.model.home.HomePageStatisticsBean;
 import com.wb.weibao.model.home.MaintenanceListModel;
 import com.wb.weibao.model.home.MaintenanceRecordDetailBean;
@@ -22,18 +22,18 @@ import com.wb.weibao.model.home.PatrolEndStatusBean;
 import com.wb.weibao.model.home.PatrolMapInfoModel;
 import com.wb.weibao.model.home.PatrolPointListBean;
 import com.wb.weibao.model.home.ProjectDetailbean;
+import com.wb.weibao.model.home.RecordListAppBean;
 import com.wb.weibao.model.home.SecurityInfoModel;
 import com.wb.weibao.model.home.SignListModel;
 import com.wb.weibao.model.home.SmartElectorBean;
 import com.wb.weibao.model.home.SmartElectorDetailBean;
 import com.wb.weibao.model.home.SmartPatrolBean;
 import com.wb.weibao.model.home.StatisticsModel;
-import com.wb.weibao.model.home.RecordListAppBean;
+import com.wb.weibao.model.home.WaterListModel;
+import com.wb.weibao.model.home.WaterModel;
 import com.wb.weibao.model.record.EventReportListbean;
 import com.wb.weibao.model.record.RecordCount;
 import com.wb.weibao.model.record.RecordListModel;
-
-import java.util.Map;
 
 import io.reactivex.Flowable;
 import okhttp3.MultipartBody;
@@ -671,7 +671,7 @@ public interface ApiService {
      * @return
      */
     @POST("collector/app/powerListApp")
-    Flowable<SmartElectorBean> getPowerListApp(@Query("page") String page, @Query("size") String size,@Query("projectId") String projectId);
+    Flowable<SmartElectorBean> getPowerListApp(@Query("page") String page, @Query("size") String size, @Query("projectId") String projectId);
 
     /**
      * 电路监控详情
@@ -772,6 +772,7 @@ public interface ApiService {
 
     /**
      * 设备复位
+     *
      * @return
      */
     @POST("collector/app/resetDevice")
@@ -779,9 +780,31 @@ public interface ApiService {
 
     /**
      * 判断是否重复巡查
+     *
      * @param patrolPointCode
      * @return
      */
     @POST("patrol/record/app/isRepeatPatrol")
     Flowable<BaseBean> getIsRepeatPatrol(@Query("patrolPointCode") String patrolPointCode);
+
+
+    /**
+     * 查询智慧用水采集器列表
+     *
+     * @param projectId
+     * @param type      水设备类型 10002:消火栓压力传感器，10003:液位传感器,10004：水压传感器
+     * @return
+     */
+    @POST("collector/app/waterListApp")
+    Flowable<WaterListModel> getWaterList(@Query("projectId") String projectId, @Query("type") String type);
+
+
+    /**
+     * 查询智慧用水采集器详情
+     *
+     * @param id
+     * @return
+     */
+    @POST("collector/app/waterDetailApp")
+    Flowable<WaterModel> getWater(@Query("id") String id);
 }

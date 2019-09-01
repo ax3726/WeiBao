@@ -31,16 +31,17 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!-- 百度ak -->
+        <activity android:name=".ui.home.WaterFireCheckActivity"></activity>
+        <activity android:name=".ui.home.WaterGageCheckActivity"></activity>
+        <activity android:name=".ui.home.WaterCheckActivity" /> <!-- 百度ak -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="IwFWF9XAnHw0W4L62fZ1OfIRidS1QX94"></meta-data>
+            android:value="IwFWF9XAnHw0W4L62fZ1OfIRidS1QX94" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
 
         <activity android:name=".ui.home.SmartPatrolMapActivity" />
         <activity
@@ -173,8 +174,8 @@
         <activity android:name=".ui.home.SmartlectorMonitoringActivity" />
         <activity android:name=".ui.home.SmartlectorMonitoringDetailActivity" />
         <activity android:name=".ui.home.SmartPatrolActivity" />
-        <activity android:name=".ui.home.ScanPatrolActivity"></activity>
-        <activity android:name=".widget.zxing.android.CapturePatrolActivity"/>
+        <activity android:name=".ui.home.ScanPatrolActivity" />
+        <activity android:name=".widget.zxing.android.CapturePatrolActivity" />
     </application>
 
 </manifest>
